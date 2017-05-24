@@ -15,6 +15,7 @@ import java.util.Set;
 
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObjSurf;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkSection;
+import fr.ign.cogit.cartagen.spatialanalysis.network.DeadEndGroup;
 import fr.ign.cogit.cartagen.spatialanalysis.network.streets.CityAxis;
 import fr.ign.cogit.cartagen.spatialanalysis.network.streets.CityPartition;
 import fr.ign.cogit.geoxygene.api.feature.IFeatureCollection;
@@ -128,5 +129,7 @@ public interface IUrbanBlock extends IGeneObjSurf {
    * Feat type name
    */
   public static final String FEAT_TYPE_NAME = "UrbanBlock";
+
+  public HashSet<DeadEndGroup> getInsideDeadEnds();
 
 }

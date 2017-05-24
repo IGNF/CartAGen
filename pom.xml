@@ -185,6 +185,11 @@
 			<artifactId>geoxygene-database</artifactId>
 			<version>1.9-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>fr.ign.cogit</groupId>
+			<artifactId>geoxygene-spatialrelation</artifactId>
+			<version>1.9-SNAPSHOT</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.vividsolutions</groupId>

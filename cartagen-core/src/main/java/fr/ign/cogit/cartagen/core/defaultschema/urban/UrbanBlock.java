@@ -50,6 +50,7 @@ import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanElement;
 import fr.ign.cogit.cartagen.core.persistence.CollectionType;
 import fr.ign.cogit.cartagen.core.persistence.EncodedRelation;
 import fr.ign.cogit.cartagen.spatialanalysis.measures.DensityMeasures;
+import fr.ign.cogit.cartagen.spatialanalysis.network.DeadEndGroup;
 import fr.ign.cogit.cartagen.spatialanalysis.network.streets.CityAxis;
 import fr.ign.cogit.cartagen.spatialanalysis.network.streets.CityPartition;
 import fr.ign.cogit.cartagen.spatialanalysis.network.streets.StreetNetwork;
@@ -769,6 +770,12 @@ public class UrbanBlock extends GeneObjSurfDefault implements IUrbanBlock {
     this.urbanElementsIds.add(urbanElement.getId());
     this.getGeoxObj().getComposants()
         .add((ElementIndependant) urbanElement.getGeoxObj());
+  }
+
+  @Override
+  public HashSet<DeadEndGroup> getInsideDeadEnds() {
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }

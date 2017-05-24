@@ -11,19 +11,24 @@
 package fr.ign.cogit.cartagen.algorithms.polygon;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import straightskeleton.Corner;
-import straightskeleton.Edge;
-import straightskeleton.Machine;
-import straightskeleton.Output.SharedEdge;
-import straightskeleton.Skeleton;
-import utils.Loop;
-import utils.LoopL;
+import fr.ign.cogit.cartagen.common.triangulation.Triangulation;
+import fr.ign.cogit.cartagen.graph.INode;
+import fr.ign.cogit.cartagen.graph.Node;
+import fr.ign.cogit.cartagen.graph.TreeGraph;
+import fr.ign.cogit.cartagen.graph.triangulation.TriangulationPoint;
+import fr.ign.cogit.cartagen.graph.triangulation.TriangulationSegment;
+import fr.ign.cogit.cartagen.graph.triangulation.TriangulationTriangle;
+import fr.ign.cogit.cartagen.graph.triangulation.impl.TriangulationPointImpl;
+import fr.ign.cogit.cartagen.graph.triangulation.impl.TriangulationSegmentFactoryImpl;
+import fr.ign.cogit.cartagen.graph.triangulation.impl.TriangulationSegmentImpl;
+import fr.ign.cogit.cartagen.graph.triangulation.impl.TriangulationTriangleFactoryImpl;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPositionList;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineSegment;
@@ -37,7 +42,15 @@ import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPosition;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineSegment;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineString;
 import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.CommonAlgorithmsFromCartAGen;
+import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.LineDensification;
 import fr.ign.cogit.geoxygene.util.algo.geomstructure.Vector2D;
+import straightskeleton.Corner;
+import straightskeleton.Edge;
+import straightskeleton.Machine;
+import straightskeleton.Output.SharedEdge;
+import straightskeleton.Skeleton;
+import utils.Loop;
+import utils.LoopL;
 
 /**
  * Extract the skeleton of polygons by different methods
@@ -85,7 +98,8 @@ public class Skeletonize {
    * @param polygon
    * @return
    */
-  public static Set<ILineSegment> skeletonizeStraightSkeleton(IPolygon polygon) {
+  public static Set<ILineSegment> skeletonizeStraightSkeleton(
+      IPolygon polygon) {
     Set<ILineSegment> skeletonSegments = new HashSet<ILineSegment>();
     Machine directionMachine = new Machine();
 
@@ -131,7 +145,8 @@ public class Skeletonize {
       ILineSegment segment = new GM_LineSegment(
           new DirectPosition(edge.getStart(edge.left).x,
               edge.getStart(edge.left).y),
-          new DirectPosition(edge.getEnd(edge.left).x, edge.getEnd(edge.left).y));
+          new DirectPosition(edge.getEnd(edge.left).x,
+              edge.getEnd(edge.left).y));
       if (segment.intersects(polygon.getExterior().getPrimitive()))
         continue;
       for (IRing hole : polygon.getInterior()) {
@@ -200,8 +215,8 @@ public class Skeletonize {
       }
       // extend it if necessary
       if (extend) {
-        Vector2D vect = new Vector2D(skeSeg.coord().get(1), skeSeg.coord().get(
-            0));
+        Vector2D vect = new Vector2D(skeSeg.coord().get(1),
+            skeSeg.coord().get(0));
         IDirectPosition firstPt = CommonAlgorithmsFromCartAGen.projection(
             skeSeg.coord().get(0), polygon.exteriorLineString(), vect);
         line.addControlPoint(0, firstPt);
@@ -218,10 +233,10 @@ public class Skeletonize {
       }
       // then, extend the last node
       if (extend) {
-        Vector2D vect = new Vector2D(skeSeg.coord().get(0), skeSeg.coord().get(
-            1));
-        IDirectPosition lastPt = CommonAlgorithmsFromCartAGen.projection(skeSeg
-            .coord().get(1), polygon.exteriorLineString(), vect);
+        Vector2D vect = new Vector2D(skeSeg.coord().get(0),
+            skeSeg.coord().get(1));
+        IDirectPosition lastPt = CommonAlgorithmsFromCartAGen.projection(
+            skeSeg.coord().get(1), polygon.exteriorLineString(), vect);
         line.addControlPoint(lastPt);
       }
       extendedSkeleton.add(line);
@@ -317,4 +332,348 @@ public class Skeletonize {
 
     return extendedSkeleton;
   }
+
+  /**
+   * Skeletonize a polygon and returns all segments of the skeleton as a
+   * tree-graph.
+   * @param polygon
+   * @param densStep densifies polygon with a vertex every densStep. Put -1 to
+   *          avoid densification.
+   * @return
+   */
+  public static TreeGraph skeletonizeTINGraph(IPolygon polygon,
+      double densStep) {
+    // initialisation of useful collections
+    List<TriangulationPoint> points = new ArrayList<TriangulationPoint>();
+    TreeGraph graph = new TreeGraph("skeleton");
+
+    // compute the outline of the polygon to extract the triangulation
+    // vertices and constraining segments
+    ILineString contour = null;
+    if (densStep == -1) {
+      contour = new GM_LineString(polygon.coord());
+    } else {
+      contour = LineDensification
+          .densification(new GM_LineString(polygon.coord()), densStep);
+    }
+
+    // the list contains all the points arround the face
+    for (int i = 0; i < contour.numPoints(); i++) {
+      TriangulationPointImpl point = new TriangulationPointImpl(
+          contour.getControlPoint(i));
+      points.add(point);
+    }
+
+    // the triangulation is generated
+    Triangulation tri = new Triangulation(points,
+        new TriangulationSegmentFactoryImpl(),
+        new TriangulationTriangleFactoryImpl());
+    tri.compute(true);
+    Collection<TriangulationTriangle> triangles = tri.getTriangles();
+
+    if (triangles.size() != 2) {
+      // There are three case of triangles
+      for (TriangulationTriangle triangle : triangles) {
+
+        if (polygon.contains(triangle.getGeom())) {
+
+          TriangulationPointImpl point1 = new TriangulationPointImpl(
+              triangle.getPoint1().getPosition());
+          TriangulationPointImpl point2 = new TriangulationPointImpl(
+              triangle.getPoint2().getPosition());
+          TriangulationPointImpl point3 = new TriangulationPointImpl(
+              triangle.getPoint3().getPosition());
+          TriangulationSegmentImpl seg1 = new TriangulationSegmentImpl(point1,
+              point2);
+          TriangulationSegmentImpl seg2 = new TriangulationSegmentImpl(point2,
+              point3);
+          TriangulationSegmentImpl seg3 = new TriangulationSegmentImpl(point3,
+              point1);
+          int nbSeg = 0, contourSeg1 = 0, contourSeg2 = 0, contourSeg3 = 0;
+
+          if (contour.buffer(0.1).contains(seg1.getGeom()) == true) {
+            contourSeg1 = 1;
+          }
+          if (contour.buffer(0.1).contains(seg2.getGeom()) == true) {
+            contourSeg2 = 1;
+          }
+          if (contour.buffer(0.1).contains(seg3.getGeom()) == true) {
+            contourSeg3 = 1;
+          }
+
+          nbSeg = contourSeg1 + contourSeg2 + contourSeg3;
+
+          // The end triangles (the end line starts and finishes where these
+          // triangles are => We don't make anything now
+
+          // The most frequent triangles (1 side in common with the separator
+          // outline)
+          if (nbSeg == 1) {
+            IDirectPosition pos1 = new DirectPosition();
+            IDirectPosition pos2 = new DirectPosition();
+
+            if (contourSeg1 == 1) {
+              pos1 = seg2.getGeom().centroid();
+              pos2 = seg3.getGeom().centroid();
+              INode node1 = graph.getNodeAt(pos1);
+              if (node1 == null) {
+                node1 = new Node(pos1.toGM_Point());
+                node1.setGraph(graph);
+                graph.getNodes().add(node1);
+              }
+              INode node2 = graph.getNodeAt(pos2);
+              if (node2 == null) {
+                node2 = new Node(pos2.toGM_Point());
+                node2.setGraph(graph);
+                graph.getNodes().add(node2);
+              }
+              graph.addEdge(node1, node2);
+            } else if (contourSeg2 == 1) {
+              pos1 = seg1.getGeom().centroid();
+              pos2 = seg3.getGeom().centroid();
+              INode node1 = graph.getNodeAt(pos1);
+              if (node1 == null) {
+                node1 = new Node(pos1.toGM_Point());
+                node1.setGraph(graph);
+                graph.getNodes().add(node1);
+              }
+              INode node2 = graph.getNodeAt(pos2);
+              if (node2 == null) {
+                node2 = new Node(pos2.toGM_Point());
+                node2.setGraph(graph);
+                graph.getNodes().add(node2);
+              }
+              graph.addEdge(node1, node2);
+            } else {
+              pos1 = seg1.getGeom().centroid();
+              pos2 = seg2.getGeom().centroid();
+              INode node1 = graph.getNodeAt(pos1);
+              if (node1 == null) {
+                node1 = new Node(pos1.toGM_Point());
+                node1.setGraph(graph);
+                graph.getNodes().add(node1);
+              }
+              INode node2 = graph.getNodeAt(pos2);
+              if (node2 == null) {
+                node2 = new Node(pos2.toGM_Point());
+                node2.setGraph(graph);
+                graph.getNodes().add(node2);
+              }
+              graph.addEdge(node1, node2);
+            }
+          }
+
+          // Third case : a fork is created (no side in common with the
+          // separator outline)
+          if (nbSeg == 0) {
+            IDirectPosition pos1 = new DirectPosition();
+            IDirectPosition pos2 = new DirectPosition();
+            IDirectPosition pos3 = new DirectPosition();
+            IDirectPosition barycentre = new DirectPosition();
+            pos1 = seg1.getGeom().centroid();
+            pos2 = seg2.getGeom().centroid();
+            pos3 = seg3.getGeom().centroid();
+            barycentre = triangle.getGeom().centroid();
+
+            Node node = new Node(barycentre.toGM_Point());
+            node.setGraph(graph);
+            graph.getNodes().add(node);
+
+            INode node1 = graph.getNodeAt(pos1);
+            if (node1 == null) {
+              node1 = new Node(pos1.toGM_Point());
+              node1.setGraph(graph);
+              graph.getNodes().add(node1);
+            }
+            graph.addEdge(node, node1);
+
+            INode node2 = graph.getNodeAt(pos2);
+            if (node2 == null) {
+              node2 = new Node(pos2.toGM_Point());
+              node2.setGraph(graph);
+              graph.getNodes().add(node2);
+            }
+            graph.addEdge(node, node2);
+
+            INode node3 = graph.getNodeAt(pos3);
+            if (node3 == null) {
+              node3 = new Node(pos3.toGM_Point());
+              node3.setGraph(graph);
+              graph.getNodes().add(node3);
+            }
+            graph.addEdge(node, node3);
+          }
+
+        }
+      }
+    }
+    return graph;
+  }
+
+  private static void computeTINSkeSegments(IPolygon polygon,
+      MultiSkeleton multiSke, double densStep) {
+    // initialisation of useful collections
+    List<TriangulationPoint> points = new ArrayList<TriangulationPoint>();
+    Set<ILineSegment> hashSegFork = new HashSet<ILineSegment>();
+
+    // compute the outline of the polygon to extract the triangulation
+    // vertices and constraining segments
+    ILineString contour = LineDensification
+        .densification(new GM_LineString(polygon.coord()), densStep);
+
+    // the list contains all the points arround the face
+    for (int i = 0; i < contour.numPoints(); i++) {
+      TriangulationPointImpl point = new TriangulationPointImpl(
+          contour.getControlPoint(i));
+      points.add(point);
+    }
+
+    // the triangulation is generated
+    Triangulation tri = new Triangulation(points,
+        new TriangulationSegmentFactoryImpl(),
+        new TriangulationTriangleFactoryImpl());
+    tri.compute(true);
+    Collection<TriangulationTriangle> triangles = tri.getTriangles();
+
+    // Cas particulier où la triangulation de la face contient deux triangles
+    if (triangles.size() == 2) {
+      for (TriangulationSegment seg : tri.getSegments()) {
+        if ((polygon.contains(seg.getGeom())) && (contour.buffer(0.05)
+            .intersection(seg.getGeom()).equals(seg.getGeom()) == false)) {
+          multiSke.getIsolatedPts().add(seg.getGeom().centroid());
+        }
+      }
+    }
+
+    else {
+      // There are three case of triangles
+      for (TriangulationTriangle triangle : triangles) {
+
+        if (polygon.contains(triangle.getGeom())) {
+
+          TriangulationPointImpl point1 = new TriangulationPointImpl(
+              triangle.getPoint1().getPosition());
+          TriangulationPointImpl point2 = new TriangulationPointImpl(
+              triangle.getPoint2().getPosition());
+          TriangulationPointImpl point3 = new TriangulationPointImpl(
+              triangle.getPoint3().getPosition());
+          TriangulationSegmentImpl seg1 = new TriangulationSegmentImpl(point1,
+              point2);
+          TriangulationSegmentImpl seg2 = new TriangulationSegmentImpl(point2,
+              point3);
+          TriangulationSegmentImpl seg3 = new TriangulationSegmentImpl(point3,
+              point1);
+          int nbSeg = 0, contourSeg1 = 0, contourSeg2 = 0, contourSeg3 = 0;
+
+          if (contour.buffer(0.1).contains(seg1.getGeom()) == true) {
+            contourSeg1 = 1;
+          }
+          if (contour.buffer(0.1).contains(seg2.getGeom()) == true) {
+            contourSeg2 = 1;
+          }
+          if (contour.buffer(0.1).contains(seg3.getGeom()) == true) {
+            contourSeg3 = 1;
+          }
+
+          nbSeg = contourSeg1 + contourSeg2 + contourSeg3;
+
+          // The end triangles (the end line starts and finishes where these
+          // triangles are => We don't make anything now
+
+          // The most frequent triangles (1 side in common with the separator
+          // outline)
+          if (nbSeg == 1) {
+            IDirectPosition pos1 = new DirectPosition();
+            IDirectPosition pos2 = new DirectPosition();
+
+            if (contourSeg1 == 1) {
+              pos1 = seg2.getGeom().centroid();
+              pos2 = seg3.getGeom().centroid();
+              ILineSegment segment = new GM_LineSegment(pos1, pos2);
+              multiSke.segFace.add(segment);
+            } else if (contourSeg2 == 1) {
+              pos1 = seg1.getGeom().centroid();
+              pos2 = seg3.getGeom().centroid();
+              ILineSegment segment = new GM_LineSegment(pos1, pos2);
+              multiSke.segFace.add(segment);
+            } else {
+              pos1 = seg1.getGeom().centroid();
+              pos2 = seg2.getGeom().centroid();
+              ILineSegment segment = new GM_LineSegment(pos1, pos2);
+              multiSke.segFace.add(segment);
+            }
+          }
+
+          // Third case : a fork is created (no side in common with the
+          // separator outline)
+          if (nbSeg == 0) {
+            IDirectPosition pos1 = new DirectPosition();
+            IDirectPosition pos2 = new DirectPosition();
+            IDirectPosition pos3 = new DirectPosition();
+            IDirectPosition barycentre = new DirectPosition();
+            pos1 = seg1.getGeom().centroid();
+            pos2 = seg2.getGeom().centroid();
+            pos3 = seg3.getGeom().centroid();
+            barycentre = triangle.getGeom().centroid();
+
+            ILineSegment segSuivant1 = new GM_LineSegment(barycentre, pos1);
+            ILineSegment segSuivant2 = new GM_LineSegment(barycentre, pos2);
+            ILineSegment segSuivant3 = new GM_LineSegment(barycentre, pos3);
+            hashSegFork.add(segSuivant1);
+            hashSegFork.add(segSuivant2);
+            hashSegFork.add(segSuivant3);
+          }
+
+        }
+      }
+    }
+
+    // Removal of the useless segments created with the forks by filtering
+    for (ILineSegment segmentFork : hashSegFork) {
+      IDirectPosition debutFork = segmentFork.getStartPoint();
+      IDirectPosition finFork = segmentFork.getEndPoint();
+      boolean boolFork = false;
+
+      for (ILineSegment segment : multiSke.segFace) {
+        IDirectPosition debut = segment.getStartPoint();
+        IDirectPosition fin = segment.getEndPoint();
+        if (debutFork.equals(debut) || debutFork.equals(fin)
+            || finFork.equals(debut) || finFork.equals(fin)) {
+          boolFork = true;
+        }
+      }
+
+      if (boolFork == true) {
+        multiSke.segments.add(segmentFork);
+      }
+    }
+
+    multiSke.segments.addAll(multiSke.segFace);
+    multiSke.segFace.clear();
+  }
+
+  /**
+   * Connect a skeleton computed by any method to the nearest edges of the
+   * skeletonized polygon.
+   * @param skeleton
+   * @param polygon
+   */
+  private static void connectSkeletonToPolygon(ILineString skeleton,
+      IPolygon polygon) {
+    // first extend the start node
+    Vector2D vect = new Vector2D(skeleton.coord().get(1),
+        skeleton.coord().get(0));
+    IDirectPosition firstPt = CommonAlgorithmsFromCartAGen.projection(
+        skeleton.coord().get(0), polygon.exteriorLineString(), vect);
+    skeleton.addControlPoint(0, firstPt);
+
+    // then, extend the last node
+    vect = new Vector2D(skeleton.coord().get(skeleton.numPoints() - 2),
+        skeleton.coord().get(skeleton.numPoints() - 1));
+    IDirectPosition lastPt = CommonAlgorithmsFromCartAGen.projection(
+        skeleton.coord().get(skeleton.numPoints() - 1),
+        polygon.exteriorLineString(), vect);
+    skeleton.addControlPoint(lastPt);
+  }
+
 }
