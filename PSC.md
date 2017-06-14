@@ -9,12 +9,6 @@ This document describes the role and responsibilities of the CartAGen Project St
 > - Author: [Guillaume Touya][1]
 > - Contact {firstname.lastname}@ign.fr.
 
-### Table of contents
-
-
-[TOC]
-
-----------
 
 
 Structure
