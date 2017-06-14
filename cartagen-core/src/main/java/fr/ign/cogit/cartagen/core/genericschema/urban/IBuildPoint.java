@@ -18,4 +18,6 @@ import fr.ign.cogit.cartagen.core.genericschema.IGeneObjPoint;
 
 public interface IBuildPoint extends IGeneObjPoint {
   public static final String FEAT_TYPE_NAME = "BuildPoint"; //$NON-NLS-1$
+
+  public String getNature();
 }

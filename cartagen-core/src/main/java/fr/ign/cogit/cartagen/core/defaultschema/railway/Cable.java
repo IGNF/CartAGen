@@ -37,6 +37,7 @@ public class Cable extends GeneObjLinDefault implements ICable {
    * Associated Geoxygene schema object
    */
   private TronconCable geoxObj;
+  private String nature;
 
   /**
    * Constructor
@@ -95,6 +96,15 @@ public class Cable extends GeneObjLinDefault implements ICable {
   @Override
   public boolean isEliminated() {
     return super.isEliminated();
+  }
+
+  @Override
+  public String getNature() {
+    return nature;
+  }
+
+  public void setNature(String nature) {
+    this.nature = nature;
   }
 
 }

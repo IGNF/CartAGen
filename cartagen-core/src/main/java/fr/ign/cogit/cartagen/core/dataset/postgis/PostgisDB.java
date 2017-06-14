@@ -10,7 +10,7 @@
 /**
  * 
  */
-package fr.ign.cogit.cartagen.core.dataset;
+package fr.ign.cogit.cartagen.core.dataset.postgis;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

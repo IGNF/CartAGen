@@ -21,8 +21,8 @@ import fr.ign.cogit.geoxygene.schemageo.api.occSol.ZoneOccSol;
  * d'occupation du sol simples Author: J. Renard Date: 18/09/2009
  */
 
-public class SimpleLandUseArea extends GeneObjSurfDefault implements
-    ISimpleLandUseArea {
+public class SimpleLandUseArea extends GeneObjSurfDefault
+    implements ISimpleLandUseArea {
 
   /**
    * The type of land use
@@ -62,6 +62,12 @@ public class SimpleLandUseArea extends GeneObjSurfDefault implements
     this.setInitialGeom(poly);
     this.setEliminated(false);
     this.setGeom(poly);
+  }
+
+  public SimpleLandUseArea() {
+    super();
+    this.setType(0);
+    this.setEliminated(false);
   }
 
   @Override

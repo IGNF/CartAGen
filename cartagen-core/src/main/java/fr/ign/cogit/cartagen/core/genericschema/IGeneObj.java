@@ -23,8 +23,8 @@ import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
  * classes that implement these more specific interfaces.
  * @author Cecile Duchene, IGN-F, COGIT Lab.
  */
-public interface IGeneObj extends IGraphLinkableFeature, IFeature,
-    IPersistentObject {
+public interface IGeneObj
+    extends IGraphLinkableFeature, IFeature, IPersistentObject {
 
   /**
    * @return TRUE if the object has to be considered eliminated by the
@@ -240,6 +240,13 @@ public interface IGeneObj extends IGraphLinkableFeature, IFeature,
    * @param obj
    */
   public void copyAttributes(IGeneObj obj);
+
+  /**
+   * Set the value of a given attribute.
+   * @param attrName
+   * @param value
+   */
+  public void setAttribute(String attrName, Object value);
 
   /**
    * get the SupportObj which is assciated

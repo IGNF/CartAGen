@@ -33,7 +33,9 @@ public class SmallDeadEndsDeletionAction extends ActionCartagen {
 
     // agrege les troncons analogues adjacents
     NetworkEnrichment.aggregateAnalogAdjacentSections(
-        CartAGenDoc.getInstance().getCurrentDataset(), res.getFeature());
+        CartAGenDoc.getInstance().getCurrentDataset(), res.getFeature(),
+        CartAGenDoc.getInstance().getCurrentDataset().getCartAGenDB()
+            .getGeneObjImpl().getCreationFactory());
     return ActionResult.UNKNOWN;
   }
 

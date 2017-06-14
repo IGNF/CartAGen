@@ -1,4 +1,4 @@
-package fr.ign.cogit.cartagen.appli.collagen;
+package fr.ign.cogit.cartagen.appli.plugins.process;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
+import fr.ign.cogit.cartagen.appli.collagen.EditFormalConstraintsFrame;
 import fr.ign.cogit.cartagen.collagen.agents.CollaGenEnvironment;
 import fr.ign.cogit.cartagen.collagen.components.orchestration.Conductor;
 import fr.ign.cogit.cartagen.collagen.geospaces.model.GeographicSpace;
@@ -258,6 +259,7 @@ public class CollaGenComponent extends JMenu {
         Conductor chefO = Conductor.getInstance();
         AgentObserver observer = (AgentObserver) CartAGenPlugin.getInstance()
             .getApplication();
+        observer.setSlowMotion(true);
         UrbanAGENTProcess process = new UrbanAGENTProcess(chefO, observer);
         process.runOnGeoSpace(space);
       }
@@ -287,6 +289,7 @@ public class CollaGenComponent extends JMenu {
         Conductor chefO = Conductor.getInstance();
         AgentObserver observer = (AgentObserver) CartAGenPlugin.getInstance()
             .getApplication();
+        observer.setSlowMotion(true);
         UrbanAGENTProcess process = new UrbanAGENTProcess(chefO, observer);
         process.setGeneraliseRoads(false);
         process.runOnGeoSpace(space);
@@ -318,6 +321,7 @@ public class CollaGenComponent extends JMenu {
         Conductor chefO = Conductor.getInstance();
         AgentObserver observer = (AgentObserver) CartAGenPlugin.getInstance()
             .getApplication();
+        observer.setSlowMotion(true);
         UrbanAGENTProcess process = new UrbanAGENTProcess(chefO, observer);
         process.setGeneraliseRoads(false);
         process.setBlockGrayingAllowed(false);
@@ -350,6 +354,7 @@ public class CollaGenComponent extends JMenu {
               "centroide de l'espace rural: " + space.getGeom().centroid());
           AgentObserver observer = (AgentObserver) CartAGenPlugin.getInstance()
               .getApplication();
+          observer.setSlowMotion(true);
           CartAComProcess process = new CartAComProcess(chefO, observer);
           process.runOnGeoSpace(space);
         }
@@ -381,6 +386,7 @@ public class CollaGenComponent extends JMenu {
         Conductor chefO = Conductor.getInstance();
         AgentObserver observer = (AgentObserver) CartAGenPlugin.getInstance()
             .getApplication();
+        observer.setSlowMotion(true);
         RuralAGENTProcess process = new RuralAGENTProcess(chefO, observer);
         process.runOnGeoSpace(space);
       }

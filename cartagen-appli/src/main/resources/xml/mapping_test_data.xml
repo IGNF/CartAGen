@@ -1,0 +1,269 @@
+<mapping>
+    <gene-obj-implementation>
+    	<name>default</name>
+    	<factory>fr.ign.cogit.cartagen.core.defaultschema.DefaultCreationFactory</factory>
+    	<root-package-name>fr.ign.cogit.cartagen.core.defaultschema</root-package-name>
+    	<root-class>fr.ign.cogit.cartagen.core.defaultschema.GeneObjDefault</root-class>
+    </gene-obj-implementation>
+    <matching>
+        <postgisLayer>ign_minor_road</postgisLayer>
+        <creationMethod>createRoadLine</creationMethod>
+        <scaleRef>15000</scaleRef>
+        <theme>road</theme>
+        <attributes>
+            <attribute>
+                <postgisAttr>importance</postgisAttr>
+                <javaAttr>importance</javaAttr>
+            </attribute>
+        </attributes>
+    </matching>
+    <matching>
+        <postgisLayer>ign_major_road</postgisLayer>
+        <creationMethod>createRoadLine</creationMethod>
+        <scaleRef>15000</scaleRef>
+        <theme>road</theme>
+        <attributes>
+            <attribute>
+                <postgisAttr>importance</postgisAttr>
+                <javaAttr>importance</javaAttr>
+            </attribute>
+        </attributes>
+    </matching>
+    <matching>
+        <postgisLayer>ign_secondary_road</postgisLayer>
+        <creationMethod>createRoadLine</creationMethod>
+        <scaleRef>15000</scaleRef>
+        <theme>road</theme>
+        <attributes>
+            <attribute>
+                <postgisAttr>importance</postgisAttr>
+                <javaAttr>importance</javaAttr>
+            </attribute>
+        </attributes>
+    </matching>
+    <matching>
+        <postgisLayer>ign_street</postgisLayer>
+        <creationMethod>createRoadLine</creationMethod>
+        <scaleRef>15000</scaleRef>
+        <theme>road</theme>
+        <attributes>
+            <attribute>
+                <postgisAttr>importance</postgisAttr>
+                <javaAttr>importance</javaAttr>
+            </attribute>
+        </attributes>
+    </matching>    
+	<matching>
+		<postgisLayer>ign_footpath</postgisLayer>
+		<creationMethod>createPath</creationMethod>
+		<scaleRef>15000</scaleRef>
+		<theme>road</theme>
+		<attributes>
+			<attribute>
+				<postgisAttr>importance</postgisAttr>
+				<javaAttr>importance</javaAttr>
+			</attribute>
+		</attributes>
+	</matching>
+    
+    <!-- **************************************DEFAUT*************************** -->
+	<!--Scale : 25k -->
+	<!--THEME : Urban -->
+	<matching>
+        <postgisLayer>ign_building</postgisLayer>
+        <creationMethod>createBuilding</creationMethod>
+        <scaleRef>15000</scaleRef>
+        <theme>urban</theme>
+        <attributes>
+            <attribute>
+                <postgisAttr>nature</postgisAttr>
+                <javaAttr>nature</javaAttr>
+            </attribute>
+        </attributes>
+    </matching>
+    <matching>
+		<postgisLayer>ign_public_building</postgisLayer>
+		<creationMethod>createBuilding</creationMethod>
+		<scaleRef>15000</scaleRef>
+		<theme>urban</theme>
+		<attributes>
+            <attribute>
+                <postgisAttr>nature</postgisAttr>
+                <javaAttr>nature</javaAttr>
+            </attribute>
+		</attributes>
+	</matching>
+	<matching>
+		<postgisLayer>ign_industrial_building</postgisLayer>
+		<creationMethod>createBuilding</creationMethod>
+		<scaleRef>15000</scaleRef>
+		<theme>urban</theme>
+		<attributes>
+			<attribute>
+                <postgisAttr>nature</postgisAttr>
+                <javaAttr>nature</javaAttr>
+            </attribute>
+		</attributes>
+	</matching>
+
+
+	<!-- ***************************************************************** -->
+	<!--THEME : Labels -->
+	<matching>
+		<postgisLayer>ign_town_label</postgisLayer>
+		<creationMethod>createLabelPoint</creationMethod>
+		<scaleRef>15000</scaleRef>
+		<theme>labels</theme>
+		<attributes>
+			<attribute>
+				<postgisAttr>name</postgisAttr>
+				<javaAttr>name</javaAttr>
+			</attribute>
+			<attribute>
+				<postgisAttr>importance</postgisAttr>
+				<javaAttr>importance</javaAttr>
+			</attribute>
+			<attribute>
+				<postgisAttr>nature</postgisAttr>
+				<javaAttr>nature</javaAttr>
+			</attribute>
+		</attributes>
+	</matching>
+	<matching>
+		<postgisLayer>ign_hydrography_label</postgisLayer>
+		<creationMethod>createLabelPoint</creationMethod>
+		<scaleRef>15000</scaleRef>
+		<theme>labels</theme>
+		<attributes>
+			<attribute>
+				<postgisAttr>name</postgisAttr>
+				<javaAttr>name</javaAttr>
+			</attribute>
+			<attribute>
+				<postgisAttr>importance</postgisAttr>
+				<javaAttr>importance</javaAttr>
+			</attribute>
+			<attribute>
+				<postgisAttr>nature</postgisAttr>
+				<javaAttr>nature</javaAttr>
+			</attribute>
+		</attributes>
+	</matching>
+	<matching>
+		<postgisLayer>ign_orography_label</postgisLayer>
+		<creationMethod>createLabelPoint</creationMethod>
+		<scaleRef>15000</scaleRef>
+		<theme>labels</theme>
+		<attributes>
+			<attribute>
+				<postgisAttr>name</postgisAttr>
+				<javaAttr>name</javaAttr>
+			</attribute>
+			<attribute>
+				<postgisAttr>importance</postgisAttr>
+				<javaAttr>importance</javaAttr>
+			</attribute>
+			<attribute>
+				<postgisAttr>nature</postgisAttr>
+				<javaAttr>nature</javaAttr>
+			</attribute>
+		</attributes>
+	</matching>
+
+	<!-- ***************************************************************** -->
+	<!-- THEME : Hydro -->
+	<matching>
+		<postgisLayer>ign_river</postgisLayer>
+		<creationMethod>createWaterLine</creationMethod>
+		<scaleRef>15000</scaleRef>
+		<theme>hydro</theme>
+		<attributes>
+			<attribute>
+				<postgisAttr>name</postgisAttr>
+				<javaAttr>name</javaAttr>
+			</attribute>
+		</attributes>
+	</matching>
+	<matching>
+		<postgisLayer>ign_surfacic_water</postgisLayer>
+		<creationMethod>createWaterArea</creationMethod>
+		<scaleRef>15000</scaleRef>
+		<theme>hydro</theme>
+		<attributes>
+		</attributes>
+	</matching>
+	<!-- ***************************************************************** -->
+	<!--THEME : Land Use -->
+	<matching>
+		<postgisLayer>ign_forest</postgisLayer>
+		<creationMethod>createSimpleLandUseArea</creationMethod>
+		<scaleRef>15000</scaleRef>
+		<theme>land</theme>
+		<attributes>
+		</attributes>
+	</matching>
+
+	<!-- ***************************************************************** -->
+	<!--THEME : Transport -->
+	<matching>
+		<postgisLayer>ign_ski_lift</postgisLayer>
+		<creationMethod>createCable</creationMethod>
+		<scaleRef>15000</scaleRef>
+		<theme>transport</theme>
+		<attributes>
+			<attribute>
+				<postgisAttr>nature</postgisAttr>
+				<javaAttr>nature</javaAttr>
+			</attribute>
+		</attributes>
+	</matching>
+    <!-- ***************************************************************** -->
+	<!--THEME : Admin -->
+	<matching>
+		<postgisLayer>ign_administrative_limit</postgisLayer>
+		<creationMethod>createAdminLimit</creationMethod>
+		<scaleRef>15000</scaleRef>
+		<theme>admin</theme>
+		<attributes>
+		</attributes>
+	</matching>
+	
+
+	<!-- ***************************************************************** -->
+	<!-- THEME : RELIEF -->
+	<matching>
+		<postgisLayer>ign_embankment</postgisLayer>
+		<creationMethod>createEmbankmentLine</creationMethod>
+		<scaleRef>15000</scaleRef>
+		<theme>relief</theme>
+		<attributes>
+		</attributes>
+	</matching>
+	<matching>
+		<postgisLayer>ign_contour_line</postgisLayer>
+		<creationMethod>createContourLine</creationMethod>
+		<scaleRef>15000</scaleRef>
+		<theme>relief</theme>
+		<attributes>
+			<attribute>
+				<postgisAttr>elevation</postgisAttr>
+				<javaAttr>altitude</javaAttr>
+			</attribute>
+		</attributes>
+	</matching>
+	
+	    <!-- ***************************************************************** -->
+	<!--THEME : Misc -->
+	<matching>
+		<postgisLayer>ign_tower</postgisLayer>
+		<creationMethod>createBuildPoint</creationMethod>
+		<scaleRef>15000</scaleRef>
+		<theme>misc</theme>
+		<attributes>
+			<attribute>
+				<postgisAttr>tower</postgisAttr>
+				<javaAttr>tower</javaAttr>
+			</attribute>
+		</attributes>
+	</matching>
+</mapping>

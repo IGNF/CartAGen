@@ -46,6 +46,12 @@ public class AdminLimit extends GeneObjLinDefault implements IAdminLimit {
     this.setEliminated(false);
   }
 
+  public AdminLimit() {
+    super();
+    this.geoxObj = new LimiteAdministrativeImpl();
+    this.setEliminated(false);
+  }
+
   @Override
   public IFeature getGeoxObj() {
     return this.geoxObj;

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<StyledLayerDescriptor xmlns:ogc="http://www.opengis.net/ogc">
+    
+    <NamedLayer>
+        <Name>waterLines</Name>
+        <UserStyle>
+            <Name>Style créé pour le layer waterLines</Name>
+            <IsDefault>false</IsDefault>
+            <FeatureTypeStyle>
+                <Rule>
+                    <LineSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+                        <Stroke>
+                            <CssParameter name="stroke">#000000</CssParameter>
+                            <CssParameter name="stroke-opacity">1.0</CssParameter>
+                            <CssParameter name="stroke-width">1.0</CssParameter>
+                        </Stroke>
+                        <GeometryPropertyName>geom</GeometryPropertyName>
+                        <PerpendicularOffset>0.0</PerpendicularOffset>
+                    </LineSymbolizer>
+                    </Rule>
+            </FeatureTypeStyle>
+        </UserStyle>
+    </NamedLayer>
+    
+     <NamedLayer>
+        <Name>roads</Name>
+        <UserStyle>
+            <Name>Style créé pour le layer waterLines</Name>
+            <IsDefault>false</IsDefault>
+            <FeatureTypeStyle>
+                <Rule>
+                    <LineSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+                        <Stroke>
+                            <CssParameter name="stroke">#000000</CssParameter>
+                            <CssParameter name="stroke-opacity">1.0</CssParameter>
+                            <CssParameter name="stroke-width">1.0</CssParameter>
+                        </Stroke>
+                        <GeometryPropertyName>geom</GeometryPropertyName>
+                        <PerpendicularOffset>0.0</PerpendicularOffset>
+                    </LineSymbolizer>
+                    </Rule>
+            </FeatureTypeStyle>
+        </UserStyle>
+    </NamedLayer>
+    
+        
+     <NamedLayer>
+        <Name>contourLines</Name>
+        <UserStyle>
+            <Name>Style créé pour le layer waterLines</Name>
+            <IsDefault>false</IsDefault>
+            <FeatureTypeStyle>
+                <Rule>
+                    <LineSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+                        <Stroke>
+                            <CssParameter name="stroke">#000000</CssParameter>
+                            <CssParameter name="stroke-opacity">1.0</CssParameter>
+                            <CssParameter name="stroke-width">1.0</CssParameter>
+                        </Stroke>
+                        <GeometryPropertyName>geom</GeometryPropertyName>
+                        <PerpendicularOffset>0.0</PerpendicularOffset>
+                    </LineSymbolizer>
+                    </Rule>
+            </FeatureTypeStyle>
+        </UserStyle>
+    </NamedLayer>
+    
+        
+     <NamedLayer>
+        <Name>reliefLines</Name>
+        <UserStyle>
+            <Name>Style créé pour le layer waterLines</Name>
+            <IsDefault>false</IsDefault>
+            <FeatureTypeStyle>
+                <Rule>
+                    <LineSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+                        <Stroke>
+                            <CssParameter name="stroke">#000000</CssParameter>
+                            <CssParameter name="stroke-opacity">1.0</CssParameter>
+                            <CssParameter name="stroke-width">1.0</CssParameter>
+                        </Stroke>
+                        <GeometryPropertyName>geom</GeometryPropertyName>
+                        <PerpendicularOffset>0.0</PerpendicularOffset>
+                    </LineSymbolizer>
+                    </Rule>
+            </FeatureTypeStyle>
+        </UserStyle>
+    </NamedLayer>
+    
+     <NamedLayer>
+        <Name>mask</Name>
+        <UserStyle>
+            <Name>Style créé pour le layer waterAreas</Name>
+            <IsDefault>false</IsDefault>
+            <FeatureTypeStyle>
+                <Rule>
+                    <PolygonSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+                        <Stroke>
+                            <CssParameter name="stroke">#000000</CssParameter>
+                            <CssParameter name="stroke-opacity">1.0</CssParameter>
+                            <CssParameter name="stroke-width">1.0</CssParameter>
+                        </Stroke>
+                        <GeometryPropertyName>geom</GeometryPropertyName>
+                        <Fill>
+                            <CssParameter name="fill">#777777</CssParameter>
+                            <CssParameter name="fill-opacity">0.0</CssParameter>
+                        </Fill>
+                    </PolygonSymbolizer>
+                </Rule>
+            </FeatureTypeStyle>
+           
+        </UserStyle>
+    </NamedLayer>
+    
+    <NamedLayer>
+        <Name>waterAreas</Name>
+        <UserStyle>
+            <Name>Style créé pour le layer waterAreas</Name>
+            <IsDefault>false</IsDefault>
+            <FeatureTypeStyle>
+                <Rule>
+                    <PolygonSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+                        <Stroke>
+                            <CssParameter name="stroke">#000000</CssParameter>
+                            <CssParameter name="stroke-opacity">1.0</CssParameter>
+                            <CssParameter name="stroke-width">1.0</CssParameter>
+                        </Stroke>
+                        <GeometryPropertyName>geom</GeometryPropertyName>
+                        <Fill>
+                            <CssParameter name="fill">#777777</CssParameter>
+                            <CssParameter name="fill-opacity">0.0</CssParameter>
+                        </Fill>
+                    </PolygonSymbolizer>
+                </Rule>
+            </FeatureTypeStyle>
+           
+        </UserStyle>
+    </NamedLayer>
+    
+    
+        <NamedLayer>
+        <Name>networkFaces</Name>
+        <UserStyle>
+            <Name>Style créé pour le layer waterAreas</Name>
+            <IsDefault>false</IsDefault>
+            <FeatureTypeStyle>
+                <Rule>
+                    <PolygonSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+                        <Stroke>
+                            <CssParameter name="stroke">#000000</CssParameter>
+                            <CssParameter name="stroke-opacity">1.0</CssParameter>
+                            <CssParameter name="stroke-width">1.0</CssParameter>
+                        </Stroke>
+                        <GeometryPropertyName>geom</GeometryPropertyName>
+                        <Fill>
+                            <CssParameter name="fill">#777777</CssParameter>
+                            <CssParameter name="fill-opacity">0.0</CssParameter>
+                        </Fill>
+                    </PolygonSymbolizer>
+                </Rule>
+            </FeatureTypeStyle>
+           
+        </UserStyle>
+    </NamedLayer>
+    
+        <NamedLayer>
+        <Name>buildings</Name>
+        <UserStyle>
+            <Name>Style créé pour le layer waterAreas</Name>
+            <IsDefault>false</IsDefault>
+            <FeatureTypeStyle>
+                <Rule>
+                    <PolygonSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+                        <Stroke>
+                            <CssParameter name="stroke">#000000</CssParameter>
+                            <CssParameter name="stroke-opacity">1.0</CssParameter>
+                            <CssParameter name="stroke-width">1.0</CssParameter>
+                        </Stroke>
+                        <GeometryPropertyName>geom</GeometryPropertyName>
+                        <Fill>
+                            <CssParameter name="fill">#777777</CssParameter>
+                            <CssParameter name="fill-opacity">0.0</CssParameter>
+                        </Fill>
+                    </PolygonSymbolizer>
+                </Rule>
+            </FeatureTypeStyle>
+           
+        </UserStyle>
+    </NamedLayer>
+    
+    
+    <NamedLayer>
+    	<Name>roadNodes</Name>
+    	<UserStyle>
+    		<Name>POI</Name>
+    		<IsDefault>false</IsDefault>
+			<FeatureTypeStyle>
+    			<Rule>
+    				<Name>Aire de détente</Name>
+    				
+    				<PointSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+   						<Graphic>
+   						<Mark>
+       						<WellKnownName>cross</WellKnownName>
+       						<Fill>
+         							<CssParameter name="fill">#000000</CssParameter>
+       						</Fill>
+     					</Mark>
+     					<Size>3</Size>
+   						</Graphic>
+ 					</PointSymbolizer>    						
+    			</Rule>
+			</FeatureTypeStyle>
+		</UserStyle>
+	</NamedLayer>
+</StyledLayerDescriptor>

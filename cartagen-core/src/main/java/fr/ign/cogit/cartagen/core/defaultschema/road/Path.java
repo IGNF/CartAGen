@@ -64,6 +64,17 @@ public class Path extends GeneObjLinDefault implements IPathLine {
     this.finalNode = null;
   }
 
+  /**
+   * Constructor
+   */
+  public Path() {
+    super();
+    this.setEliminated(false);
+    this.deadEnd = false;
+    this.initialNode = null;
+    this.finalNode = null;
+  }
+
   @Override
   @Transient
   public IFeature getGeoxObj() {

@@ -1,4 +1,4 @@
-package fr.ign.cogit.cartagen.core.dataset;
+package fr.ign.cogit.cartagen.core.dataset.shapefile;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -18,6 +18,9 @@ import org.geotools.data.shapefile.shp.ShapefileReader.Record;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
+import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
+import fr.ign.cogit.cartagen.core.dataset.GeographicClass;
+import fr.ign.cogit.cartagen.core.dataset.SourceDLM;
 import fr.ign.cogit.cartagen.core.defaultschema.road.RoadLineWithAttributes;
 import fr.ign.cogit.cartagen.core.genericschema.energy.IElectricityLine;
 import fr.ign.cogit.cartagen.core.genericschema.hydro.IWaterArea;

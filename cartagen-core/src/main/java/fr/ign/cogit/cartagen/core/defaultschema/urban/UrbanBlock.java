@@ -31,6 +31,8 @@ import org.hibernate.annotations.Type;
 
 import fr.ign.cogit.cartagen.core.GeneralisationSpecifications;
 import fr.ign.cogit.cartagen.core.Legend;
+import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
+import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.defaultschema.GeneObjSurfDefault;
 import fr.ign.cogit.cartagen.core.defaultschema.hydro.WaterLine;
 import fr.ign.cogit.cartagen.core.defaultschema.road.BranchingCrossRoad;
@@ -42,6 +44,7 @@ import fr.ign.cogit.cartagen.core.genericschema.road.IBranchingCrossroad;
 import fr.ign.cogit.cartagen.core.genericschema.road.IDualCarriageWay;
 import fr.ign.cogit.cartagen.core.genericschema.road.IRoadLine;
 import fr.ign.cogit.cartagen.core.genericschema.road.IRoundAbout;
+import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IEmptySpace;
 import fr.ign.cogit.cartagen.core.genericschema.urban.ITown;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanAlignment;
@@ -64,6 +67,7 @@ import fr.ign.cogit.geoxygene.schemageo.api.support.elementsIndependants.Element
 import fr.ign.cogit.geoxygene.schemageo.api.support.reseau.ArcReseau;
 import fr.ign.cogit.geoxygene.schemageo.impl.bati.IlotImpl;
 import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.CommonAlgorithmsFromCartAGen;
+import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.JTSAlgorithms;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -776,6 +780,82 @@ public class UrbanBlock extends GeneObjSurfDefault implements IUrbanBlock {
   public HashSet<DeadEndGroup> getInsideDeadEnds() {
     // TODO Auto-generated method stub
     return null;
+  }
+
+  @Override
+  public void initComponents() {
+    CartAGenDoc doc = CartAGenDoc.getInstance();
+    CartAGenDataSet dataset = doc.getCurrentDataset();
+
+    // Geometry
+    IPolygon poly = this.getGeom();
+    this.geoxObj = new IlotImpl(poly);
+    // Surrounding Network
+    Collection<INetworkSection> surrounding = new HashSet<>();
+    surrounding.addAll(CartAGenDoc.getInstance().getCurrentDataset().getRoads()
+        .select(this.getGeom()));
+    surrounding.addAll(CartAGenDoc.getInstance().getCurrentDataset()
+        .getWaterLines().select(this.getGeom()));
+    surrounding.addAll(CartAGenDoc.getInstance().getCurrentDataset()
+        .getRailwayLines().select(this.getGeom()));
+    for (INetworkSection section : surrounding) {
+      // c'est un troncon
+      if (this.getGeom().contains(section.getGeom())) {
+        ((IUrbanBlock) this).getSurroundingNetwork().add(section);
+        ((Ilot) ((IUrbanBlock) this).getGeoxObj()).getArcsReseaux()
+            .add((ArcReseau) section.getGeoxObj());
+      }
+      if (JTSAlgorithms.coversPredicate(this.getGeom(), section.getGeom())) {
+        ((IUrbanBlock) this).getSurroundingNetwork().add(section);
+        ((Ilot) ((IUrbanBlock) this).getGeoxObj()).getArcsReseaux()
+            .add((ArcReseau) section.getGeoxObj());
+      }
+    }
+
+    // Urban Elements
+    Collection<IBuilding> components = CartAGenDoc.getInstance()
+        .getCurrentDataset().getBuildings().select(this.getGeom());
+    for (IBuilding urbanElement : components) {
+      // batiment totallement inclu dans ilot
+      if (this.getGeom().contains(urbanElement.getGeom())) {
+        ((IUrbanBlock) this).addUrbanElement(urbanElement);
+        continue;
+      }
+
+      // le batiment n'est pas totalement dans l'ilot. calcul de la part du
+      // batiment dans l'ilot
+      double taux = urbanElement.getGeom().intersection(this.getGeom()).area()
+          / (urbanElement.getGeom().area());
+      System.out.println(taux);
+      // si ce taux est suffisament grand, le batiment est considere comme
+      // appartenant a l'ilot
+      if (taux > 0.6) {
+        (this).addUrbanElement(urbanElement);
+        continue;
+      }
+    }
+    this.emptySpaces = new HashSet<IEmptySpace>();
+
+    // town
+    if (dataset.getTowns().size() == 1)
+      this.setTown(dataset.getTowns().get(0));
+    else {
+      for (ITown town : dataset.getTowns()) {
+        if (town.getGeom().intersects(this.getGeom())) {
+          this.setTown(town);
+          break;
+        }
+      }
+    }
+
+    // Other Properties
+    this.isColored = false;
+    this.aggregLevel = 0;
+    this.insideBlocks = new HashSet<IUrbanBlock>();
+    this.axes = new HashSet<CityAxis>();
+    this.neighbours = new HashSet<IUrbanBlock>();
+    this.initialGeoxBlocks = new HashSet<IUrbanBlock>();
+    this.initialGeoxBlocks.add(this);
   }
 
 }

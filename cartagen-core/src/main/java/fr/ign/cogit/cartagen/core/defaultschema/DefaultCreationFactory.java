@@ -45,6 +45,7 @@ import fr.ign.cogit.cartagen.core.defaultschema.railway.RailwayRoute;
 import fr.ign.cogit.cartagen.core.defaultschema.railway.TriageArea;
 import fr.ign.cogit.cartagen.core.defaultschema.relief.ContourLine;
 import fr.ign.cogit.cartagen.core.defaultschema.relief.DEMPixel;
+import fr.ign.cogit.cartagen.core.defaultschema.relief.EmbankmentLine;
 import fr.ign.cogit.cartagen.core.defaultschema.relief.ReliefElementArea;
 import fr.ign.cogit.cartagen.core.defaultschema.relief.ReliefElementLine;
 import fr.ign.cogit.cartagen.core.defaultschema.relief.ReliefElementPoint;
@@ -108,6 +109,7 @@ import fr.ign.cogit.cartagen.core.genericschema.railway.IRailwayRoute;
 import fr.ign.cogit.cartagen.core.genericschema.railway.ITriageArea;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IContourLine;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IDEMPixel;
+import fr.ign.cogit.cartagen.core.genericschema.relief.IEmbankmentLine;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IReliefElementArea;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IReliefElementLine;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IReliefElementPoint;
@@ -249,6 +251,11 @@ public class DefaultCreationFactory extends AbstractCreationFactory {
   }
 
   // BuildPoint
+
+  @Override
+  public IBuildPoint createBuildPoint() {
+    return new BuildPoint();
+  }
 
   @Override
   public IBuildPoint createBuildPoint(IPoint point) {
@@ -550,6 +557,11 @@ public class DefaultCreationFactory extends AbstractCreationFactory {
   // Path
 
   @Override
+  public IPathLine createPath() {
+    return new Path();
+  }
+
+  @Override
   public IPathLine createPath(ILineString line, int importance, int symbolId) {
     return new Path(line, importance, symbolId);
   }
@@ -802,6 +814,11 @@ public class DefaultCreationFactory extends AbstractCreationFactory {
   // ContourLine
 
   @Override
+  public IContourLine createContourLine() {
+    return new ContourLine();
+  }
+
+  @Override
   public IContourLine createContourLine(ILineString line, double value) {
     return new ContourLine(line, value);
   }
@@ -809,6 +826,13 @@ public class DefaultCreationFactory extends AbstractCreationFactory {
   @Override
   public IContourLine createContourLine(CourbeDeNiveau geoxObj) {
     return new ContourLine(geoxObj);
+  }
+
+  // EmbankmentLine
+
+  @Override
+  public IEmbankmentLine createEmbankmentLine() {
+    return new EmbankmentLine();
   }
 
   // SpotHeight
@@ -891,6 +915,11 @@ public class DefaultCreationFactory extends AbstractCreationFactory {
   // SimpleLandUseArea
 
   @Override
+  public ISimpleLandUseArea createSimpleLandUseArea() {
+    return new SimpleLandUseArea();
+  }
+
+  @Override
   public ISimpleLandUseArea createSimpleLandUseArea(IPolygon poly, int type) {
     return new SimpleLandUseArea(poly, type);
   }
@@ -968,6 +997,11 @@ public class DefaultCreationFactory extends AbstractCreationFactory {
   }
 
   // AdminLimit
+
+  @Override
+  public IAdminLimit createAdminLimit() {
+    return new AdminLimit();
+  }
 
   @Override
   public IAdminLimit createAdminLimit(ILineString line) {

@@ -52,6 +52,7 @@ import fr.ign.cogit.cartagen.core.genericschema.railway.IRailwayNode;
 import fr.ign.cogit.cartagen.core.genericschema.railway.ITriageArea;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IContourLine;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IDEMPixel;
+import fr.ign.cogit.cartagen.core.genericschema.relief.IEmbankmentLine;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IReliefElementLine;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IReliefElementPoint;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IReliefField;
@@ -187,6 +188,7 @@ public class CartAGenDataSet extends DataSet {
   public static final String SPOT_HEIGHTS_POP = "heightSpots";
   public static final String DEM_PIXELS_POP = "DEMpixels";
   public static final String RELIEF_PTS_POP = "reliefPoints";
+  public static final String EMBANKMENT_POP = "embankmentLines";
 
   public static final String LANDUSE_AREAS_POP = "landUseAreas";
   public static final String ADMIN_FIELDS_POP = "adminFields";
@@ -331,6 +333,8 @@ public class CartAGenDataSet extends DataSet {
       return CartAGenDataSet.SQUARE_AREA_POP;
     } else if (obj instanceof ICemetery) {
       return CartAGenDataSet.CEMETERY_POP;
+    } else if (obj instanceof IEmbankmentLine) {
+      return CartAGenDataSet.EMBANKMENT_POP;
     }
     return null;
   }
@@ -443,6 +447,8 @@ public class CartAGenDataSet extends DataSet {
       return CartAGenDataSet.SQUARE_AREA_POP;
     } else if (featureType.equals(ICemetery.FEAT_TYPE_NAME)) {
       return CartAGenDataSet.CEMETERY_POP;
+    } else if (featureType.equals(IEmbankmentLine.FEAT_TYPE_NAME)) {
+      return CartAGenDataSet.EMBANKMENT_POP;
     }
     return null;
   }
@@ -555,6 +561,8 @@ public class CartAGenDataSet extends DataSet {
       return CartAGenDataSet.SQUARE_AREA_POP;
     } else if (ICemetery.class.isAssignableFrom(classObj)) {
       return CartAGenDataSet.CEMETERY_POP;
+    } else if (IEmbankmentLine.class.isAssignableFrom(classObj)) {
+      return CartAGenDataSet.EMBANKMENT_POP;
     }
     return null;
   }
@@ -667,6 +675,8 @@ public class CartAGenDataSet extends DataSet {
       return ISquareArea.FEAT_TYPE_NAME;
     } else if (popName.equals(CartAGenDataSet.CEMETERY_POP)) {
       return ICemetery.FEAT_TYPE_NAME;
+    } else if (popName.equals(CartAGenDataSet.EMBANKMENT_POP)) {
+      return IEmbankmentLine.FEAT_TYPE_NAME;
     }
     return null;
   }
@@ -1142,6 +1152,16 @@ public class CartAGenDataSet extends DataSet {
   public IPopulation<ILabelPoint> getLabelPoints() {
     return (IPopulation<ILabelPoint>) this.getCartagenPop(
         CartAGenDataSet.LABEL_PT_POP, ILabelPoint.FEAT_TYPE_NAME);
+  }
+
+  /**
+   * Gets the embankment lines of the dataset
+   * @return
+   */
+  @SuppressWarnings("unchecked")
+  public IPopulation<IEmbankmentLine> getEmbankmentLines() {
+    return (IPopulation<IEmbankmentLine>) this.getCartagenPop(
+        CartAGenDataSet.EMBANKMENT_POP, IEmbankmentLine.FEAT_TYPE_NAME);
   }
 
   /**

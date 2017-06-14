@@ -1,0 +1,26 @@
+<Config-CartAGen-GUI-Components>
+	<Component>
+		<name>Utilities</name>
+		<path>fr.ign.cogit.geoxygene.appli.plugin.cartagen.util.UtilitiesGUIComponent</path>
+	</Component>
+		<Component>
+		<name>Least Squares</name>
+		<path>fr.ign.cogit.cartagen.appli.plugins.process.leastsquares.LeastSquaresComponent</path>
+	</Component>
+	<Component>
+		<name>CollaGen</name>
+		<path>fr.ign.cogit.cartagen.appli.plugins.process.CollaGenComponent</path>
+	</Component>
+	<Component>
+		<name>Evaluation</name>
+		<path>fr.ign.cogit.cartagen.appli.plugins.evaluation.EvaluationComponent</path>
+	</Component>
+	<Component>
+		<name>Spatial Analysis</name>
+		<path>fr.ign.cogit.cartagen.appli.plugins.spatialanalysis.SpatialAnalysisComponent</path>
+	</Component>
+	<Component>
+		<name>Continuous</name>
+		<path>fr.ign.cogit.geoxygene.appli.plugin.cartagen.util.ContinuousGUIComponent</path>
+	</Component>
+</Config-CartAGen-GUI-Components>

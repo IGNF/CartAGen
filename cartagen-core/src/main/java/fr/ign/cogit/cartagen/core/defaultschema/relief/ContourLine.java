@@ -45,6 +45,8 @@ public class ContourLine extends GeneObjLinDefault implements IContourLine {
 
   public ContourLine() {
     super();
+    this.setEliminated(false);
+    this.isMaster = false;
   }
 
   /**

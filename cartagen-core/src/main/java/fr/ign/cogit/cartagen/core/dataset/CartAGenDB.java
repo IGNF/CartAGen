@@ -32,6 +32,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+import fr.ign.cogit.cartagen.core.dataset.postgis.PostgisDB;
+import fr.ign.cogit.cartagen.core.dataset.shapefile.ShapeFileDB;
 import fr.ign.cogit.cartagen.core.defaultschema.GeneObjDefault;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.geoxygene.api.feature.IPopulation;

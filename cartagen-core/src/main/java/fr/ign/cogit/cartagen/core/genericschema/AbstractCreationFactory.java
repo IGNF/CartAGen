@@ -55,6 +55,7 @@ import fr.ign.cogit.cartagen.core.genericschema.railway.IRailwayRoute;
 import fr.ign.cogit.cartagen.core.genericschema.railway.ITriageArea;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IContourLine;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IDEMPixel;
+import fr.ign.cogit.cartagen.core.genericschema.relief.IEmbankmentLine;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IReliefElementArea;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IReliefElementLine;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IReliefElementPoint;
@@ -214,6 +215,13 @@ public abstract class AbstractCreationFactory {
   }
 
   // BuildPoint
+
+  @SuppressWarnings("unused")
+  public IBuildPoint createBuildPoint() {
+    AbstractCreationFactory.logger
+        .error("Non implemented creation factory method for IBuildPoint");
+    return null;
+  }
 
   @SuppressWarnings("unused")
   public IBuildPoint createBuildPoint(IPoint point) {
@@ -641,6 +649,13 @@ public abstract class AbstractCreationFactory {
     return null;
   }
 
+  @SuppressWarnings("unused")
+  public IPathLine createPath() {
+    AbstractCreationFactory.logger
+        .error("Non implemented creation factory method for IPath");
+    return null;
+  }
+
   // Bridge Point
   @SuppressWarnings("unused")
   public IBridgePoint createBridgePoint(IPoint point) {
@@ -906,6 +921,13 @@ public abstract class AbstractCreationFactory {
   // ContourLine
 
   @SuppressWarnings("unused")
+  public IContourLine createContourLine() {
+    AbstractCreationFactory.logger
+        .error("Non implemented creation factory method for IContourLine");
+    return null;
+  }
+
+  @SuppressWarnings("unused")
   public IContourLine createContourLine(ILineString line, double value) {
     AbstractCreationFactory.logger
         .error("Non implemented creation factory method for IContourLine");
@@ -914,6 +936,15 @@ public abstract class AbstractCreationFactory {
 
   @SuppressWarnings("unused")
   public IContourLine createContourLine(CourbeDeNiveau geoxObj) {
+    AbstractCreationFactory.logger
+        .error("Non implemented creation factory method for IContourLine");
+    return null;
+  }
+
+  // EmbankmentLine
+
+  @SuppressWarnings("unused")
+  public IEmbankmentLine createEmbankmentLine() {
     AbstractCreationFactory.logger
         .error("Non implemented creation factory method for IContourLine");
     return null;
@@ -1021,6 +1052,13 @@ public abstract class AbstractCreationFactory {
   // SimpleLandUseArea
 
   @SuppressWarnings("unused")
+  public ISimpleLandUseArea createSimpleLandUseArea() {
+    AbstractCreationFactory.logger.error(
+        "Non implemented creation factory method for ISimpleLandUseArea");
+    return null;
+  }
+
+  @SuppressWarnings("unused")
   public ISimpleLandUseArea createSimpleLandUseArea(IPolygon poly, int type) {
     AbstractCreationFactory.logger.error(
         "Non implemented creation factory method for ISimpleLandUseArea");
@@ -1122,6 +1160,13 @@ public abstract class AbstractCreationFactory {
   }
 
   // AdminLimit
+
+  @SuppressWarnings("unused")
+  public IAdminLimit createAdminLimit() {
+    AbstractCreationFactory.logger
+        .error("Non implemented creation factory method for IAdminLimit");
+    return null;
+  }
 
   @SuppressWarnings("unused")
   public IAdminLimit createAdminLimit(ILineString line) {

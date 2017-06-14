@@ -35,9 +35,11 @@ import org.hibernate.annotations.Type;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
+import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.dataset.SourceDLM;
 import fr.ign.cogit.cartagen.core.defaultschema.GeneObjSurfDefault;
+import fr.ign.cogit.cartagen.core.genericschema.road.IDualCarriageWay;
 import fr.ign.cogit.cartagen.core.genericschema.urban.ITown;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanBlock;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanElement;
@@ -394,6 +396,24 @@ public class Town extends GeneObjSurfDefault implements ITown {
   public void restoreGeoxObjects() {
     if (this.geoxObj == null)
       this.geoxObj = new VilleImpl(this.getGeom());
+  }
+
+  @Override
+  public void initComponents() {
+    this.geoxObj = new VilleImpl(this.getGeom());
+    this.setInitialGeom(this.getGeom());
+    this.townBlocks = new FT_FeatureCollection<IUrbanBlock>();
+    this.centre = this.geoxObj.getGeom().centroid();
+    this.outline = ((IPolygon) this.geoxObj.getGeom()).exteriorLineString();
+
+    CartAGenDoc doc = CartAGenDoc.getInstance();
+    CartAGenDataSet dataset = doc.getCurrentDataset();
+
+    // Create Street Network
+    this.streetNetwork = new StreetNetwork(this.getGeom(), dataset.getRoads(),
+        dataset.getRoadStrokes(), dataset.getRoundabouts(),
+        dataset.getBranchings(), new FT_FeatureCollection<IDualCarriageWay>(),
+        dataset.getBlocks());
   }
 
 }

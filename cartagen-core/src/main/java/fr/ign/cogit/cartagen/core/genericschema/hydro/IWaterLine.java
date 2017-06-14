@@ -18,4 +18,6 @@ import fr.ign.cogit.cartagen.core.genericschema.network.INetworkSection;
 
 public interface IWaterLine extends INetworkSection {
   public static final String FEAT_TYPE_NAME = "WaterLine"; //$NON-NLS-1$
+
+  public String getName();
 }

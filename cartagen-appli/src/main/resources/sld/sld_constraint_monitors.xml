@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<StyledLayerDescriptor xmlns:ogc="http://www.opengis.net/ogc">
+        
+    <NamedLayer>
+    	<Name>constraintMonitors</Name>
+    	<UserStyle>
+    		<Name>Points</Name>
+    		<IsDefault>false</IsDefault>
+			<FeatureTypeStyle>
+    			<Rule>
+    				<Name>UNACCEPTABLE</Name>
+    				<Filter>
+                        <PropertyIsEqualTo matchCase="true">
+                            <PropertyName>satisfactionString</PropertyName>
+                            <Literal>UNACCEPTABLE</Literal>
+                        </PropertyIsEqualTo>
+                    </Filter>
+    				<PointSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+   						<Graphic>
+   						<Mark>
+       						<WellKnownName>cross</WellKnownName>
+       						<Fill>
+         							<CssParameter name="fill">#990000</CssParameter>
+       						</Fill>
+     					</Mark>
+     					<Size>6</Size>
+   						</Graphic>
+ 					</PointSymbolizer>    						
+    			</Rule>
+    			<Rule>
+    				<Name>NOT_SATISFIED</Name>
+    				<Filter>
+                        <PropertyIsEqualTo matchCase="true">
+                            <PropertyName>satisfactionString</PropertyName>
+                            <Literal>NOT_SATISFIED</Literal>
+                        </PropertyIsEqualTo>
+                    </Filter>
+    				<PointSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+   						<Graphic>
+   						<Mark>
+       						<WellKnownName>cross</WellKnownName>
+       						<Fill>
+         							<CssParameter name="fill">#d7301f</CssParameter>
+       						</Fill>
+     					</Mark>
+     					<Size>6</Size>
+   						</Graphic>
+ 					</PointSymbolizer>    						
+    			</Rule>
+    			<Rule>
+    				<Name>BARELY_SATISFIED</Name>
+    				<Filter>
+                        <PropertyIsEqualTo matchCase="true">
+                            <PropertyName>satisfactionString</PropertyName>
+                            <Literal>BARELY_SATISFIED</Literal>
+                        </PropertyIsEqualTo>
+                    </Filter>
+    				<PointSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+   						<Graphic>
+   						<Mark>
+       						<WellKnownName>cross</WellKnownName>
+       						<Fill>
+         							<CssParameter name="fill">#ef6548</CssParameter>
+       						</Fill>
+     					</Mark>
+     					<Size>6</Size>
+   						</Graphic>
+ 					</PointSymbolizer>    						
+    			</Rule>
+    			<Rule>
+    				<Name>FAIR</Name>
+    				<Filter>
+                        <PropertyIsEqualTo matchCase="true">
+                            <PropertyName>satisfactionString</PropertyName>
+                            <Literal>FAIR</Literal>
+                        </PropertyIsEqualTo>
+                    </Filter>
+    				<PointSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+   						<Graphic>
+   						<Mark>
+       						<WellKnownName>cross</WellKnownName>
+       						<Fill>
+         							<CssParameter name="fill">#fc8d59</CssParameter>
+       						</Fill>
+     					</Mark>
+     					<Size>6</Size>
+   						</Graphic>
+ 					</PointSymbolizer>    						
+    			</Rule>
+    			<Rule>
+    				<Name>ACCEPTABLE</Name>
+    				<Filter>
+                        <PropertyIsEqualTo matchCase="true">
+                            <PropertyName>satisfactionString</PropertyName>
+                            <Literal>ACCEPTABLE</Literal>
+                        </PropertyIsEqualTo>
+                    </Filter>
+    				<PointSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+   						<Graphic>
+   						<Mark>
+       						<WellKnownName>cross</WellKnownName>
+       						<Fill>
+         							<CssParameter name="fill">#fdbb84</CssParameter>
+       						</Fill>
+     					</Mark>
+     					<Size>6</Size>
+   						</Graphic>
+ 					</PointSymbolizer>    						
+    			</Rule>
+    			<Rule>
+    				<Name>CORRECT</Name>
+    				<Filter>
+                        <PropertyIsEqualTo matchCase="true">
+                            <PropertyName>satisfactionString</PropertyName>
+                            <Literal>CORRECT</Literal>
+                        </PropertyIsEqualTo>
+                    </Filter>
+    				<PointSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+   						<Graphic>
+   						<Mark>
+       						<WellKnownName>cross</WellKnownName>
+       						<Fill>
+         							<CssParameter name="fill">#fdd49e</CssParameter>
+       						</Fill>
+     					</Mark>
+     					<Size>6</Size>
+   						</Graphic>
+ 					</PointSymbolizer>    						
+    			</Rule>
+    			<Rule>
+    				<Name>VERY_SATISFIED</Name>
+    				<Filter>
+                        <PropertyIsEqualTo matchCase="true">
+                            <PropertyName>satisfactionString</PropertyName>
+                            <Literal>VERY_SATISFIED</Literal>
+                        </PropertyIsEqualTo>
+                    </Filter>
+    				<PointSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+   						<Graphic>
+   						<Mark>
+       						<WellKnownName>cross</WellKnownName>
+       						<Fill>
+         							<CssParameter name="fill">#fee8c8</CssParameter>
+       						</Fill>
+     					</Mark>
+     					<Size>6</Size>
+   						</Graphic>
+ 					</PointSymbolizer>    						
+    			</Rule>
+    			<Rule>
+    				<Name>PERFECT</Name>
+    				<Filter>
+                        <PropertyIsEqualTo matchCase="true">
+                            <PropertyName>satisfactionString</PropertyName>
+                            <Literal>PERFECT</Literal>
+                        </PropertyIsEqualTo>
+                    </Filter>
+    				<PointSymbolizer uom="http://www.opengeospatial.org/se/units/metre">
+   						<Graphic>
+   						<Mark>
+       						<WellKnownName>cross</WellKnownName>
+       						<Fill>
+         							<CssParameter name="fill">#fff7ec</CssParameter>
+       						</Fill>
+     					</Mark>
+     					<Size>6</Size>
+   						</Graphic>
+ 					</PointSymbolizer>    						
+    			</Rule>    			    			    			    			    			    			    			
+			</FeatureTypeStyle>
+		</UserStyle>
+	</NamedLayer>
+</StyledLayerDescriptor>

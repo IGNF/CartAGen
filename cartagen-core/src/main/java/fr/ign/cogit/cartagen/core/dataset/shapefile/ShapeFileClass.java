@@ -7,7 +7,7 @@
  * 
  * @copyright IGN
  ******************************************************************************/
-package fr.ign.cogit.cartagen.core.dataset;
+package fr.ign.cogit.cartagen.core.dataset.shapefile;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +36,8 @@ import org.opengis.feature.simple.SimpleFeatureType;
 
 import com.vividsolutions.jts.geom.GeometryFactory;
 
+import fr.ign.cogit.cartagen.core.dataset.CartAGenDB;
+import fr.ign.cogit.cartagen.core.dataset.GeographicClass;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.cartagen.util.StringUtil;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;

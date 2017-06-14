@@ -27,6 +27,7 @@ public class BuildPoint extends GeneObjPointDefault implements IBuildPoint {
    * Associated Geoxygene schema object
    */
   private AutreConstruction geoxObj;
+  private String nature;
 
   /**
    * Constructor
@@ -45,9 +46,23 @@ public class BuildPoint extends GeneObjPointDefault implements IBuildPoint {
     this.setEliminated(false);
   }
 
+  public BuildPoint() {
+    super();
+    this.setEliminated(false);
+  }
+
   @Override
   public IFeature getGeoxObj() {
     return this.geoxObj;
+  }
+
+  @Override
+  public String getNature() {
+    return nature;
+  }
+
+  public void setNature(String nature) {
+    this.nature = nature;
   }
 
 }

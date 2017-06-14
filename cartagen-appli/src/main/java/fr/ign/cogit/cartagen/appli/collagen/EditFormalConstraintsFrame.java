@@ -67,6 +67,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.xml.sax.SAXException;
 
+import fr.ign.cogit.cartagen.appli.plugins.process.CollaGenComponent;
 import fr.ign.cogit.cartagen.collagen.resources.ontology.Character;
 import fr.ign.cogit.cartagen.collagen.resources.ontology.GeneralisationConcept;
 import fr.ign.cogit.cartagen.collagen.resources.ontology.GeoSpaceConcept;
@@ -109,8 +110,9 @@ public class EditFormalConstraintsFrame extends JFrame
   private OperationRulesDatabase rDb;
   private OWLOntology ontology;
 
-  private JComboBox cbTypeExpr, cbOperateur, cbOpReq, cbConcReq, cbCaracReq,
-      cbCarac;
+  private JComboBox<String> cbTypeExpr, cbOperateur, cbOpReq;
+  private JComboBox<GeneralisationConcept> cbConcReq;
+  private JComboBox<Character> cbCarac, cbCaracRo, cbCaracReq;
   private JRadioButton rdLisib, rdPreserv, rdMicro, rdMeso, rdRel, rdMacro;
   private JTextField txtValeurExpression, txtValReq, txtPourcReq;
   private JTextField txtConcept, txtNom, txtConcept1, txtConcept2;
@@ -121,12 +123,14 @@ public class EditFormalConstraintsFrame extends JFrame
   private JRadioButton rdProc;
   private JButton btnOnto1, btnOnto2, btnOnto4, btnOnto5;
   private JButton btnPlusRo, btnMoinsRo, btnOntoEspC, btnOntoEspR;
-  private JComboBox cbOpRegleOp, cbCaracRo, cbUniteValeur, cbUniteSelection,
+  private JComboBox<String> cbOpRegleOp, cbUniteValeur, cbUniteSelection,
       cbUniteRegle;
   private JSlider sldImp, sldRatioC, sldRatioR, sldImpRo;
   private JLabel lblValExpr, lblExemple, lblUnite, lblUniteSel;
-  private JList listeRequetes, listeMi, listeMe, listeMa, listeRe, listeRO,
-      listeCond;
+  private JList<FormalGenConstraint> listeMi, listeMe, listeMa, listeRe;
+  private JList<ORPremise> listeCond;
+  private JList<Request> listeRequetes;
+  private JList<OperationRule> listeRO;
   private JTable tableRestC, tableRestR;
   private ButtonGroup bg, bg2;
   private JTabbedPane onglets;
@@ -210,7 +214,7 @@ public class EditFormalConstraintsFrame extends JFrame
         ORPremise condition = new ORPremise(elem, carac, valeur,
             CharacterValueType.getType(valeur), unite, motCle);
         this.currentRulePremise.add(condition);
-        DefaultListModel dlm = new DefaultListModel();
+        DefaultListModel<ORPremise> dlm = new DefaultListModel<>();
         for (ORPremise r : this.currentRulePremise) {
           dlm.addElement(r);
         }
@@ -240,7 +244,7 @@ public class EditFormalConstraintsFrame extends JFrame
             ValueUnit.values()[this.cbUniteSelection.getSelectedIndex()]);
         this.requests.add(requete);
         this.currentCriterion.getRequests().add(requete);
-        DefaultListModel dlm = new DefaultListModel();
+        DefaultListModel<Request> dlm = new DefaultListModel<>();
         for (Request r : this.requests) {
           dlm.addElement(r);
         }
@@ -252,17 +256,17 @@ public class EditFormalConstraintsFrame extends JFrame
         ORPremise cond = (ORPremise) this.listeCond.getSelectedValue();
         if (cond != null) {
           this.currentRulePremise.remove(cond);
-          DefaultListModel dlm = new DefaultListModel();
+          DefaultListModel<ORPremise> dlm = new DefaultListModel<>();
           for (ORPremise r : this.currentRulePremise) {
             dlm.addElement(r);
           }
           this.listeCond.setModel(dlm);
         }
       } else {
-        Request requete = (Request) this.listeRequetes.getSelectedValue();
+        Request requete = this.listeRequetes.getSelectedValue();
         if (requete != null) {
           this.requests.remove(requete);
-          DefaultListModel dlm = new DefaultListModel();
+          DefaultListModel<Request> dlm = new DefaultListModel<>();
           for (Request r : this.requests) {
             dlm.addElement(r);
           }
@@ -328,7 +332,8 @@ public class EditFormalConstraintsFrame extends JFrame
       OperationRule regle = this.createOperationRule();
       this.rDb.getRules().add(regle);
       // mise � jour de la liste
-      DefaultListModel dlm = (DefaultListModel) this.listeRO.getModel();
+      DefaultListModel<OperationRule> dlm = (DefaultListModel<OperationRule>) this.listeRO
+          .getModel();
       dlm.addElement(regle);
       this.listeRO.setModel(dlm);
       this.initialiserFormulaire();
@@ -422,12 +427,12 @@ public class EditFormalConstraintsFrame extends JFrame
     this.txtValReq.setText("");
 
     // on vide la liste
-    DefaultListModel dlm = new DefaultListModel();
+    DefaultListModel<Request> dlm = new DefaultListModel<>();
     this.listeRequetes.setModel(dlm);
 
     // on vide les combo boxes
-    this.cbConcReq.setModel(new DefaultComboBoxModel());
-    this.cbCaracReq.setModel(new DefaultComboBoxModel());
+    this.cbConcReq.setModel(new DefaultComboBoxModel<GeneralisationConcept>());
+    this.cbCaracReq.setModel(new DefaultComboBoxModel<Character>());
 
     // on vide les collections
     this.requests = new ArrayList<Request>();
@@ -448,7 +453,7 @@ public class EditFormalConstraintsFrame extends JFrame
     // ON VIDE L'ONGLET REGLE OPER
     // ***********************************
     this.currentRulePremise = new HashSet<ORPremise>();
-    this.listeCond.setModel(new DefaultListModel());
+    this.listeCond.setModel(new DefaultListModel<>());
     this.txtNomRo.setText("");
     this.txtConceptCRo.setEditable(true);
     this.txtConceptCRo.setText("");
@@ -457,7 +462,7 @@ public class EditFormalConstraintsFrame extends JFrame
     this.txtConceptPRo.setText("");
     this.txtConceptPRo.setEditable(false);
     this.txtValeurRo.setText("");
-    this.cbCaracRo.setModel(new DefaultComboBoxModel());
+    this.cbCaracRo.setModel(new DefaultComboBoxModel<>());
     this.sldImpRo.setValue(1);
     this.pack();
   }
@@ -466,22 +471,22 @@ public class EditFormalConstraintsFrame extends JFrame
    * Update the constraints {@link JList} according to the lists of the frame.
    */
   private void updateConstraintLists() {
-    DefaultListModel dlm1 = new DefaultListModel();
+    DefaultListModel<FormalGenConstraint> dlm1 = new DefaultListModel<>();
     Collections.sort(this.microList);
     for (FormalGenConstraint c : this.microList) {
       dlm1.addElement(c);
     }
-    DefaultListModel dlm2 = new DefaultListModel();
+    DefaultListModel<FormalGenConstraint> dlm2 = new DefaultListModel<>();
     Collections.sort(this.mesoList);
     for (FormalGenConstraint c : this.mesoList) {
       dlm2.addElement(c);
     }
-    DefaultListModel dlm3 = new DefaultListModel();
+    DefaultListModel<FormalGenConstraint> dlm3 = new DefaultListModel<>();
     Collections.sort(this.macroList);
     for (FormalGenConstraint c : this.macroList) {
       dlm3.addElement(c);
     }
-    DefaultListModel dlm4 = new DefaultListModel();
+    DefaultListModel<FormalGenConstraint> dlm4 = new DefaultListModel<>();
     Collections.sort(this.relList);
     for (FormalGenConstraint c : this.relList) {
       dlm4.addElement(c);
@@ -498,7 +503,7 @@ public class EditFormalConstraintsFrame extends JFrame
    * {@link OperationRulesDatabase} feature of the frame.
    */
   private void updateRulesList() {
-    DefaultListModel dlm1 = new DefaultListModel();
+    DefaultListModel<OperationRule> dlm1 = new DefaultListModel<>();
     for (OperationRule r : this.rDb.getRules()) {
       dlm1.addElement(r);
     }
@@ -859,7 +864,7 @@ public class EditFormalConstraintsFrame extends JFrame
     this.bg.add(this.rdLisib);
     this.bg.add(this.rdPreserv);
     this.rdLisib.setSelected(true);
-    this.cbTypeExpr = new JComboBox(this.typesL);
+    this.cbTypeExpr = new JComboBox<>(this.typesL);
     this.cbTypeExpr.setMinimumSize(new Dimension(60, 20));
     this.cbTypeExpr.setMaximumSize(new Dimension(60, 20));
     this.cbTypeExpr.setPreferredSize(new Dimension(60, 20));
@@ -868,7 +873,7 @@ public class EditFormalConstraintsFrame extends JFrame
     this.lblValExpr = new JLabel(this.nomValeur + " : ");
     this.lblExemple = new JLabel(this.mapTypeEx.get(this.nomSeuil));
     this.cbTypeExpr.addItemListener(this);
-    this.cbOperateur = new JComboBox(
+    this.cbOperateur = new JComboBox<>(
         new String[] { "=", "<", ">", "<=", ">=", this.nomSimilaire,
             this.nomMaintenu, this.nomForce, this.nomEvite, this.nomInterdit });
     this.cbOperateur.setMinimumSize(new Dimension(80, 20));
@@ -880,7 +885,7 @@ public class EditFormalConstraintsFrame extends JFrame
     this.txtValeurExpression.setPreferredSize(new Dimension(60, 20));
     this.cbOperateur.setSelectedItem("=");
     this.cbTypeExpr.setSelectedItem(this.nomSeuil);
-    this.cbUniteValeur = new JComboBox(
+    this.cbUniteValeur = new JComboBox<>(
         new String[] { this.nomSsUnite, this.nomUniteTerr, this.nomUniteCarte,
             this.nomUniteAngle, this.nomUniteTerr2, this.nomUniteCarte2 });
     this.cbUniteValeur.setMinimumSize(new Dimension(100, 20));
@@ -908,7 +913,7 @@ public class EditFormalConstraintsFrame extends JFrame
     pExpresssion.setLayout(new BoxLayout(pExpresssion, BoxLayout.X_AXIS));
     // on cr�e un panneau horiz pour les noms de la contrainte
     JPanel pSelection = new JPanel();
-    this.listeRequetes = new JList();
+    this.listeRequetes = new JList<>();
     this.listeRequetes.setPreferredSize(new Dimension(80, 80));
     this.listeRequetes.setMaximumSize(new Dimension(80, 80));
     this.listeRequetes.setMinimumSize(new Dimension(80, 80));
@@ -926,20 +931,21 @@ public class EditFormalConstraintsFrame extends JFrame
     pPlusMoins.add(btnMoins);
     pPlusMoins.setLayout(new BoxLayout(pPlusMoins, BoxLayout.Y_AXIS));
     JPanel pConceptReq = new JPanel();
-    this.cbConcReq = new JComboBox(
-        new DefaultComboBoxModel(this.relatedConcepts.toArray()));
+    this.cbConcReq = new JComboBox<GeneralisationConcept>(
+        new DefaultComboBoxModel<GeneralisationConcept>(
+            (GeneralisationConcept[]) this.relatedConcepts.toArray()));
     this.cbConcReq.addItemListener(this);
     this.cbConcReq.setMinimumSize(new Dimension(100, 20));
     this.cbConcReq.setMaximumSize(new Dimension(100, 20));
     this.cbConcReq.setPreferredSize(new Dimension(100, 20));
-    this.cbCaracReq = new JComboBox(new DefaultComboBoxModel());
+    this.cbCaracReq = new JComboBox<>(new DefaultComboBoxModel<>());
     this.cbCaracReq.setMinimumSize(new Dimension(100, 20));
     this.cbCaracReq.setMaximumSize(new Dimension(100, 20));
     this.cbCaracReq.setPreferredSize(new Dimension(100, 20));
     pConceptReq.add(this.cbConcReq);
     pConceptReq.add(this.cbCaracReq);
     pConceptReq.setLayout(new BoxLayout(pConceptReq, BoxLayout.Y_AXIS));
-    this.cbOpReq = new JComboBox(new String[] { "=", "<", ">", "<=", ">=" });
+    this.cbOpReq = new JComboBox<>(new String[] { "=", "<", ">", "<=", ">=" });
     this.cbOpReq.setMinimumSize(new Dimension(50, 20));
     this.cbOpReq.setMaximumSize(new Dimension(50, 20));
     this.cbOpReq.setPreferredSize(new Dimension(50, 20));
@@ -952,7 +958,7 @@ public class EditFormalConstraintsFrame extends JFrame
     this.txtPourcReq.setMaximumSize(new Dimension(60, 20));
     this.txtPourcReq.setPreferredSize(new Dimension(60, 20));
     this.txtPourcReq.setDocument(new RealLimitator());
-    this.cbUniteSelection = new JComboBox(
+    this.cbUniteSelection = new JComboBox<>(
         new String[] { this.nomSsUnite, this.nomUniteTerr, this.nomUniteCarte,
             this.nomUniteAngle, this.nomUniteTerr2, this.nomUniteCarte2 });
     this.cbUniteSelection.setMinimumSize(new Dimension(100, 20));
@@ -1059,7 +1065,7 @@ public class EditFormalConstraintsFrame extends JFrame
     this.pBdc = new JPanel();
     JPanel pListes = new JPanel();
     JPanel pMicros = new JPanel();
-    this.listeMi = new JList(new DefaultListModel());
+    this.listeMi = new JList<>(new DefaultListModel<>());
     this.listeMi.setPreferredSize(new Dimension(80, 580));
     this.listeMi.setMaximumSize(new Dimension(80, 580));
     this.listeMi.setMinimumSize(new Dimension(80, 580));
@@ -1068,7 +1074,7 @@ public class EditFormalConstraintsFrame extends JFrame
     pMicros.add(new JLabel(this.titreMicro));
     pMicros.setLayout(new BoxLayout(pMicros, BoxLayout.Y_AXIS));
     JPanel pMesos = new JPanel();
-    this.listeMe = new JList(new DefaultListModel());
+    this.listeMe = new JList<>(new DefaultListModel<>());
     this.listeMe.setPreferredSize(new Dimension(80, 380));
     this.listeMe.setMaximumSize(new Dimension(80, 380));
     this.listeMe.setMinimumSize(new Dimension(80, 380));
@@ -1077,7 +1083,7 @@ public class EditFormalConstraintsFrame extends JFrame
     pMesos.add(new JLabel(this.titreMeso));
     pMesos.setLayout(new BoxLayout(pMesos, BoxLayout.Y_AXIS));
     JPanel pMacros = new JPanel();
-    this.listeMa = new JList(new DefaultListModel());
+    this.listeMa = new JList<>(new DefaultListModel<>());
     this.listeMa.setPreferredSize(new Dimension(80, 280));
     this.listeMa.setMaximumSize(new Dimension(80, 280));
     this.listeMa.setMinimumSize(new Dimension(80, 280));
@@ -1086,7 +1092,7 @@ public class EditFormalConstraintsFrame extends JFrame
     pMacros.add(new JLabel(this.titreMacro));
     pMacros.setLayout(new BoxLayout(pMacros, BoxLayout.Y_AXIS));
     JPanel pRels = new JPanel();
-    this.listeRe = new JList(new DefaultListModel());
+    this.listeRe = new JList<>(new DefaultListModel<>());
     this.listeRe.setPreferredSize(new Dimension(80, 380));
     this.listeRe.setMaximumSize(new Dimension(80, 380));
     this.listeRe.setMinimumSize(new Dimension(80, 380));
@@ -1110,11 +1116,11 @@ public class EditFormalConstraintsFrame extends JFrame
     // *****************************************
     this.currentRulePremise = new HashSet<ORPremise>();
     JPanel pReglesOper = new JPanel();
-    DefaultListModel dlm6 = new DefaultListModel();
+    DefaultListModel<OperationRule> dlm6 = new DefaultListModel<>();
     for (OperationRule c : this.rDb.getRules()) {
       dlm6.addElement(c);
     }
-    this.listeRO = new JList(dlm6);
+    this.listeRO = new JList<>(dlm6);
     this.listeRO.setPreferredSize(new Dimension(80, 280));
     this.listeRO.setMaximumSize(new Dimension(80, 280));
     this.listeRO.setMinimumSize(new Dimension(80, 280));
@@ -1168,7 +1174,7 @@ public class EditFormalConstraintsFrame extends JFrame
     pConclusionRo.setLayout(new BoxLayout(pConclusionRo, BoxLayout.X_AXIS));
     // et un panneau pour la pr�misse de la r�gle
     JPanel pPremisseRo = new JPanel();
-    this.listeCond = new JList();
+    this.listeCond = new JList<>();
     this.listeCond.setPreferredSize(new Dimension(80, 80));
     this.listeCond.setMaximumSize(new Dimension(80, 80));
     this.listeCond.setMinimumSize(new Dimension(80, 80));
@@ -1183,7 +1189,7 @@ public class EditFormalConstraintsFrame extends JFrame
     pPlusMoinsRo.add(this.btnPlusRo);
     pPlusMoinsRo.add(this.btnMoinsRo);
     pPlusMoinsRo.setLayout(new BoxLayout(pPlusMoinsRo, BoxLayout.Y_AXIS));
-    this.cbOpRegleOp = new JComboBox(
+    this.cbOpRegleOp = new JComboBox<>(
         new String[] { "=", "<", ">", "<=", ">=" });
     this.cbOpRegleOp.setMinimumSize(new Dimension(50, 20));
     this.cbOpRegleOp.setMaximumSize(new Dimension(50, 20));
@@ -1197,7 +1203,7 @@ public class EditFormalConstraintsFrame extends JFrame
     this.btnOnto5 = new JButton(icoOnto);
     this.btnOnto5.addActionListener(this);
     this.btnOnto5.setActionCommand("onto6");
-    this.cbCaracRo = new JComboBox();
+    this.cbCaracRo = new JComboBox<>();
     this.cbCaracRo.setMinimumSize(new Dimension(120, 20));
     this.cbCaracRo.setMaximumSize(new Dimension(120, 20));
     this.cbCaracRo.setPreferredSize(new Dimension(120, 20));
@@ -1205,7 +1211,7 @@ public class EditFormalConstraintsFrame extends JFrame
     this.txtValeurRo.setMinimumSize(new Dimension(60, 20));
     this.txtValeurRo.setMaximumSize(new Dimension(60, 20));
     this.txtValeurRo.setPreferredSize(new Dimension(60, 20));
-    this.cbUniteRegle = new JComboBox(
+    this.cbUniteRegle = new JComboBox<>(
         new String[] { this.nomSsUnite, this.nomUniteTerr, this.nomUniteCarte,
             this.nomUniteAngle, this.nomUniteTerr2, this.nomUniteCarte2 });
     this.cbUniteRegle.setMinimumSize(new Dimension(100, 20));
@@ -1357,11 +1363,11 @@ public class EditFormalConstraintsFrame extends JFrame
     if (JRadioButton.class.isInstance(e.getSource())) {
       JRadioButton radio = (JRadioButton) e.getSource();
       if (radio.equals(this.rdLisib) || radio.equals(this.rdPreserv)) {
-        DefaultComboBoxModel cbm = null;
+        DefaultComboBoxModel<String> cbm = null;
         if (this.rdLisib.isSelected()) {
-          cbm = new DefaultComboBoxModel(this.typesL);
+          cbm = new DefaultComboBoxModel<>(this.typesL);
         } else {
-          cbm = new DefaultComboBoxModel(this.typesP);
+          cbm = new DefaultComboBoxModel<>(this.typesP);
         }
         this.cbTypeExpr.setModel(cbm);
         this.cbTypeExpr
@@ -1381,8 +1387,8 @@ public class EditFormalConstraintsFrame extends JFrame
       GeneralisationConcept nouveau = (GeneralisationConcept) this.cbConcReq
           .getSelectedItem();
       if (nouveau != null) {
-        this.cbCaracReq.setModel(
-            new DefaultComboBoxModel(nouveau.getTousCaracteres().toArray()));
+        this.cbCaracReq.setModel(new DefaultComboBoxModel<>(
+            (Character[]) nouveau.getTousCaracteres().toArray()));
       }
     } else if (e.getSource().equals(this.cbTypeExpr)) {
       String nouveau = (String) this.cbTypeExpr.getSelectedItem();
@@ -1455,14 +1461,14 @@ public class EditFormalConstraintsFrame extends JFrame
       return;
     }
     if (txt.equals(this.txtConceptPRo)) {
-      DefaultComboBoxModel cbm = new DefaultComboBoxModel();
+      DefaultComboBoxModel<Character> cbm = new DefaultComboBoxModel<>();
       for (Character c : elem.getTousCaracteres()) {
         cbm.addElement(c);
       }
       this.cbCaracRo.setModel(cbm);
       return;
     }
-    DefaultComboBoxModel cbm = new DefaultComboBoxModel();
+    DefaultComboBoxModel<Character> cbm = new DefaultComboBoxModel<>();
     this.relatedConcepts.add(elem);
     if (this.rdMacro.isSelected()) {
       for (Character c : elem.getCaracteresMacro()) {
@@ -1474,8 +1480,8 @@ public class EditFormalConstraintsFrame extends JFrame
       }
     }
     this.cbCarac.setModel(cbm);
-    DefaultComboBoxModel cbm2 = new DefaultComboBoxModel(
-        this.relatedConcepts.toArray());
+    DefaultComboBoxModel<GeneralisationConcept> cbm2 = new DefaultComboBoxModel<>(
+        (GeneralisationConcept[]) this.relatedConcepts.toArray());
     for (GeneralisationConcept c : this.relatedConcepts) {
       for (GeneralisationConcept cc : c.getTousSousElements()) {
         cbm2.addElement(cc);
@@ -1483,7 +1489,7 @@ public class EditFormalConstraintsFrame extends JFrame
     }
     this.cbConcReq.setModel(cbm2);
     // on remplit la combo box des caract�res
-    DefaultComboBoxModel cbm3 = new DefaultComboBoxModel();
+    DefaultComboBoxModel<Character> cbm3 = new DefaultComboBoxModel<>();
     GeographicConcept concSel = (GeographicConcept) this.cbConcReq
         .getSelectedItem();
     for (Character c : concSel.getTousCaracteres()) {
@@ -1642,8 +1648,10 @@ public class EditFormalConstraintsFrame extends JFrame
     if (e.getClickCount() == 2) {
       // on ouvre le browser sur l'objet s�lectionn� dans la liste
       // on commence par r�cup�rer la liste source de l'�v�nement
-      JList liste = (JList) e.getSource();
-      // on récupère l'objet java s�lectionn�
+      @SuppressWarnings("unchecked")
+      JList<FormalGenConstraint> liste = (JList<FormalGenConstraint>) e
+          .getSource();
+      // get the selected element
       FormalGenConstraint contr = (FormalGenConstraint) liste
           .getSelectedValue();
       // on lance le browser sur l'objet contrainte contr
@@ -1654,7 +1662,9 @@ public class EditFormalConstraintsFrame extends JFrame
     // s'il s'agit du clic droit, on propose l'édition de la contrainte
     if (e.getButton() == MouseEvent.BUTTON3) {
       // on fait appara�tre un menu contextuel avec 2 entr�es
-      JList liste = (JList) e.getSource();
+      @SuppressWarnings("unchecked")
+      JList<FormalGenConstraint> liste = (JList<FormalGenConstraint>) e
+          .getSource();
       Point point = e.getLocationOnScreen();
       // int x = pBdc.getX();
       // int y = pBdc.getY();
@@ -1847,7 +1857,7 @@ public class EditFormalConstraintsFrame extends JFrame
         EditFormalConstraintsFrame.this.requests.addAll(
             EditFormalConstraintsFrame.this.currentCriterion.getRequests());
       }
-      DefaultListModel dlm = new DefaultListModel();
+      DefaultListModel<Request> dlm = new DefaultListModel<>();
       for (Request r : EditFormalConstraintsFrame.this.requests) {
         dlm.addElement(r);
       }

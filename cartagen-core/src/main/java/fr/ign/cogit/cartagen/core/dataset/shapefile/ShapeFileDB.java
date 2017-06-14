@@ -7,7 +7,7 @@
  * 
  * @copyright IGN
  ******************************************************************************/
-package fr.ign.cogit.cartagen.core.dataset;
+package fr.ign.cogit.cartagen.core.dataset.shapefile;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +30,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import fr.ign.cogit.cartagen.core.dataset.CartAGenDB;
+import fr.ign.cogit.cartagen.core.dataset.GeneObjImplementation;
+import fr.ign.cogit.cartagen.core.dataset.GeographicClass;
+import fr.ign.cogit.cartagen.core.dataset.SourceDLM;
 import fr.ign.cogit.cartagen.core.genericschema.AbstractCreationFactory;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.cartagen.core.genericschema.energy.IElectricityLine;

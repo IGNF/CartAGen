@@ -18,4 +18,10 @@ import fr.ign.cogit.cartagen.core.genericschema.IGeneObjLin;
 
 public interface ICable extends IGeneObjLin {
   public static final String FEAT_TYPE_NAME = "Cable"; //$NON-NLS-1$
+
+  /**
+   * The nature of the cable section (e.g. ski lift, tramway, ...)
+   * @return
+   */
+  public String getNature();
 }

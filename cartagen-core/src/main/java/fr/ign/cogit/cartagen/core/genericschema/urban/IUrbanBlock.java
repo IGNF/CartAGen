@@ -126,6 +126,11 @@ public interface IUrbanBlock extends IGeneObjSurf {
   public void setStemmingFromN1Transfo(boolean b);
 
   /**
+   * Initialise the components of the block (urban elements, network, etc.).
+   */
+  public void initComponents();
+
+  /**
    * Feat type name
    */
   public static final String FEAT_TYPE_NAME = "UrbanBlock";

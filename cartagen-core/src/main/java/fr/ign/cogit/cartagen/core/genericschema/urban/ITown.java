@@ -54,5 +54,10 @@ public interface ITown extends IGeneObjSurf {
    */
   public boolean isTownCentre(IUrbanBlock block);
 
+  /**
+   * Initialise the components of the town (blocks, center, network, etc.).
+   */
+  public void initComponents();
+
   public static final String FEAT_TYPE_NAME = "Town"; //$NON-NLS-1$
 }

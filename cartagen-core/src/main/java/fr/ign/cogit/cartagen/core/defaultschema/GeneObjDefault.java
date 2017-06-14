@@ -39,8 +39,10 @@ import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.feature.IPopulation;
 import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
+import fr.ign.cogit.geoxygene.feature.AbstractFeature;
 import fr.ign.cogit.geoxygene.feature.FT_Feature;
 import fr.ign.cogit.geoxygene.feature.FT_FeatureCollection;
+import fr.ign.cogit.geoxygene.schema.schemaConceptuelISOJeu.AttributeType;
 import fr.ign.cogit.geoxygene.schema.schemaConceptuelISOJeu.FeatureType;
 import fr.ign.cogit.geoxygene.util.ReflectionUtil;
 import fr.ign.cogit.geoxygene.util.algo.CommonAlgorithms;
@@ -842,4 +844,80 @@ public class GeneObjDefault extends FT_Feature implements IGeneObj {
     return super.getAttribute(nomAttribut);
   }
 
+  @Override
+  public void setAttribute(String nomAttribut, Object value) {
+    if (value != null) {
+      AttributeType attribute = new AttributeType();
+      attribute.setNomField(nomAttribut);
+      attribute.setMemberName(nomAttribut);
+      if (nomAttribut.length() != 0) {
+        // Case ID
+        if (attribute.getMemberName().equals("id")) { //$NON-NLS-1$
+          this.setId((Integer) value);
+        } else {
+          // Other case
+          // Builds the setter name
+          String nomFieldMaj = Character.toUpperCase(nomAttribut.charAt(0))
+              + nomAttribut.substring(1);
+          // System.out.println("nomFieldMaj : " + nomFieldMaj);
+          Class<?> classe = this.getClass();
+          Method methodSetter = null;
+          try {
+            // While the superclass is not the root class OR while the method is
+            // not found
+            while (!classe.equals(Object.class) && methodSetter == null) {
+              // System.out.print("Class :" + classe.getName() + "\n");
+              // Get the method for the current class
+              Method listMethod[] = classe.getDeclaredMethods();
+              // Compare the methods name with the one searched
+              for (Method m : listMethod) {
+                // System.out.print("Methode :" + m.getName() + "\n");
+                // if the method is found : save it in methodSetter and get out
+                if (m.getName().equals("set" + nomFieldMaj)) {
+                  methodSetter = m;
+                  break;
+                } else if (m.getName().equals(nomAttribut)) {
+                  methodSetter = m;
+                  break;
+                }
+              }
+              // System.out.print("SuperClass");
+              // else : search the method in the superclass ones
+              classe = classe.getSuperclass();
+            }
+            // Get the right class
+            classe = this.getClass();
+            // two possible cases : method found or null
+            if (methodSetter != null) {
+              methodSetter.invoke(this, value);
+            }
+          } catch (SecurityException e) {
+            if (AbstractFeature.logger.isDebugEnabled()) {
+              AbstractFeature.logger
+                  .debug("SecurityException pendant l'appel de la méthode "
+                      + nomAttribut + " sur la classe " + classe);
+            }
+          } catch (IllegalArgumentException e) {
+            if (AbstractFeature.logger.isDebugEnabled()) {
+              AbstractFeature.logger.debug(
+                  "IllegalArgumentException pendant l'appel de la méthode "
+                      + nomAttribut + " sur la classe " + classe);
+            }
+          } catch (IllegalAccessException e) {
+            if (AbstractFeature.logger.isDebugEnabled()) {
+              AbstractFeature.logger
+                  .debug("IllegalAccessException pendant l'appel de la méthode "
+                      + nomAttribut + " sur la classe " + classe);
+            }
+          } catch (InvocationTargetException e) {
+            if (AbstractFeature.logger.isDebugEnabled()) {
+              AbstractFeature.logger.debug(
+                  "InvocationTargetException pendant l'appel de la méthode "
+                      + nomAttribut + " sur la classe " + classe);
+            }
+          }
+        }
+      }
+    }
+  }
 }

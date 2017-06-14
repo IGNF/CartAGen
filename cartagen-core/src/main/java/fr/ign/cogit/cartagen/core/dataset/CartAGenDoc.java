@@ -29,6 +29,7 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import fr.ign.cogit.cartagen.core.Legend;
+import fr.ign.cogit.cartagen.core.dataset.postgis.PostgisDB;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPositionList;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
