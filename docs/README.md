@@ -5,24 +5,22 @@ CartAGen is a plugin for [GeOxygene][2] dedicated to cartographic generalisation
 > - Author: [Guillaume Touya][1]
 > - Contact {firstname.lastname}@ign.fr.
 
-### Table of contents
-
-
-[TOC]
-
-----------
 
 
 Description
 -------------
 
 
-Tutorials
+Getting Started
 -------------
 
 - How to load a geographical dataset into CartAGen?
 - How to trigger generalization algorithms in CartAGen?
 - How to use the agent-based generalization processes?
+
+
+Watch videos
+-------------
 
 
 [1]: http://recherche.ign.fr/labos/cogit/english/accueilCOGIT.php
