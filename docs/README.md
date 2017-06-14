@@ -1,8 +1,6 @@
 # CartAGen
-CartAGen is a plugin for GeOxygene dedicated to cartographic generalisation
+CartAGen is a plugin for [GeOxygene][2] dedicated to cartographic generalisation maintained by [COGIT research team][1] from IGN France, the French national mapping agency. CartAGen is a research platform and is mainly focused on map generalization research needs.
 
-- See the description of the Project Steering Committee: [PSC.md][1]
-- See the members of the Project Steering Committee: [PSC_members.md][2]
 
-[1]: https://github.com/IGNF/CartAGen/blob/master/PSC.md
-[2]: https://github.com/IGNF/CartAGen/blob/master/PSC_members.md
+[1]: http://recherche.ign.fr/labos/cogit/english/accueilCOGIT.php
+[2]: https://github.com/IGNF/geoxygene
