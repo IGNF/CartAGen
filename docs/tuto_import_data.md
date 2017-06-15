@@ -14,9 +14,9 @@ Description
 Getting Started
 -------------
 
-- [How to load a geographical dataset into CartAGen?][3]
-- [How to trigger generalization algorithms in CartAGen?][4]
-- [How to use the agent-based generalization processes?][5]
+- How to load a geographical dataset into CartAGen?
+- How to trigger generalization algorithms in CartAGen?
+- How to use the agent-based generalization processes?
 
 
 Watch videos
@@ -25,6 +25,3 @@ Watch videos
 
 [1]: http://recherche.ign.fr/labos/cogit/english/accueilCOGIT.php
 [2]: https://github.com/IGNF/geoxygene
-[3]: https://github.com/IGNF/CartAGen/tree/master/docs/tuto_import_data.md
-[4]: https://github.com/IGNF/CartAGen/tree/master/docs/tuto_generalization_algo.md
-[5]: https://github.com/IGNF/CartAGen/tree/master/docs/tuto_agents.md
