@@ -22,10 +22,9 @@ Getting Started
 Watch videos
 -------------
 
-<div class="video-container">
-    <iframe src="http://www.youtube.com/embed/Ns42t_hwAXw" height="315" width="560" allowfullscreen="" frameborder="0">
-    </iframe>
-</div>
+[![GAEL relief generalization](https://img.youtube.com/vi/b3wlWVkD74Y/0.jpg)](https://www.youtube.com/watch?v=b3wlWVkD74Y)
+[![AGENT mountain road generalization](https://img.youtube.com/vi/Ns42t_hwAXw/0.jpg)](https://www.youtube.com/watch?v=Ns42t_hwAXw)
+
 
 
 [1]: http://recherche.ign.fr/labos/cogit/english/accueilCOGIT.php
