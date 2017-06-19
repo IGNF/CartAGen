@@ -10,6 +10,9 @@ CartAGen is a plugin for [GeOxygene][2] dedicated to cartographic generalisation
 Description
 -------------
 
+CartAGen is a Java research platform dedicated to map generalization and [built upon many years of research at IGN France][6]. CartAGen can be seen as a plugin for [GeOxygene][2] Java platform or as a standalone platform.
+It contains implementations of many generalization algorithms of the literature, but most of all, it contains implementations of [several map generalization processes][7] that automatically orchestrate these algorithms, including complete or partial implementations of the multi-agents based AGENT, CartACom, GAEL, and CollaGen models.
+
 
 Getting Started
 -------------
@@ -32,3 +35,5 @@ Watch videos
 [3]: https://github.com/IGNF/CartAGen/tree/master/docs/tuto_import_data.md
 [4]: https://github.com/IGNF/CartAGen/tree/master/docs/tuto_generalization_algo.md
 [5]: https://github.com/IGNF/CartAGen/tree/master/docs/tuto_agents.md
+[6]: http://aci.ign.fr/2010_Zurich/genemr2010_submission_10.pdf
+[7]: https://www.researchgate.net/publication/281967532_Automated_generalisation_results_using_the_agent-based_platform_CartAGen
