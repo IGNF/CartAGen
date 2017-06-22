@@ -365,6 +365,7 @@ public class GeneObjDefault extends FT_Feature implements IGeneObj {
       return;
     }
     this.getGeoxObj().setGeom(geom);
+    this.geom = geom;
   }
 
   @Override

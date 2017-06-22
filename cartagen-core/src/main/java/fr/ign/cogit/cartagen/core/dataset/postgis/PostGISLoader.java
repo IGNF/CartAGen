@@ -227,6 +227,11 @@ public class PostGISLoader {
             }
 
           }
+
+          // check if initialGeom is filled
+          if (element.getInitialGeom() == null)
+            element.setInitialGeom(geom);
+
           // if existing towns/blocks
           if (element instanceof ITown)
             ((ITown) element).initComponents();

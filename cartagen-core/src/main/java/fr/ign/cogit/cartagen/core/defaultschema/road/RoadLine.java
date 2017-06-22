@@ -131,6 +131,7 @@ public class RoadLine extends NetworkSection implements IRoadLine {
    */
   public RoadLine() {
     super();
+    this.geoxObj = new TronconDeRouteImpl(new ReseauImpl(), false, null);
   }
 
   @Override

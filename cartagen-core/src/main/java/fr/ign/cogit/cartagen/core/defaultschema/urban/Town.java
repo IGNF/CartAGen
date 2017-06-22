@@ -232,8 +232,8 @@ public class Town extends GeneObjSurfDefault implements ITown {
     RobustELECTRETRIMethod electre = new RobustELECTRETRIMethod();
     Set<Criterion> criteria = new HashSet<Criterion>();
     boolean special = false;
-    if (CartAGenDoc.getInstance().getCurrentDataset().getCartAGenDB()
-        .getSourceDLM().equals(SourceDLM.SPECIAL_CARTAGEN))
+    if (SourceDLM.SPECIAL_CARTAGEN.equals(CartAGenDoc.getInstance()
+        .getCurrentDataset().getCartAGenDB().getSourceDLM()))
       special = true;
     if (!special)
       criteria.add(new ChurchCriterion("Church"));
