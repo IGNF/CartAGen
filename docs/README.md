@@ -20,6 +20,7 @@ Getting Started
 - [How to load a geographical dataset into CartAGen?][3]
 - [How to trigger generalization algorithms in CartAGen?][4]
 - [How to use the agent-based generalization processes?][5]
+- [Understanding CartAGen data schema for generalization][8]
 
 
 Watch videos
@@ -37,3 +38,4 @@ Watch videos
 [5]: https://github.com/IGNF/CartAGen/tree/master/docs/tuto_agents.md
 [6]: http://aci.ign.fr/2010_Zurich/genemr2010_submission_10.pdf
 [7]: https://www.researchgate.net/publication/281967532_Automated_generalisation_results_using_the_agent-based_platform_CartAGen
+[8]: https://github.com/IGNF/CartAGen/tree/master/docs/tuto_schema.md

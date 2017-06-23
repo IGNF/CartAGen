@@ -10,6 +10,7 @@ CartAGen uses a centralized data schema to load and generalize geographic inform
 What is CartAGen data schema for generalization?
 -------------
 
+![simplified view of the schema](assets/images/schema_gene_simplifie.png)
 
 Description of the interfaces of the centralized schema
 -------------
