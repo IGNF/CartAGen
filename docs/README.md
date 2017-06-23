@@ -33,9 +33,9 @@ Watch videos
 
 [1]: http://recherche.ign.fr/labos/cogit/english/accueilCOGIT.php
 [2]: https://github.com/IGNF/geoxygene
-[3]: https://github.com/IGNF/CartAGen/tree/master/docs/tuto_import_data.md
-[4]: https://github.com/IGNF/CartAGen/tree/master/docs/tuto_generalization_algo.md
-[5]: https://github.com/IGNF/CartAGen/tree/master/docs/tuto_agents.md
+[3]: https://github.com/IGNF/CartAGen/tree/gh-pages/docs/tuto_import_data.md
+[4]: https://github.com/IGNF/CartAGen/tree/gh-pages/docs/tuto_generalization_algo.md
+[5]: https://github.com/IGNF/CartAGen/tree/gh-pages/docs/tuto_agents.md
 [6]: http://aci.ign.fr/2010_Zurich/genemr2010_submission_10.pdf
 [7]: https://www.researchgate.net/publication/281967532_Automated_generalisation_results_using_the_agent-based_platform_CartAGen
-[8]: https://github.com/IGNF/CartAGen/tree/master/docs/tuto_schema.md
+[8]: https://github.com/IGNF/CartAGen/tree/gh-pages/docs/tuto_schema.md
