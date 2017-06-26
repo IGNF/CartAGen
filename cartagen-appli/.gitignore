@@ -1,3 +1,5 @@
 /target/
 /.classpath
 /.project
+/cartagen_warn.log
+/cartagen.log
