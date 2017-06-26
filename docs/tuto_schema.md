@@ -22,7 +22,7 @@ Description of the interfaces of the centralized schema
 [ ![airport schema](assets/images/airport_schema_small.png) ](assets/images/airport_schema.png)
 
 #### [](#header-4)Hydrography schema
-![hydrography schema](assets/images/hydro_schema.png)
+[ ![hydrography schema](assets/images/hydro_schema_small.png) ](assets/images/hydro_schema.png)
 
 Implementations of the centralized schema
 -------------
@@ -38,10 +38,10 @@ This part of the tutorial explains how to extend the centralized schema when a t
 
 ### [](#header-3) Add a new interface to the centralized schema
 
-La première étape est de vérifier s'il existe déjà une interface pour les pistes cyclables dans celles qui existent dans CartAGen. Ces interfaces sont dans le module open source geoxygene-cartagen, et dans le package fr.ign.cogit.cartagen.core.genericschema.
-Dans notre cas, il n'y en a pas donc nous créons une nouvelle interface qui étend l'interface INetworkSection car les pistes cyclables sont structurées en réseau. Si notre interface représente des données ponctuelles, elle doit étendre IGeneObjPoint, IGeneObjLin pour des données linéaires non structurées en réseau, etc.
+The first step is to check if there is an interface that models cycle ways in the CartAGen centralized schema. Now there is one existing, but let's pretend there is none. 
+We want to model cycle ways as a network, so the new interface has to extend the _INetworkSection_ interface. If our new type of feature were a point feature, it would extend _IGeneObjPoint_, _IGeneObjLin_ for line features not structured in networks, and _IGeneObjSurf_ for polygon features.
 
-Le code ci-dessous est celui de notre interface ICycleWay, qui possède les propriétés courantes des pistes cyclables dans OSM, soit le type de surface de la piste et sa largeur.
+The code below defines the new interface ICycleWay, whose fields are derived from common characteristics of OSM cycle ways: the cycle way surface and its width (named realWidth here to avoid confusions with the getWidth() method used in CartAGen to retrieve map symbol width).
 ```java
 public interface ICycleWay extends INetworkSection {
 
