@@ -19,7 +19,7 @@ Description of the interfaces of the centralized schema
 ![administrative schema](assets/images/admin_schema.png)
 
 #### [](#header-4)Airport schema
-![airport schema](assets/images/airport_schema.png)
+[ ![airport schema](assets/images/airport_schema_small.png) ](assets/images/airport_schema.png)
 
 #### [](#header-4)Hydrography schema
 ![hydrography schema](assets/images/hydro_schema.png)
@@ -33,14 +33,10 @@ There are two available implementations of the centralized schema:
 How to extend the centralized schema
 -------------
 
-Cette fiche explique la marche à suivre pour enrichir le schéma de données géographique de CartAGen avec un type d'entité géographique non géré jusqu'à présent. Ce tutoriel reprend le cas de données OpenStreetMap (OSM) car il est un peu plus complexe que les autres, mais la plupart des étapes sont valables pour des données issues d'autres sources.
-
-Dans CartAGen, les données géographiques sont stockées dans des classes spécifiques pour chaque type d'entité, par exemple RoadLine pour les routes, Building pour les bâtiments, etc. Des interfaces sont construites pour chaque type d'entité et tous les traitements de généralisation prennent des interfaces en entrée et une des implémentations existantes. Pas besoin ainsi d'avoir un algorithme pour les routes BD Topo et un pour les routes OSM.
-
-Tout le long de ce tutoriel, nous allons suivre l'intégration des entités de piste cyclable dans CartAGen.
+This part of the tutorial explains how to extend the centralized schema when a type of feature you want to process does not exist in the schema yet. A use case based on OpenStreetMap (OSM) cycle ways illustrates here the different steps.
 
 
-## [](#header-2) Add a new interface to the centralized schema
+### [](#header-3) Add a new interface to the centralized schema
 
 La première étape est de vérifier s'il existe déjà une interface pour les pistes cyclables dans celles qui existent dans CartAGen. Ces interfaces sont dans le module open source geoxygene-cartagen, et dans le package fr.ign.cogit.cartagen.core.genericschema.
 Dans notre cas, il n'y en a pas donc nous créons une nouvelle interface qui étend l'interface INetworkSection car les pistes cyclables sont structurées en réseau. Si notre interface représente des données ponctuelles, elle doit étendre IGeneObjPoint, IGeneObjLin pour des données linéaires non structurées en réseau, etc.
@@ -69,7 +65,7 @@ public interface ICycleWay extends INetworkSection {
 }
 ```
 
-## [](#header-2) Implémenter l'interface
+### [](#header-3) Implementing the new interface
 
 Il existe une implémentation par défaut des interfaces d'objets géographiques de CartAGen dans le package fr.ign.cogit.cartagen.core.defaultschema, mais il en existe d'autres, par exemple :
 * une implémentation dite "gothic" dont les objets peuvent être utilisés dans le logiciel Clarity (fr.ign.cogit.cartagen.gothic.gothicBasedCoreSchema)
@@ -166,7 +162,7 @@ On complète alors les méthodes déclarées dans l'interface :
   }
 ```
 
-## [](#header-2) Compléter la factory de l'implémentation choisie
+### [](#header-3) Extended the factory of the chosen implementation
 
 La construction de certains objets (comme les noeuds de réseau) peut se faire lors de calculs et pour éviter que le code de ces calculs soit dépendant d'une des implémentations, on fait appel à une factory pour construire les objets. Par exemple, la factory abstraite possède la méthode createCycleWay(ILineString line) et il existe une factory par implémentation qui construit par exemple des OsmCycleWay ou des GothicCycleWay. 
 
@@ -222,7 +218,7 @@ Enfin, il y a une dernière étape spécifique aux implémentations OSM car le f
 	}
 ```
 
-## [](#header-2) Construire une population dédiée 
+### [](#header-3) Creating a dedicated population in the dataset 
 
 Une fois que l'on a construit nos objets géographiques comme des objets Java dans une classe adaptée, on ne peut pas les utiliser directement dans CartAGen. La structure de stockage des données dans CartAGen est expliquée dans ce [[Documentation_persistance_CartAGen|tutoriel sur la persistence]]. Un projet est représenté par un objet document de la classe ''CartAGenDoc'', qui contient une ou plusieurs bases de données (par exemple une base pour la BD Topo et une pour les données OSM). Chaque base de données est associée à un unique objet ''CartAGenDataset'' dont la fonction est de stocker et de permettre l'accès au données chargées dans la base de données. Il faut donc stocker nos données dans le dataset associé à la base de données OSM créé au chargement.
 Dans le dataset, les données sont stockées dans des populations, instances de la l'interface ''IPopulation'' : il y a par exemple, une population pour les routes, les bâtiments, les cours d'eau, etc. Pour nos nouvelles données, il faut créer une nouvelle population adaptée et donc modifier la classe ''CartAGenDataset''. Certaines implémentations avec des données spécifiques ont une classe de dataset qui étend ''CartAGenDataset'' et dans ce cas, c'est la sous-classe qu'il faut modifier (de la même manière que ''CartAGenDataset''). C'est le cas d'OSM, pour lequel il faut donc modifier la classe ''OsmDataset'' du package *fr.ign.cogit.cartagen.osm.importexport*. Quatre types de modifications sont nécessaires dans la classe :
@@ -273,7 +269,7 @@ public class OsmDataset extends CartAGenDataSet {
   }
 ```
 
-## [](#header-2) Displaying the new features
+### [](#header-3) Displaying the new features
 
 Le fait de stocker nos nouvelles données dans le dataset ne permet pas directement de les afficher car le dataset ne gère pas l'affichage, qui est fait à partir de layers. Un layer commande l'affichage d'une ou plusieurs populations du dataset, et un ''LayerManager'' gère l'ensemble des layers via un objet de la classe ''LayerGroup''.
 Comme pour le dataset, il existe un ''LayerGroup'' générique et des classes qui étendent ce layer, ''OsmLayerGroup'' pour le cas des données OSM. Ces classes doivent être modifiées pour l'intégration des pistes cyclables dans les layers, en cinq étapes :

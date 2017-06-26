@@ -13,9 +13,14 @@ Description
 CartAGen is a Java research platform dedicated to map generalization and [built upon many years of research at IGN France][6]. CartAGen can be seen as a plugin for [GeOxygene][2] Java platform or as a standalone platform.
 It contains implementations of many generalization algorithms of the literature, but most of all, it contains implementations of [several map generalization processes][7] that automatically orchestrate these algorithms, including complete or partial implementations of the multi-agents based [AGENT][9], [CartACom][10], [GAEL][11], and [CollaGen][12] models.
 
+AGENT generalization of a small town to 1:60k:
 ![AGENT generalization of a small town to 1:50k](docs/assets/images/AGENT_results.png)
+
+AGENT mountain road generalization:
 ![AGENT mountain road generalization](docs/assets/images/agent_roads.png)
-![CartACom generalization to ](docs/assets/images/cartacom_results.png)
+
+CartACom generalization to 1:50k:
+![CartACom generalization to 1:50k](docs/assets/images/cartacom_results.png)
 
 Getting Started
 -------------
@@ -57,7 +62,7 @@ A list, not exhaustive yet, of the generalization algorithms available in CartAG
 | Enlarge to rectangle	| [reported in AGENT project][21] 	| uses JTS smallest surrounding rectangle (SSR)  | 					|
 | Rotate   				| [reported in AGENT project][21]	| JTS implementation  |					|
 | Random displacement	| never published (@Julien Gaffuri)	| [BuildingDisplacementRandom.java][25]  |	iteratively, a building is randomly displaced (with very small displacements), until the global legibility is optimized (a gradient descent is used)	|
-| displacement in block | [Ruas 1999][26]					| [BuildingDisplacementRuas.java27]  |					|
+| displacement in block | [Ruas 1999][26]					| [BuildingDisplacementRuas.java][27]  |					|
 
 [1]: http://recherche.ign.fr/labos/cogit/english/accueilCOGIT.php
 [2]: https://github.com/IGNF/geoxygene
