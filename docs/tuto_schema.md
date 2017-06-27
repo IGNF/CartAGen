@@ -67,14 +67,19 @@ public interface ICycleWay extends INetworkSection {
 
 ### [](#header-3) Implementing the new interface
 
-Il existe une implémentation par défaut des interfaces d'objets géographiques de CartAGen dans le package fr.ign.cogit.cartagen.core.defaultschema, mais il en existe d'autres, par exemple :
-* une implémentation dite "gothic" dont les objets peuvent être utilisés dans le logiciel Clarity (fr.ign.cogit.cartagen.gothic.gothicBasedCoreSchema)
-* plusieurs implémentation pour les données du PEA REP (VMAP, MGCP++, VMAP1++) (geoxygene-cartagen fr.ign.cogit.cartagen.pearep)
-* une implémentation pour les données OSM, pour laquelle les objets contiennent tous leurs tags OSM (fr.ign.cogit.cartagen.osm.osmschema)
+We've seen above in this tutorial that the CartAGen centralized schema might have several implementations to deal with specific characteristics of some datasets (e.g. the OSM implementation allows to store the raw tags on each feature in addition to the fields already contained in the schema).
 
-Pour réellement importer nos pistes cyclables, il faut choisir une implémentation et implémenter notre interface ICycleWay dans cette implémentation. Dans notre exemple, nous prenons l'implémentation OSM et créons la classe suivante :
+In order to actually load cycle ways, there has to be some implementation of the _ICycleWay_ interface in the implementation that you are using (ideally, the interface should be implemented in all centralized schema implementations).
+in this use case, we select the OSM implementation and add the following class:
 
 ```java
+package fr.ign.cogit.geoxygene.osm.schema.roads;
+
+import fr.ign.cogit.cartagen.core.genericschema.network.INetworkNode;
+import fr.ign.cogit.cartagen.core.genericschema.road.ICycleWay;
+import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
+import fr.ign.cogit.geoxygene.osm.schema.network.OsmNetworkSection;
+
 public class OsmCycleWay extends OsmNetworkSection implements ICycleWay {
 
   @Override
@@ -134,8 +139,9 @@ public class OsmCycleWay extends OsmNetworkSection implements ICycleWay {
   }
 ```
 
-Étendre ici la classe OsmNetworkSection qui étend elle-même OsmGeneObj permet de bénéficier des méthodes communes aux objets OSM, en rapport avec les tags OSM.
-On complète alors les méthodes déclarées dans l'interface :
+It can be noticed that our new class extends OsmNetworkSection class that itself extends OsmGeneObj that implements common methods to handle OSM tags and metadata.
+So we add the following in the class declaration:
+
 ```java
   private String surface;
 
@@ -164,9 +170,10 @@ On complète alors les méthodes déclarées dans l'interface :
 
 ### [](#header-3) Extended the factory of the chosen implementation
 
-La construction de certains objets (comme les noeuds de réseau) peut se faire lors de calculs et pour éviter que le code de ces calculs soit dépendant d'une des implémentations, on fait appel à une factory pour construire les objets. Par exemple, la factory abstraite possède la méthode createCycleWay(ILineString line) et il existe une factory par implémentation qui construit par exemple des OsmCycleWay ou des GothicCycleWay. 
+The centralized CartAGen schema is coded following the principles of the [_factory_ design pattern][4]: we do not directly instantiate the implemented classes of the centralized schema, we use a factory to create new objects, the factory using the good implementation. Using this pattern, the generalization code is not dependant on the implementations.
+In the use case, the abstract factory needs to contain a createCycleWay(ILineString line) method and the OSM version of the factory extends this method by creating an OsmCycleWay instance, while the default factory creates a CycleWay instance. 
 
-On commence par faire un (ou plusieurs) constructeur(s) dans notre classe OsmCycleWay :
+So let's start by adding one (or more) constructors within the OsmCycleWay class:
 
 ```java
   public OsmCycleWay(ILineString line) {
@@ -175,7 +182,7 @@ On commence par faire un (ou plusieurs) constructeur(s) dans notre classe OsmCyc
   }
 ```
 
-Puis, on ajoute la méthode construisant les objets dans la factory abstraite (AbstractCreationFactory dans le package fr.ign.cogit.cartagen.core.genericschema) :
+Then, add the method that could use this constructor in the abstract factory (AbstractCreationFactory in package fr.ign.cogit.cartagen.core.genericschema) :
 
 ```java
   @SuppressWarnings("unused")
@@ -186,7 +193,7 @@ Puis, on ajoute la méthode construisant les objets dans la factory abstraite (A
   }
 ```
 
-On surcharge ensuite cette méthode dans la factory de l'implémentation OSM (fr.ign.cogit.cartagen.osm.osmschema.OSMSchemaFactory) :
+Then override this method in the OSM implementation factory (fr.ign.cogit.cartagen.osm.osmschema.OSMSchemaFactory) :
 
 ```java
   @Override
@@ -195,7 +202,7 @@ On surcharge ensuite cette méthode dans la factory de l'implémentation OSM (fr
   }
 ```
 
-Enfin, il y a une dernière étape spécifique aux implémentations OSM car le fichier initial .osm contient en vrac toutes les données : il faut compléter une méthode générique de la factory qui lance la bonne méthode de la factory en fonction du type de l'entité OSM (évaluée grâce à ses tags):
+There is a final step, specific to OSM implementations because .osm files do not order, or classify the map features: a generic method that invokes the good factory method as to be completed with the case of a feature whose tags match with cycle ways.
 
 ```java
 	public OsmGeneObj createGeneObj(Class<?> classObj, OSMResource resource,
@@ -220,13 +227,13 @@ Enfin, il y a une dernière étape spécifique aux implémentations OSM car le f
 
 ### [](#header-3) Creating a dedicated population in the dataset 
 
-Une fois que l'on a construit nos objets géographiques comme des objets Java dans une classe adaptée, on ne peut pas les utiliser directement dans CartAGen. La structure de stockage des données dans CartAGen est expliquée dans ce [[Documentation_persistance_CartAGen|tutoriel sur la persistence]]. Un projet est représenté par un objet document de la classe ''CartAGenDoc'', qui contient une ou plusieurs bases de données (par exemple une base pour la BD Topo et une pour les données OSM). Chaque base de données est associée à un unique objet ''CartAGenDataset'' dont la fonction est de stocker et de permettre l'accès au données chargées dans la base de données. Il faut donc stocker nos données dans le dataset associé à la base de données OSM créé au chargement.
-Dans le dataset, les données sont stockées dans des populations, instances de la l'interface ''IPopulation'' : il y a par exemple, une population pour les routes, les bâtiments, les cours d'eau, etc. Pour nos nouvelles données, il faut créer une nouvelle population adaptée et donc modifier la classe ''CartAGenDataset''. Certaines implémentations avec des données spécifiques ont une classe de dataset qui étend ''CartAGenDataset'' et dans ce cas, c'est la sous-classe qu'il faut modifier (de la même manière que ''CartAGenDataset''). C'est le cas d'OSM, pour lequel il faut donc modifier la classe ''OsmDataset'' du package *fr.ign.cogit.cartagen.osm.importexport*. Quatre types de modifications sont nécessaires dans la classe :
+In order to be stored and displayed in CartAGen, the features of the centralized schema have the be added in a dedicated population of features, the populations being stored in a _CartAGenDataset_ instance. Each interface of the centralized schema has a dedicated population in the dataset and the name of the population is standardized as a static field in the CartAGenDataset class.
+Four additions are necessary in the _CartAGenDataset_ class:
 
-* Ajout du nom de la population que l'on stocke dans une variable statique :
+* add the population name as a static field :
 
 ```java
-public class OsmDataset extends CartAGenDataSet {
+public class CartAGenDataSet {
 
 	// ///////////////////////////////////////
 	// STANDARD NAMES OF DATASET POPULATIONS
@@ -237,24 +244,24 @@ public class OsmDataset extends CartAGenDataSet {
 ```
 
 
-* On complète la méthode getPopNameFromObj(IFeature obj) en ajoutant avant le return final :
+* Complete the getPopNameFromObj(IFeature obj) method by adding the following condition:
 
 ```java
     if (obj instanceof ICycleWay) {
-      return OsmDataset.CYCLEWAY_POP;
+      return CartAGenDataSet.CYCLEWAY_POP;
     }
 ```
 
-* On complète la méthode getPopNameFromClass(Class<?> classObj) en ajoutant avant le return final :
+* Complete the getPopNameFromClass(Class<?> classObj) method by adding the following condition:
 
 ```java
     if (ICycleWay.class.isAssignableFrom(classObj)) {
-      return OsmDataset.CYCLEWAY_POP;
+      return CartAGenDataSet.CYCLEWAY_POP;
     }
 ```
 
 
-* Enfin, on ajoute une méthode de raccourci permettant d'accéder directement, dans le code d'un programme, à la population des pistes cyclables quand on le souhaite :
+* Finally, add a new shortcut method that allows a direct access to the cycle way features:
 
 ```java
   /**
@@ -265,14 +272,12 @@ public class OsmDataset extends CartAGenDataSet {
   @SuppressWarnings("unchecked")
   public IPopulation<ICycleWay> getCycleWays() {
     return (IPopulation<ICycleWay>) this.getCartagenPop(
-        OsmDataset.CYCLEWAY_POP, ICycleWay.FEAT_TYPE_NAME);
+        CartAGenDataSet.CYCLEWAY_POP, ICycleWay.FEAT_TYPE_NAME);
   }
 ```
 
 ### [](#header-3) Displaying the new features
 
-Le fait de stocker nos nouvelles données dans le dataset ne permet pas directement de les afficher car le dataset ne gère pas l'affichage, qui est fait à partir de layers. Un layer commande l'affichage d'une ou plusieurs populations du dataset, et un ''LayerManager'' gère l'ensemble des layers via un objet de la classe ''LayerGroup''.
-Comme pour le dataset, il existe un ''LayerGroup'' générique et des classes qui étendent ce layer, ''OsmLayerGroup'' pour le cas des données OSM. Ces classes doivent être modifiées pour l'intégration des pistes cyclables dans les layers, en cinq étapes :
 
 ![cycleway displayed with pink dashes](assets/images/Affichage_piste_cyclable.png)
 
@@ -281,3 +286,4 @@ Comme pour le dataset, il existe un ''LayerGroup'' générique et des classes qu
 [1]: http://www.tandfonline.com/doi/abs/10.1080/13658810410001672881
 [2]: https://github.com/IGNF/geoxygene
 [3]: https://github.com/IGNF/CartAGen/tree/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/core/defaultschema
+[4]: https://en.wikipedia.org/wiki/Factory_method_pattern
