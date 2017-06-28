@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/IGNF/cartagen.svg?branch=master)](https://travis-ci.org/IGNF/cartagen)
+
 # CartAGen
 CartAGen is a plugin for GeOxygene dedicated to cartographic generalisation
 
