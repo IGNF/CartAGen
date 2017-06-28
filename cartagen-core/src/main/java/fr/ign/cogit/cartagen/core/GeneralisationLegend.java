@@ -7,9 +7,6 @@
  * 
  * @copyright IGN
  ******************************************************************************/
-/**
- * 
- */
 package fr.ign.cogit.cartagen.core;
 
 import java.awt.Color;

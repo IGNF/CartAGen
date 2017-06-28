@@ -7,9 +7,7 @@
     <artifactId>cartagen</artifactId>
     <version>0.1-SNAPSHOT</version>
   </parent>
-  <groupId>fr.ign.cogit</groupId>
   <artifactId>cartagen-appli</artifactId>
-  <version>0.1-SNAPSHOT</version>
   <name>cartagen-appli</name>
   <url>http://maven.apache.org</url>
   <properties>
@@ -42,5 +40,11 @@
 		<artifactId>jxl</artifactId>
 		<version>2.6.12</version>
 	</dependency>
+	<dependency>
+		<groupId>twak</groupId>
+		<artifactId>campskeleton</artifactId>
+		<version>1.0</version>
+		<scope>compile</scope>
+	</dependency>	
   </dependencies>
 </project>

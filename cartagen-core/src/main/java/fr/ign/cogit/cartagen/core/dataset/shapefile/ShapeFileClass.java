@@ -27,8 +27,6 @@ import org.geotools.data.shapefile.files.ShpFiles;
 import org.geotools.data.shapefile.shp.ShapeType;
 import org.geotools.data.shapefile.shp.ShapefileReader;
 import org.geotools.feature.DefaultFeatureCollection;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.SchemaException;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.opengis.feature.simple.SimpleFeature;
@@ -65,8 +63,8 @@ public class ShapeFileClass implements GeographicClass {
    * @param path
    * @param popName
    */
-  public ShapeFileClass(CartAGenDB dataSet, String path,
-      String featureTypeName, Class<? extends IGeometry> geometryType) {
+  public ShapeFileClass(CartAGenDB dataSet, String path, String featureTypeName,
+      Class<? extends IGeometry> geometryType) {
     super();
     this.dataSet = dataSet;
     this.path = path;
@@ -94,13 +92,9 @@ public class ShapeFileClass implements GeographicClass {
             headerIni.getFieldLength(i) + 6, headerIni.getFieldDecimalCount(i));
       }
       // get the population of Cartagen objects
-      IPopulation<? extends IFeature> pop = this
-          .getDataSet()
-          .getDataSet()
-          .getCartagenPop(
-              this.getDataSet().getDataSet()
-                  .getPopNameFromFeatType(this.featureTypeName),
-              featureTypeName);
+      IPopulation<? extends IFeature> pop = this.getDataSet().getDataSet()
+          .getCartagenPop(this.getDataSet().getDataSet()
+              .getPopNameFromFeatType(this.featureTypeName), featureTypeName);
       // get the records of the shapefile
       HashMap<Integer, Object[]> fields = new HashMap<Integer, Object[]>();
       int i = 0;
@@ -142,8 +136,8 @@ public class ShapeFileClass implements GeographicClass {
       shpf.delete();
 
       // build the shapefile datastore
-      ShapefileDataStore store = new ShapefileDataStore(new File(this.path
-          + ".shp").toURI().toURL());
+      ShapefileDataStore store = new ShapefileDataStore(
+          new File(this.path + ".shp").toURI().toURL());
       // build the specification String of the shapefile
       // specify the geometry type
       String specs = "the_geom:" + geomType; //$NON-NLS-1$
@@ -160,16 +154,17 @@ public class ShapeFileClass implements GeographicClass {
       featureTypeName = featureTypeName.replace('.', '_');
       SimpleFeatureType type = DataUtilities.createType(featureTypeName, specs);
       store.createSchema(type);
-      FeatureStore<SimpleFeatureType, SimpleFeature>featureStore = (FeatureStore<SimpleFeatureType, SimpleFeature>) store
+      FeatureStore<SimpleFeatureType, SimpleFeature> featureStore = (FeatureStore<SimpleFeatureType, SimpleFeature>) store
           .getFeatureSource(featureTypeName);
 
-      
       // write features in the datastore
       Transaction t = new DefaultTransaction();
-     
-      // FeatureCollection<SimpleFeatureType, SimpleFeature> collection = FeatureCollections.newCollection();
-      DefaultFeatureCollection collection = new DefaultFeatureCollection("building",type);
-      
+
+      // FeatureCollection<SimpleFeatureType, SimpleFeature> collection =
+      // FeatureCollections.newCollection();
+      DefaultFeatureCollection collection = new DefaultFeatureCollection(
+          "building", type);
+
       // loop on the records
       for (Integer j = 0; j < fields.size(); j++) {
         // get the object related to record using the shape id
