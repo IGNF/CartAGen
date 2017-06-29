@@ -25,10 +25,6 @@ import fr.ign.cogit.cartagen.agents.gael.deformation.submicro.ISubMicro;
 import fr.ign.cogit.cartagen.agents.gael.deformation.submicrogeneobj.GAELPointGeneObj;
 import fr.ign.cogit.cartagen.agents.gael.field.agent.FieldAgent;
 import fr.ign.cogit.cartagen.agents.gael.field.agent.relief.ContourLineAgent;
-import fr.ign.cogit.cartagen.graph.IEdge;
-import fr.ign.cogit.cartagen.graph.IGraph;
-import fr.ign.cogit.cartagen.graph.IGraphLinkableFeature;
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationPoint;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.feature.IFeatureCollection;
@@ -45,6 +41,10 @@ import fr.ign.cogit.geoxygene.api.spatial.toporoot.ITopology;
 import fr.ign.cogit.geoxygene.contrib.agents.action.ActionProposal;
 import fr.ign.cogit.geoxygene.contrib.agents.agent.AgentSatisfactionState;
 import fr.ign.cogit.geoxygene.contrib.agents.constraint.Constraint;
+import fr.ign.cogit.geoxygene.contrib.graphe.IEdge;
+import fr.ign.cogit.geoxygene.contrib.graphe.IGraph;
+import fr.ign.cogit.geoxygene.contrib.graphe.IGraphLinkableFeature;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 
 public class GeographicPointAgent extends CartAComAgentGeneralisation
     implements IGeographicPointAgent {

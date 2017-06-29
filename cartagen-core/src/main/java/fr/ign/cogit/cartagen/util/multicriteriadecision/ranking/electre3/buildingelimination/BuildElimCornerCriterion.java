@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
-import fr.ign.cogit.cartagen.util.multicriteriadecision.ranking.electre3.ELECTREIIICriterion;
+import fr.ign.cogit.geoxygene.contrib.multicriteriadecision.ranking.ELECTREIIICriterion;
 import fr.ign.cogit.geoxygene.schemageo.api.bati.Batiment;
 
 public class BuildElimCornerCriterion extends ELECTREIIICriterion {

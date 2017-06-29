@@ -16,14 +16,14 @@ import fr.ign.cogit.cartagen.agents.gael.deformation.constraint.simple.segment.O
 import fr.ign.cogit.cartagen.agents.gael.deformation.constraint.simple.segment.PositionPreservation;
 import fr.ign.cogit.cartagen.agents.gael.field.agent.relief.ReliefFieldAgent;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
-import fr.ign.cogit.cartagen.graph.IGraph;
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationPoint;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationSegment;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineSegment;
 import fr.ign.cogit.geoxygene.api.spatial.geomprim.ICurve;
+import fr.ign.cogit.geoxygene.contrib.graphe.IGraph;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPosition;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineSegment;
 

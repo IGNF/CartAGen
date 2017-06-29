@@ -18,14 +18,17 @@ import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.feature.IPopulation;
 import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
+import fr.ign.cogit.geoxygene.contrib.graphe.IEdge;
+import fr.ign.cogit.geoxygene.contrib.graphe.IGraphLinkableFeature;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.feature.FT_Feature;
 
 /**
  * A feature linked to a point agent
  * @author JGaffuri
  */
-public class GraphLinkableFeature extends FT_Feature implements
-    IGraphLinkableFeature {
+public class GraphLinkableFeature extends FT_Feature
+    implements IGraphLinkableFeature {
 
   private IGeneObj feature;
 

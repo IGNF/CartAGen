@@ -4,8 +4,6 @@ import java.awt.Color;
 
 import fr.ign.cogit.cartagen.algorithms.polygon.Skeletonize;
 import fr.ign.cogit.cartagen.core.dataset.geompool.GeometryPool;
-import fr.ign.cogit.cartagen.graph.GraphPath;
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.cartagen.graph.TreeGraph;
 import fr.ign.cogit.cartagen.spatialanalysis.measures.section.Bend;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
@@ -13,6 +11,8 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPositionList;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
 import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IMultiCurve;
+import fr.ign.cogit.geoxygene.contrib.graphe.GraphPath;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.generalisation.Filtering;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPositionList;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineString;

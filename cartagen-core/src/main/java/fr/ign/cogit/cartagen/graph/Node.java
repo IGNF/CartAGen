@@ -1,11 +1,11 @@
 /*******************************************************************************
  * This software is released under the licence CeCILL
- *  
- *  see Licence_CeCILL-C_fr.html see Licence_CeCILL-C_en.html
- *  
- *  see <a href="http://www.cecill.info/">http://www.cecill.info/a>
- *  
- *  @copyright IGN
+ * 
+ * see Licence_CeCILL-C_fr.html see Licence_CeCILL-C_en.html
+ * 
+ * see <a href="http://www.cecill.info/">http://www.cecill.info/a>
+ * 
+ * @copyright IGN
  ******************************************************************************/
 package fr.ign.cogit.cartagen.graph;
 
@@ -20,6 +20,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.geomprim.IPoint;
+import fr.ign.cogit.geoxygene.contrib.graphe.IEdge;
+import fr.ign.cogit.geoxygene.contrib.graphe.IGraph;
+import fr.ign.cogit.geoxygene.contrib.graphe.IGraphLinkableFeature;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPosition;
 
 /*
@@ -124,8 +128,8 @@ public class Node implements INode {
     super();
     this.geoObjects = geoObjects;
     this.geom = geom;
-    this.positionIni = new DirectPosition(geom.getPosition().getX(), geom
-        .getPosition().getY(), geom.getPosition().getZ());
+    this.positionIni = new DirectPosition(geom.getPosition().getX(),
+        geom.getPosition().getY(), geom.getPosition().getZ());
     this.graph = graph;
     this.edgesIn = new HashSet<IEdge>();
     this.edgesOut = new HashSet<IEdge>();
@@ -136,8 +140,8 @@ public class Node implements INode {
     super();
     this.geoObjects = new HashSet<IFeature>();
     this.geom = geom;
-    this.positionIni = new DirectPosition(geom.getPosition().getX(), geom
-        .getPosition().getY(), geom.getPosition().getZ());
+    this.positionIni = new DirectPosition(geom.getPosition().getX(),
+        geom.getPosition().getY(), geom.getPosition().getZ());
     this.edgesIn = new HashSet<IEdge>();
     this.edgesOut = new HashSet<IEdge>();
     this.id = 100000 + Node.counter.incrementAndGet();

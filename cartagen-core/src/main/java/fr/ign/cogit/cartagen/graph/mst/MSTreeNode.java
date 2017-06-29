@@ -14,11 +14,11 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
-import fr.ign.cogit.cartagen.graph.IEdge;
-import fr.ign.cogit.cartagen.graph.IGraph;
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.cartagen.graph.Node;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
+import fr.ign.cogit.geoxygene.contrib.graphe.IEdge;
+import fr.ign.cogit.geoxygene.contrib.graphe.IGraph;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.spatial.geomprim.GM_Point;
 
 /*

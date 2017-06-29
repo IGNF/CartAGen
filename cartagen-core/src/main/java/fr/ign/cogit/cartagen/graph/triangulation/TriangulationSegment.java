@@ -12,8 +12,8 @@
  */
 package fr.ign.cogit.cartagen.graph.triangulation;
 
-import fr.ign.cogit.cartagen.graph.IEdge;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineSegment;
+import fr.ign.cogit.geoxygene.contrib.graphe.IEdge;
 
 /**
  * The segment interface
@@ -22,11 +22,11 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineSegment;
 public interface TriangulationSegment extends IEdge {
 
   /**
-	 */
+   */
   public TriangulationPoint getPoint1();
 
   /**
-	 */
+   */
   public TriangulationPoint getPoint2();
 
   /**

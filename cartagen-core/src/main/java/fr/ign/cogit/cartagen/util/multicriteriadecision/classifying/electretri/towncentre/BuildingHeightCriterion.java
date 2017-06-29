@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanBlock;
-import fr.ign.cogit.cartagen.util.multicriteriadecision.classifying.electretri.ELECTRECriterion;
+import fr.ign.cogit.geoxygene.contrib.multicriteriadecision.classifying.electretri.ELECTRECriterion;
 import fr.ign.cogit.geoxygene.schemageo.api.bati.Batiment;
 import fr.ign.cogit.geoxygene.schemageo.api.bati.Ilot;
 import fr.ign.cogit.geoxygene.schemageo.api.support.elementsIndependants.ElementIndependant;
@@ -27,8 +27,8 @@ public class BuildingHeightCriterion extends ELECTRECriterion {
   // All static fields //
   private static double MIN_HEIGHT = 6.0;
   private static double MAX_HEIGHT = 40.0;
-  private static Logger logger = Logger.getLogger(ELECTRECriterion.class
-      .getName());
+  private static Logger logger = Logger
+      .getLogger(ELECTRECriterion.class.getName());
 
   // Public fields //
 
@@ -70,15 +70,16 @@ public class BuildingHeightCriterion extends ELECTRECriterion {
     }
     double height = totalHeight / ilot.getComposants().size();
     if (height < BuildingHeightCriterion.MIN_HEIGHT) {
-      BuildingHeightCriterion.logger.finest(this.getName() + " : " + 0.2
-          * (height / BuildingHeightCriterion.MIN_HEIGHT));
+      BuildingHeightCriterion.logger.finest(this.getName() + " : "
+          + 0.2 * (height / BuildingHeightCriterion.MIN_HEIGHT));
       return 0.2 * (height / BuildingHeightCriterion.MIN_HEIGHT);
     }
     if (height > BuildingHeightCriterion.MAX_HEIGHT) {
       BuildingHeightCriterion.logger.finest(this.getName() + 0.2);
       return 0.2;
     }
-    double best = (2.0 * BuildingHeightCriterion.MIN_HEIGHT + BuildingHeightCriterion.MAX_HEIGHT) / 3.0;
+    double best = (2.0 * BuildingHeightCriterion.MIN_HEIGHT
+        + BuildingHeightCriterion.MAX_HEIGHT) / 3.0;
     double value = Math.max(0.2, 1.0 - Math.abs(height - best) / best);
     BuildingHeightCriterion.logger.finest(this.getName() + " : " + value);
     return value;

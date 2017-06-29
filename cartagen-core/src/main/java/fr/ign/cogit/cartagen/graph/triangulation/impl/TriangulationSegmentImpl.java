@@ -13,10 +13,10 @@
 package fr.ign.cogit.cartagen.graph.triangulation.impl;
 
 import fr.ign.cogit.cartagen.graph.Edge;
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationPoint;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationSegment;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineSegment;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineSegment;
 
 /**
@@ -25,11 +25,11 @@ import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineSegment;
  * @author jgaffuri
  * 
  */
-public class TriangulationSegmentImpl extends Edge implements
-    TriangulationSegment {
+public class TriangulationSegmentImpl extends Edge
+    implements TriangulationSegment {
 
   /**
-	 */
+   */
   private TriangulationPoint point1;
 
   /**
@@ -41,7 +41,7 @@ public class TriangulationSegmentImpl extends Edge implements
   }
 
   /**
-	 */
+   */
   private TriangulationPoint point2;
 
   /**
@@ -53,7 +53,7 @@ public class TriangulationSegmentImpl extends Edge implements
   }
 
   /**
-	 */
+   */
   private ILineSegment geom;
 
   /*

@@ -25,7 +25,6 @@ import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanAlignment;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanBlock;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanElement;
-import fr.ign.cogit.cartagen.graph.IEdge;
 import fr.ign.cogit.cartagen.graph.mst.MinSpanningTree;
 import fr.ign.cogit.cartagen.spatialanalysis.urban.UrbanEnrichment;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
@@ -34,6 +33,7 @@ import fr.ign.cogit.geoxygene.appli.plugin.cartagen.CartAGenPlugin;
 import fr.ign.cogit.geoxygene.appli.plugin.cartagen.selection.SelectionUtil;
 import fr.ign.cogit.geoxygene.appli.plugin.cartagen.themes.DataThemesGUIComponent;
 import fr.ign.cogit.geoxygene.appli.plugin.cartagen.themes.UrbanAlignmentMenu;
+import fr.ign.cogit.geoxygene.contrib.graphe.IEdge;
 import fr.ign.cogit.geoxygene.feature.FT_FeatureCollection;
 
 public class UrbanAlignmentMenuCogitComplement extends JMenu {

@@ -19,8 +19,6 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 import fr.ign.cogit.cartagen.graph.Graph;
-import fr.ign.cogit.cartagen.graph.IEdge;
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.cartagen.graph.triangulation.ITriangulation;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationPoint;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationSegment;
@@ -36,6 +34,8 @@ import fr.ign.cogit.geoxygene.contrib.cartetopo.Arc;
 import fr.ign.cogit.geoxygene.contrib.cartetopo.CarteTopo;
 import fr.ign.cogit.geoxygene.contrib.cartetopo.Face;
 import fr.ign.cogit.geoxygene.contrib.cartetopo.Noeud;
+import fr.ign.cogit.geoxygene.contrib.graphe.IEdge;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.feature.DefaultFeature;
 import fr.ign.cogit.geoxygene.feature.Population;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPosition;
@@ -63,7 +63,7 @@ public class Triangulation extends Graph implements ITriangulation {
   }
 
   /**
-	 */
+   */
   private List<TriangulationPoint> points;
 
   /**
@@ -75,7 +75,7 @@ public class Triangulation extends Graph implements ITriangulation {
   }
 
   /**
-	 */
+   */
   private Collection<TriangulationSegment> segments;
 
   /**
@@ -87,7 +87,7 @@ public class Triangulation extends Graph implements ITriangulation {
   }
 
   /**
-	 */
+   */
   private Collection<TriangulationTriangle> triangles;
 
   /**
@@ -234,8 +234,8 @@ public class Triangulation extends Graph implements ITriangulation {
     }
     if (this.points.size() == 2) {
       // build the single segment
-      this.segments.add(this.segFac.create(this.points.get(0),
-          this.points.get(1)));
+      this.segments
+          .add(this.segFac.create(this.points.get(0), this.points.get(1)));
       return;
     }
 
@@ -252,9 +252,9 @@ public class Triangulation extends Graph implements ITriangulation {
       Triangulation.trianguleC(this.options, this.jin, this.jout, null);
     }
     if (Triangulation.logger.isDebugEnabled()) {
-      Triangulation.logger.debug("Triangulation finished ("
-          + this.jout.numberofedges + " segments, "
-          + this.jout.numberoftriangles + " triangles)");
+      Triangulation.logger
+          .debug("Triangulation finished (" + this.jout.numberofedges
+              + " segments, " + this.jout.numberoftriangles + " triangles)");
     }
 
     // cleaning
@@ -292,8 +292,8 @@ public class Triangulation extends Graph implements ITriangulation {
     }
     if (this.points.size() == 2) {
       // build the single segment
-      this.segments.add(this.segFac.create(this.points.get(0),
-          this.points.get(1)));
+      this.segments
+          .add(this.segFac.create(this.points.get(0), this.points.get(1)));
       return;
     }
 
@@ -310,9 +310,9 @@ public class Triangulation extends Graph implements ITriangulation {
       Triangulation.trianguleC(options, this.jin, this.jout, null);
     }
     if (Triangulation.logger.isDebugEnabled()) {
-      Triangulation.logger.debug("Triangulation finished ("
-          + this.jout.numberofedges + " segments, "
-          + this.jout.numberoftriangles + " triangles)");
+      Triangulation.logger
+          .debug("Triangulation finished (" + this.jout.numberofedges
+              + " segments, " + this.jout.numberoftriangles + " triangles)");
     }
 
     // cleaning
@@ -397,16 +397,16 @@ public class Triangulation extends Graph implements ITriangulation {
    */
   private void convertJout(boolean createTriangles, IGeometry geom) {
     if (Triangulation.logger.isDebugEnabled()) {
-      Triangulation.logger.debug("Output data triangulation conversion - geom="
-          + geom);
+      Triangulation.logger
+          .debug("Output data triangulation conversion - geom=" + geom);
     }
 
     int i;
     TriangulationPoint p1 = null, p2 = null, p3 = null;
 
     if (Triangulation.logger.isDebugEnabled()) {
-      Triangulation.logger.debug("Construction of " + this.jout.numberofedges
-          + " segments");
+      Triangulation.logger
+          .debug("Construction of " + this.jout.numberofedges + " segments");
     }
     for (i = 0; i < this.jout.numberofedges; i++) {
       // create segment between points number jout.edgelist[2*i] and point
@@ -426,10 +426,10 @@ public class Triangulation extends Graph implements ITriangulation {
 
         // there is a geometry to consider and the segment center point does not
         // belong to it: continue
-        if (geom != null
-            && !geom.contains(new DirectPosition((p1.getPosition().getX() + p2
-                .getPosition().getX()) / 2, (p1.getPosition().getY() + p2
-                .getPosition().getY()) / 2).toGM_Point())) {
+        if (geom != null && !geom.contains(new DirectPosition(
+            (p1.getPosition().getX() + p2.getPosition().getX()) / 2,
+            (p1.getPosition().getY() + p2.getPosition().getY()) / 2)
+                .toGM_Point())) {
           continue;
         }
 
@@ -451,8 +451,8 @@ public class Triangulation extends Graph implements ITriangulation {
     }
 
     if (Triangulation.logger.isDebugEnabled()) {
-      Triangulation.logger.debug("Construction of "
-          + this.jout.numberoftriangles + " triangles");
+      Triangulation.logger.debug(
+          "Construction of " + this.jout.numberoftriangles + " triangles");
     }
     for (i = 0; i < this.jout.numberoftriangles; i++) {
       // create triangle between points number jout.trianglelist[3*i],
@@ -468,11 +468,11 @@ public class Triangulation extends Graph implements ITriangulation {
 
         // there is a geometry to consider and the triangle center point does
         // not belong to it: continue
-        if (geom != null
-            && !geom.contains(new DirectPosition((p1.getPosition().getX()
-                + p2.getPosition().getX() + p3.getPosition().getX()) / 3, (p1
-                .getPosition().getY() + p2.getPosition().getY() + p3
-                .getPosition().getY()) / 3).toGM_Point())) {
+        if (geom != null && !geom.contains(new DirectPosition(
+            (p1.getPosition().getX() + p2.getPosition().getX()
+                + p3.getPosition().getX()) / 3,
+            (p1.getPosition().getY() + p2.getPosition().getY()
+                + p3.getPosition().getY()) / 3).toGM_Point())) {
           continue;
         }
 
@@ -493,8 +493,8 @@ public class Triangulation extends Graph implements ITriangulation {
 
     if (this.getOptions().indexOf('v') != -1) {
       if (Triangulation.logger.isDebugEnabled()) {
-        Triangulation.logger.debug(I18N
-            .getString("Triangulation.VoronoiDiagramExportStart")); //$NON-NLS-1$
+        Triangulation.logger
+            .debug(I18N.getString("Triangulation.VoronoiDiagramExportStart")); //$NON-NLS-1$
       }
       IEnvelope envelope = this.getPointsEnvelope();
       envelope.expandBy(100);
@@ -502,10 +502,10 @@ public class Triangulation extends Graph implements ITriangulation {
           envelope, 10);
       // l'export du diagramme de voronoi
       for (int j = 0; j < this.jvorout.numberofpoints; j++) {
-        this.getPopVoronoiVertices().add(
-            new Noeud(new GM_Point(new DirectPosition(
-                this.jvorout.pointlist[2 * j],
-                this.jvorout.pointlist[2 * j + 1]))));
+        this.getPopVoronoiVertices()
+            .add(new Noeud(
+                new GM_Point(new DirectPosition(this.jvorout.pointlist[2 * j],
+                    this.jvorout.pointlist[2 * j + 1]))));
       }
       for (int j = 0; j < this.jvorout.numberofedges; j++) {
         int indexIni = this.jvorout.edgelist[2 * j];
@@ -517,13 +517,12 @@ public class Triangulation extends Graph implements ITriangulation {
           Noeud c1 = this.getPopVoronoiVertices().getElements().get(indexIni);
           Noeud c2 = new Noeud();
           double vectorSize = 10000000;
-          c2.setGeometrie(new GM_Point(new DirectPosition(c1.getGeometrie()
-              .getPosition().getX()
-              + vectorSize * vx, c1.getGeometrie().getPosition().getY()
-              + vectorSize * vy)));
+          c2.setGeometrie(new GM_Point(new DirectPosition(
+              c1.getGeometrie().getPosition().getX() + vectorSize * vx,
+              c1.getGeometrie().getPosition().getY() + vectorSize * vy)));
           GM_LineString line = new GM_LineString(new DirectPositionList(
-              Arrays.asList(c1.getGeometrie().getPosition(), c2.getGeometrie()
-                  .getPosition())));
+              Arrays.asList(c1.getGeometrie().getPosition(),
+                  c2.getGeometrie().getPosition())));
           IGeometry intersection = line.intersection(envelope.getGeom());
           IDirectPositionList list = intersection.coord();
           if (list.size() > 1) {
@@ -532,8 +531,9 @@ public class Triangulation extends Graph implements ITriangulation {
           indexFin = this.getPopVoronoiVertices().size();
           this.getPopVoronoiVertices().add(c2);
         }
-        this.getPopVoronoiEdges().add(
-            new Arc(this.getPopVoronoiVertices().getElements().get(indexIni),
+        this.getPopVoronoiEdges()
+            .add(new Arc(
+                this.getPopVoronoiVertices().getElements().get(indexIni),
                 this.getPopVoronoiVertices().getElements().get(indexFin)));
       }
     }

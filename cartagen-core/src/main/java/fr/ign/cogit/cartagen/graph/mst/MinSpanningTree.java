@@ -18,10 +18,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
 import fr.ign.cogit.cartagen.graph.Graph;
-import fr.ign.cogit.cartagen.graph.IEdge;
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineSegment;
+import fr.ign.cogit.geoxygene.contrib.graphe.IEdge;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineSegment;
 
 /*
@@ -159,10 +159,11 @@ public class MinSpanningTree extends Graph {
       newEdge.getSpanningTree().addEdge(newEdge);
       // merging of the two trees connected by this edge
       MinSpanningTree treeToBeMerged;
-      if (newEdge.getInitialNode().getGraph().equals(newEdge.getSpanningTree())) {
+      if (newEdge.getInitialNode().getGraph()
+          .equals(newEdge.getSpanningTree())) {
         treeToBeMerged = (MinSpanningTree) newEdge.getFinalNode().getGraph();
-      } else if (newEdge.getFinalNode().getGraph().equals(
-          newEdge.getSpanningTree())) {
+      } else if (newEdge.getFinalNode().getGraph()
+          .equals(newEdge.getSpanningTree())) {
         treeToBeMerged = (MinSpanningTree) newEdge.getInitialNode().getGraph();
       } else {
         treeToBeMerged = (MinSpanningTree) newEdge.getFinalNode().getGraph();
@@ -203,7 +204,8 @@ public class MinSpanningTree extends Graph {
         MinSpanningTree tree2 = recursiveTrees.get(j);
         MSTreeEdge edge = tree1.getConnectingEdge(tree2);
         if (edge.getLengthValue() < newEdge.getLengthValue()) {
-          if (edge.getInitialNode().getGeoObjects().iterator().next() instanceof IBuilding) {
+          if (edge.getInitialNode().getGeoObjects().iterator()
+              .next() instanceof IBuilding) {
             newEdge = edge;
           }
         }
@@ -230,9 +232,9 @@ public class MinSpanningTree extends Graph {
         if (lengthValue >= connectingEdge.getLengthValue()) {
           continue;
         }
-        ILineSegment geom = new GM_LineSegment(node1.getGeoObjects().iterator()
-            .next().getGeom().centroid(), node2.getGeoObjects().iterator()
-            .next().getGeom().centroid());
+        ILineSegment geom = new GM_LineSegment(
+            node1.getGeoObjects().iterator().next().getGeom().centroid(),
+            node2.getGeoObjects().iterator().next().getGeom().centroid());
         connectingEdge = new MSTreeEdge(this, (MSTreeNode) node1,
             (MSTreeNode) node2, geom, lengthValue);
       }

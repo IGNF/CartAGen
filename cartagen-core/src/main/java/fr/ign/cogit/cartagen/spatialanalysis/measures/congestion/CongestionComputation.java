@@ -14,10 +14,10 @@ package fr.ign.cogit.cartagen.spatialanalysis.measures.congestion;
 
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanElement;
-import fr.ign.cogit.cartagen.graph.IEdge;
-import fr.ign.cogit.cartagen.graph.IGraphLinkableFeature;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPositionList;
+import fr.ign.cogit.geoxygene.contrib.graphe.IEdge;
+import fr.ign.cogit.geoxygene.contrib.graphe.IGraphLinkableFeature;
 import fr.ign.cogit.geoxygene.util.algo.CommonAlgorithms;
 
 /**
@@ -83,7 +83,7 @@ public class CongestionComputation {
           .getGraphLinkableFeature() == feature
               ? s.getFinalNode().getGraphLinkableFeature()
               : s.getInitialNode().getGraphLinkableFeature();
-      ag = feat.getFeature();
+      ag = (IGeneObj) feat.getFeature();
 
       // compte les segments bati-bati
       if (ag instanceof IUrbanElement) {

@@ -11,8 +11,8 @@ package fr.ign.cogit.cartagen.util.multicriteriadecision.ranking.electre3.buildi
 
 import java.util.Map;
 
-import fr.ign.cogit.cartagen.util.multicriteriadecision.ranking.electre3.ELECTREIIICriterion;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
+import fr.ign.cogit.geoxygene.contrib.multicriteriadecision.ranking.ELECTREIIICriterion;
 
 public class BuildElimSizeCriterion extends ELECTREIIICriterion {
 

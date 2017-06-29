@@ -25,6 +25,10 @@ import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.geomprim.ICurve;
 import fr.ign.cogit.geoxygene.api.spatial.geomprim.IPoint;
+import fr.ign.cogit.geoxygene.contrib.graphe.GraphPath;
+import fr.ign.cogit.geoxygene.contrib.graphe.IEdge;
+import fr.ign.cogit.geoxygene.contrib.graphe.IGraph;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.schemageo.api.support.reseau.ArcReseau;
 import fr.ign.cogit.geoxygene.schemageo.api.support.reseau.Direction;
 import fr.ign.cogit.geoxygene.schemageo.api.support.reseau.NoeudReseau;
@@ -395,13 +399,13 @@ public class Graph implements IGraph {
         }
         // if the node has already been reached, check if this path is shorter
         if (stack.contains(neighbour)) {
-          if (mapNodeWghts.get(neighbour).doubleValue() > (neighWght + mapNodeWghts
-              .get(nearest).doubleValue())) {
+          if (mapNodeWghts.get(neighbour).doubleValue() > (neighWght
+              + mapNodeWghts.get(nearest).doubleValue())) {
             // modify the attributes of the shortest path to 'neighbour' node
             mapNodePrev.put(neighbour, nearest);
             mapNodePrevArc.put(neighbour, arc);
-            mapNodeWghts.put(neighbour, new Double(neighWght
-                + mapNodeWghts.get(nearest).doubleValue()));
+            mapNodeWghts.put(neighbour, new Double(
+                neighWght + mapNodeWghts.get(nearest).doubleValue()));
           }
           continue;
         }
@@ -413,7 +417,7 @@ public class Graph implements IGraph {
         mapNodePrevArc.put(neighbour, arc);
         // put this node in the stack
         stack.add(neighbour);
-      }// for, loop on the neighbours of 'nearest'
+      } // for, loop on the neighbours of 'nearest'
     }
 
     // ***************************************
@@ -442,7 +446,7 @@ public class Graph implements IGraph {
       nodeList.add(1, previousNode);
       next = previousNode;
 
-    }// while (true) : phase arrière
+    } // while (true) : phase arrière
 
     GraphPath sp = new GraphPath(spWght, arcList, nodeList, this);
     return sp;
@@ -507,12 +511,12 @@ public class Graph implements IGraph {
           suivants.removeAll(partieConn);
           // add all that remains into noeudsSuiv
           noeudsSuiv.addAll(suivants);
-        }// iteration on noeudsSuivants
-      }// while noeudsSuiv is not empty
+        } // iteration on noeudsSuivants
+      } // while noeudsSuiv is not empty
 
       // add the connex part to the final set
       connexes.add(partieConn);
-    }// tant que la pile n'est pas vide
+    } // tant que la pile n'est pas vide
 
     return connexes;
   }

@@ -14,7 +14,7 @@ package fr.ign.cogit.cartagen.spatialanalysis.measures.congestion;
 
 import org.apache.log4j.Logger;
 
-import fr.ign.cogit.cartagen.graph.IGraphLinkableFeature;
+import fr.ign.cogit.geoxygene.contrib.graphe.IGraphLinkableFeature;
 
 /**
  * @author JGaffuri

@@ -19,8 +19,6 @@ import fr.ign.cogit.cartagen.agents.gael.field.constraint.buildingrelief.Buildin
 import fr.ign.cogit.cartagen.agents.gael.field.relation.buildingfield.BuildingElevationRelation;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
-import fr.ign.cogit.cartagen.graph.IGraph;
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationPoint;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationTriangle;
 import fr.ign.cogit.cartagen.spatialanalysis.measures.TriangleFacesMeasures;
@@ -29,6 +27,8 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ITriangle;
 import fr.ign.cogit.geoxygene.contrib.agents.constraint.Constraint;
+import fr.ign.cogit.geoxygene.contrib.graphe.IGraph;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPosition;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPositionList;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineString;

@@ -11,8 +11,8 @@ package fr.ign.cogit.cartagen.spatialanalysis.measures;
 
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
-import fr.ign.cogit.cartagen.graph.ITriangleFace;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
+import fr.ign.cogit.geoxygene.contrib.graphe.ITriangleFace;
 
 public class TriangleFacesMeasures {
 

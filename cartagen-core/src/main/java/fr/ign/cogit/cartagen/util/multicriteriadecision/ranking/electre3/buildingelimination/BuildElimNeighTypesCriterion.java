@@ -13,7 +13,7 @@ import java.util.Map;
 
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
 import fr.ign.cogit.cartagen.spatialanalysis.measures.congestion.CongestionComputation;
-import fr.ign.cogit.cartagen.util.multicriteriadecision.ranking.electre3.ELECTREIIICriterion;
+import fr.ign.cogit.geoxygene.contrib.multicriteriadecision.ranking.ELECTREIIICriterion;
 
 /**
  * A criteria for building elimination in a block based on the types on

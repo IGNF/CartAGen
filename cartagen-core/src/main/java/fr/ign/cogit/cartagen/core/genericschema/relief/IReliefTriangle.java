@@ -10,8 +10,8 @@
 package fr.ign.cogit.cartagen.core.genericschema.relief;
 
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObjSurf;
-import fr.ign.cogit.cartagen.graph.INode;
-import fr.ign.cogit.cartagen.graph.ITriangleFace;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
+import fr.ign.cogit.geoxygene.contrib.graphe.ITriangleFace;
 
 /*
  * ###### IGN / CartAGen ###### Title: reliefElementPoint Description: Points

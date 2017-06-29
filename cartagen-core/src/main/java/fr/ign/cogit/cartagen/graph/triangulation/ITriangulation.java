@@ -12,12 +12,12 @@ package fr.ign.cogit.cartagen.graph.triangulation;
 import java.util.Collection;
 import java.util.List;
 
-import fr.ign.cogit.cartagen.graph.IGraph;
 import fr.ign.cogit.geoxygene.api.feature.IPopulation;
 import fr.ign.cogit.geoxygene.contrib.cartetopo.Arc;
 import fr.ign.cogit.geoxygene.contrib.cartetopo.CarteTopo;
 import fr.ign.cogit.geoxygene.contrib.cartetopo.Face;
 import fr.ign.cogit.geoxygene.contrib.cartetopo.Noeud;
+import fr.ign.cogit.geoxygene.contrib.graphe.IGraph;
 
 public interface ITriangulation extends IGraph {
 

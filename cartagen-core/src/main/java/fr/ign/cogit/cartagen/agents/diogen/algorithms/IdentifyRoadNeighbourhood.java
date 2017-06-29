@@ -20,8 +20,6 @@ import fr.ign.cogit.cartagen.core.genericschema.network.INetworkSection;
 import fr.ign.cogit.cartagen.core.genericschema.road.IRoadLine;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
 import fr.ign.cogit.cartagen.graph.GraphLinkableFeature;
-import fr.ign.cogit.cartagen.graph.IGraphLinkableFeature;
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationPoint;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationTriangle;
 import fr.ign.cogit.cartagen.graph.triangulation.impl.TriangulationPointImpl;
@@ -35,6 +33,8 @@ import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IMultiCurve;
 import fr.ign.cogit.geoxygene.api.spatial.geomprim.IPoint;
 import fr.ign.cogit.geoxygene.contrib.agents.agent.IAgent;
 import fr.ign.cogit.geoxygene.contrib.geometrie.Operateurs;
+import fr.ign.cogit.geoxygene.contrib.graphe.IGraphLinkableFeature;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPositionList;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineString;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_Polygon;
@@ -225,7 +225,8 @@ public class IdentifyRoadNeighbourhood {
       // get the other nodes at proximity
       Set<INode> nodes = node.getNextNodes();
       for (INode otherNode : nodes) {
-        IGeneObj f = otherNode.getGraphLinkableFeature().getFeature();
+        IGeneObj f = (IGeneObj) otherNode.getGraphLinkableFeature()
+            .getFeature();
         if (!(f instanceof IBuilding)) {
           continue;
         }

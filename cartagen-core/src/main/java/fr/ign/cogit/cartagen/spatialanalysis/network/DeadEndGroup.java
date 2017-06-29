@@ -21,8 +21,6 @@ import fr.ign.cogit.cartagen.core.genericschema.network.NetworkSectionType;
 import fr.ign.cogit.cartagen.core.genericschema.road.IDeadEndGroup;
 import fr.ign.cogit.cartagen.core.genericschema.road.IRoadLine;
 import fr.ign.cogit.cartagen.graph.Graph;
-import fr.ign.cogit.cartagen.graph.GraphPath;
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.feature.IFeatureCollection;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
@@ -34,6 +32,8 @@ import fr.ign.cogit.geoxygene.contrib.cartetopo.Arc;
 import fr.ign.cogit.geoxygene.contrib.cartetopo.CarteTopo;
 import fr.ign.cogit.geoxygene.contrib.cartetopo.Face;
 import fr.ign.cogit.geoxygene.contrib.cartetopo.Noeud;
+import fr.ign.cogit.geoxygene.contrib.graphe.GraphPath;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.feature.DefaultFeature;
 import fr.ign.cogit.geoxygene.feature.FT_FeatureCollection;
 import fr.ign.cogit.geoxygene.schema.schemaConceptuelISOJeu.AttributeType;
@@ -150,7 +150,7 @@ public class DeadEndGroup extends GeneObjDefault implements IDeadEndGroup {
       if (sp.getLength() > this.length) {
         this.length = sp.getLength();
       }
-    }// boucle sur les extrémités
+    } // boucle sur les extrémités
   }
 
   public INetworkNode getRootNode() {
@@ -407,7 +407,8 @@ public class DeadEndGroup extends GeneObjDefault implements IDeadEndGroup {
    */
 
   public static HashSet<DeadEndGroup> buildFromRoads(
-      IFeatureCollection<IRoadLine> roads, IGeometry border, CarteTopo carteTopo) {
+      IFeatureCollection<IRoadLine> roads, IGeometry border,
+      CarteTopo carteTopo) {
 
     // Addition of the city centre contour if existing
     ILineString borderLine = null;
@@ -584,9 +585,8 @@ public class DeadEndGroup extends GeneObjDefault implements IDeadEndGroup {
           continue;
         }
         // Ne pas tenir compte des routes sortant de la ville
-        if (borderLine != null
-            && arc.getCorrespondant(0).getGeom()
-                .intersects(borderLine.exteriorLineString())) {
+        if (borderLine != null && arc.getCorrespondant(0).getGeom()
+            .intersects(borderLine.exteriorLineString())) {
           continue;
         }
         INetworkSection section = (INetworkSection) arc.getCorrespondant(0);

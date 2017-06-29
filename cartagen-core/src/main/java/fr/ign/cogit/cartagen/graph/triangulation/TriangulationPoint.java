@@ -12,10 +12,10 @@
  */
 package fr.ign.cogit.cartagen.graph.triangulation;
 
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.geomprim.IPoint;
 import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 
 /**
  * The point interface

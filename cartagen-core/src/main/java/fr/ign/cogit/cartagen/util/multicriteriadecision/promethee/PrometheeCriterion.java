@@ -9,7 +9,7 @@
  ******************************************************************************/
 package fr.ign.cogit.cartagen.util.multicriteriadecision.promethee;
 
-import fr.ign.cogit.cartagen.util.multicriteriadecision.Criterion;
+import fr.ign.cogit.geoxygene.contrib.multicriteriadecision.Criterion;
 
 /**
  * A Promethee criterion with a name and a preference function.
@@ -20,7 +20,8 @@ public abstract class PrometheeCriterion extends Criterion {
 
   private PreferenceFunction preferenceFunction;
 
-  public PrometheeCriterion(String name, PreferenceFunction preferenceFunction) {
+  public PrometheeCriterion(String name,
+      PreferenceFunction preferenceFunction) {
     super(name);
     this.preferenceFunction = preferenceFunction;
   }

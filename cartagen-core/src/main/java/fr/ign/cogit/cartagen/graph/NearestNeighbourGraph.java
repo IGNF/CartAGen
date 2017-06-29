@@ -16,6 +16,7 @@ import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.feature.IFeatureCollection;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
+import fr.ign.cogit.geoxygene.contrib.graphe.IEdge;
 import fr.ign.cogit.geoxygene.feature.DefaultFeature;
 import fr.ign.cogit.geoxygene.feature.FT_FeatureCollection;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineString;
@@ -81,8 +82,8 @@ public class NearestNeighbourGraph extends Graph {
         continue;
       }
       // create the new edge
-      IEdge edge = new Edge(this, node, nearest, null, new GM_LineString(pt1,
-          pt2));
+      IEdge edge = new Edge(this, node, nearest, null,
+          new GM_LineString(pt1, pt2));
       this.getEdges().add(edge);
       node.addEdgeOut(edge);
       nearest.addEdgeIn(edge);
@@ -149,8 +150,8 @@ public class NearestNeighbourGraph extends Graph {
       // create the new edge
       // get the neighbour position
       IDirectPosition pt2 = nearest.getGeom().getPosition();
-      IEdge edge = new Edge(this, node, nearest, null, new GM_LineString(pt1,
-          pt2));
+      IEdge edge = new Edge(this, node, nearest, null,
+          new GM_LineString(pt1, pt2));
       this.getEdges().add(edge);
       node.addEdgeOut(edge);
       nearest.addEdgeIn(edge);

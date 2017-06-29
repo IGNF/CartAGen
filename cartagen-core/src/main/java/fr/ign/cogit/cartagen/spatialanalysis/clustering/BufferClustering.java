@@ -12,6 +12,7 @@ import java.util.Set;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkNode;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkSection;
+import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.feature.IFeatureCollection;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
 import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IMultiSurface;
@@ -28,7 +29,7 @@ import fr.ign.cogit.geoxygene.feature.FT_FeatureCollection;
  */
 public class BufferClustering {
 
-  private IFeatureCollection<IGeneObj> features;
+  private IFeatureCollection<IFeature> features;
   private double bufferSize;
   private boolean isDebug = false;
   /**
@@ -37,10 +38,10 @@ public class BufferClustering {
   private boolean eliminated = false;
   private Random red, green, blue;
 
-  public BufferClustering(Collection<? extends IGeneObj> features,
+  public BufferClustering(Collection<? extends IFeature> features,
       double bufferSize) {
     super();
-    this.features = new FT_FeatureCollection<IGeneObj>();
+    this.features = new FT_FeatureCollection<IFeature>();
     this.features.addAll(features);
     this.bufferSize = bufferSize;
     this.red = new Random();
@@ -48,11 +49,11 @@ public class BufferClustering {
     this.blue = new Random();
   }
 
-  public void setFeatures(IFeatureCollection<IGeneObj> features) {
+  public void setFeatures(IFeatureCollection<IFeature> features) {
     this.features = features;
   }
 
-  public IFeatureCollection<IGeneObj> getFeatures() {
+  public IFeatureCollection<IFeature> getFeatures() {
     return this.features;
   }
 
@@ -80,13 +81,13 @@ public class BufferClustering {
    * @return
    */
   @SuppressWarnings("unchecked")
-  public Map<Set<IGeneObj>, IPolygon> getClusters() {
-    Map<Set<IGeneObj>, IPolygon> clusters = new HashMap<Set<IGeneObj>, IPolygon>();
+  public Map<Set<IFeature>, IPolygon> getClusters() {
+    Map<Set<IFeature>, IPolygon> clusters = new HashMap<Set<IFeature>, IPolygon>();
 
     // first, build the merged geometry
     IGeometry mergedGeom = null;
-    for (IGeneObj obj : this.features) {
-      if (!this.eliminated & obj.isEliminated()) {
+    for (IFeature obj : this.features) {
+      if (!this.eliminated & obj.isDeleted()) {
         continue;
       }
       IGeometry buffer = obj.getGeom().buffer(this.bufferSize);
@@ -104,7 +105,7 @@ public class BufferClustering {
     }
 
     if (mergedGeom instanceof IPolygon) {
-      Set<IGeneObj> cluster = new HashSet<IGeneObj>();
+      Set<IFeature> cluster = new HashSet<IFeature>();
       cluster.addAll(this.features.select(mergedGeom));
       clusters.put(cluster, (IPolygon) mergedGeom);
       return clusters;
@@ -113,7 +114,7 @@ public class BufferClustering {
     // now make any simple part of mergedGeom a cluster
     for (IGeometry simple : ((IMultiSurface<IOrientableSurface>) mergedGeom)
         .getList()) {
-      Set<IGeneObj> cluster = new HashSet<IGeneObj>();
+      Set<IFeature> cluster = new HashSet<IFeature>();
       cluster.addAll(this.features.select(simple));
       clusters.put(cluster, (IPolygon) simple);
     }
@@ -129,12 +130,12 @@ public class BufferClustering {
    * @return
    */
   @SuppressWarnings("unchecked")
-  public Set<Set<IGeneObj>> getNetworkClusters() {
-    Set<Set<IGeneObj>> clusters = new HashSet<Set<IGeneObj>>();
+  public Set<Set<IFeature>> getNetworkClusters() {
+    Set<Set<IFeature>> clusters = new HashSet<Set<IFeature>>();
     double epsilon = 5.0;
     // first, build the merged geometry
     IGeometry mergedGeom = null;
-    for (IGeneObj obj : this.features) {
+    for (IFeature obj : this.features) {
       if (!(obj instanceof INetworkSection)) {
         continue;
       }
@@ -157,7 +158,7 @@ public class BufferClustering {
     }
 
     if (mergedGeom instanceof IPolygon) {
-      Set<IGeneObj> cluster = new HashSet<IGeneObj>();
+      Set<IFeature> cluster = new HashSet<IFeature>();
       cluster.addAll(this.features.select(mergedGeom));
       clusters.add(cluster);
       if (this.isDebug) {
@@ -177,7 +178,7 @@ public class BufferClustering {
     // now make any simple part of mergedGeom a cluster
     for (IGeometry simple : ((IMultiSurface<IOrientableSurface>) mergedGeom)
         .getList()) {
-      Set<IGeneObj> cluster = new HashSet<IGeneObj>();
+      Set<IFeature> cluster = new HashSet<IFeature>();
       cluster.addAll(this.features.select(simple));
       clusters.add(cluster);
       if (this.isDebug) {

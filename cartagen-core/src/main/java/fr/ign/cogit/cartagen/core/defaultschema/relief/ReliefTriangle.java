@@ -11,11 +11,11 @@ package fr.ign.cogit.cartagen.core.defaultschema.relief;
 
 import fr.ign.cogit.cartagen.core.defaultschema.GeneObjSurfDefault;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IReliefTriangle;
-import fr.ign.cogit.cartagen.graph.IGraph;
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.cartagen.graph.Node;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
+import fr.ign.cogit.geoxygene.contrib.graphe.IGraph;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_Triangle;
 import fr.ign.cogit.geoxygene.spatial.geomprim.GM_Point;
 
@@ -24,8 +24,8 @@ import fr.ign.cogit.geoxygene.spatial.geomprim.GM_Point;
  * cotés Author: J. Renard Date: 30/06/2010
  */
 
-public class ReliefTriangle extends GeneObjSurfDefault implements
-    IReliefTriangle {
+public class ReliefTriangle extends GeneObjSurfDefault
+    implements IReliefTriangle {
 
   INode pt1, pt2, pt3;
 

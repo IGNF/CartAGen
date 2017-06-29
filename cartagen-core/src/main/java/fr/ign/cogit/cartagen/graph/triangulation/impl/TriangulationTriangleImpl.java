@@ -12,11 +12,11 @@
  */
 package fr.ign.cogit.cartagen.graph.triangulation.impl;
 
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.cartagen.graph.TriangleFace;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationPoint;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationTriangle;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPositionList;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineString;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_Triangle;
@@ -28,11 +28,11 @@ import fr.ign.cogit.geoxygene.spatial.geomprim.GM_Ring;
  * @author jgaffuri
  * 
  */
-public class TriangulationTriangleImpl extends TriangleFace implements
-    TriangulationTriangle {
+public class TriangulationTriangleImpl extends TriangleFace
+    implements TriangulationTriangle {
 
   /**
-	 */
+   */
   private TriangulationPoint point1;
 
   /**
@@ -44,7 +44,7 @@ public class TriangulationTriangleImpl extends TriangleFace implements
   }
 
   /**
-	 */
+   */
   private TriangulationPoint point2;
 
   /**
@@ -56,7 +56,7 @@ public class TriangulationTriangleImpl extends TriangleFace implements
   }
 
   /**
-	 */
+   */
   private TriangulationPoint point3;
 
   /**
@@ -68,7 +68,7 @@ public class TriangulationTriangleImpl extends TriangleFace implements
   }
 
   /**
-	 */
+   */
   private IPolygon geom;
 
   /*

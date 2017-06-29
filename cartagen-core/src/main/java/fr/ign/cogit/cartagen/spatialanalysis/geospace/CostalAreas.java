@@ -12,14 +12,14 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import fr.ign.cogit.cartagen.graph.Graph;
-import fr.ign.cogit.cartagen.graph.IEdge;
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.feature.IFeatureCollection;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
 import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
 import fr.ign.cogit.geoxygene.contrib.geometrie.Distances;
+import fr.ign.cogit.geoxygene.contrib.graphe.IEdge;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.feature.DefaultFeature;
 import fr.ign.cogit.geoxygene.feature.FT_FeatureCollection;
 import fr.ign.cogit.geoxygene.generalisation.GaussianFilter;
@@ -76,8 +76,8 @@ public class CostalAreas {
 
       // on construit pour l'instant une zone par laisse
       for (ArcReseau laisse : laisses) {
-        IGeometry newGeom = GaussianFilter.gaussianFilter(
-            (ILineString) laisse.getGeom(), sigmaLiss, 1);
+        IGeometry newGeom = GaussianFilter
+            .gaussianFilter((ILineString) laisse.getGeom(), sigmaLiss, 1);
         areas.add((IPolygon) newGeom.buffer(seuilBuff));
       }
 

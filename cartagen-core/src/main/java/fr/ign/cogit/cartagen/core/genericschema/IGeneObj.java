@@ -11,9 +11,9 @@ package fr.ign.cogit.cartagen.core.genericschema;
 
 import java.util.Set;
 
-import fr.ign.cogit.cartagen.graph.IGraphLinkableFeature;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
+import fr.ign.cogit.geoxygene.contrib.graphe.IGraphLinkableFeature;
 
 /**
  * Root interface describing the requirements for geographic objects handled by

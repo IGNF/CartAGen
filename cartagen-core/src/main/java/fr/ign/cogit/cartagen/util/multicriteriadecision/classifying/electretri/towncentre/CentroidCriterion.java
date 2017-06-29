@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanBlock;
-import fr.ign.cogit.cartagen.util.multicriteriadecision.classifying.electretri.ELECTRECriterion;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
+import fr.ign.cogit.geoxygene.contrib.multicriteriadecision.classifying.electretri.ELECTRECriterion;
 
 public class CentroidCriterion extends ELECTRECriterion {
 

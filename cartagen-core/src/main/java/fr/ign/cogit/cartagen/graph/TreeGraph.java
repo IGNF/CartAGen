@@ -3,6 +3,9 @@ package fr.ign.cogit.cartagen.graph;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.ign.cogit.geoxygene.contrib.graphe.GraphPath;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
+
 /**
  * Undirected graphs in which any two vertices are connected by exactly one
  * simple path.

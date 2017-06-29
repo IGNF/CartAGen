@@ -12,8 +12,8 @@
  */
 package fr.ign.cogit.cartagen.graph.triangulation;
 
-import fr.ign.cogit.cartagen.graph.ITriangleFace;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
+import fr.ign.cogit.geoxygene.contrib.graphe.ITriangleFace;
 
 /**
  * The triangle interface
@@ -22,15 +22,15 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
 public interface TriangulationTriangle extends ITriangleFace {
 
   /**
-	 */
+   */
   public TriangulationPoint getPoint1();
 
   /**
-	 */
+   */
   public TriangulationPoint getPoint2();
 
   /**
-	 */
+   */
   public TriangulationPoint getPoint3();
 
   /**

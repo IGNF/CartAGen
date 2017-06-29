@@ -21,14 +21,14 @@ import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanBlock;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanElement;
 import fr.ign.cogit.cartagen.spatialanalysis.urban.CornerBuildings;
-import fr.ign.cogit.cartagen.util.multicriteriadecision.ranking.electre3.ELECTREIIIAction;
-import fr.ign.cogit.cartagen.util.multicriteriadecision.ranking.electre3.ELECTREIIICriterion;
-import fr.ign.cogit.cartagen.util.multicriteriadecision.ranking.electre3.ELECTREIIIMethod;
 import fr.ign.cogit.cartagen.util.multicriteriadecision.ranking.electre3.buildingelimination.BuildElimCongDirCriterion;
 import fr.ign.cogit.cartagen.util.multicriteriadecision.ranking.electre3.buildingelimination.BuildElimCongestionCriterion;
 import fr.ign.cogit.cartagen.util.multicriteriadecision.ranking.electre3.buildingelimination.BuildElimCornerCriterion;
 import fr.ign.cogit.cartagen.util.multicriteriadecision.ranking.electre3.buildingelimination.BuildElimNeighTypesCriterion;
 import fr.ign.cogit.cartagen.util.multicriteriadecision.ranking.electre3.buildingelimination.BuildElimSizeCriterion;
+import fr.ign.cogit.geoxygene.contrib.multicriteriadecision.ranking.ELECTREIIIAction;
+import fr.ign.cogit.geoxygene.contrib.multicriteriadecision.ranking.ELECTREIIICriterion;
+import fr.ign.cogit.geoxygene.contrib.multicriteriadecision.ranking.ELECTREIIIMethod;
 import fr.ign.cogit.geoxygene.schemageo.api.bati.Ilot;
 
 /**

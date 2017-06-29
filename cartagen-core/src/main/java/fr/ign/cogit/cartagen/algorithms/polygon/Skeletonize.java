@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.Set;
 
 import fr.ign.cogit.cartagen.common.triangulation.Triangulation;
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.cartagen.graph.Node;
 import fr.ign.cogit.cartagen.graph.TreeGraph;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationPoint;
@@ -37,6 +36,7 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
 import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IMultiPoint;
 import fr.ign.cogit.geoxygene.api.spatial.geomprim.IPoint;
 import fr.ign.cogit.geoxygene.api.spatial.geomprim.IRing;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.generalisation.Filtering;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPosition;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineSegment;

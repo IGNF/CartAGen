@@ -8,7 +8,6 @@ import fr.ign.cogit.cartagen.agents.gael.deformation.submicro.GAELSegment;
 import fr.ign.cogit.cartagen.agents.gael.deformation.submicro.ISubMicro;
 import fr.ign.cogit.cartagen.agents.gael.field.agent.FieldAgent;
 import fr.ign.cogit.cartagen.agents.gael.field.agent.relief.ContourLineAgent;
-import fr.ign.cogit.cartagen.graph.INode;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationPoint;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
@@ -17,6 +16,7 @@ import fr.ign.cogit.geoxygene.api.spatial.geomprim.IPoint;
 import fr.ign.cogit.geoxygene.contrib.agents.action.ActionProposal;
 import fr.ign.cogit.geoxygene.contrib.agents.agent.IAgent;
 import fr.ign.cogit.geoxygene.contrib.agents.state.AgentState;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 
 /**
  * The point fieldAgent class.

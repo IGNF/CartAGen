@@ -20,6 +20,8 @@ import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.feature.IFeatureCollection;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
+import fr.ign.cogit.geoxygene.contrib.graphe.IEdge;
+import fr.ign.cogit.geoxygene.contrib.graphe.INode;
 import fr.ign.cogit.geoxygene.feature.DefaultFeature;
 import fr.ign.cogit.geoxygene.feature.FT_FeatureCollection;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineString;
@@ -82,8 +84,8 @@ public class RelativeNeighbourhoodGraph extends Graph {
           continue;
 
         // create the new edge
-        IEdge edge = new Edge(this, node, neigh, null, new GM_LineString(pt1,
-            pt2));
+        IEdge edge = new Edge(this, node, neigh, null,
+            new GM_LineString(pt1, pt2));
         this.getEdges().add(edge);
         node.addEdgeOut(edge);
         neigh.addEdgeIn(edge);
@@ -133,8 +135,8 @@ public class RelativeNeighbourhoodGraph extends Graph {
           continue;
 
         // create the new edge
-        IEdge edge = new Edge(this, node, neigh, null, new GM_LineString(pt1,
-            pt2));
+        IEdge edge = new Edge(this, node, neigh, null,
+            new GM_LineString(pt1, pt2));
         this.getEdges().add(edge);
         node.addEdgeOut(edge);
         neigh.addEdgeIn(edge);
@@ -227,8 +229,9 @@ public class RelativeNeighbourhoodGraph extends Graph {
       neighbours.remove(triEdge.getInitialNode());
       neighbours.remove(triEdge.getFinalNode());
       // build the circle for the Gabriel Graph rule
-      IPolygon[] circles = buildRNCircles(triEdge.getInitialNode()
-          .getPosition(), triEdge.getFinalNode().getPosition());
+      IPolygon[] circles = buildRNCircles(
+          triEdge.getInitialNode().getPosition(),
+          triEdge.getFinalNode().getPosition());
       // check that no neighbour belong to the circle
       boolean isRN = true;
       for (INode neighbour : neighbours) {
