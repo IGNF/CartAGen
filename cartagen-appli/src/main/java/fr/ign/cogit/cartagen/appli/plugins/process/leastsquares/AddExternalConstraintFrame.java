@@ -15,18 +15,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import fr.ign.cogit.cartagen.software.interfacecartagen.utilities.swingcomponents.frame.ClassBrowserFrame;
-import fr.ign.cogit.cartagen.software.interfacecartagen.utilities.swingcomponents.renderer.ClassSimpleNameListRenderer;
+import fr.ign.cogit.cartagen.appli.utilities.ClassBrowserFrame;
+import fr.ign.cogit.geoxygene.appli.plugin.cartagen.util.renderer.ClassSimpleNameListRenderer;
 
-public class AddExternalConstraintFrame extends JFrame implements
-    ActionListener {
+public class AddExternalConstraintFrame extends JFrame
+    implements ActionListener {
 
   /****/
   private static final long serialVersionUID = 1L;
 
   private LeastSquaresFrame parent;
   private JTextField txtClass1, txtClass2, txtThreshold;
-  private JComboBox cbConstraint;
+  private JComboBox<Class<?>> cbConstraint;
 
   public AddExternalConstraintFrame(LeastSquaresFrame parent)
       throws HeadlessException {
@@ -41,10 +41,10 @@ public class AddExternalConstraintFrame extends JFrame implements
     // panneau nom de la contrainte
     JPanel panelNom = new JPanel();
     JLabel lblContrainte = new JLabel("Nom de la contrainte externe");
-    cbConstraint = new JComboBox(parent.getExternalConstraintsArray());
+    cbConstraint = new JComboBox<>(parent.getExternalConstraintsArray());
     cbConstraint.setRenderer(new ClassSimpleNameListRenderer());
-    ImageIcon icone = new ImageIcon(this.getClass().getResource(
-        "/images/browse.jpeg"));
+    ImageIcon icone = new ImageIcon(
+        this.getClass().getResource("/images/browse.jpeg"));
     panelNom.add(lblContrainte);
     panelNom.add(cbConstraint);
     panelNom.setLayout(new BoxLayout(panelNom, BoxLayout.X_AXIS));
@@ -105,8 +105,8 @@ public class AddExternalConstraintFrame extends JFrame implements
     // *********************************
     this.getContentPane().add(panelContrainte);
     this.getContentPane().add(panelOK);
-    this.getContentPane().setLayout(
-        new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+    this.getContentPane()
+        .setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
     this.setVisible(true);
     this.pack();
   }
@@ -120,12 +120,13 @@ public class AddExternalConstraintFrame extends JFrame implements
           ((Class<?>) cbConstraint.getSelectedItem()).getName(),
           txtClass1.getText(), txtClass2.getText(), txtThreshold.getText() });
       parent.tableContrRel.setModel(model);
-      if (!parent.contraintesActivees.contains(((Class<?>) cbConstraint
-          .getSelectedItem()).getName())) {
-        parent.contraintesActivees.add(((Class<?>) cbConstraint
-            .getSelectedItem()).getName());
-        parent.poidsContraintes.put(((Class<?>) cbConstraint.getSelectedItem())
-            .getName(), new Double(1.0));
+      if (!parent.contraintesActivees
+          .contains(((Class<?>) cbConstraint.getSelectedItem()).getName())) {
+        parent.contraintesActivees
+            .add(((Class<?>) cbConstraint.getSelectedItem()).getName());
+        parent.poidsContraintes.put(
+            ((Class<?>) cbConstraint.getSelectedItem()).getName(),
+            new Double(1.0));
       }
       this.setVisible(false);
       parent.miseAjourFrame();

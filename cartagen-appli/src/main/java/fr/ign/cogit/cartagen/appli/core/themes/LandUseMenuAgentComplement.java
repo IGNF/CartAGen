@@ -13,7 +13,7 @@ import javax.swing.JMenuItem;
 import fr.ign.cogit.cartagen.agents.core.AgentGeneralisationScheduler;
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
 import fr.ign.cogit.cartagen.agents.gael.field.agent.partition.landuse.LandUseFieldAgent;
-import fr.ign.cogit.cartagen.software.dataset.CartAGenDoc;
+import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.geoxygene.appli.plugin.cartagen.themes.DataThemesGUIComponent;
 import fr.ign.cogit.geoxygene.appli.plugin.cartagen.themes.LandUseMenu;
 

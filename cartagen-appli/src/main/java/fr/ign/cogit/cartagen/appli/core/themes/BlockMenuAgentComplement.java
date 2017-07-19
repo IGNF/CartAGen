@@ -18,11 +18,12 @@ import fr.ign.cogit.cartagen.agents.core.agent.GeographicObjectAgentGeneralisati
 import fr.ign.cogit.cartagen.agents.core.agent.urban.BlockAgent;
 import fr.ign.cogit.cartagen.agents.core.agent.urban.BuildingAgent;
 import fr.ign.cogit.cartagen.agents.core.agent.urban.UrbanAlignmentAgent;
+import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanAlignment;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanBlock;
-import fr.ign.cogit.cartagen.software.CartagenApplication;
-import fr.ign.cogit.cartagen.software.dataset.CartAGenDocOld;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
+import fr.ign.cogit.geoxygene.appli.plugin.cartagen.CartAGenPlugin;
+import fr.ign.cogit.geoxygene.appli.plugin.cartagen.selection.SelectionUtil;
 import fr.ign.cogit.geoxygene.appli.plugin.cartagen.themes.BlockMenu;
 import fr.ign.cogit.geoxygene.appli.plugin.cartagen.themes.DataThemesGUIComponent;
 
@@ -129,7 +130,7 @@ public class BlockMenuAgentComplement {
     @Override
     public void actionPerformed(ActionEvent e) {
       AgentGeneralisationScheduler.getInstance().initList();
-      for (IUrbanBlock obj : CartAGenDocOld.getInstance().getCurrentDataset()
+      for (IUrbanBlock obj : CartAGenDoc.getInstance().getCurrentDataset()
           .getBlocks()) {
         AgentGeneralisationScheduler.getInstance()
             .add(AgentUtil.getAgentFromGeneObj(obj));
@@ -152,12 +153,12 @@ public class BlockMenuAgentComplement {
       Thread th = new Thread(new Runnable() {
         @Override
         public void run() {
-          for (IUrbanBlock obj : CartAGenDocOld.getInstance()
-              .getCurrentDataset().getBlocks()) {
+          for (IUrbanBlock obj : CartAGenDoc.getInstance().getCurrentDataset()
+              .getBlocks()) {
             ((GeographicObjectAgentGeneralisation) AgentUtil
                 .getAgentFromGeneObj(obj)).goBackToInitialState();
           }
-          for (IUrbanAlignment obj : CartAGenDocOld.getInstance()
+          for (IUrbanAlignment obj : CartAGenDoc.getInstance()
               .getCurrentDataset().getUrbanAlignments()) {
             ((UrbanAlignmentAgent) AgentUtil.getAgentFromGeneObj(obj))
                 .computeShapeLine();
@@ -183,8 +184,8 @@ public class BlockMenuAgentComplement {
       Thread th = new Thread(new Runnable() {
         @Override
         public void run() {
-          for (IFeature sel : CartagenApplication.getInstance().getFrame()
-              .getVisuPanel().selectedObjects) {
+          for (IFeature sel : SelectionUtil.getSelectedObjects(
+              CartAGenPlugin.getInstance().getApplication())) {
             if (!(sel instanceof IUrbanBlock)) {
               continue;
             }
@@ -221,8 +222,8 @@ public class BlockMenuAgentComplement {
       Thread th = new Thread(new Runnable() {
         @Override
         public void run() {
-          for (IFeature sel : CartagenApplication.getInstance().getFrame()
-              .getVisuPanel().selectedObjects) {
+          for (IFeature sel : SelectionUtil.getSelectedObjects(
+              CartAGenPlugin.getInstance().getApplication())) {
             if (!(sel instanceof IUrbanBlock)) {
               continue;
             }

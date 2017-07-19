@@ -29,8 +29,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import fr.ign.cogit.cartagen.agents.core.AgentSpecifications;
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
-import fr.ign.cogit.cartagen.software.CartagenApplication;
-import fr.ign.cogit.cartagen.software.GeneralisationSpecifications;
+import fr.ign.cogit.cartagen.core.GeneralisationSpecifications;
+import fr.ign.cogit.geoxygene.appli.plugin.cartagen.CartAGenPlugin;
 
 /**
  * @author JGaffuri
@@ -238,7 +238,6 @@ public class AgentConfigurationFrame extends JFrame {
     this.setSize(new Dimension(400, 300));
     this.setLocation(100, 100);
     this.setTitle("CartAGen - Agent configuration");
-    this.setIconImage(CartagenApplication.getInstance().getFrame().getIcon());
     this.setVisible(false);
 
     GridBagConstraints c;
@@ -658,9 +657,8 @@ public class AgentConfigurationFrame extends JFrame {
         .addActionListener(new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent arg0) {
-            JFileChooser parcourir = new JFileChooser(
-                new File(CartagenApplication.getInstance()
-                    .getCheminFichierConfigurationGene()));
+            JFileChooser parcourir = new JFileChooser(new File(CartAGenPlugin
+                .getInstance().getCheminFichierConfigurationGene()));
             parcourir.setDialogType(JFileChooser.SAVE_DIALOG);
             parcourir.setApproveButtonText("Save");
             parcourir.setDialogTitle("Save");
@@ -673,7 +671,7 @@ public class AgentConfigurationFrame extends JFrame {
                 .showOpenDialog(AgentConfigurationFrame.getInstance());
             if (res == JFileChooser.APPROVE_OPTION) {
               GeneralisationSpecifications
-                  .enregistrer(parcourir.getSelectedFile());
+                  .saveToFile(parcourir.getSelectedFile());
             } else if (res == JFileChooser.ERROR_OPTION) {
               JOptionPane.showMessageDialog(
                   AgentConfigurationFrame.getInstance(), "Error", "Error",

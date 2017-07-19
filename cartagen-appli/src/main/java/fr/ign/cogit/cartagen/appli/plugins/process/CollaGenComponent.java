@@ -39,7 +39,8 @@ import fr.ign.cogit.cartagen.collagen.processes.implementation.RuralRoadSelectio
 import fr.ign.cogit.cartagen.collagen.processes.implementation.UrbanAGENTProcess;
 import fr.ign.cogit.cartagen.collagen.processes.implementation.UrbanLeastSquaresProcess;
 import fr.ign.cogit.cartagen.collagen.resources.ontology.GeneralisationConcept;
-import fr.ign.cogit.cartagen.core.carto.SLDUtilCartagen;
+import fr.ign.cogit.cartagen.core.SLDUtilCartagen;
+import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObjLin;
 import fr.ign.cogit.cartagen.core.genericschema.hydro.IWaterLine;
@@ -47,7 +48,6 @@ import fr.ign.cogit.cartagen.core.genericschema.network.INetworkSection;
 import fr.ign.cogit.cartagen.core.genericschema.partition.IMask;
 import fr.ign.cogit.cartagen.core.genericschema.road.IRoadLine;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
-import fr.ign.cogit.cartagen.software.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.spatialanalysis.network.flexibilitygraph.MinimumSeparation;
 import fr.ign.cogit.cartagen.spatialanalysis.urban.UrbanAreaComputationJTS;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;

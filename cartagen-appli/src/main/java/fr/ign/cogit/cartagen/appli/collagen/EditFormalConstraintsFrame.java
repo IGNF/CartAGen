@@ -68,6 +68,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.xml.sax.SAXException;
 
 import fr.ign.cogit.cartagen.appli.plugins.process.CollaGenComponent;
+import fr.ign.cogit.cartagen.appli.utilities.I18N;
 import fr.ign.cogit.cartagen.collagen.resources.ontology.Character;
 import fr.ign.cogit.cartagen.collagen.resources.ontology.GeneralisationConcept;
 import fr.ign.cogit.cartagen.collagen.resources.ontology.GeoSpaceConcept;
@@ -96,11 +97,10 @@ import fr.ign.cogit.cartagen.collagen.resources.specs.rules.ORConclusion;
 import fr.ign.cogit.cartagen.collagen.resources.specs.rules.ORPremise;
 import fr.ign.cogit.cartagen.collagen.resources.specs.rules.OperationRule;
 import fr.ign.cogit.cartagen.collagen.resources.specs.rules.OperationRulesDatabase;
-import fr.ign.cogit.cartagen.software.interfacecartagen.utilities.I18N;
-import fr.ign.cogit.cartagen.software.interfacecartagen.utilities.swingcomponents.filter.RealLimitator;
-import fr.ign.cogit.cartagen.software.interfacecartagen.utilities.swingcomponents.filter.XMLFileFilter;
-import fr.ign.cogit.cartagen.software.interfacecartagen.utilities.swingcomponents.frame.OntologyBrowserFrame;
+import fr.ign.cogit.geoxygene.appli.panel.RealLimitator;
+import fr.ign.cogit.geoxygene.appli.panel.XMLFileFilter;
 import fr.ign.cogit.geoxygene.util.browser.ObjectBrowser;
+import fr.ign.cogit.ontology.gui.OntologyBrowserFrame;
 
 @SuppressWarnings("serial")
 public class EditFormalConstraintsFrame extends JFrame
@@ -118,7 +118,7 @@ public class EditFormalConstraintsFrame extends JFrame
   private JTextField txtConcept, txtNom, txtConcept1, txtConcept2;
   private JTextField txtNomRo, txtConceptCRo, txtConceptPRo, txtConceptRp,
       txtValeurRo;
-  private JTextField txtRpProc, txtRpEsp, txtEspaceCont, txtEspaceReg;
+  private JTextField txtEspaceCont, txtEspaceReg;
   private JCheckBox chkConseil, chkPositive;
   private JRadioButton rdProc;
   private JButton btnOnto1, btnOnto2, btnOnto4, btnOnto5;
@@ -277,16 +277,15 @@ public class EditFormalConstraintsFrame extends JFrame
     } else if (e.getActionCommand().equals("onto")) {
       String root = this.getRootFromConstr();
       @SuppressWarnings("unused")
-      OntologyBrowserFrame f = new OntologyBrowserFrame(this.txtConcept,
-          this.ontology, root);
+      OntologyBrowserFrame f = new OntologyBrowserFrame(this.ontology, root);
     } else if (e.getActionCommand().equals("onto1")) {
       @SuppressWarnings("unused")
-      OntologyBrowserFrame f = new OntologyBrowserFrame(this.txtConcept1,
-          this.ontology, "entité_géographique");
+      OntologyBrowserFrame f = new OntologyBrowserFrame(this.ontology,
+          "entité_géographique");
     } else if (e.getActionCommand().equals("onto2")) {
       @SuppressWarnings("unused")
-      OntologyBrowserFrame f = new OntologyBrowserFrame(this.txtConcept2,
-          this.ontology, "entité_géographique");
+      OntologyBrowserFrame f = new OntologyBrowserFrame(this.ontology,
+          "entité_géographique");
     } else if (e.getActionCommand().equals("enregistrer")) {
       // on cr�e l'objet java contrainte
       FormalGenConstraint contr = this.createConstraint();
@@ -302,12 +301,11 @@ public class EditFormalConstraintsFrame extends JFrame
         root = "espace_géographique";
       }
       @SuppressWarnings("unused")
-      OntologyBrowserFrame f = new OntologyBrowserFrame(this.txtConceptRp,
-          this.ontology, root);
+      OntologyBrowserFrame f = new OntologyBrowserFrame(this.ontology, root);
     } else if (e.getActionCommand().equals("onto4")) {
       @SuppressWarnings("unused")
-      OntologyBrowserFrame f = new OntologyBrowserFrame(this.txtConceptCRo,
-          this.ontology, "opération_de_généralisation");
+      OntologyBrowserFrame f = new OntologyBrowserFrame(this.ontology,
+          "opération_de_généralisation");
     } else if (e.getActionCommand().equals("onto5")) {
       Set<String> rootsToRemove = new HashSet<String>();
       rootsToRemove.add("opération_de_généralisation");
@@ -317,16 +315,15 @@ public class EditFormalConstraintsFrame extends JFrame
           this.ontology, rootsToRemove);
     } else if (e.getActionCommand().equals("onto6")) {
       @SuppressWarnings("unused")
-      OntologyBrowserFrame f = new OntologyBrowserFrame(this.txtConceptPRo,
-          this.ontology, "");
+      OntologyBrowserFrame f = new OntologyBrowserFrame(this.ontology, "");
     } else if (e.getActionCommand().equals("ontoProc")) {
       @SuppressWarnings("unused")
-      OntologyBrowserFrame f = new OntologyBrowserFrame(this.txtRpProc,
-          this.ontology, "processus_de_généralisation");
+      OntologyBrowserFrame f = new OntologyBrowserFrame(this.ontology,
+          "processus_de_généralisation");
     } else if (e.getActionCommand().equals("ontoEsp")) {
       @SuppressWarnings("unused")
-      OntologyBrowserFrame f = new OntologyBrowserFrame(this.txtRpEsp,
-          this.ontology, "espace_géographique");
+      OntologyBrowserFrame f = new OntologyBrowserFrame(this.ontology,
+          "espace_géographique");
     } else if (e.getActionCommand().equals("enregistrerRo")) {
       // on cr�e l'objet java r�gle
       OperationRule regle = this.createOperationRule();
@@ -340,12 +337,12 @@ public class EditFormalConstraintsFrame extends JFrame
       this.pack();
     } else if (e.getActionCommand().equals("onto_espace_cont")) {
       @SuppressWarnings("unused")
-      OntologyBrowserFrame f = new OntologyBrowserFrame(this.txtEspaceCont,
-          this.ontology, "espace_géographique");
+      OntologyBrowserFrame f = new OntologyBrowserFrame(this.ontology,
+          "espace_géographique");
     } else if (e.getActionCommand().equals("onto_espace_reg")) {
       @SuppressWarnings("unused")
-      OntologyBrowserFrame f = new OntologyBrowserFrame(this.txtEspaceReg,
-          this.ontology, "espace_géographique");
+      OntologyBrowserFrame f = new OntologyBrowserFrame(this.ontology,
+          "espace_géographique");
     } else if (e.getActionCommand().equals("plus_cont")) {
       // on ajoute la restriction
       RestrictTableModel model = (RestrictTableModel) this.tableRestC

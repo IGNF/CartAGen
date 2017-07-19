@@ -12,6 +12,10 @@
  */
 package fr.ign.cogit.cartagen.core;
 
+import java.io.File;
+
+import javax.swing.JOptionPane;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -152,5 +156,16 @@ public final class GeneralisationSpecifications {
 
   // distance de separation entre courbes de niveau en mm
   public static double DISTANCE_SEPARATION_INTER_CN = 0.1;
+
+  /**
+   * 
+   * @param fichier
+   */
+  public static void saveToFile(File fichier) {
+    JOptionPane.showMessageDialog(null,
+        "Fonctionnalité à venir... un jour... peut-etre..." + fichier,
+        "A venir", JOptionPane.INFORMATION_MESSAGE);
+    // FIXME
+  }
 
 }
