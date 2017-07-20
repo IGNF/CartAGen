@@ -12,8 +12,28 @@ What is CartAGen data schema for generalization?
 
 ![simplified view of the schema](assets/images/schema_gene_simplifie.png)
 
+The figure above shows the main interfaces of the CartAGen centralized schema. Geographic objects stored in postGIS databases, shapefiles, .osm files are loaded as IRoadLine features for roads, IBuilding for buildings, IWaterLine for rivers, etc. All these interfaces extend a common IGeneObj interface that represent geographical feature that can be generalized. All the generalization processes in CartAGen deal with these generic IGeneObj features, so they can be applied to any kind of input data that can implement this centralized schema.
+
+When a user wants to generalize its dataset with CartAGen, the difficulty is not be sure that the processes can use such data as input, but to make sure that the input data can be loaded into these centralized classes. Rather than coding new algorithms for new datasets that are not handled in CartAGen yet, only a new data loader is necessary!
+
+![difference between IGeneObj and IFeature](assets/images/geneobj_class.png)
+
+IFeature is the GeOxygene version of the Simple Feature Class OGC/ISO standard. IFeature is an interface for objects that have a geometry and semantic attributes (that also follow the OGC/ISO standards). 
+The geometry implementation uses the Java Topology Suite (JTS) library.
+The CartAGen interface IGeneObj is an extension of this IFeature interface, that contains specific method related to map generalization (see figure above).
+
+One of the most common operators of map generalization is deletion/elimination, so IGeneObj features can be eliminated (without being removed from dataset, to be able to backtrack this elimination). The initial geometry is also stored in order to backtrack to the initial state, and to allow the use of preservation constraints that compare the current geometry with the initial one.
+
+The method ```java void addToGeneArtifacts(Object artifact) ``` allows the addition of artifacts useful for generalization, e.g. [agents in multi-agent system][7].
+
+#### [](#header-4)GeOxygene features
+
+The method ```java IFeature getGeoxObj() ``` gives GeOxygene feature version of the CartAGen object, that are direct implementations of the OGC based IFeature interface. This alternate version of the feature might be useful to use to spatial analysis algorithms that exist in the GeOxygene platform on which CartAGen is based. For instance, the Strokes ([Thomson & Richardson 1999][6]) algorithm exists in GeOxygene for purposes larger than generalisation, and the GeOxygene feature version is used to trigger the Strokes algorithm for generalisation.
+
 Description of the interfaces of the centralized schema
 -------------
+
+The figures below show with more details the centralized schema for the main topographic map themes that can be generalized. More information on the schema can be found in the Javadoc and in the comments in the code.
 
 #### [](#header-4)Administrative schema
 ![administrative schema](assets/images/admin_schema.png)
@@ -24,11 +44,18 @@ Description of the interfaces of the centralized schema
 #### [](#header-4)Hydrography schema
 [ ![hydrography schema](assets/images/hydro_schema_small.png) ](assets/images/hydro_schema.png)
 
+#### [](#header-4)Road schema
+[ ![road schema](assets/images/road_schema_small.png) ](assets/images/road_schema.png)
+
 Implementations of the centralized schema
 -------------
+
+The schema described above is composed of Java interfaces for genericity. But in order to instantiate this schema, proper Java classes are necessary (an interface cannot be instantiated, it's only a skeleton that the classes must respect).
+ 
 There are two available implementations of the centralized schema:
 - [a default one][3] that only implements the interfaces without any additional attribute,
-- an OSM implementation that also stores raw tags and OSM metadata on each feature.
+- an [OSM implementation][5] that also stores raw tags and OSM metadata on each feature.
+
 
 How to extend the centralized schema
 -------------
@@ -282,8 +309,19 @@ public class CartAGenDataSet {
 ![cycleway displayed with pink dashes](assets/images/Affichage_piste_cyclable.png)
 
 
+See Also
+-------------
+- [tutorial on data loading][8]
+- [tutorial to generalize loaded data][9]
+- [tutorial to generalize loaded data with agent-based processes][7]
+
 
 [1]: http://www.tandfonline.com/doi/abs/10.1080/13658810410001672881
 [2]: https://github.com/IGNF/geoxygene
 [3]: https://github.com/IGNF/CartAGen/tree/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/core/defaultschema
 [4]: https://en.wikipedia.org/wiki/Factory_method_pattern
+[5]: https://github.com/IGNF/CartAGen/tree/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/osm/schema
+[6]: http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.202.4737
+[7]: /tuto_agents.md
+[8]: /tuto_import_data.md
+[9]: /tuto_generalization_algo.md
