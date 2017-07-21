@@ -6,18 +6,28 @@ CartAGen is a plugin for [GeOxygene][2] dedicated to cartographic generalisation
 > - Contact {firstname.lastname}@ign.fr.
 
 
-
-Description
+Description of the sample dataset
 -------------
 
 
-Getting Started
+Restoring the sample dataset into PostGIS
 -------------
 
-- How to load a geographical dataset into CartAGen?
-- How to trigger generalization algorithms in CartAGen?
-- How to use the agent-based generalization processes?
 
+Filling the mapping XML file
+-------------
+
+
+Loading the dataset in the application
+-------------
+
+
+Importing shapefiles
+-------------
+
+
+Importing .osm files
+-------------
 
 See Also
 -------------

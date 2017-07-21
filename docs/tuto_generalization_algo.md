@@ -8,28 +8,20 @@ The tutorial also explains how this import can be done with shapefiles or .osm f
 
 
 
-Description of the sample dataset
+Triggering algorithms with the menu buttons
+-------------
+#### [](#header-4)Generic algorithms
+
+#### [](#header-4)Theme specific algorithms
+
+
+Where are the algorithms in the Java library?
 -------------
 
 
-Restoring the sample dataset into PostGIS
+Example: enlarging and displacing buildings in the sample dataset
 -------------
 
-
-Filling the mapping XML file
--------------
-
-
-Loading the dataset in the application
--------------
-
-
-Importing shapefiles
--------------
-
-
-Importing .osm files
--------------
 
 
 See Also
