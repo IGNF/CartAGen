@@ -199,12 +199,14 @@ public interface IGeneObj
   /**
    * @return the Id of the symbol associated to this object
    */
+  @Deprecated
   int getSymbolId();
 
   /**
    * Set the Id of the symbol associated to this object
    * @param symbolId the symbol Id to set
    */
+  @Deprecated
   void setSymbolId(int symbolId);
 
   /**

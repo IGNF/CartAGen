@@ -725,4 +725,9 @@ public class DeadEndGroup extends GeneObjDefault implements IDeadEndGroup {
 
     return connected;
   }
+
+  public Collection<HashSet<INetworkSection>> getBranches() {
+    // TODO Auto-generated method stub
+    return null;
+  }
 }
