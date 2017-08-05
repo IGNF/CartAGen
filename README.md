@@ -64,7 +64,7 @@ A list, not exhaustive yet, of the generalization algorithms available in CartAG
 | [Random displacement][45] 	| never published (@Julien Gaffuri)	| [BuildingDisplacementRandom.java][25]  |	iteratively, a building is randomly displaced (with very small displacements), until the global legibility is optimized (a gradient descent is used)	|
 | [displacement in block][46]  | [Ruas 1999][26]					| [BuildingDisplacementRuas.java][27]  |					|
 | [Aggregation][47]  | [Regnauld 1998][28]					| [PolygonAggregation.java][29]  |	Direct port from Regnauld's PhD thesis, comments only in French for now		|
-| [Delete overlaping buildings in block][48]  | never published (@Guillaume Touya)	| [BuildingDeletionOverlap.java][30]  |	Given a threshold of area overlaping and a couple of overlaping buildings, deletes the smallest one. The algorithm helps as a first pass in overdensed blocks after building enlargement. |
+| [Delete overlaping buildings in block][48]  | never published (@Guillaume Touya)	| [BuildingDeletionOverlap.java][30]  |	Given a threshold of area overlaping and a couple of overlaping buildings, deletes the smallest one |
 | [ELECTRE deletion in block][49]  | not yet published (@Guillaume Touya)	| [BuildingsDeletionProximityMultiCriterion.java][31]  | Uses ELECTRE III multi-criteria	to sort buildings from the first to delete to the last, using criteria such as, relative position, congestion or size	|
 | [PROMETHEE deletion in block][50]  | not yet published (@Guillaume Touya)	| [BuildingDeletionPromethee.java][32]  | Uses PROMETHEE multi-criteria	to sort buildings from the first to delete to the last, using criteria such as, relative position, congestion or size	|
 | [Congestion based deletion in block][51]  | [Ruas 1999][26]					| [BuildingsDeletionCongestion.java][33]  |	comments in French for now	|
@@ -116,23 +116,23 @@ A list, not exhaustive yet, of the generalization algorithms available in CartAG
 [33]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/block/deletion/BuildingsDeletionCongestion.java
 [34]: http://www.tandfonline.com/doi/abs/10.1080/13658810600912323
 [35]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/typification/TypifyBurghardtCecconi.java
-[36]: /algorithms/line/douglas_peucker.md
-[37]: /algorithms/line/visvalingam.md
-[38]: /algorithms/line/raposo.md
-[39]: /algorithms/line/accordion.md
-[40]: /algorithms/line/bend_schematization.md
+[36]: docs/algorithms/line/douglas_peucker.md
+[37]: docs/algorithms/line/visvalingam.md
+[38]: /docs/algorithms/line/raposo.md
+[39]: /docs/algorithms/line/accordion.md
+[40]: /docs/algorithms/line/bend_schematization.md
 [41]: https://github.com/IGNF/CartAGen/tree/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/network/RiverNetworkSelection.java
-[42]: /algorithms/buildings/enlarge_enlarge_rectangle.md
-[43]: /algorithms/buildings/simplification.md
-[44]: /algorithms/buildings/ls_squaring.md
-[45]: /algorithms/buildings/random_displacement.md
-[46]: /algorithms/buildings/ruas_displacement.md
-[47]: /algorithms/buildings/aggregation_regnauld.md
-[48]: /algorithms/buildings/overlaping_deletion.md
-[49]: /algorithms/buildings/electre_deletion.md
-[50]: /algorithms/buildings/promethee_deletion.md
-[51]: /algorithms/buildings/congestion_deletion.md
-[52]: /algorithms/buildings/building_typification.md
+[42]: /docs/algorithms/buildings/enlarge_enlarge_rectangle.md
+[43]: /docs/algorithms/buildings/simplification.md
+[44]: /docs/algorithms/buildings/ls_squaring.md
+[45]: /docs/algorithms/buildings/random_displacement.md
+[46]: /docs/algorithms/buildings/ruas_displacement.md
+[47]: /docs/algorithms/buildings/aggregation_regnauld.md
+[48]: /docs/algorithms/buildings/overlaping_deletion.md
+[49]: /docs/algorithms/buildings/electre_deletion.md
+[50]: /docs/algorithms/buildings/promethee_deletion.md
+[51]: /docs/algorithms/buildings/congestion_deletion.md
+[52]: /docs/algorithms/buildings/building_typification.md
 [53]: https://www.researchgate.net/publication/220606082_A_Road_Network_Selection_Process_Based_on_Data_Enrichment_and_Structure_Detection
 [54]: https://www.researchgate.net/publication/281967153_River_Network_Selection_based_on_Structure_and_Pattern_Recognition
 [55]: https://www.researchgate.net/publication/282274843_Generalising_Unusual_Map_Themes_from_OpenStreetMap
