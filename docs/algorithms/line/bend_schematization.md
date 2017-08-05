@@ -1,0 +1,29 @@
+# Description of Bend Schematization Line Simplification/Caricature Algorithm
+
+> - Date 20/07/2017.
+> - Author: [Guillaume Touya][1]
+> - Contact {firstname.lastname}@ign.fr.
+
+
+
+Description of the algorithm
+-------------
+
+
+
+Examples of generalization
+-------------
+
+
+When to use the algorithm?
+-------------
+
+
+
+See Also
+-------------
+- [Accordion algorithm][2]
+
+
+[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[2]: /algorithms/line/accordion.md
