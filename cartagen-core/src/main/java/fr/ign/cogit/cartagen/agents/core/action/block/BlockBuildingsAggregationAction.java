@@ -15,17 +15,15 @@ import fr.ign.cogit.geoxygene.contrib.agents.constraint.Constraint;
  */
 public class BlockBuildingsAggregationAction extends ActionCartagen {
 
-  public BlockBuildingsAggregationAction(BlockAgent ag, Constraint cont,
-      double poids) {
-    super(ag, cont, poids);
-  }
+    public BlockBuildingsAggregationAction(BlockAgent ag, Constraint cont, double poids) {
+        super(ag, cont, poids);
+    }
 
-  @Override
-  public ActionResult compute() throws InterruptedException {
-    @SuppressWarnings("unused")
-    IBuilding ab = BuildingsAggregation
-        .compute(((IBlockAgent) this.getAgent()).getFeature());
-    // AgentUtil.getAgentAgentFromGeneObj(ab).activate();
-    return ActionResult.UNKNOWN;
-  }
+    @Override
+    public ActionResult compute() throws InterruptedException {
+        @SuppressWarnings("unused")
+        IBuilding ab = BuildingsAggregation.computeBlockAggregation(((IBlockAgent) this.getAgent()).getFeature());
+        // AgentUtil.getAgentAgentFromGeneObj(ab).activate();
+        return ActionResult.UNKNOWN;
+    }
 }

@@ -26,27 +26,28 @@ import fr.ign.cogit.geoxygene.spatial.geomprim.GM_Ring;
 import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.CommonAlgorithmsFromCartAGen;
 
 /**
- * Implementation of the hexagonal tessellation line simplification algorithm
- * from (Raposo 2010). It's the same principle as Li-Openshaw algorithm but with
- * hexagonal tessellation instead of a grid. All options from the paper are
- * implemented. Be careful, it uses the scale as parameter.
+ * Implementation of the Li-Openshaw line simplification algorithm from (Li &
+ * Openshaw 1993). A regular grid is put on top of the given line. All the line
+ * vertices that lie in one a the cells of the grid are replaced by only one
+ * vertex at the centroid of the removed vertices. The size of cells in the grid
+ * is thus the parameter to simplify more or less the cells (small grid cells
+ * lead to small simplification).
  * 
  * @author GTouya
  * 
  */
 public class LiOpenshawSimplification {
 
-    private boolean method1 = false, toblerRes = false;
-    private Double initialScale;
+    private boolean method1 = false;
+    private double cellSize;
     private GridTessellation<Integer> tess;
 
     /**
     *
      */
-    public LiOpenshawSimplification(boolean method1, boolean toblerRes, Double initialScale) {
-        this.method1 = method1;
-        this.toblerRes = toblerRes;
-        this.initialScale = initialScale;
+    public LiOpenshawSimplification(boolean centroidOnLine, double cellSize) {
+        this.method1 = !centroidOnLine;
+        this.cellSize = cellSize;
     }
 
     /**
@@ -58,14 +59,10 @@ public class LiOpenshawSimplification {
      */
     public ILineString simplify(ILineString line) {
         IDirectPositionList points = new DirectPositionList();
-        // compute the hexagonal tessellation for this line
-        // first, the width of a cell that depends on the options of the
-        // algorithm.
-        double width = 0.0;// FIXME
 
         // the envelope of the line is computed to delimit the tessallation.
         IEnvelope envelope = line.getEnvelope();
-        tess = new GridTessellation<Integer>(envelope, width);
+        tess = new GridTessellation<Integer>(envelope, cellSize);
         int currentIndex = 0;
         GridCell<Integer> prevCell = null;
         while (currentIndex < line.coord().size() - 1) {
