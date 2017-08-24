@@ -18,15 +18,21 @@ This algorithm amalgamates and simplifies close buildings while retaining their 
 
 That is the dilation step that amagamates the buildings when they are close enough, i.e. if the gap between the buildings is smaller than the size of the dilation.
 
-![Building amalgamation based on morphological operators](images/damen_et_al_principles.png)
+![Building amalgamation based on morphological operators](/images/damen_et_al_principles.png)
 
 The initial paper by Damen et al., presented at 12th ICA Workshop on Generalisation and Multiple Representation in 2008 (Montpellier, France), can be found [here][2]
 The code of the algorithm can be found [here][3].
 
+| Parameter name        | Description         				| Type 							| Default value			|
+|:----------------------|:----------------------------------|:------------------------------|:--------------------------------------------------|
+| bufferSize    | the size of the square used for the Minkowski sums and differences 		| double (meters) 			| 								|
+| edgeLength	| edge under this length are removed by the edge simplification step	| double (meters) | should be smaller than bufferSize 	|
+
+
 Examples of generalization
 -------------
-![Initial buildings](images/morpho_amalgamation_before.png)
-![Amalgamated building](images/morpho_amalgamation_after.png)
+![Initial buildings](/images/morpho_amalgamation_before.png)
+![Amalgamated building](/images/morpho_amalgamation_after.png)
 
 
 When to use the algorithm?
