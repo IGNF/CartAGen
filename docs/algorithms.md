@@ -28,6 +28,7 @@ A list, not exhaustive yet, of the generalization algorithms available in CartAG
 | [Random displacement][45] 	| never published (@Julien Gaffuri)	| [BuildingDisplacementRandom.java][25]  |	iteratively, a building is randomly displaced (with very small displacements), until the global legibility is optimized (a gradient descent is used)	|
 | [displacement in block][46]  | [Ruas 1999][26]					| [BuildingDisplacementRuas.java][27]  |					|
 | [Aggregation][47]  | [Regnauld 1998][28]					| [PolygonAggregation.java][29]  |	Direct port from Regnauld's PhD thesis, comments only in French for now		|
+| [Morphology Amalgamation][63]  | [Damen et al 2008][64]					| [BuildingsAggregation.java][65]  |	Direct port from the workshop paper, but the square Minkowski is approximated by the CAP_FLAT buffer from JTS library	|
 | [Delete overlaping buildings in block][48]  | never published (@Guillaume Touya)	| [BuildingDeletionOverlap.java][30]  |	Given a threshold of area overlaping and a couple of overlaping buildings, deletes the smallest one |
 | [ELECTRE deletion in block][49]  | not yet published (@Guillaume Touya)	| [BuildingsDeletionProximityMultiCriterion.java][31]  | Uses ELECTRE III multi-criteria	to sort buildings from the first to delete to the last, using criteria such as, relative position, congestion or size	|
 | [PROMETHEE deletion in block][50]  | not yet published (@Guillaume Touya)	| [BuildingDeletionPromethee.java][32]  | Uses PROMETHEE multi-criteria	to sort buildings from the first to delete to the last, using criteria such as, relative position, congestion or size	|
@@ -107,3 +108,6 @@ A list, not exhaustive yet, of the generalization algorithms available in CartAG
 [60]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/network/roads/RoadNetworkStrokesBasedSelection.java
 [61]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/rail/CollapseParallelRailways.java
 [62]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/rail/TypifySideTracks.java
+[63]: docs/algorithms/buildings/morpho_amalgamation.md
+[64]: https://kartographie.geo.tu-dresden.de/downloads/ica-gen/workshop2008/04_Damen_et_al.pdf
+[65]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/block/BuildingsAggregation.java

@@ -56,18 +56,70 @@ No, there is no template to write the code of a new algorithm in CartAGen. The a
 However, there are some guidelines to make the algorithm useful for all the users of CartAGen:
 - use the centralized schema interfaces as input/output of the algorithm: e.g. if the algorithm processes buildings, use the ```IBuilding``` interface.
 - if the algorithm is generic in terms of features, prefer the geometry interfaces (IPoint, ILineString, or IPolygon) as input/output of the algorithm. For instance, the Douglas & Peucker algorithm is not dedicated to a specific features, so the CartAGen implementations use ILineString (and IPolygon) as input and output of the algorithm, because it can process any feature with a line (or polygon) geometry.
+- most algorithms make use of basic/advanced geometrical algorithms (e.g. dilation, erosion, closing, opening here) that might be already available in [GeOxygene][7], the library that manages features and geometries for CartAGen, so before implementing something new, please check if it does not already exist in GeOxygene.
 
 ```java
     public static Collection<IBuilding> computeMorphologicalAmalgamation(Collection<IBuilding> buildings, double bufferSize){
-        Collection<IBuilding> outCollection = new HashSet<>();
-        
-		// TODO
-        
-		return outCollection;
+    // initialise
+    Collection<IBuilding> outCollection = new HashSet<>();
+    Collection<IPolygon> clusters = new HashSet<>();
+    IMultiSurface<IPolygon> multiPolygon = GeometryEngine.getFactory()
+        .createMultiPolygon();
+    for (IBuilding building : buildings)
+      multiPolygon.add(building.getGeom());
+
+    MorphologyTransform morph = new MorphologyTransform(bufferSize, 20);
+    morph.setCapForm(BufferParameters.CAP_FLAT);
+    IMultiSurface<IPolygon> closedGeom = morph
+        .closingMultiPolygon(multiPolygon);
+    IGeometry merged = morph.opening(closedGeom);
+
+    if (merged instanceof IPolygon) {
+      clusters.add((IPolygon) merged);
+    } else if (merged instanceof IMultiSurface) {
+      for (IPolygon simple : ((IMultiSurface<IPolygon>) merged).getList())
+        clusters.add(simple);
+    }
+
+    // from the collection of output polygon, create a new building feature
+    // from each of these polygons
+    for (IPolygon clusterPolygon : clusters) {
+
+      IPolygon simplified = edgeRemovalSimplification(clusterPolygon,
+          edgeLength);
+
+      // simplify the polygon by removing small edges
+      IBuilding newBuilding = CartAGenDoc.getInstance().getCurrentDataset()
+          .getCartAGenDB().getGeneObjImpl().getCreationFactory()
+          .createBuilding(simplified);
+      outCollection.add(newBuilding);
+    }
+    return outCollection;
     }
 ```
 
 #### [](#header-4)Documenting the added algorithm
+
+Of course, comments should be added in the code, as much as possible, to document the algorithm (see the example below).
+
+```java
+  /**
+   * Algorithms to amalgamate a collection of buildings into one (or several)
+   * square amalgamated polygon, using morphological operators. The algorithm is
+   * an implementation of the paper from Damen et al. (2008, ICA Workshop in
+   * Montpellier). Here, the sequence of operators is closure, then opening,
+   * then edge removal.
+   * 
+   * @param buildings
+   * @param bufferSize the size of the buffer for the dilation/erosion
+   *          operations.
+   * @param edgeLength the minimum length for final edges of the polygon
+   *          (smaller edges are removed).
+   * @return
+   */
+```
+
+The website that describes and documents the CartAGen project (i.e. this website), also contains descriptions of the available algorithms, so the addition of a new algorithm should involve the addition of a new webpage to document the algorithm. You can find [here][8] the page that documents the Damen et al. algorithm used above as an example.
 
 See Also
 -------------
@@ -82,3 +134,5 @@ See Also
 [4]: /tuto_agents.md
 [5]: /algorithms/buildings/random_displacement.md
 [6]: https://kartographie.geo.tu-dresden.de/downloads/ica-gen/workshop2008/04_Damen_et_al.pdf
+[7]: https://github.com/IGNF/geoxygene
+[8]: /algorithms/buildings/morpho_amalgamation.md
