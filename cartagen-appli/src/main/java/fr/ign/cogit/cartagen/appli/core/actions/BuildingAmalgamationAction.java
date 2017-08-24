@@ -18,30 +18,41 @@ import fr.ign.cogit.geoxygene.appli.plugin.cartagen.selection.SelectionUtil;
 
 public class BuildingAmalgamationAction extends AbstractAction {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Collection<IBuilding> buildings = new HashSet<>();
-        for (IFeature feat : SelectionUtil.getSelectedObjects(CartAGenPlugin.getInstance().getApplication()))
-            if (feat instanceof IBuilding)
-                buildings.add((IBuilding) feat);
-        String bufferSize = JOptionPane.showInputDialog("Enter the buffer size in meters");
-        String edgeLength = JOptionPane.showInputDialog("Enter the minimum edge length in meters");
-        Collection<IBuilding> outputBuildings = BuildingsAggregation.computeMorphologicalAmalgamation(buildings,
-                new Double(bufferSize), new Double(edgeLength));
-        System.out.println(outputBuildings.size() + " buildings after amalgamation");
-        for (IBuilding building : outputBuildings)
-            CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool().addFeatureToGeometryPool(building.getGeom(),
-                    Color.RED, 2);
-    }
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    Collection<IBuilding> buildings = new HashSet<>();
+    for (IFeature feat : SelectionUtil
+        .getSelectedObjects(CartAGenPlugin.getInstance().getApplication()))
+      if (feat instanceof IBuilding)
+        buildings.add((IBuilding) feat);
+    String bufferSize = JOptionPane
+        .showInputDialog("Enter the buffer size in meters");
+    String edgeLength = JOptionPane
+        .showInputDialog("Enter the minimum edge length in meters");
+    Collection<IBuilding> outputBuildings = BuildingsAggregation
+        .computeMorphologicalAmalgamation(buildings, new Double(bufferSize),
+            new Double(edgeLength));
+    System.out
+        .println(outputBuildings.size() + " buildings after amalgamation");
 
-    public BuildingAmalgamationAction() {
-        this.putValue(Action.SHORT_DESCRIPTION,
-                "Trigger the amalgamation of a set of close buildings with the algorithm from (Damen et al. 2008)");
-        this.putValue(Action.NAME, "Trigger the amalgamation of a set of close buildings");
-    }
+    // display the output in the geometry pool
+    CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
+        .setSld(CartAGenPlugin.getInstance().getApplication().getMainFrame()
+            .getSelectedProjectFrame().getSld());
+    for (IBuilding building : outputBuildings)
+      CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
+          .addFeatureToGeometryPool(building.getGeom(), Color.RED, 2);
+  }
+
+  public BuildingAmalgamationAction() {
+    this.putValue(Action.SHORT_DESCRIPTION,
+        "Trigger the amalgamation of a set of close buildings with the algorithm from (Damen et al. 2008)");
+    this.putValue(Action.NAME,
+        "Trigger the amalgamation of a set of close buildings");
+  }
 }

@@ -31,6 +31,12 @@ public class PostGISCartAGenDB extends CartAGenDB {
     this.setName(name);
   }
 
+  public PostGISCartAGenDB(File file) throws ClassNotFoundException,
+      ParserConfigurationException, SAXException, IOException {
+    super();
+    openFromXml(file);
+  }
+
   @Override
   public void openFromXml(File file) throws ParserConfigurationException,
       SAXException, IOException, ClassNotFoundException {
