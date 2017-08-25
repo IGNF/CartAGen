@@ -46,6 +46,17 @@ A list, not exhaustive yet, of the generalization algorithms available in CartAG
 | Collapse parallel railways	    | [Touya & Girres 2014][55] | [CollapseParallelRailways.java][61]  			| 	|
 | Typify side tracks	    | [Savino & Touya 2015][56] | [TypifySideTracks.java][62]  			| 	|
 
+
+#### [](#header-4)Other algorithms
+
+| Algorithm name        | Reference         				| Code 							| Description of the implementation 				|
+|:----------------------|:----------------------------------|:------------------------------|:--------------------------------------------------|
+| [Point cloud reduction][70]   |  | [KMeansReduction.java][69]  			| 	|
+| [Point cloud covering][71]	    | [Galton & Duckham 2006][66] | [DelaunayNonConvexHull.java][67]  			| 	|
+| [Spinalize][72]   | [Touya & Girres 2014][66] | [Spinalize.java][74]  			| 	|
+| [Airport generalization][73]   | [Touya & Girres 2014][66] | [AirportTypification.java][68]  			| 	|
+
+
 [1]: http://recherche.ign.fr/labos/cogit/english/accueilCOGIT.php
 [2]: https://github.com/IGNF/geoxygene
 [3]: docs/tuto_import_data.md
@@ -111,3 +122,12 @@ A list, not exhaustive yet, of the generalization algorithms available in CartAG
 [63]: /algorithms/buildings/morpho_amalgamation.md
 [64]: https://kartographie.geo.tu-dresden.de/downloads/ica-gen/workshop2008/04_Damen_et_al.pdf
 [65]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/block/BuildingsAggregation.java
+[66]: https://link.springer.com/chapter/10.1007%2F11863939_6
+[67]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/points/DelaunayNonConvexHull.java
+[68]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/facilities/AirportTypification.java
+[69]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/points/KMeansReduction.java
+[70]: /algorithms/others/point_reduction.md
+[71]: /algorithms/others/point_cover.md
+[72]: /algorithms/others/spinalize.md
+[73]: /algorithms/others/airports.md
+[74]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/polygon/Spinalize.java
