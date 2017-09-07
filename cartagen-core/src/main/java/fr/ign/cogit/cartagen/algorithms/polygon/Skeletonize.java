@@ -41,7 +41,9 @@ import fr.ign.cogit.geoxygene.generalisation.Filtering;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPosition;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineSegment;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineString;
+import fr.ign.cogit.geoxygene.spatial.geomengine.GeometryEngine;
 import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.CommonAlgorithmsFromCartAGen;
+import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.JTSAlgorithms;
 import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.LineDensification;
 import fr.ign.cogit.geoxygene.util.algo.geomstructure.Vector2D;
 import straightskeleton.Corner;
@@ -350,11 +352,14 @@ public class Skeletonize {
     // compute the outline of the polygon to extract the triangulation
     // vertices and constraining segments
     ILineString contour = null;
+    IPolygon densePol = null;
     if (densStep == -1) {
       contour = new GM_LineString(polygon.coord());
+      densePol = polygon;
     } else {
       contour = LineDensification
           .densification(new GM_LineString(polygon.coord()), densStep);
+      densePol = GeometryEngine.getFactory().createIPolygon(contour.coord());
     }
 
     // the list contains all the points arround the face
@@ -372,10 +377,12 @@ public class Skeletonize {
     Collection<TriangulationTriangle> triangles = tri.getTriangles();
 
     if (triangles.size() != 2) {
-      // There are three case of triangles
+      // There are three cases of triangles
       for (TriangulationTriangle triangle : triangles) {
 
-        if (polygon.contains(triangle.getGeom())) {
+        // System.out.println(triangle.getGeom().centroid());
+        // System.out.println(polygon.relate(triangle.getGeom()));
+        if (JTSAlgorithms.coversPredicate(densePol, triangle.getGeom())) {
 
           TriangulationPointImpl point1 = new TriangulationPointImpl(
               triangle.getPoint1().getPosition());
@@ -404,7 +411,7 @@ public class Skeletonize {
           nbSeg = contourSeg1 + contourSeg2 + contourSeg3;
 
           // The end triangles (the end line starts and finishes where these
-          // triangles are => We don't make anything now
+          // triangles are) => We don't make anything now
 
           // The most frequent triangles (1 side in common with the separator
           // outline)
