@@ -22,6 +22,17 @@ Triggering algorithms with the menu buttons
 Where are the algorithms in the Java library?
 -------------
 
+Generalization operations are atomic transformations of map objects that improve the legibility of the objects at target scale. 
+There are many different taxonomies of generalization operations (or operators), but the one illustrated in the images below derives from Sébastien Mustière's PhD thesis.
+
+![Simplification operations](assets/images/simplification_operations.png)  ![Caricature operations](assets/images/caricature_operations.png)  ![Harmonisation operations](assets/images/harmonisation_operations.png)
+
+A generalization algorithm is an algorithm that instanciates one or several generalization operations. For instance, the famous Douglas & Peucker algorithm is an algorithm that instanciates the filtering operation.
+
+See more information on generalization operations and algorithms in [this chapter][11] from the ICA commission 2014 book.
+
+Most algorithms available in CartAGen are located in the [algorithms package][9] of the cartagen-core project. However, some simple geometrical algorithms such as Gaussian smoothing or Douglas & Peucker filtering are included in the geometry computation methods of [GeOxygene library][10], on which CartAGen is built upon.
+
 > TIP: To know where the code of an algorithm is, look at the code of the menu button that triggers the algorithm (in the package `fr.ign.cogit.cartagen.appli.core.themes` of cartagen-appli module).
 
 > There is a list of the available algorithms with descriptions [at the bottom of this page][2]
@@ -136,3 +147,6 @@ See Also
 [6]: https://kartographie.geo.tu-dresden.de/downloads/ica-gen/workshop2008/04_Damen_et_al.pdf
 [7]: https://github.com/IGNF/geoxygene
 [8]: /algorithms/buildings/morpho_amalgamation.md
+[9]: https://github.com/IGNF/CartAGen/tree/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms
+[10]: https://github.com/IGNF/geoxygene/tree/master/geoxygene-spatial/src/main/java/fr/ign/cogit/geoxygene
+[11]: https://link.springer.com/chapter/10.1007%2F978-3-319-00203-3_6

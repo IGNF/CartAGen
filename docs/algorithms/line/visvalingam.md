@@ -8,17 +8,29 @@
 
 Description of the algorithm
 -------------
+Cet algorithme réalise une simplification de ligne qui permet d'obtenir des résultats moins anguleux que l'algorithme de filtrage de [Douglas and Peucker][2].
+The algorithm was proposed by [Visvalingam & Whyatt 1993][5].
 
+The principle of the algorithm is to select the vertices to delete (the less characteristic ones) rather than choosing the vertices to keep (in the Douglas and Peucker algorithm). 
+To select the vertices to delete, there is an iterative process, and at each iteration, the triangles formed by three consecutive vertices are computed. If the area of the smallest triangle is smaller than a threshold ("area_tolerance" parameter), the middle vertex is deleted, and another iteration starts.
+
+| Parameter name        | Description         				| Type 							| Default value			|
+|:----------------------|:----------------------------------|:------------------------------|:--------------------------------------------------|
+| area_tolerance   | the minimum triangle area to keep a vertex in the line |  double (m²) |  	|
 
 
 Examples of generalization
 -------------
-
+![A coastline simplified by the Visvalingam-Whyatt algorithm](/images/visvalingam_coastline.png)
 
 When to use the algorithm?
 -------------
+The algorithm is relevant for the simplification of natural line or polygon features such as rivers, forests, or coastlines.
 
-
+Available variations
+-------------
+In the same Java class, there is a variation of the algorithm that is topology safe, which means that if other features are passed as parameters of the algorithm, the variation algorithm checks that the simplified line does not intersect any of these additional lines.
+If the removal of a point creates an intersection, the removal is just backtrack and the algorithm continues with the next vertex.
 
 See Also
 -------------
@@ -31,3 +43,4 @@ See Also
 [2]: /algorithms/line/douglas_peucker.md
 [3]: /algorithms/line/raposo.md
 [4]: /algorithms/line/li_openshaw.md
+[5]: http://www.tandfonline.com/doi/abs/10.1179/000870493786962263

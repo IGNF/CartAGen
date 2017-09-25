@@ -1,4 +1,4 @@
-# Description of Douglas & Peucker Line Simplification Algorithm
+# Description of K-Means Point Reduction Algorithm
 
 > - Date 20/07/2017.
 > - Author: [Guillaume Touya][1]
@@ -9,38 +9,31 @@
 Description of the algorithm
 -------------
 
-The Douglas & Peucker algorithm is a line filtering algorithm, which means that it filters the vertices of the line (or polygon) to only retain the most important ones to preserve the shape of the line.
-The algorithm iteratively searches the most characteristics vertices of portions of the line and decides to retain or remove them given a distance threshold (see figure below).
+The algorithm computes a K-Mean clustering of the points using the Euclidean distance between points, and then replaces each cluster by a single point.
 
-![Line simplified by the Douglas & Peucker algorithm](/images/Douglas-Peucker_animated.gif)
+More details from Wikipedia on [K-Means clustering][3].
 
-The initial paper can be found [here][5]
-More details from Wikipedia [here][6].
 
 | Parameter name        | Description         				| Type 							| Default value			|
 |:----------------------|:----------------------------------|:------------------------------|:--------------------------------------------------|
-| threshold    | the distance under which a vertex is removed from the line 	| double (meters) 			| 								|
-
+| k    | the number of clusters to build (i.e. the number of points after reduction	| integer			| 								|
+| shrinkRatio    | if k is set to 0, the algorithm rather uses this ratio to compute how many points are kept (0.5 means half the points are kept) 	| double (between 0 and 1) 			| 								|
 
 Examples of generalization
 -------------
-
+![K-Means point reduction using the centroid of the cluster](/images/kmeans_centroid.png)
+![K-Means point reduction using the nearest point to the centroid of the cluster](/images/kmeans_point.png)
 
 When to use the algorithm?
 -------------
-The algorithm tends to unsmooth geographic lines, and is rarely used to simplify geographic features. But it can be very useful to quickly filter the vertices of a line inside another algorithm.
+The algorithm is dedicated to features represented by point clouds.
 
 
 See Also
 -------------
-- [Visvalingam-Whyatt algorithm][2]
-- [Hexagon based Raposo algorithm][3]
-- [Li-Openshaw algorithm][4]
+- [point cloud covering algorithm][2]
 
 
 [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
-[2]: /algorithms/line/visvalingam.md
-[3]: /algorithms/line/raposo.md
-[4]: /algorithms/line/li_openshaw.md
-[5]: http://dx.doi.org/10.3138/FM57-6770-U75U-7727
-[6]: http://dx.doi.org/10.3138/FM57-6770-U75U-7727
+[2]: /algorithms/line/point_cover.md
+[3]: https://en.wikipedia.org/wiki/K-means_clustering

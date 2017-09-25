@@ -54,6 +54,7 @@ A list, not exhaustive yet, of the generalization algorithms available in CartAG
 | [Point cloud reduction][70]   |  | [KMeansReduction.java][69]  			| 	|
 | [Point cloud covering][71]	    | [Galton & Duckham 2006][66] | [DelaunayNonConvexHull.java][67]  			| 	|
 | [Spinalize][72]   | [Touya & Girres 2014][66] | [Spinalize.java][74]  			| 	|
+| [Skeletonize][76]   | [Haunert & Sester 2008][77] | [Skeletonize.java][75]  			| 	|
 | [Airport generalization][73]   | [Touya & Girres 2014][66] | [AirportTypification.java][68]  			| 	|
 
 
@@ -131,3 +132,6 @@ A list, not exhaustive yet, of the generalization algorithms available in CartAG
 [72]: /algorithms/others/spinalize.md
 [73]: /algorithms/others/airports.md
 [74]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/polygon/Spinalize.java
+[75]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/polygon/Skeletonize.java
+[76]: /algorithms/others/skeletonize.md
+[77]: https://link.springer.com/article/10.1007%2Fs10707-007-0028-x

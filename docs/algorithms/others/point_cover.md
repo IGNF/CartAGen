@@ -1,4 +1,4 @@
-# Description of Douglas & Peucker Line Simplification Algorithm
+# Description of the Point Cover Algorithms
 
 > - Date 20/07/2017.
 > - Author: [Guillaume Touya][1]
@@ -9,22 +9,33 @@
 Description of the algorithm
 -------------
 
-The Douglas & Peucker algorithm is a line filtering algorithm, which means that it filters the vertices of the line (or polygon) to only retain the most important ones to preserve the shape of the line.
-The algorithm iteratively searches the most characteristics vertices of portions of the line and decides to retain or remove them given a distance threshold (see figure below).
+The Point Cover algorithm replace a point cloud by polygons that cover the region occupied by clusters of the points.
+First clusters have to be computed, using any of the available techniques. 
+Then, a Delaunay Triangulation of the geographic object is created, and the longest segments (and their associated triangles) on the boundary of the hull are eliminated one by one, in order to reduce its spatial shape to the very structure of the points of the object. 
+The algorithm stops in 4 cases: 
+- a point is put outside of the hull 
+- the hull is not regular anymore (ie. contains bridging edges) 
+- the hull doesn't satisfy Jordan criteria anymore (ie. contains bridging points) 
+- minimal edge length removal is reached
 
-![Line simplified by the Douglas & Peucker algorithm](/images/Douglas-Peucker_animated.gif)
 
-The initial paper can be found [here][5]
-More details from Wikipedia [here][6].
+The initial paper from Duckham & Galton describing the Delaunay based concave hull can be found [here][3]
+
 
 | Parameter name        | Description         				| Type 							| Default value			|
 |:----------------------|:----------------------------------|:------------------------------|:--------------------------------------------------|
-| threshold    | the distance under which a vertex is removed from the line 	| double (meters) 			| 								|
+| minLength    | the minimal length of a triangulation segment to be kept as the outline of the hull	| double (meters) 			| 								|
 
 
 Examples of generalization
 -------------
+Below, a set of points representing shipwrecks covered with the Delaunay concave hull of the clusters.
 
+![A set of points representing shipwrecks covered with the Delaunay concave hull](/images/cover_concave_shipwreck.png)
+
+Below, a set of points representing shipwrecks covered with the convex hull of the clusters.
+
+![A set of points representing shipwrecks covered with the convex hull](/images/cover_convex_shipwreck.png)
 
 When to use the algorithm?
 -------------
@@ -33,14 +44,9 @@ The algorithm tends to unsmooth geographic lines, and is rarely used to simplify
 
 See Also
 -------------
-- [Visvalingam-Whyatt algorithm][2]
-- [Hexagon based Raposo algorithm][3]
-- [Li-Openshaw algorithm][4]
+- [Point reduction algorithm algorithm][2]
 
 
 [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
-[2]: /algorithms/line/visvalingam.md
-[3]: /algorithms/line/raposo.md
-[4]: /algorithms/line/li_openshaw.md
-[5]: http://dx.doi.org/10.3138/FM57-6770-U75U-7727
-[6]: http://dx.doi.org/10.3138/FM57-6770-U75U-7727
+[2]: /algorithms/line/point_reduction.md
+[3]: https://link.springer.com/chapter/10.1007%2F11863939_6
