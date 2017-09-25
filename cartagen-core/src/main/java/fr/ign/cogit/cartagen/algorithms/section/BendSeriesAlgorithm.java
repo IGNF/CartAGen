@@ -17,6 +17,7 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPositionList;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineSegment;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
+import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
 import fr.ign.cogit.geoxygene.api.spatial.geomprim.IPoint;
 import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
 import fr.ign.cogit.geoxygene.contrib.geometrie.Angle;
@@ -24,6 +25,7 @@ import fr.ign.cogit.geoxygene.contrib.geometrie.Operateurs;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPositionList;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineString;
 import fr.ign.cogit.geoxygene.util.algo.CommonAlgorithms;
+import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.JTSAlgorithms;
 import fr.ign.cogit.geoxygene.util.algo.geomstructure.Segment;
 import fr.ign.cogit.geoxygene.util.algo.geomstructure.Vector2D;
 
@@ -355,6 +357,24 @@ public class BendSeriesAlgorithm {
         genBendsMap.put(bend, bend.getGeom().coord());
         continue;
       }
+      double scalarProd = vector.prodScalaire(
+          new Vector2D(bend.getGeom().startPoint(), bend.getGeom().endPoint()));
+      if (scalarProd < 0.0)
+        vector = vector.opposite();
+
+      IPolygon bendPolygon = bend.closeBend();
+      boolean clockWise = JTSAlgorithms.isClockwise(bendPolygon);
+      Vector2D as = new Vector2D(bend.getGeom().startPoint(),
+          bend.getBendSummit());
+      Vector2D ab = new Vector2D(bend.getGeom().startPoint(),
+          bend.getGeom().endPoint());
+      double prodVect = as.getX() * ab.getY() - as.getY() * ab.getX();
+      if (clockWise && prodVect > 0) {
+        vector = vector.opposite();
+      } else if (!clockWise && prodVect < 0) {
+        vector = vector.opposite();
+      }
+
       if (debugMode)
         pool.addVectorToGeometryPool(vector, bend.getGeom().endPoint(),
             Color.DARK_GRAY, 2);

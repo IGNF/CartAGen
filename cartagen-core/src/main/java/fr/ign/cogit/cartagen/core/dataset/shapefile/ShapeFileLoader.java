@@ -89,7 +89,7 @@ public class ShapeFileLoader {
     ShapefileReader shr = null;
     DbaseFileReader dbr = null;
     try {
-      ShpFiles shpf = new ShpFiles(chemin + ".shp");
+      ShpFiles shpf = new ShpFiles(chemin);
       shr = new ShapefileReader(shpf, true, false, new GeometryFactory());
       dbr = new DbaseFileReader(shpf, true, Charset.defaultCharset());
     } catch (FileNotFoundException e) {
@@ -502,7 +502,7 @@ public class ShapeFileLoader {
     ShapefileReader shr = null;
     DbaseFileReader dbr = null;
     try {
-      ShpFiles shpf = new ShpFiles(chemin + ".shp");
+      ShpFiles shpf = new ShpFiles(chemin);
       shr = new ShapefileReader(shpf, true, false, new GeometryFactory());
       dbr = new DbaseFileReader(shpf, true, Charset.defaultCharset());
     } catch (FileNotFoundException e) {
@@ -548,6 +548,8 @@ public class ShapeFileLoader {
         if (i == 0)
           importance = (Integer) champs[i];
       }
+      if (importance < 0 || importance > 5)
+        importance = 2;
 
       // recupere la geometrie
       IGeometry geom = null;
@@ -647,6 +649,7 @@ public class ShapeFileLoader {
     shr.close();
     dbr.close();
 
+    logger.debug(dataset.getRoadNetwork().getSections().size());
     return true;
 
   }
