@@ -54,3 +54,5 @@ Implemented generalization algorithms
 [8]: docs/tuto_schema.md
 [9]: docs/algorithms.md
 [10]: docs/tuto_gui.md
+[11]: http://gi-tage.de/archive/2007/downloads/acceptedPapers/gaffuri.pdf
+[12]: http://dx.doi.org/10.1007/978-3-642-19143-5_30
