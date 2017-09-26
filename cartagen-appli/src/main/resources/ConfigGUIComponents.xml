@@ -23,4 +23,8 @@
 		<name>Continuous</name>
 		<path>fr.ign.cogit.geoxygene.appli.plugin.cartagen.util.ContinuousGUIComponent</path>
 	</Component>
+	<Component>
+		<name>OpenStreetMap</name>
+		<path>fr.ign.cogit.cartagen.appli.plugins.vgi.OSMCartAGenPlugin</path>
+	</Component>
 </Config-CartAGen-GUI-Components>

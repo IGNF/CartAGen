@@ -435,6 +435,7 @@ public class OSMLoader extends SwingWorker<Void, Void> {
    */
   @SuppressWarnings("unchecked")
   private void convertResourcesToGeneObjs() throws Exception {
+
     // Sleep for up to one second.
     try {
       Thread.sleep(1);
@@ -564,6 +565,10 @@ public class OSMLoader extends SwingWorker<Void, Void> {
               OSMResource resource = getWayFromId(inner.getRef());
               if (resource == null)
                 continue;
+              // case where the inner ring is not polygon: skip to next relation
+              // member
+              if (!((OSMWay) resource.getGeom()).isPolygon())
+                continue;
               IRing ring = convertor
                   .convertOSMPolygon((OSMWay) resource.getGeom(), nodes)
                   .getExterior();
@@ -574,6 +579,11 @@ public class OSMLoader extends SwingWorker<Void, Void> {
 
             // get the proper matching
             OsmMatching matching = mapping.getMatchingFromResource(rel);
+            if (matching == null) {
+              // some matchings are not handled yet, just pass to the next
+              // feature
+              continue;
+            }
             // create the gene obj
             String featTypeName = (String) matching.getCartagenClass()
                 .getField("FEAT_TYPE_NAME").get(null);
