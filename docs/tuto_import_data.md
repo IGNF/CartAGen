@@ -120,9 +120,12 @@ Then, go into the "Dataset" menu, then the "Import dataset" submenu, and then cl
 
 ![Menu to load shapefiles](assets/images/import_shapefile_menu.png)
 
-The name of the zone is just metadata on the dataset.
+The name of the zone is just metadata on the dataset (see image below).
 Then, the text field and the button help choosing the mapping file between the shapefiles structure and the CartAGen data schema. The XML structure is exactly the same as the PostGIS mapping file. 
 In the running example of the tutorial, as the shapefiles are named similarly to the PostGIS tables, the "mapping_test_data.xml" file can also be used to map the shapefiles, no need to create a new one.
+
+![Menu to load shapefiles](assets/images/import_shapefile_window.png)
+
 Then, choose a name for the loaded dataset. The name of a dataset is useful when several datasets are loaded at the same time in CartAGen, or when the document is saved (the name of the dataset is used as a name for the file created to enable document saves).
 The scale to give is the symbolisation scale of the loaded data, i.e. the target scale of generalization. This scale value can be changed later in the CartAGen GUI.
 Finally, the last text field of the window (at the bottom) is for the path of the folder that contains all shapefiles to load (the shapefiles have to be located in the same folder).
