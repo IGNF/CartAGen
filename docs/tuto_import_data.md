@@ -116,6 +116,29 @@ The tutorial above only allows the import of geographical datasets stored in a P
 Importing .osm files
 -------------
 
+It is also possible to load extract from OpenStreetMap with .osm formatted files.
+The matching between OSM tags and CartAGen feature types is automatic (encoded in the OSM loader).
+To load OSM files, you have to use the 'OpenStreetMap' menu (see image below)
+
+![Menu to load an OSM file](assets/images/load_osm_menu.png)
+
+Clicking on the menu item opens a window (see image below) where the .osm file to load can be specified, as well as the map projection to use. 
+As CartAGen uses parameters in map millimeters, it does not work properly if the data is loaded with geographic coordinates: the dataset has to be projected into a given map projection.
+Only a very small extract of the existing map projections is available in this window, so additional map projections will have to be added in the code of the window to be able to use them. 
+CartAGen uses Geotools library for projections, which gives a large variety of map projection that can be used.
+It is also possible to filter the loaded features by specifying a tag filter: the loader will only consider the features that have the specific tag (with no regard to the value of the tag). 
+To only load roads, you have to put "highway" in the text field.
+
+![Loading Frame for OSM data](assets/images/import_osm_window.png)
+
+In order to test this importing method, a .osm file was extracted from OpenStreetMap on Sept. 26th 2017, on the Alpe d'Huez area.
+
+The 'Import recent files' menu gives a shortcut access to the last five files that were loaded in CartAGen.
+
+Saving and loading CartAGen Documents
+-------------
+
+
 See Also
 -------------
 - [tutorial on CartAGen centralized schema][8]

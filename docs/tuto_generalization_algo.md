@@ -12,13 +12,6 @@ The tutorial:
 
 
 
-Triggering algorithms with the menu buttons
--------------
-#### [](#header-4)Generic algorithms
-
-#### [](#header-4)Theme specific algorithms
-
-
 Where are the algorithms in the Java library?
 -------------
 
@@ -36,6 +29,29 @@ Most algorithms available in CartAGen are located in the [algorithms package][9]
 > TIP: To know where the code of an algorithm is, look at the code of the menu button that triggers the algorithm (in the package `fr.ign.cogit.cartagen.appli.core.themes` of cartagen-appli module).
 
 > There is a list of the available algorithms with descriptions [at the bottom of this page][2]
+
+
+Triggering algorithms with the menu buttons
+-------------
+#### [](#header-4)Generic algorithms
+
+Some of the [available algorithms][2] are generic, which means they can be used on different types of geographic features, and even sometimes different types of geometry. 
+For instance, the simplification algorithms provided in CartAGen can be used on any type of line or polygon feature (even if they are not always effective on every type of feature, see the detailed description of the algorithms).
+Some of these algorithms can be manually triggered on the selected geographic features in the GUI: click on the menu items in the Generalisation->Algorithms menu (see image below).
+
+![menu to trigger generic algorithms](assets/images/algorithms_menu.png)
+
+#### [](#header-4)Theme specific algorithms
+
+Some other algorithms are clearly dedicated to specific types of features, and cannot be triggered on different features. 
+The 'Themes' menu (see image below) contains sub-menus and menu items to use theme-specific algorithms. 
+For instance, the 'Road Network' sub-menu contains menu items to 'Detect Roundabouts' and 'Collapse Roundabouts'
+
+![theme menus](assets/images/theme_menu.png)
+
+CartAGen is not supposed to be an interactive platform to carry out generalization on loaded data for production issues. 
+It is intended as a research platform, at least its GUI, and these menus are mostly helpful to design new algorithms and to design new generalization processes that orchestrate different algorithms. 
+For instance, it is useful to test the algorithms on its own data before choosing which ones can be included in an [agent-based generalization process][4].
 
 
 Example: enlarging and displacing buildings in the sample dataset
