@@ -2,7 +2,6 @@ package fr.ign.cogit.cartagen.spatialanalysis.measures.section;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import fr.ign.cogit.cartagen.spatialanalysis.measures.section.LineCurvature;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPositionList;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
@@ -35,6 +34,11 @@ public class Bend {
   private IDirectPosition summit = null;
   private int summitIndex = -1;
   private int id;
+  /**
+   * the head of the bend is the narrow part around the summit that is often
+   * subject to coalescence.
+   */
+  private ILineString head = null;
 
   public Bend(ILineString geom) {
     super();
@@ -110,8 +114,8 @@ public class Bend {
    */
   public double getHeight() {
     // first, get the base middle point.
-    IDirectPosition baseMiddle = new Segment(getGeom().startPoint(), getGeom()
-        .endPoint()).getMiddlePoint();
+    IDirectPosition baseMiddle = new Segment(getGeom().startPoint(),
+        getGeom().endPoint()).getMiddlePoint();
 
     // then, get the bend summit
     IDirectPosition summit = this.getBendSummit();
@@ -160,8 +164,8 @@ public class Bend {
     if (summit == null) {
       getBendSummit();
     }
-    double d1 = CommonAlgorithmsFromCartAGen.getLineDistanceBetweenIndexes(
-        getGeom(), 0, summitIndex);
+    double d1 = CommonAlgorithmsFromCartAGen
+        .getLineDistanceBetweenIndexes(getGeom(), 0, summitIndex);
     double d2 = CommonAlgorithmsFromCartAGen.getLineDistanceBetweenIndexes(
         getGeom(), summitIndex, getGeom().numPoints() - 1);
 
@@ -193,8 +197,8 @@ public class Bend {
    */
   public double getOrientation() {
     // first, get the base middle point.
-    IDirectPosition baseMiddle = new Segment(getGeom().startPoint(), getGeom()
-        .endPoint()).getMiddlePoint();
+    IDirectPosition baseMiddle = new Segment(getGeom().startPoint(),
+        getGeom().endPoint()).getMiddlePoint();
 
     // then, get the bend summit
     IDirectPosition summit = this.getBendSummit();
@@ -222,6 +226,14 @@ public class Bend {
     if (this.id != other.id)
       return false;
     return true;
+  }
+
+  public ILineString getHead() {
+    return head;
+  }
+
+  public void setHead(ILineString head) {
+    this.head = head;
   }
 
 }

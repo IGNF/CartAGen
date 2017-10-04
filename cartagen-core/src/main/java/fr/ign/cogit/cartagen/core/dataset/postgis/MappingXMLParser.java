@@ -24,13 +24,15 @@ import org.xml.sax.SAXException;
 
 import fr.ign.cogit.cartagen.core.dataset.GeneObjImplementation;
 import fr.ign.cogit.cartagen.core.dataset.postgis.PostGISToLayerMapping.PostGISToLayerMatching;
+import fr.ign.cogit.cartagen.core.dataset.shapefile.ShapeToLayerMapping;
+import fr.ign.cogit.cartagen.core.dataset.shapefile.ShapeToLayerMapping.ShapeToLayerMatching;
 import fr.ign.cogit.cartagen.core.genericschema.AbstractCreationFactory;
 
-public class PostGISMappingXMLParser {
+public class MappingXMLParser {
 
   private File xmlFile;
 
-  public PostGISMappingXMLParser(File xmlFile) {
+  public MappingXMLParser(File xmlFile) {
     super();
     this.xmlFile = xmlFile;
   }
@@ -112,11 +114,111 @@ public class PostGISMappingXMLParser {
         }
 
         // create the corresponding CalacMatching
-        PostGISToLayerMatching calacMatching = mapping.new PostGISToLayerMatching(
+        PostGISToLayerMatching matchingObj = mapping.new PostGISToLayerMatching(
             postgisLayer, factory.getClass().getDeclaredMethod(creationMethod),
             scaleRef, theme, attrMappingStorage);
         // add it to CalacMatchings
-        calacMatchings.add(calacMatching);
+        calacMatchings.add(matchingObj);
+      }
+      return mapping;
+
+    } catch (NoSuchMethodException e) {
+      e.printStackTrace();
+    } catch (InstantiationException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    } catch (DOMException e) {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
+
+  /**
+   * Parse the XML File to produce a {@link PostGISToLayerMapping} instance, if
+   * the file has the correct structure.
+   * @return
+   * @throws ParserConfigurationException
+   * @throws IOException
+   * @throws SAXException
+   */
+  public ShapeToLayerMapping parseShapeMapping()
+      throws ParserConfigurationException, SAXException, IOException {
+
+    try {
+
+      // open the xml file
+      DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+      DocumentBuilder db;
+      db = dbf.newDocumentBuilder();
+      org.w3c.dom.Document doc;
+      doc = db.parse(this.xmlFile);
+      doc.getDocumentElement().normalize();
+
+      // get the root of the XML document
+      Element root = (Element) doc.getElementsByTagName("mapping").item(0);
+
+      Element implElem = (Element) root
+          .getElementsByTagName("gene-obj-implementation").item(0);
+      AbstractCreationFactory factory = (AbstractCreationFactory) Class
+          .forName(
+              implElem.getElementsByTagName("factory").item(0).getTextContent())
+          .newInstance();
+      String name = implElem.getElementsByTagName("name").item(0)
+          .getTextContent();
+      String rootPackageName = implElem
+          .getElementsByTagName("root-package-name").item(0).getTextContent();
+      Class<?> rootClass = Class.forName(
+          implElem.getElementsByTagName("root-class").item(0).getTextContent());
+      // create a new CalacMapping
+      GeneObjImplementation implementation = new GeneObjImplementation(name,
+          rootPackageName, rootClass, factory);
+      ShapeToLayerMapping mapping = new ShapeToLayerMapping(implementation);
+      Set<ShapeToLayerMatching> matchingSet = mapping.getMatchings();
+
+      // for every matching
+      for (int itMatchings = 0; itMatchings < root
+          .getElementsByTagName("matching").getLength(); itMatchings++) {
+        Element matching = (Element) root.getElementsByTagName("matching")
+            .item(itMatchings);
+
+        // get matching properties
+        String postgisLayer = matching.getElementsByTagName("postgisLayer")
+            .item(0).getTextContent();
+        String creationMethod = matching.getElementsByTagName("creationMethod")
+            .item(0).getTextContent();
+        String scaleRef = matching.getElementsByTagName("scaleRef").item(0)
+            .getTextContent();
+        String theme = matching.getElementsByTagName("theme").item(0)
+            .getTextContent();
+
+        // get matching attributes mapping
+        Element attributes = (Element) matching
+            .getElementsByTagName("attributes").item(0);
+        Hashtable<String, String> attrMappingStorage = new Hashtable<String, String>();
+        if (attributes != null) {
+          // get and store each attribute mapping
+          for (int itAttrMapping = 0; itAttrMapping < attributes
+              .getElementsByTagName("attribute").getLength(); itAttrMapping++) {
+            Element attribute = (Element) attributes
+                .getElementsByTagName("attribute").item(itAttrMapping);
+            String postgisAttr = attribute.getElementsByTagName("postgisAttr")
+                .item(0).getTextContent();
+            String javaAttr = attribute.getElementsByTagName("javaAttr").item(0)
+                .getTextContent();
+            attrMappingStorage.put(javaAttr, postgisAttr);
+          }
+        }
+
+        // create the corresponding CalacMatching
+        ShapeToLayerMatching matchingObj = mapping.new ShapeToLayerMatching(
+            postgisLayer, factory.getClass().getDeclaredMethod(creationMethod),
+            scaleRef, theme, attrMappingStorage);
+        // add it to CalacMatchings
+        matchingSet.add(matchingObj);
       }
       return mapping;
 

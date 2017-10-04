@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cartagen-last-session-params>
+   <parameter createDb="false" epsg="2154" name="Recent OSM file 1" tagFilter="">D:\Users\gtouya\workspace\cartagen\cartagen-appli\src\main\resources\data\alpe_huez.osm</parameter>
+   <parameter createDb="false" epsg="2154" name="Recent OSM file 2" tagFilter="">D:\Donnees\OSM\roland_garros_062016.osm</parameter>
+   <parameter createDb="false" epsg="2154" name="Recent OSM file 3" tagFilter="">D:\Donnees\OSM\aspe_ossau.osm</parameter>
+   <parameter createDb="false" epsg="2154" name="Recent OSM file 4" tagFilter="">D:\Donnees\OSM\bois_vincennes.osm</parameter>
    <parameter name="Recent CartAGenDoc 1">D:\Users\gtouya\workspace\cartagen\cartagen-appli\src\main\resources\xml\alpe_huez_doc.xml</parameter>
 </cartagen-last-session-params>

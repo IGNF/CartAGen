@@ -4,8 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -18,10 +23,13 @@ import org.geotools.data.shapefile.shp.ShapefileReader.Record;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
+import fr.ign.cogit.cartagen.core.dataset.CartAGenDB;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
 import fr.ign.cogit.cartagen.core.dataset.GeographicClass;
 import fr.ign.cogit.cartagen.core.dataset.SourceDLM;
 import fr.ign.cogit.cartagen.core.defaultschema.road.RoadLineWithAttributes;
+import fr.ign.cogit.cartagen.core.genericschema.AbstractCreationFactory;
+import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.cartagen.core.genericschema.energy.IElectricityLine;
 import fr.ign.cogit.cartagen.core.genericschema.hydro.IWaterArea;
 import fr.ign.cogit.cartagen.core.genericschema.hydro.IWaterArea.WaterAreaNature;
@@ -51,6 +59,7 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
 import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IMultiCurve;
 import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IMultiPoint;
+import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IMultiPrimitive;
 import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IMultiSurface;
 import fr.ign.cogit.geoxygene.api.spatial.geomprim.IPoint;
 import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
@@ -69,6 +78,8 @@ import fr.ign.cogit.geoxygene.schemageo.impl.support.reseau.ArcReseauImpl;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineString;
 import fr.ign.cogit.geoxygene.util.algo.CommonAlgorithms;
 import fr.ign.cogit.geoxygene.util.conversion.AdapterFactory;
+import fr.ign.cogit.geoxygene.util.conversion.ParseException;
+import fr.ign.cogit.geoxygene.util.conversion.WktGeOxygene;
 
 public class ShapeFileLoader {
 
@@ -81,26 +92,26 @@ public class ShapeFileLoader {
 
   /**
    * Charge des batiments depuis un shapefile surfacique
-   * @param chemin
+   * @param filePath
    * @throws IOException
    */
-  public static boolean loadBuildingsFromSHP(String chemin,
+  public static boolean loadBuildingsFromSHP(String filePath,
       CartAGenDataSet dataset) throws IOException {
     ShapefileReader shr = null;
     DbaseFileReader dbr = null;
     try {
-      ShpFiles shpf = new ShpFiles(chemin);
+      ShpFiles shpf = new ShpFiles(filePath);
       shr = new ShapefileReader(shpf, true, false, new GeometryFactory());
       dbr = new DbaseFileReader(shpf, true, Charset.defaultCharset());
     } catch (FileNotFoundException e) {
       if (logger.isDebugEnabled()) {
-        logger.debug("fichier " + chemin + " non trouve.");
+        logger.debug("fichier " + filePath + " non trouve.");
       }
       return false;
     }
 
     if (logger.isInfoEnabled()) {
-      logger.info("Loading: " + chemin);
+      logger.info("Loading: " + filePath);
     }
 
     IPopulation<IBuilding> buildPop = dataset.getBuildings();
@@ -155,7 +166,7 @@ public class ShapeFileLoader {
         }
 
       } else {
-        logger.error("ERREUR lors du chargement de shp " + chemin
+        logger.error("ERREUR lors du chargement de shp " + filePath
             + ". Type de geometrie " + geom.getClass().getName()
             + " non gere.");
       }
@@ -3032,5 +3043,169 @@ public class ShapeFileLoader {
     dbr.close();
 
     return true;
+  }
+
+  /**
+   * A generic loader for a shapefile and a mapping between shapefile structure
+   * and CartAGen structure.
+   * @param path
+   * @param dataset
+   * @param layer
+   * @param method
+   * @param factory
+   * @param attrMapping
+   * @param createGeoClass
+   * @return
+   * @throws NoSuchFieldException
+   * @throws SecurityException
+   * @throws InvocationTargetException
+   */
+  @SuppressWarnings("unchecked")
+  public static boolean genericShapefileLoader(String path,
+      CartAGenDataSet dataset, String layer, Method method,
+      AbstractCreationFactory factory, Hashtable<String, String> attrMapping,
+      boolean createGeoClass) throws NoSuchFieldException, SecurityException,
+      InvocationTargetException {
+    try {
+      // Open the shapefile
+      ShapefileReader shr = null;
+      DbaseFileReader dbr = null;
+      if (!path.endsWith(".shp"))
+        path = path + ".shp";
+      try {
+        ShpFiles shpf = new ShpFiles(path);
+        shr = new ShapefileReader(shpf, true, false, new GeometryFactory());
+        dbr = new DbaseFileReader(shpf, true, Charset.defaultCharset());
+      } catch (FileNotFoundException e) {
+        if (logger.isDebugEnabled()) {
+          logger.debug("fichier " + path + " non trouve.");
+        }
+        e.printStackTrace();
+        return false;
+      }
+
+      if (logger.isInfoEnabled()) {
+        logger.info("Loading: " + path);
+      }
+
+      // Create the population
+      IGeneObj elementDef = (IGeneObj) method.invoke(factory);
+      String elementClass = (String) elementDef.getClass()
+          .getField("FEAT_TYPE_NAME").get(null);
+      IPopulation<IGeneObj> pop = (IPopulation<IGeneObj>) dataset
+          .getCartagenPop(dataset.getPopNameFromObj(elementDef), elementClass);
+
+      IGeometry geom = null;
+      int w = 0;
+      // Create Calac object for each postGIS object
+      while (shr.hasNext()) {
+        Record objet = shr.nextRecord();
+
+        // Get the geometry
+        try {
+          geom = AdapterFactory.toGM_Object((Geometry) objet.shape());
+        } catch (Exception e) {
+          e.printStackTrace();
+          return false;
+        }
+        // Break done the geometry if it is a multiple geometry
+        List<IGeometry> listGeom = new ArrayList<IGeometry>();
+        if (geom.isMultiSurface() || geom.isMultiCurve()) {
+          IMultiPrimitive<?> multiGeom = ((IMultiPrimitive<?>) geom);
+          for (Integer i = 0; i < multiGeom.size(); i++) {
+            IGeometry geomPart = multiGeom.get(i);
+            listGeom.add(geomPart);
+          }
+        } else
+          listGeom.add(geom);
+
+        // get the fields
+        Object[] champs = dbr.readEntry();
+        Map<String, Object> fields = new HashMap<String, Object>();
+        for (int i = 0; i < dbr.getHeader().getNumFields(); i++) {
+          fields.put(dbr.getHeader().getFieldName(i), champs[i]);
+        }
+
+        // For each part, create a Java element
+        for (Integer i = 0; i < listGeom.size(); i++) {
+          IGeometry geomListPart = listGeom.get(i);
+          // Create the Calac object
+          IGeneObj element = (IGeneObj) method.invoke(factory);
+          // affecte la géométrie
+          element.setGeom(geomListPart);
+          // Get the object attributes from postGIS layer to Java class given
+          // by attrMapping
+          for (String attrJava : attrMapping.keySet()) {
+            String attrShape = attrMapping.get(attrJava);
+            Object value = null;
+            value = fields.get(attrShape);
+            if (attrJava.equals("initialGeom")) {
+              try {
+                element
+                    .setInitialGeom(WktGeOxygene.makeGeOxygene((String) value));
+              } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+              } catch (ParseException e) {
+                e.printStackTrace();
+              }
+              continue;
+            } else {
+              if ((attrJava.equals("eliminated"))
+                  && !(value instanceof Boolean)) {
+                value = Boolean.parseBoolean((String) value);
+              }
+            }
+            try {
+              element.setAttribute(attrJava, value);
+            } catch (IllegalArgumentException e) {
+              e.printStackTrace();
+            }
+
+          }
+
+          // check if initialGeom is filled
+          if (element.getInitialGeom() == null)
+            element.setInitialGeom(geom);
+
+          // if existing towns/blocks
+          if (element instanceof ITown)
+            ((ITown) element).initComponents();
+          else {
+            if (element instanceof IUrbanBlock)
+              ((IUrbanBlock) element).initComponents();
+          }
+          // Add this object to the population
+          pop.add(element);
+        }
+        w = w + 1;
+      }
+
+      // Get the geometry type
+      Class<? extends IGeometry> geomType = null;
+      if (geom.isPoint())
+        geomType = IPoint.class;
+      else if (geom.isLineString() || geom.isMultiCurve())
+        geomType = ILineString.class;
+      else if (geom.isPolygon() || geom.isMultiSurface())
+        geomType = IPolygon.class;
+
+      // Create geoClass
+      if (createGeoClass) {
+        CartAGenDB database = dataset.getCartAGenDB();
+        ShapeFileClass geoClass = new ShapeFileClass(database, path,
+            elementClass, geomType);
+        if (!database.getClasses().contains(geoClass)) {
+          database.addClass(geoClass);
+        }
+      }
+
+      System.out.println("nb d'objets chargés = " + w);
+    } catch (IllegalArgumentException | IllegalAccessException ex) {
+      ex.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return true;
+
   }
 }

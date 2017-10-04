@@ -27,6 +27,10 @@ public class SportsField extends GeneObjSurfDefault implements ISportsField {
   private IUrbanBlock block;
   private SportsFieldType type = SportsFieldType.UNKNOWN;
 
+  public SportsField() {
+    super();
+  }
+
   public void setType(SportsFieldType type) {
     this.type = type;
   }
@@ -62,16 +66,16 @@ public class SportsField extends GeneObjSurfDefault implements ISportsField {
   public ILineString getMedianGeom() {
     if (getGeom().coord().size() == 4) {
       // get the segments
-      List<Segment> segments = Segment.getSegmentList(getGeom(), getGeom()
-          .coord().get(0));
+      List<Segment> segments = Segment.getSegmentList(getGeom(),
+          getGeom().coord().get(0));
       Segment seg1 = segments.get(0);
       Segment seg2 = segments.get(2);
       if (segments.get(1).length() > seg1.length()) {
         seg1 = segments.get(1);
         seg2 = segments.get(3);
       }
-      return GeometryEngine.getFactory().createLineSegment(
-          seg1.getMiddlePoint(), seg2.getMiddlePoint());
+      return GeometryEngine.getFactory()
+          .createLineSegment(seg1.getMiddlePoint(), seg2.getMiddlePoint());
     }
     return null;
   }

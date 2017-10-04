@@ -363,7 +363,17 @@ public class DefaultCreationFactory extends AbstractCreationFactory {
     return new SportsField(poly, type);
   }
 
+  @Override
+  public ISportsField createSportsField() {
+    return new SportsField();
+  }
+
   // cemetery
+
+  @Override
+  public ICemetery createCemetery() {
+    return new Cemetery();
+  }
 
   @Override
   public ICemetery createCemetery(IPolygon poly, CemeteryType type) {

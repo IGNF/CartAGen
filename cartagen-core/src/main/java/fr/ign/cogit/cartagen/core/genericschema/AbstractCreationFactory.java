@@ -350,6 +350,13 @@ public abstract class AbstractCreationFactory {
   // SportsField
 
   @SuppressWarnings("unused")
+  public ISportsField createSportsField() {
+    AbstractCreationFactory.logger
+        .error("Non implemented creation factory method for ISportsField");
+    return null;
+  }
+
+  @SuppressWarnings("unused")
   public ISportsField createSportsField(IPolygon poly) {
     AbstractCreationFactory.logger
         .error("Non implemented creation factory method for ISportsField");
@@ -360,6 +367,15 @@ public abstract class AbstractCreationFactory {
   public ISportsField createSportsField(IPolygon poly, SportsFieldType type) {
     AbstractCreationFactory.logger
         .error("Non implemented creation factory method for ISportsField");
+    return null;
+  }
+
+  // Cemetery
+
+  @SuppressWarnings("unused")
+  public ICemetery createCemetery() {
+    AbstractCreationFactory.logger
+        .error("Non implemented creation factory method for ICemetery");
     return null;
   }
 

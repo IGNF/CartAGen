@@ -245,21 +245,24 @@ public class PostGISLoader {
         w = w + 1;
       }
 
-      // Get the geometry type
-      GeometryType geomType = null;
-      if (geom.isPoint())
-        geomType = GeometryType.POINT;
-      else if (geom.isLineString() || geom.isMultiCurve())
-        geomType = GeometryType.LINE;
-      else if (geom.isPolygon() || geom.isMultiSurface())
-        geomType = GeometryType.POLYGON;
+      if (pop.size() > 0) {
+        // Get the geometry type
+        GeometryType geomType = null;
+        if (geom.isPoint())
+          geomType = GeometryType.POINT;
+        else if (geom.isLineString() || geom.isMultiCurve())
+          geomType = GeometryType.LINE;
+        else if (geom.isPolygon() || geom.isMultiSurface())
+          geomType = GeometryType.POLYGON;
 
-      // Create geoClass
-      if (createGeoClass) {
-        PostGISClass geoClass = new PostGISClass(layer, elementClass, geomType);
-        CartAGenDB database = dataset.getCartAGenDB();
-        if (!database.getClasses().contains(geoClass)) {
-          database.addClass(geoClass);
+        // Create geoClass
+        if (createGeoClass) {
+          PostGISClass geoClass = new PostGISClass(layer, elementClass,
+              geomType);
+          CartAGenDB database = dataset.getCartAGenDB();
+          if (!database.getClasses().contains(geoClass)) {
+            database.addClass(geoClass);
+          }
         }
       }
 

@@ -22,6 +22,10 @@ public class Cemetery extends GeneObjSurfDefault implements ICemetery {
   private IUrbanBlock block;
   private CemeteryType type = CemeteryType.UNKNOWN;
 
+  public Cemetery() {
+    super();
+  }
+
   public Cemetery(IPolygon geom, CemeteryType type) {
     super();
     this.setGeom(geom);
