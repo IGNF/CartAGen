@@ -91,10 +91,15 @@ public class AgentUtil {
   protected final static Logger logger = Logger
       .getLogger(AgentUtil.class.getName());
 
+  public static Logger getLogger() {
+      return logger;
+  }
+
   // /////////////////////////////////
   // RECUPERATION OF AGENTS (AGENT AND GAEL)
   // /////////////////////////////////
 
+    
   /**
    * Returns the AGENT agent attached to a generalisation object
    * @param geneObj
