@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * This software is released under the licence CeCILL
+ * 
+ * see Licence_CeCILL-C_fr.html see Licence_CeCILL-C_en.html
+ * 
+ * see <a href="http://www.cecill.info/">http://www.cecill.info/a>
+ * 
+ * @copyright IGN
+ ******************************************************************************/
 package fr.ign.cogit.cartagen.spatialanalysis.measures.section;
 
 import java.util.ArrayList;
@@ -13,18 +22,22 @@ import fr.ign.cogit.geoxygene.contrib.geometrie.Angle;
 import fr.ign.cogit.geoxygene.generalisation.GaussianFilter;
 import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.CommonAlgorithmsFromCartAGen;
 
-public class BendSeries {
+/**
+ * A BendSeries feature is a part of a linear section composed of a series of
+ * sinuous bends.
+ * @author gtouya
+ *
+ */
+public class BendSeries extends SectionPart {
 
   private static Logger logger = Logger.getLogger(BendSeries.class.getName());
 
-  private ILineString geom;
   private List<IDirectPosition> inflectionPts;
   private List<Bend> bends;
   private double sigmaSmoothing = 75.0;
 
   public BendSeries(ILineString geom) {
-    super();
-    this.geom = geom;
+    super(geom);
     ILineString smoothLine = GaussianFilter.gaussianFilter(geom,
         this.sigmaSmoothing, 1);
     List<Integer> sequences = this.computeBendSequences(smoothLine);
@@ -34,8 +47,7 @@ public class BendSeries {
   }
 
   public BendSeries(ILineString geom, double sigmaSmoothing) {
-    super();
-    this.geom = geom;
+    super(geom);
     this.sigmaSmoothing = sigmaSmoothing;
     ILineString smoothLine = GaussianFilter.gaussianFilter(geom,
         this.sigmaSmoothing, 1);
@@ -43,14 +55,6 @@ public class BendSeries {
     List<Integer> filteredSequence = this.filterBendSequences(sequences, 1);
     this.computeInflectionPoints(filteredSequence);
     this.computeBendsFromInflectionPts();
-  }
-
-  public ILineString getGeom() {
-    return geom;
-  }
-
-  public void setGeom(ILineString geom) {
-    this.geom = geom;
   }
 
   public List<IDirectPosition> getInflectionPts() {
@@ -207,7 +211,7 @@ public class BendSeries {
    */
   private void computeInflectionPoints(List<Integer> filteredSequence) {
     this.inflectionPts = new ArrayList<IDirectPosition>();
-    IDirectPositionList listePoints = geom.getControlPoint();
+    IDirectPositionList listePoints = getGeom().getControlPoint();
 
     // Détermine les points d'inflexion sur la polyligne originale
     inflectionPts.add(listePoints.get(0));

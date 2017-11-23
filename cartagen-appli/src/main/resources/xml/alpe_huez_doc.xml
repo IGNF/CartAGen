@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cartagen-document>
+   <name>database name</name>
+   <databases>
+      <database>src/main/resources/xml/Cartagen_dbs/alpe_huez.xml<geo-center>
+            <x>893403.688057</x>
+            <y>2017046.028429</y>
+         </geo-center>
+         <envelope>
+            <lower-corner>
+               <x>893286.868314</x>
+               <y>2016969.995553</y>
+            </lower-corner>
+            <upper-corner>
+               <x>893520.507801</x>
+               <y>2017122.061306</y>
+            </upper-corner>
+         </envelope>
+         <sld-file>src/main/resources/xml/Cartagen_dbs/sld_alpe_huez.xml</sld-file>
+         <displayed-layer>buildings</displayed-layer>
+      </database>
+   </databases>
+</cartagen-document>

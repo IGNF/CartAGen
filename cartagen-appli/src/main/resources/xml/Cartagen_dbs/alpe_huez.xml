@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cartagen-dataset>
+  <name>Calac</name>
+  <type host="localhost" port="5433" dbName="alpe_huez" user="postgres" password="cartagen" schema="public">fr.ign.cogit.cartagen.core.dataset.postgis.PostGISCartAGenDB</type>
+  <dataset-type>fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet</dataset-type>
+  <scale>25000</scale>
+  <classes-list>
+    <class>
+      <name>ign_building</name>
+      <feature-type>Building</feature-type>
+    </class>
+  </classes-list>
+  <mapping-file>src/main/resources/xml/mapping_test_data.xml</mapping-file>
+  <geneobj-implementation>
+    <implementation-name>default</implementation-name>
+    <implementation-package>fr.ign.cogit.cartagen.core.defaultschema</implementation-package>
+    <implementation-root-class>fr.ign.cogit.cartagen.core.defaultschema.GeneObjDefault</implementation-root-class>
+    <implementation-factory>fr.ign.cogit.cartagen.core.defaultschema.DefaultCreationFactory</implementation-factory>
+  </geneobj-implementation>
+  <persistent>false</persistent>
+  <persistent-classes/>
+</cartagen-dataset>

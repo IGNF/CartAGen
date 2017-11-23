@@ -151,6 +151,12 @@ public class PostGISToLayerMapping {
     return matchings.size();
   }
 
+  public void addMatching(String postGISLayer, Method creationMethod,
+      String scale, String theme, Hashtable<String, String> listAttr) {
+    this.matchings.add(new PostGISToLayerMatching(postGISLayer, creationMethod,
+        scale, theme, listAttr));
+  }
+
   public Set<PostGISToLayerMatching> getMatchings() {
     return this.matchings;
   }

@@ -88,7 +88,7 @@ import fr.ign.cogit.geoxygene.util.conversion.AdapterFactory;
  */
 
 public class AgentUtil {
-  private final static Logger logger = Logger
+  protected final static Logger logger = Logger
       .getLogger(AgentUtil.class.getName());
 
   // /////////////////////////////////

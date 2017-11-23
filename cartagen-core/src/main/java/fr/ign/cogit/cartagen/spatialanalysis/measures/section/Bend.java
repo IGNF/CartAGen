@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * This software is released under the licence CeCILL
+ * 
+ * see Licence_CeCILL-C_fr.html see Licence_CeCILL-C_en.html
+ * 
+ * see <a href="http://www.cecill.info/">http://www.cecill.info/a>
+ * 
+ * @copyright IGN
+ ******************************************************************************/
 package fr.ign.cogit.cartagen.spatialanalysis.measures.section;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -22,11 +31,10 @@ import fr.ign.cogit.geoxygene.util.algo.geomstructure.Segment;
  * @author GTouya
  * 
  */
-public class Bend {
+public class Bend extends SectionPart {
 
   private static AtomicInteger counter = new AtomicInteger();
 
-  private ILineString geom;
   /**
    * sigma value for smoothing the line when the summit is computed.
    */
@@ -41,17 +49,8 @@ public class Bend {
   private ILineString head = null;
 
   public Bend(ILineString geom) {
-    super();
+    super(geom);
     this.id = counter.getAndIncrement();
-    this.geom = geom;
-  }
-
-  public ILineString getGeom() {
-    return geom;
-  }
-
-  public void setGeom(ILineString geom) {
-    this.geom = geom;
   }
 
   /**
