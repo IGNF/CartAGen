@@ -91,7 +91,23 @@ Description of the menus of the application
 
 #### [](#header-4)File Menu
 
-#### [](#header-4)Display Menu
+The File menu is the standard File menu of the GeOxygene application that CartAGen extends.
+- New Desktop: add a new desktop, i.e. a new space to create one or several projects.
+- New Project: create a new project, i.e. a new view panel that can contain a different dataset. For instance, two different maps of the same area can be loaded in different projects, and be synchronised.
+- Open File: add a new layer from a shapefile.
+- Load SLD: load a previously stored SLD format file, and apply the style on the current layers.
+- New PostGIS Layer: add a new layer from a PostGIS table (a window opens to fill the database connection information).
+- Save Layer as ...: save the selected layer as a shapefile. 
+- Save As Image: save the content of the view panel as an image (that can be geolocated).
+- Save As SLD: save the current style information in a SLD format file that can be reused later.
+- Print: to print the content of the view panel.
+- Exit: exit the application.
+
+#### [](#header-4)View Menu
+
+The menu first contains items to go to predefined display scales, or to a custom display scale.
+The "Go To" item allows to go to a point given its coordinates.
+There is also a toggle to display mouse coordinates.
 
 #### [](#header-4)CartAGen-Config Menu
 
@@ -100,10 +116,41 @@ Description of the menus of the application
 #### [](#header-4)Dataset Menu
 
 #### [](#header-4)Themes Menu
+The themes menu contains sub-menus for the main data themes that can be found in a topographic map. These sub-menus contain enrichment or generalisation algorithms specific for this theme. 
+For instance, the building sub-menu contains the algorithms for building generalisation that are available in CartAGen.
+The sub-menus are the following:
+- Relief
+- Land use
+- Road network
+- Hydro network
+- Buildings
+- Blocks
+- Urban alignment
+- Towns
+- Other themes
 
 #### [](#header-4)Utilities Menu
 
+This menu contains several utility tools, such as typical tools found in GIS software.
+- Bookmark tool: it enables the storage of views in a file, and when the application is re-run, it is possible to go back to the exact same view by selecting the bookmark previously stored.
+- Selection tools: contains a tool to save a selection of objects, in order to load it back once the application has been re-run; also contains a query tool that follows the OGC Filter standard to select feature with specific attribute values.
+- Draw WKT geometry: draws in the geometry pool a geometry described by a WKT string. Useful when debugging as intermediate geometries in algorithms can be logged in WKT.
+- Display initial geometries: displays the initial geometries in the geometry pool, which is useful to compare before/after generalisation.
+- Change the Locale settings: for now it is only possible to switch between French and English. This changes the language of the application components.
+
 #### [](#header-4)Agent Menu
+
+The Agent Menu gives predefined set of actions to trigger some agent-based generalisation.
+
+- Create all agents: create agents for each geographic feature in the layers of the view panel (AGENT, CartACom and GAEL agents are created, which enables the use of either model).
+- Run generalisation on selected agents: run the generalisation of the selected features by starting the agent life cycle of the associated agents of the feature.
+- AGENT: create only the AGENT model agents from the loaded geographic layers.
+- CartACom: create only the CartACom model agents from the loaded geographic layers.
+- GAEL: create only the GAEL model agents from the loaded geographic layers.
+
+The Agent menu goes along with a toolbar on the right side of the view panel that gives access to the same controls as the menu, but also gives controls on the life cycle of the agents during the generalisation (pause, step-by-step).
+
+![Agent toolbar](assets/images/agent_toolbar.png)
 
 
 GeOxygene Plugins
