@@ -46,6 +46,7 @@ public class RunOnSelectionAction extends AbstractAction {
       if (!(obj instanceof IGeneObj)) {
         continue;
       }
+      AgentGeneralisationScheduler.getInstance().initList();
       GeographicAgentGeneralisation ago = AgentUtil
           .getAgentFromGeneObj((IGeneObj) obj);
       if (ago == null) {
