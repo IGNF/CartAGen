@@ -556,8 +556,10 @@ public class ShapeFileLoader {
       Map<String, Object> fields = new HashMap<String, Object>();
       for (int i = 0; i < dbr.getHeader().getNumFields(); i++) {
         fields.put(dbr.getHeader().getFieldName(i), champs[i]);
-        if (i == 0)
-          importance = (Integer) champs[i];
+        if (i == 0) {
+          if (champs[i] instanceof Integer)
+            importance = (Integer) champs[i];
+        }
       }
       if (importance < 0 || importance > 5)
         importance = 2;
