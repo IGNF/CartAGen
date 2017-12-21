@@ -191,6 +191,8 @@ See Also
 - [tutorial on CartAGen data schema][9]
 - [tutorial to use agent-based generalization][7]
 
+- [Return to main page][23]
+
 [1]: http://recherche.ign.fr/labos/cogit/english/accueilCOGIT.php
 [2]: https://www.eclipse.org/
 [3]: https://github.com/IGNF/CartAGen/blob/master/cartagen-appli/src/main/java/fr/ign/cogit/cartagen/appli/core/CartAGenApplicationAgent.java
@@ -213,3 +215,4 @@ See Also
 [20]: https://github.com/IGNF/geoxygene/blob/master/geoxygene-appli/src/main/java/fr/ign/cogit/geoxygene/appli/plugin/cartagen/util/ContinuousGUIComponent.java
 [21]: https://github.com/IGNF/CartAGen/blob/master/cartagen-appli/src/main/java/fr/ign/cogit/cartagen/appli/plugins/vgi/OSMCartAGenPlugin.java
 [22]: https://www.researchgate.net/publication/226629945_CollaGen_Collaboration_between_automatic_cartographic_Generalisation_Processes
+[23]: https://ignf.github.io/CartAGen

@@ -13,15 +13,19 @@ The Basic Concepts of Agent-Based Generalization
 
 Generalizing data with AGENT
 -------------
+To be done...
 
 Generalizing data with CartACom
 -------------
+To be done...
 
 Generalizing data with GAEL
 -------------
+The implementation of the GAEL model is for now only partially functional in CartAGen.
 
 Generalizing data with DIOGEN
 -------------
+To be done...
 
 See Also
 -------------
@@ -29,13 +33,15 @@ See Also
 - [tutorial to generalize loaded data][9]
 - [tutorial on CartAGen data schema][7]
 
+- [Return to main page][6]
+
 
 [1]: http://www.tandfonline.com/doi/abs/10.1080/13658810410001672881
 [2]: http://icaci.org/files/documents/ICC_proceedings/ICC2001/icc2001/file/f13041.pdf
 [3]: http://dx.doi.org/10.1080/13658816.2011.639302
 [4]: https://www.researchgate.net/publication/221225232_Systeme_multi-agent_pour_la_deformation_en_generalisation_cartographique
 [5]: http://www.tandfonline.com/doi/full/10.1080/23729333.2017.1300997
-[6]: 
+[6]: https://ignf.github.io/CartAGen
 [7]: /tuto_agents.md
 [8]: /tuto_import_data.md
 [9]: /tuto_schema.md

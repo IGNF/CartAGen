@@ -11,51 +11,54 @@ A list, not exhaustive yet, of the generalization algorithms available in CartAG
 | Algorithm name        | Reference         				| Code 							| Description of the implementation 				|
 |:----------------------|:----------------------------------|:------------------------------|:--------------------------------------------------|
 | [Douglas & Peucker][36]    | [Douglas & Peucker 1973][13] 		| JTS implementation  			| basic implementation								|
-| [Visvalingam-Whyatt][37]	| [Visvalingam & Whyatt 1993][14]	| [VisvalingamWhyatt.java][15]  | topology safe implementation (checks potential intersections when removing a vertex)	|
-| [Hexagon based][38]    | [Raposo 2013][16]      			| [RaposoSimplification.java][17] | basic implementation of all versions of the algorithm 	|
-| [Accordion][39]    	| [Plazanet 1996][18] 				| [BendSeriesAlgorithm.java][19]  | Port from the initial ADA code					|
-| [Bend schematisation][40]   | [Lecordix et al 1997][20] 		| [BendSeriesAlgorithm.java][19]  | Port from the initial ADA code					|
+| [Visvalingam-Whyatt][37]	| [Visvalingam & Whyatt 1993][14]	| [VisvalingamWhyatt][15]  | topology safe implementation (checks potential intersections when removing a vertex)	|
+| [Hexagon based][38]    | [Raposo 2013][16]      			| [RaposoSimplification][17] | basic implementation of all versions of the algorithm 	|
+| [Accordion][39]    	| [Plazanet 1996][18] 				| [BendSeriesAlgorithm][19]  | Port from the initial ADA code					|
+| [Bend schematisation][40]   | [Lecordix et al 1997][20] 		| [BendSeriesAlgorithm][19]  | Port from the initial ADA code					|
 
 #### [](#header-4)Building algorithms (for individual buildings and building groups)
 
 | Algorithm name        | Reference         				| Code 							| Description of the implementation 				|
 |:----------------------|:----------------------------------|:------------------------------|:--------------------------------------------------|
 | [Simplification][43] 	    | Ruas 1988 [reported in AGENT project][21] | [from GeOxygene][22]  			| implemented by Julien Gaffuri (code comments mostly in French)	|
-| [Least squares squaring][44] 	| [Lokhat & Touya 2016][23]	| [SquarePolygonLS.java][24]  | non linear least squares optimize the position of the building vertices, rectifying almost 90° angles	|
+| [Least squares squaring][44] 	| [Lokhat & Touya 2016][23]	| [SquarePolygonLS][24]  | non linear least squares optimize the position of the building vertices, rectifying almost 90° angles	|
 | [Enlarge][42]      		| [reported in AGENT project][21]   | JTS implementation | 	|
 | [Enlarge to rectangle][42]	| [reported in AGENT project][21] 	| uses JTS smallest surrounding rectangle (SSR)  | 					|
 | Rotate   				| [reported in AGENT project][21]	| JTS implementation  |					|
-| [Random displacement][45] 	| never published (@Julien Gaffuri)	| [BuildingDisplacementRandom.java][25]  |	iteratively, a building is randomly displaced (with very small displacements), until the global legibility is optimized (a gradient descent is used)	|
-| [displacement in block][46]  | [Ruas 1999][26]					| [BuildingDisplacementRuas.java][27]  |					|
-| [Aggregation][47]  | [Regnauld 1998][28]					| [PolygonAggregation.java][29]  |	Direct port from Regnauld's PhD thesis, comments only in French for now		|
-| [Morphology Amalgamation][63]  | [Damen et al 2008][64]					| [BuildingsAggregation.java][65]  |	Direct port from the workshop paper, but the square Minkowski is approximated by the CAP_FLAT buffer from JTS library	|
-| [Delete overlaping buildings in block][48]  | never published (@Guillaume Touya)	| [BuildingDeletionOverlap.java][30]  |	Given a threshold of area overlaping and a couple of overlaping buildings, deletes the smallest one |
-| [ELECTRE deletion in block][49]  | not yet published (@Guillaume Touya)	| [BuildingsDeletionProximityMultiCriterion.java][31]  | Uses ELECTRE III multi-criteria	to sort buildings from the first to delete to the last, using criteria such as, relative position, congestion or size	|
-| [PROMETHEE deletion in block][50]  | not yet published (@Guillaume Touya)	| [BuildingDeletionPromethee.java][32]  | Uses PROMETHEE multi-criteria	to sort buildings from the first to delete to the last, using criteria such as, relative position, congestion or size	|
-| [Congestion based deletion in block][51]  | [Ruas 1999][26]					| [BuildingsDeletionCongestion.java][33]  |	comments in French for now	|
-| [Building typification][52]  | [Burghardt & Cecconi 2007][34]					| [TypifyBurghardtCecconi.java][35]  |	slightly adapted implementation to better preserve some specific buildings |
+| [Random displacement][45] 	| never published (@Julien Gaffuri)	| [BuildingDisplacementRandom][25]  |	iteratively, a building is randomly displaced (with very small displacements), until the global legibility is optimized (a gradient descent is used)	|
+| [displacement in block][46]  | [Ruas 1999][26]					| [BuildingDisplacementRuas][27]  |					|
+| [Aggregation][47]  | [Regnauld 1998][28]					| [PolygonAggregation][29]  |	Direct port from Regnauld's PhD thesis, comments only in French for now		|
+| [Morphology Amalgamation][63]  | [Damen et al 2008][64]					| [BuildingsAggregation][65]  |	Direct port from the workshop paper, but the square Minkowski is approximated by the CAP_FLAT buffer from JTS library	|
+| [Delete overlaping buildings in block][48]  | never published (@Guillaume Touya)	| [BuildingDeletionOverlap][30]  |	Given a threshold of area overlaping and a couple of overlaping buildings, deletes the smallest one |
+| [ELECTRE deletion in block][49]  | not yet published (@Guillaume Touya)	| [BuildingsDeletionProximityMultiCriterion][31]  | Uses ELECTRE III multi-criteria	to sort buildings from the first to delete to the last, using criteria such as, relative position, congestion or size	|
+| [PROMETHEE deletion in block][50]  | not yet published (@Guillaume Touya)	| [BuildingDeletionPromethee][32]  | Uses PROMETHEE multi-criteria	to sort buildings from the first to delete to the last, using criteria such as, relative position, congestion or size	|
+| [Congestion based deletion in block][51]  | [Ruas 1999][26]					| [BuildingsDeletionCongestion][33]  |	comments in French for now	|
+| [Building typification][52]  | [Burghardt & Cecconi 2007][34]					| [TypifyBurghardtCecconi][35]  |	slightly adapted implementation to better preserve some specific buildings |
 
 #### [](#header-4)Network algorithms (for individual network section and for whole networks)
 
 | Algorithm name        | Reference         				| Code 							| Description of the implementation 				|
 |:----------------------|:----------------------------------|:------------------------------|:--------------------------------------------------|
-| River network selection   | [Touya 2007][54] | [RiverNetworkSelection.java][41]  			| 	|
-| Roundabout detection/collapse	    | [Touya 2010][53] | [CollapseRoundabout.java][58]  			| 	|
-| Road network selection   | [Touya 2010][53] | [RoadNetworkTrafficBasedSelection.java][59]  			| 	|
-| Strokes based road selection	    | [Thomson & Richardson 1999][57] | [RoadNetworkStrokesBasedSelection.java][60]  			| 	|
-| Collapse parallel railways	    | [Touya & Girres 2014][55] | [CollapseParallelRailways.java][61]  			| 	|
-| Typify side tracks	    | [Savino & Touya 2015][56] | [TypifySideTracks.java][62]  			| 	|
+| [River network selection][79]   | [Touya 2007][54] | [RiverNetworkSelection][41]  			|  some of the structures detection algorithms (e.g. irrigation areas) have not been ported from the initial implementation on 1Spatial's LAMPS2 software.	|
+| [Roundabout detection/collapse][80]	    | [Touya 2010][53] | [CollapseRoundabout][58]  			| 	|
+| [Road network selection][81]   | [Touya 2010][53] | [RoadNetworkTrafficBasedSelection][59]  			|  some of the structures detection algorithms (e.g. highway interchange) have not been ported	from the initial implementation on 1Spatial's LAMPS2 software.|
+| [Strokes based road selection][82]	    | [Thomson & Richardson 1999][57] | [RoadNetworkStrokesBasedSelection][60]  		|  Two criteria can be used for Stroke saliency: lenght of course, and the number T-shaped intersections	|
+| [Collapse parallel railways][83]	    | [Touya & Girres 2014][55] | [CollapseParallelRailways][61]  			| 	|
+| [Typify side tracks][84]	    | [Savino & Touya 2015][56] | [TypifySideTracks][62]  			| 	|
 
 
 #### [](#header-4)Other algorithms
 
 | Algorithm name        | Reference         				| Code 							| Description of the implementation 				|
 |:----------------------|:----------------------------------|:------------------------------|:--------------------------------------------------|
-| [Point cloud reduction][70]   |  | [KMeansReduction.java][69]  			| 	|
-| [Point cloud covering][71]	    | [Galton & Duckham 2006][66] | [DelaunayNonConvexHull.java][67]  			| 	|
-| [Spinalize][72]   | [Touya & Girres 2014][66] | [Spinalize.java][74]  			| 	|
-| [Skeletonize][76]   | [Haunert & Sester 2008][77] | [Skeletonize.java][75]  			| 	|
-| [Airport generalization][73]   | [Touya & Girres 2014][66] | [AirportTypification.java][68]  			| 	|
+| [Point cloud reduction][70]   |  | [KMeansReduction][69]  			| 	|
+| [Point cloud covering][71]	    | [Galton & Duckham 2006][66] | [DelaunayNonConvexHull][67]  			| 	|
+| [Spinalize][72]   | [Touya & Girres 2014][66] | [Spinalize][74]  			| 	|
+| [Skeletonize][76]   | [Haunert & Sester 2008][77] | [Skeletonize][75]  			| 	|
+| [Airport generalization][73]   | [Touya & Girres 2014][66] | [AirportTypification][68]  			| 	|
+
+
+- [Return to main page][78]
 
 
 [1]: http://recherche.ign.fr/labos/cogit/english/accueilCOGIT.php
@@ -135,3 +138,10 @@ A list, not exhaustive yet, of the generalization algorithms available in CartAG
 [75]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/polygon/Skeletonize.java
 [76]: /algorithms/others/skeletonize.md
 [77]: https://link.springer.com/article/10.1007%2Fs10707-007-0028-x
+[78]: https://ignf.github.io/CartAGen
+[79]: /algorithms/networks/river_selection.md
+[80]: /algorithms/networks/roundabouts.md
+[81]: /algorithms/networks/road_selection.md
+[82]: /algorithms/networks/strokes_selection.md
+[83]: /algorithms/networks/collapse_railways.md
+[84]: /algorithms/networks/typify_sidetracks.md

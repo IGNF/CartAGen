@@ -1,4 +1,4 @@
-# Description of the Building Simplification Algorithm
+# Description of the Typify Rail Sidetracks Algorithm
 
 > - Date 20/07/2017.
 > - Author: [Guillaume Touya][1]
@@ -25,8 +25,8 @@ To be filled...
 
 See Also
 -------------
-- [Bend schematization algorithm][2]
+- [Collapse Parallel Railways algorithm][2]
 
 
 [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
-[2]: /algorithms/line/bend_schematization.md
+[2]: /algorithms/networks/collapse_railways.md

@@ -28,7 +28,7 @@ Most algorithms available in CartAGen are located in the [algorithms package][9]
 
 > TIP: To know where the code of an algorithm is, look at the code of the menu button that triggers the algorithm (in the package `fr.ign.cogit.cartagen.appli.core.themes` of cartagen-appli module).
 
-> There is a list of the available algorithms with descriptions [at the bottom of this page][2]
+> There is a list of the available algorithms with descriptions [at this page][2]
 
 
 Triggering algorithms with the menu buttons
@@ -60,15 +60,78 @@ Example: enlarging and displacing buildings in the sample dataset
 What we want to do in this example is to generalize the buildings of the [sample dataset][3] to the 1:30,000 scale, by enlarging them, simplifying them and removing symbol overlaps (between two buildings and between buildings and road symbols) by a [contextual displacement][5].
 The contextual displacement works on a group of buildings to displace them optimally in the free space around them, so first, groups of buildings have to be computed, and each of these groups will be generalize as a whole.
 
+All these steps can be achieved by an interactive use of the GUI menus, but this part of the tutorial shows how to do this by code.
+
 ##### [](#header-5) Set the scale and update symbol sizes
+```java
+	// first, set the symbolisation scale to 1:30k (this is the target scale of the tutorial generalisation process)
+	// To do that, we first need to get the current SLD
+	StyledLayerDescriptor sld = CartAGenDoc.getInstance().getCurrentDataset().getSld();
+	// then update the symbolisation to the new target scale
+	SLDUtilCartagen.changeSymbolisationScale(30000.0, sld);
+```
 
 ##### [](#header-5) Compute the building groups
 
+```java
+      // get the network sections that delimit groups (i.e. roads and rivers)
+      IFeatureCollection<IFeature> sections = new FT_FeatureCollection<>();
+      sections.addAll(dataset.getRoads());
+      sections.addAll(dataset.getWaterLines());
+
+      // create the groups with a 25.0 m threshold for building buffering
+      Collection<IUrbanBlock> groups = UrbanEnrichment
+          .createBuildingGroups(sections, 25.0, 10.0, 12, 2.0, 5000.0);
+```
+
 ##### [](#header-5) Loop on the building groups
+
+```java
+	for(IUrbanBlock group: groups){
+		// generalise the group...
+	}
+```
 
 ##### [](#header-5) Enlarge and simplify all the buildings of the group
 
+```java
+          // in this case, we only added buildings as urban elements, so no need
+          // to check (there can be parks, squares, sports fields...)
+          // the class GeneralisationSpecifications is used: it contains
+          // standard values for classical generalisation specifications, such
+          // as the minimum size of a building in map mm²
+
+          // first enlarge the building geometry
+          // compute the goal area
+          double area = building.getGeom().area();
+          double goalArea = area;
+          double aireMini = GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT
+              * Legend.getSYMBOLISATI0N_SCALE()
+              * Legend.getSYMBOLISATI0N_SCALE() / 1000000.0;
+          if (area <= aireMini) {
+            goalArea = aireMini;
+          }
+          // compute the homothety of the building geometry
+          IPolygon geom = CommonAlgorithms.homothetie(
+              (IPolygon) building.getGeom(), Math.sqrt(goalArea / area));
+
+          // then simplify the building
+          IGeometry simplified = SimplificationAlgorithm.simplification(geom,
+              GeneralisationSpecifications.LONGUEUR_MINI_GRANULARITE
+                  * Legend.getSYMBOLISATI0N_SCALE() / 1000.0);
+          
+          // apply the new geometry to the building
+          building.setGeom(simplified);
+```
+
 ##### [](#header-5) Displace the buildings in the group
+
+```java
+        // trigger the displacement of the enlarged and simplified features
+        BuildingDisplacementRandom.compute(group);
+```
+
+Be careful, the processing time on the whole sample dataset can be long (around 5 minutes).
 
 Guidelines to add a new generalization algorithm into CartAGen
 -------------
@@ -154,6 +217,7 @@ See Also
 - [tutorial on data loading][3]
 - [tutorial to generalize loaded data with agent-based processes][4]
 
+- [Return to main page][12]
 
 [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
 [2]: /algorithms.md
@@ -166,3 +230,4 @@ See Also
 [9]: https://github.com/IGNF/CartAGen/tree/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms
 [10]: https://github.com/IGNF/geoxygene/tree/master/geoxygene-spatial/src/main/java/fr/ign/cogit/geoxygene
 [11]: https://link.springer.com/chapter/10.1007%2F978-3-319-00203-3_6
+[12]: https://ignf.github.io/CartAGen

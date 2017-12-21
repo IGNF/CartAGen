@@ -1,4 +1,4 @@
-# Description of the OVerlaping Buildings Deletion Algorithm for Building Groups
+# Description of the Overlaping Buildings Deletion Algorithm for Building Groups
 
 > - Date 20/07/2017.
 > - Author: [Guillaume Touya][1]
@@ -8,15 +8,17 @@
 
 Description of the algorithm
 -------------
-
+To be filled...
 
 
 Examples of generalization
 -------------
+To be filled...
 
 
 When to use the algorithm?
 -------------
+To be filled...
 
 
 
