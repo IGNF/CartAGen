@@ -9,6 +9,26 @@
       <name>ign_building</name>
       <feature-type>Building</feature-type>
     </class>
+    <class>
+      <name>ign_minor_road</name>
+      <feature-type>RoadLine</feature-type>
+    </class>
+	<class>
+      <name>ign_major_road</name>
+      <feature-type>RoadLine</feature-type>
+    </class>
+    <class>
+      <name>ign_secondary_road</name>
+      <feature-type>RoadLine</feature-type>
+    </class>
+    <class>
+      <name>ign_street</name>
+      <feature-type>RoadLine</feature-type>
+    </class>	
+    <class>
+      <name>ign_river</name>
+      <feature-type>WaterLine</feature-type>
+    </class>	
   </classes-list>
   <mapping-file>src/main/resources/xml/mapping_test_data.xml</mapping-file>
   <geneobj-implementation>

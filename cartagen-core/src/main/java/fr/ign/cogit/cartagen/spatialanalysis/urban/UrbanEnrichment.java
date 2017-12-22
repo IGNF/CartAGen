@@ -28,6 +28,7 @@ import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.genericschema.AbstractCreationFactory;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetwork;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkSection;
+import fr.ign.cogit.cartagen.core.genericschema.partition.IMask;
 import fr.ign.cogit.cartagen.core.genericschema.road.IBranchingCrossroad;
 import fr.ign.cogit.cartagen.core.genericschema.road.IDualCarriageWay;
 import fr.ign.cogit.cartagen.core.genericschema.road.IRoadLine;
@@ -980,4 +981,137 @@ public class UrbanEnrichment {
 
   }
 
+  @SuppressWarnings("unchecked")
+  /**
+   * Create building groups in a dataset. The groups are modelled here as
+   * IUrbanBlock features but are also created in the rural areas of the
+   * dataset. Built-up areas are created by buffering buildings and are cut by
+   * the faces of the network sections given as parameters (can be roads,
+   * rivers, railways...)
+   * 
+   * @param sections
+   * @param distanceBuffer
+   * @param distanceErosion
+   * @param quadrantSegments
+   * @param seuilDP
+   * @param holeMinArea
+   * @return
+   */
+  public static Collection<IUrbanBlock> createBuildingGroups(
+      IFeatureCollection<IFeature> sections, double distanceBuffer,
+      double distanceErosion, int quadrantSegments, double seuilDP,
+      double holeMinArea) {
+    Collection<IUrbanBlock> groups = new HashSet<>();
+
+    // get building geometries
+    ArrayList<IGeometry> geoms = new ArrayList<>();
+    IFeatureCollection<IUrbanElement> buildings = new FT_FeatureCollection<>();
+    for (IUrbanElement building : CartAGenDoc.getInstance().getCurrentDataset()
+        .getBuildings()) {
+      geoms.add(building.getGeom());
+      buildings.add(building);
+    }
+
+    IGeometry complex = UrbanAreaComputationJTS.calculTacheUrbaine(geoms,
+        distanceBuffer, distanceErosion, quadrantSegments, seuilDP,
+        holeMinArea);
+
+    // cut the areas with the main road network
+    CarteTopo carteTopo = new CarteTopo("cartetopo");
+    IFeatureCollection<IFeature> groupExtents = new FT_FeatureCollection<>();
+    IFeatureCollection<IFeature> masks = new FT_FeatureCollection<>();
+
+    // fill the limits feature collection
+    if (complex instanceof IPolygon) {
+      IPolygon polygon = (IPolygon) complex;
+      IFeature defaultFeat = new DefaultFeature(polygon);
+      groupExtents.add(defaultFeat);
+    } else if (complex instanceof IMultiSurface<?>) {
+      for (IPolygon simple : ((IMultiSurface<IPolygon>) complex)) {
+        if (simple == null)
+          continue;
+        if (simple.area() < 2000.0)
+          continue;
+        IFeature defaultFeat = new DefaultFeature(simple);
+        groupExtents.add(defaultFeat);
+      }
+    }
+
+    for (IMask mask : CartAGenDoc.getInstance().getCurrentDataset()
+        .getMasks()) {
+      masks.add(mask);
+    }
+    carteTopo.importClasseGeo(sections);
+    carteTopo.importClasseGeo(masks);
+    carteTopo.setBuildInfiniteFace(true);
+    carteTopo.creeNoeudsManquants(1.0);
+    carteTopo.fusionNoeuds(1.0);
+    carteTopo.filtreArcsDoublons();
+    carteTopo.rendPlanaire(1.0);
+    carteTopo.fusionNoeuds(1.0);
+    carteTopo.filtreArcsDoublons();
+    carteTopo.creeTopologieFaces();
+    carteTopo.getPopFaces().initSpatialIndex(Tiling.class, false);
+
+    for (Face face : carteTopo.getListeFaces()) {
+
+      Collection<IFeature> intersecting = groupExtents.select(face.getGeom());
+      if (intersecting.isEmpty())
+        continue;
+      for (IFeature intersectingExtent : intersecting) {
+        IGeometry intersection = intersectingExtent.getGeom()
+            .intersection(face.getGeom());
+        if (intersection instanceof IPolygon) {
+          // check that the face contains buildings
+          IFeatureCollection<IUrbanElement> inside = new FT_FeatureCollection<>();
+          inside.addAll(buildings.select(intersection));
+          if (inside.size() == 0)
+            continue;
+          // get the surrounding network sections
+          IFeatureCollection<INetworkSection> surroundRoads = new FT_FeatureCollection<>();
+          for (Arc arc : face.arcs()) {
+            if (arc.getGeom().intersects(intersection))
+              for (IFeature feat : arc.getCorrespondants()) {
+                if (feat instanceof INetworkSection)
+                  surroundRoads.add((INetworkSection) feat);
+              }
+          }
+
+          // create a new block
+          IUrbanBlock block = CartAGenDoc.getInstance().getCurrentDataset()
+              .getCartAGenDB().getGeneObjImpl().getCreationFactory()
+              .createUrbanBlock((IPolygon) intersection, inside, surroundRoads);
+          groups.add(block);
+        } else if (intersection instanceof IMultiSurface<?>) {
+          for (IPolygon simple : ((IMultiSurface<IPolygon>) intersection)
+              .getList()) {
+            // check that the face contains buildings
+            IFeatureCollection<IUrbanElement> inside = new FT_FeatureCollection<>();
+            inside.addAll(buildings.select(simple));
+            if (inside.size() == 0)
+              continue;
+
+            // get the surrounding network sections
+            IFeatureCollection<INetworkSection> surroundRoads = new FT_FeatureCollection<>();
+            for (Arc arc : face.arcs()) {
+              if (arc.getGeom().intersects(simple))
+                for (IFeature feat : arc.getCorrespondants()) {
+                  if (feat instanceof INetworkSection)
+                    surroundRoads.add((INetworkSection) feat);
+                }
+            }
+
+            // create a new block
+            IUrbanBlock block = CartAGenDoc.getInstance().getCurrentDataset()
+                .getCartAGenDB().getGeneObjImpl().getCreationFactory()
+                .createUrbanBlock(simple, inside, surroundRoads);
+            groups.add(block);
+          }
+        }
+
+      }
+    }
+
+    return groups;
+  }
 }
