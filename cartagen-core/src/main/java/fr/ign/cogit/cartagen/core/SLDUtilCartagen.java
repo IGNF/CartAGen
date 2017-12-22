@@ -415,4 +415,35 @@ public class SLDUtilCartagen extends SLDUtil {
     return Color.BLACK;
   }
 
+  /**
+   * Change the symbolisation scale (i.e. also the target scale of
+   * generalisation in CartAGen) and update the SLD symbol size values to the
+   * new symbolisation scale.
+   * @param newScale
+   * @param sld
+   */
+  public static void changeSymbolisationScale(double newScale,
+      StyledLayerDescriptor sld) {
+    double oldScale = Legend.getSYMBOLISATI0N_SCALE();
+    Legend.setSYMBOLISATI0N_SCALE(newScale);
+
+    // update the SLD width values with the new scale value
+    double scaleRatio = Legend.getSYMBOLISATI0N_SCALE() / oldScale;
+
+    for (Layer layer : sld.getLayers()) {
+      for (Style style : layer.getStyles()) {
+        for (FeatureTypeStyle ftStyle : style.getFeatureTypeStyles()) {
+          for (Rule rule : ftStyle.getRules()) {
+            for (Symbolizer symbolizer : rule.getSymbolizers()) {
+              if (symbolizer.getStroke() != null)
+                symbolizer.getStroke().setStrokeWidth(
+                    (float) (symbolizer.getStroke().getStrokeWidth()
+                        * scaleRatio));
+            }
+          }
+        }
+      }
+    }
+  }
+
 }
