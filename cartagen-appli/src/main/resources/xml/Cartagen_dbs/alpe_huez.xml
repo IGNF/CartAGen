@@ -29,6 +29,10 @@
       <name>ign_river</name>
       <feature-type>WaterLine</feature-type>
     </class>	
+    <class>
+      <name>ign_contour_line</name>
+      <feature-type>ContourLine</feature-type>
+    </class>
   </classes-list>
   <mapping-file>src/main/resources/xml/mapping_test_data.xml</mapping-file>
   <geneobj-implementation>

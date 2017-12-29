@@ -310,4 +310,49 @@
 			</FeatureTypeStyle>
 		</UserStyle>
 	</NamedLayer>
+		<NamedLayer>
+		<Name>contourLines</Name>
+		<UserStyle>
+			<FeatureTypeStyle>
+				<Rule>
+					<Name>simple contour</Name>
+					<Filter>
+						<PropertyIsEqualTo>
+							<PropertyName>master</PropertyName>
+							<Literal>false</Literal>
+						</PropertyIsEqualTo>
+					</Filter>
+					<LineSymbolizer>
+						<Geometry>
+							<PropertyName>geom</PropertyName>
+						</Geometry>
+						<Stroke>
+							<CssParameter name="stroke">#d27c1e</CssParameter>
+							<CssParameter name="stroke-width">1.75</CssParameter>
+						</Stroke>
+					</LineSymbolizer>
+				</Rule>
+			</FeatureTypeStyle>
+			<FeatureTypeStyle>
+				<Rule>
+					<Name>master contour</Name>
+					<Filter>
+						<PropertyIsEqualTo>
+							<PropertyName>master</PropertyName>
+							<Literal>true</Literal>
+						</PropertyIsEqualTo>
+					</Filter>
+					<LineSymbolizer>
+						<Geometry>
+							<PropertyName>geom</PropertyName>
+						</Geometry>
+						<Stroke>
+							<CssParameter name="stroke">#d27c1e</CssParameter>
+							<CssParameter name="stroke-width">3.5</CssParameter>
+						</Stroke>
+					</LineSymbolizer>
+				</Rule>
+			</FeatureTypeStyle>
+		</UserStyle>
+	</NamedLayer>
 </StyledLayerDescriptor>
