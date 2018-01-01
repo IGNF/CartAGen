@@ -9,11 +9,39 @@ This tutorial explains how to use the agent-based generalization model implement
 
 The Basic Concepts of Agent-Based Generalization
 -------------
-
+To be done...
 
 Generalizing data with AGENT
 -------------
-To be done...
+This tutorial explains how to quickly generalize the urban areas of the sample dataset.
+
+#### [](#header-4)Set the target scale
+
+![configuration menu](assets/images/cartagen_config_scale.png)  ![set the target scale](assets/images/cartagen_set_scale_50k.png)
+
+#### [](#header-4)Set the AGENT parameters
+
+![AGENT configuration menu](assets/images/AGENT_configuration_menu.png)
+
+
+![AGENT configuration frame](assets/images/AGENT_configuration_frame.png)
+
+#### [](#header-4)Enrich the dataset
+
+
+#### [](#header-4)Create the agents
+
+
+#### [](#header-4)Generalize a building
+
+
+#### [](#header-4)Generalize a block
+
+
+#### [](#header-4)Generalize a town
+
+
+> To go further in the use of AGENT, see [this advanced tutorial][10].
 
 Generalizing data with CartACom
 -------------
@@ -22,6 +50,7 @@ To be done...
 Generalizing data with GAEL
 -------------
 The implementation of the GAEL model is for now only partially functional in CartAGen.
+To be done...
 
 Generalizing data with DIOGEN
 -------------
@@ -32,6 +61,9 @@ See Also
 - [tutorial on data loading][8]
 - [tutorial to generalize loaded data][9]
 - [tutorial on CartAGen data schema][7]
+- [advanced tutorial on AGENT][10]
+- [advanced tutorial on CartACom][11]
+- [advanced tutorial on GAEL][12]
 
 - [Return to main page][6]
 
@@ -45,3 +77,6 @@ See Also
 [7]: /tuto_agents.md
 [8]: /tuto_import_data.md
 [9]: /tuto_schema.md
+[10]: /AGENT_advanced_tutorial.md
+[11]: /CartACom_advanced_tutorial.md
+[12]: /GAEL_advanced_tutorial.md
