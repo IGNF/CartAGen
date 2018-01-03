@@ -33,8 +33,6 @@
                         <PerpendicularOffset>0.0</PerpendicularOffset>
                     </LineSymbolizer>
                 </Rule>
-            </FeatureTypeStyle>	
-			<FeatureTypeStyle>
 				<Rule>
 					<Name>road_importance_0</Name>
 					<Filter>
@@ -44,17 +42,13 @@
 						</PropertyIsEqualTo>
 					</Filter>
 					<LineSymbolizer>
-						<Geometry>
-							<PropertyName>geom</PropertyName>
-						</Geometry>
+						<GeometryPropertyName>geom</GeometryPropertyName>
 						<Stroke>
 							<CssParameter name="stroke">#7f7f7f</CssParameter>
 							<CssParameter name="stroke-width">3.75</CssParameter>
 						</Stroke>
 					</LineSymbolizer>
 				</Rule>
-			</FeatureTypeStyle>
-			<FeatureTypeStyle>
 				<Rule>
 					<Name>road_importance_1</Name>
 					<Filter>
@@ -64,17 +58,13 @@
 						</PropertyIsEqualTo>
 					</Filter>
 					<LineSymbolizer>
-						<Geometry>
-							<PropertyName>geom</PropertyName>
-						</Geometry>
+						<GeometryPropertyName>geom</GeometryPropertyName>
 						<Stroke>
 							<CssParameter name="stroke">#404040</CssParameter>
 							<CssParameter name="stroke-width">12.5</CssParameter>
 						</Stroke>
 					</LineSymbolizer>
 				</Rule>
-			</FeatureTypeStyle>		
-			<FeatureTypeStyle>
 				<Rule>
 					<Name>road_importance_2</Name>
 					<Filter>
@@ -84,17 +74,13 @@
 						</PropertyIsEqualTo>
 					</Filter>
 					<LineSymbolizer>
-						<Geometry>
-							<PropertyName>geom</PropertyName>
-						</Geometry>
+						<GeometryPropertyName>geom</GeometryPropertyName>
 						<Stroke>
 							<CssParameter name="stroke">#404040</CssParameter>
 							<CssParameter name="stroke-width">16.25</CssParameter>
 						</Stroke>
 					</LineSymbolizer>
 				</Rule>
-			</FeatureTypeStyle>		
-			<FeatureTypeStyle>
 				<Rule>
 					<Name>road_importance_3</Name>
 					<Filter>
@@ -104,17 +90,13 @@
 						</PropertyIsEqualTo>
 					</Filter>
 					<LineSymbolizer>
-						<Geometry>
-							<PropertyName>geom</PropertyName>
-						</Geometry>
+						<GeometryPropertyName>geom</GeometryPropertyName>
 						<Stroke>
 							<CssParameter name="stroke">#404040</CssParameter>
 							<CssParameter name="stroke-width">22.5</CssParameter>
 						</Stroke>
 					</LineSymbolizer>
 				</Rule>
-			</FeatureTypeStyle>	
-			<FeatureTypeStyle>
 				<Rule>
 					<Name>road_importance_4</Name>
 					<Filter>
@@ -124,17 +106,13 @@
 						</PropertyIsEqualTo>
 					</Filter>
 					<LineSymbolizer>
-						<Geometry>
-							<PropertyName>geom</PropertyName>
-						</Geometry>
+						<GeometryPropertyName>geom</GeometryPropertyName>
 						<Stroke>
 							<CssParameter name="stroke">#0000ff</CssParameter>
 							<CssParameter name="stroke-width">28.75</CssParameter>
 						</Stroke>
 					</LineSymbolizer>
 				</Rule>
-			</FeatureTypeStyle>
-			<FeatureTypeStyle>
                 <Rule>
                     <Name>road_importance_5</Name>
                     <Filter>
@@ -144,9 +122,7 @@
                         </PropertyIsEqualTo>
                     </Filter>
                     <LineSymbolizer>
-                        <Geometry>
-                            <PropertyName>geom</PropertyName>
-                        </Geometry>
+                        <GeometryPropertyName>geom</GeometryPropertyName>
                         <Stroke>
                             <CssParameter name="stroke">#404040</CssParameter>
                             <CssParameter name="stroke-width">12.5</CssParameter>
@@ -154,8 +130,6 @@
                     </LineSymbolizer>
                 </Rule>
             </FeatureTypeStyle>     						
-		</UserStyle>
-		<UserStyle>
             <FeatureTypeStyle>
                 <Rule>
                     <Name>road_default_fill</Name>
@@ -168,8 +142,6 @@
                         <PerpendicularOffset>0.0</PerpendicularOffset>
                     </LineSymbolizer>
                 </Rule>
-            </FeatureTypeStyle> 
-			<FeatureTypeStyle>
 				<Rule>
 					<Name>road_importance_0_fill</Name>
 					<Filter>
@@ -179,17 +151,13 @@
 						</PropertyIsEqualTo>
 					</Filter>
 					<LineSymbolizer>
-						<Geometry>
-							<PropertyName>geom</PropertyName>
-						</Geometry>
+						<GeometryPropertyName>geom</GeometryPropertyName>
 						<Stroke>
 							<CssParameter name="stroke">#7f7f7f</CssParameter>
 							<CssParameter name="stroke-width">3.75</CssParameter>
 						</Stroke>
 					</LineSymbolizer>
 				</Rule>
-			</FeatureTypeStyle>
-			<FeatureTypeStyle>
 				<Rule>
 					<Name>road_importance_1_fill</Name>
 					<Filter>
@@ -199,17 +167,13 @@
 						</PropertyIsEqualTo>
 					</Filter>
 					<LineSymbolizer>
-						<Geometry>
-							<PropertyName>geom</PropertyName>
-						</Geometry>
+						<GeometryPropertyName>geom</GeometryPropertyName>
 						<Stroke>
 							<CssParameter name="stroke">#f0f0f0</CssParameter>
 							<CssParameter name="stroke-width">7.5</CssParameter>
 						</Stroke>
 					</LineSymbolizer>
 				</Rule>
-			</FeatureTypeStyle>
-			<FeatureTypeStyle>
 				<Rule>
 					<Name>road_importance_2_fill</Name>
 					<Filter>
@@ -219,17 +183,13 @@
 						</PropertyIsEqualTo>
 					</Filter>
 					<LineSymbolizer>
-						<Geometry>
-							<PropertyName>geom</PropertyName>
-						</Geometry>
+						<GeometryPropertyName>geom</GeometryPropertyName>
 						<Stroke>
 							<CssParameter name="stroke">#f4ff74</CssParameter>
 							<CssParameter name="stroke-width">11.25</CssParameter>
 						</Stroke>
 					</LineSymbolizer>
 				</Rule>
-			</FeatureTypeStyle>		
-			<FeatureTypeStyle>
 				<Rule>
 					<Name>road_importance_3_fill</Name>
 					<Filter>
@@ -239,17 +199,13 @@
 						</PropertyIsEqualTo>
 					</Filter>
 					<LineSymbolizer>
-						<Geometry>
-							<PropertyName>geom</PropertyName>
-						</Geometry>
+						<GeometryPropertyName>geom</GeometryPropertyName>
 						<Stroke>
 							<CssParameter name="stroke">#ff5e00</CssParameter>
 							<CssParameter name="stroke-width">17.5</CssParameter>
 						</Stroke>
 					</LineSymbolizer>
 				</Rule>
-			</FeatureTypeStyle>	
-			<FeatureTypeStyle>
 				<Rule>
 					<Name>road_importance_4_fill</Name>
 					<Filter>
@@ -259,17 +215,13 @@
 						</PropertyIsEqualTo>
 					</Filter>
 					<LineSymbolizer>
-						<Geometry>
-							<PropertyName>geom</PropertyName>
-						</Geometry>
+						<GeometryPropertyName>geom</GeometryPropertyName>
 						<Stroke>
 							<CssParameter name="stroke">#ffffff</CssParameter>
 							<CssParameter name="stroke-width">5.0</CssParameter>
 						</Stroke>
 					</LineSymbolizer>
 				</Rule>
-			</FeatureTypeStyle>
-			<FeatureTypeStyle>
                 <Rule>
                     <Name>road_importance_5_fill</Name>
                     <Filter>
@@ -279,9 +231,7 @@
                         </PropertyIsEqualTo>
                     </Filter>
                     <LineSymbolizer>
-                        <Geometry>
-                            <PropertyName>geom</PropertyName>
-                        </Geometry>
+                        <GeometryPropertyName>geom</GeometryPropertyName>
                         <Stroke>
                             <CssParameter name="stroke">#f0f0f0</CssParameter>
                             <CssParameter name="stroke-width">7.5</CssParameter>
@@ -298,9 +248,7 @@
 				<Rule>
 					<Name>Line</Name>
 					<LineSymbolizer>
-						<Geometry>
-							<PropertyName>geom</PropertyName>
-						</Geometry>
+						<GeometryPropertyName>geom</GeometryPropertyName>
 						<Stroke>
 							<CssParameter name="stroke">#74aae8</CssParameter>
 							<CssParameter name="stroke-width">5.0</CssParameter>
@@ -323,17 +271,13 @@
 						</PropertyIsEqualTo>
 					</Filter>
 					<LineSymbolizer>
-						<Geometry>
-							<PropertyName>geom</PropertyName>
-						</Geometry>
+						<GeometryPropertyName>geom</GeometryPropertyName>
 						<Stroke>
 							<CssParameter name="stroke">#d27c1e</CssParameter>
 							<CssParameter name="stroke-width">1.75</CssParameter>
 						</Stroke>
 					</LineSymbolizer>
 				</Rule>
-			</FeatureTypeStyle>
-			<FeatureTypeStyle>
 				<Rule>
 					<Name>master contour</Name>
 					<Filter>
@@ -343,9 +287,7 @@
 						</PropertyIsEqualTo>
 					</Filter>
 					<LineSymbolizer>
-						<Geometry>
-							<PropertyName>geom</PropertyName>
-						</Geometry>
+						<GeometryPropertyName>geom</GeometryPropertyName>
 						<Stroke>
 							<CssParameter name="stroke">#d27c1e</CssParameter>
 							<CssParameter name="stroke-width">3.5</CssParameter>

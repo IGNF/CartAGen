@@ -260,7 +260,7 @@ public class UrbanAlignmentAgent extends InternStructureAgentGeneralisation {
   public void instantiateConstraints() {
     this.getConstraints().clear();
     this.ajouterContrainteSatisfactionComposantsStructure(5.0);
-    this.ajouterContrainteProximite(AgentSpecifications.PROXIMITE_BATIMENT_IMP);
+    this.ajouterContrainteProximite(AgentSpecifications.BLOCK_BUILDING_PROXIMITY_IMP);
     this.ajouterContrainteRepartitionSpatiale(5.0);
     this.ajouterContrainteShapeLineCorrespondance(5.0);
     this.ajouterContrainteOrientationBatiments(5.0);

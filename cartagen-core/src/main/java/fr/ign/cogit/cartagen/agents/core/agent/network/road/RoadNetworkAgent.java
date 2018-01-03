@@ -21,12 +21,12 @@ public final class RoadNetworkAgent extends NetworkAgent {
   @Override
   public void instantiateConstraints() {
     this.getConstraints().clear();
-    if (AgentSpecifications.SATISFACTION_COMPOSANTS_RESEAU_ROUTIER) {
+    if (AgentSpecifications.ROAD_NETWORK_MICRO_SATISFACTION) {
       this.ajouterContrainteSatisfactionComposants(
-          AgentSpecifications.SATISFACTION_COMPOSANTS_RESEAU_ROUTIER_IMP);
+          AgentSpecifications.ROAD_NETWORK_MICRO_SATISFACTION_IMP);
     }
-    if (AgentSpecifications.ROUTIER_DENSITE) {
-      this.ajouterContrainteDensite(AgentSpecifications.ROUTIER_DENSITE_IMP);
+    if (AgentSpecifications.ROAD_DENSITY) {
+      this.ajouterContrainteDensite(AgentSpecifications.ROAD_DENSITY_IMP);
     }
   }
 

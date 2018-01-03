@@ -42,11 +42,11 @@ public class HydroSectionDeformation {
     }
 
     // changement
-    if (AgentSpecifications.HYDRO_EMPATEMENT) {
+    if (AgentSpecifications.RIVER_COALESCENCE) {
     }
-    if (AgentSpecifications.PROXIMITE_HYDRO_ROUTIER) {
+    if (AgentSpecifications.RIVER_ROAD_PROXIMITY) {
     }
-    if (AgentSpecifications.ECOULEMENT_HYDRO) {
+    if (AgentSpecifications.RIVER_FLOW_PRESERVATION) {
       for (GAELSegment s : tr.getSegments()) {
         s.addOutflowConstraint(10);
       }

@@ -2142,7 +2142,7 @@ public class AgentUtil {
       elXML = (Element) contrainteXML
           .getElementsByTagName("instancierContraintesAuDemarrage").item(0);
       if (elXML != null) {
-        AgentSpecifications.INSTANCIER_AU_DEMARRAGE = Boolean
+        AgentSpecifications.STARTUP_INSTANCIATION = Boolean
             .parseBoolean(elXML.getFirstChild().getNodeValue());
       }
 
@@ -2156,14 +2156,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.TAILLE_BATIMENT = Boolean
+            AgentSpecifications.BUILDING_SIZE_CONSTRAINT = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.TAILLE_BATIMENT_IMP = Double
+            AgentSpecifications.BUILDING_SIZE_CONSTRAINT_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2173,14 +2173,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.GRANULARITE_BATIMENT = Boolean
+            AgentSpecifications.BUILDING_GRANULARITY = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.GRANULARITE_BATIMENT_IMP = Double
+            AgentSpecifications.BULDING_GRANULARITY_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2190,14 +2190,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.EQUARRITE_BATIMENT = Boolean
+            AgentSpecifications.BUILDING_SQUARENESS = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.EQUARRITE_BATIMENT_IMP = Double
+            AgentSpecifications.BUILDING_SQUARENESS_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2208,14 +2208,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.LARGEUR_LOCALE_BATIMENT = Boolean
+            AgentSpecifications.BUILDING_LOCAL_WIDTH = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.LARGEUR_LOCALE_BATIMENT_IMP = Double
+            AgentSpecifications.BUILDING_LOCAL_WIDTH_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2225,21 +2225,21 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.CONVEXITE_BATIMENT = Boolean
+            AgentSpecifications.BUILDING_CONVEXITY = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.CONVEXITE_BATIMENT_IMP = Double
+            AgentSpecifications.BUILDING_CONVEXITY_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML
               .getElementsByTagName("pointSatisfaction").item(0);
           if (contImpXML != null) {
-            AgentSpecifications.CONVEXITE_BATIMENT_POINT_SATISFACTION = Double
+            AgentSpecifications.CONVEXITE_BUILDING_POINT_SATISFACTION = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2249,21 +2249,21 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.ELONGATION_BATIMENT = Boolean
+            AgentSpecifications.BUILDING_ELONGATION = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.ELONGATION_BATIMENT_IMP = Double
+            AgentSpecifications.BUILDING_ELONGATION_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML
               .getElementsByTagName("pointSatisfaction").item(0);
           if (contImpXML != null) {
-            AgentSpecifications.ELONGATION_BATIMENT_POINT_SATISFACTION = Double
+            AgentSpecifications.ELONGATION_BUILDING_POINT_SATISFACTION = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2273,21 +2273,21 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.ORIENTATION_BATIMENT = Boolean
+            AgentSpecifications.BUILDING_ORIENTATION = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.ORIENTATION_BATIMENT_IMP = Double
+            AgentSpecifications.BUILDING_ORIENTATION_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML
               .getElementsByTagName("pointSatisfaction").item(0);
           if (contImpXML != null) {
-            AgentSpecifications.ORIENTATION_BATIMENT_POINT_SATISFACTION = Double
+            AgentSpecifications.ORIENTATION_BUILDING_POINT_SATISFACTION = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2297,21 +2297,21 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.ALTITUDE_BATIMENT = Boolean
+            AgentSpecifications.BUILDING_ALTITUDE = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.ALTITUDE_BATIMENT_IMP = Double
+            AgentSpecifications.BUILDING_ALTITUDE_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML
               .getElementsByTagName("pointSatisfaction").item(0);
           if (contImpXML != null) {
-            AgentSpecifications.DENIVELLEE_POINT_SATISFACTION = Double
+            AgentSpecifications.HEIGHT_DIFFERENCE_POINT_SATISFACTION = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2321,14 +2321,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.OCCSOL_BATIMENT = Boolean
+            AgentSpecifications.BUILDING_LANDUSE = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.OCCSOL_BATIMENT_IMP = Double
+            AgentSpecifications.BUILDING_LANDUSE_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2339,14 +2339,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.PROXIMITE_BATIMENT = Boolean
+            AgentSpecifications.BLOCK_BUILDING_PROXIMITY = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.PROXIMITE_BATIMENT_IMP = Double
+            AgentSpecifications.BLOCK_BUILDING_PROXIMITY_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2357,14 +2357,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.DENSITE_ILOT_BATIMENT = Boolean
+            AgentSpecifications.BLOCK_BUILDING_DENSITY = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.DENSITE_ILOT_BATIMENT_IMP = Double
+            AgentSpecifications.BLOCK_BUILDING_DENSITY_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2375,14 +2375,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.REPARTITION_SPATIALE_BATIMENT = Boolean
+            AgentSpecifications.BUILDING_SPATIAL_DISTRIBUTION = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.REPARTITION_SPATIALE_BATIMENT_IMP = Double
+            AgentSpecifications.BUILDING_SPATIAL_DISTRIBUTION_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2393,14 +2393,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.CONSERVATION_GRANDS_BATIMENTS = Boolean
+            AgentSpecifications.LARGE_BUILDING_PRESERVATION = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.CONSERVATION_GRANDS_BATIMENTS_IMP = Double
+            AgentSpecifications.LARGE_BUILDING_PRESERVATION_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2411,14 +2411,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.SATISFACTION_BATIMENTS_ILOT = Boolean
+            AgentSpecifications.BLOCK_MICRO_SATISFACTION = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.SATISFACTION_BATIMENTS_ILOT_IMP = Double
+            AgentSpecifications.BLOCK_MICRO_SATISFACTION_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2429,14 +2429,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.SATISFACTION_ILOTS_VILLE = Boolean
+            AgentSpecifications.TOWN_BLOCK_SATISFACTION = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.SATISFACTION_ILOTS_VILLE_IMP = Double
+            AgentSpecifications.TOWN_BLOCK_SATISFACTION_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2454,14 +2454,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.SATISFACTION_COMPOSANTS_RESEAU_ROUTIER = Boolean
+            AgentSpecifications.ROAD_NETWORK_MICRO_SATISFACTION = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.SATISFACTION_COMPOSANTS_RESEAU_ROUTIER_IMP = Double
+            AgentSpecifications.ROAD_NETWORK_MICRO_SATISFACTION_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2472,14 +2472,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.ROUTIER_EMPATEMENT = Boolean
+            AgentSpecifications.ROAD_COALESCENCE = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.ROUTIER_EMPATEMENT_IMP = Double
+            AgentSpecifications.ROAD_COALESCENCE_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2490,14 +2490,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.ROUTIER_CONTROLE_DEFORMATION = Boolean
+            AgentSpecifications.ROAD_CONTROL_DISTORTION = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.ROUTIER_CONTROLE_DEFORMATION_IMP = Double
+            AgentSpecifications.ROAD_CONTROL_DISTORTION_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2508,14 +2508,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.ROUTIER_IMPASSES = Boolean
+            AgentSpecifications.DEAD_END_ROADS = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.ROUTIER_IMPASSES_IMP = Double
+            AgentSpecifications.DEAD_END_ROADS_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2525,14 +2525,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.ROUTIER_DENSITE = Boolean
+            AgentSpecifications.ROAD_DENSITY = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.ROUTIER_DENSITE_IMP = Double
+            AgentSpecifications.ROAD_DENSITY_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2550,14 +2550,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.SATISFACTION_COMPOSANTS_RESEAU_HYDRO = Boolean
+            AgentSpecifications.RIVER_NETWORK_MICRO_SATISFACTION = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.SATISFACTION_COMPOSANTS_RESEAU_HYDRO_IMP = Double
+            AgentSpecifications.RIVER_NETWORK_MICRO_SATISFACTION_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2568,14 +2568,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.HYDRO_EMPATEMENT = Boolean
+            AgentSpecifications.RIVER_COALESCENCE = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.HYDRO_EMPATEMENT_IMP = Double
+            AgentSpecifications.RIVER_COALESCENCE_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2586,14 +2586,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.PROXIMITE_HYDRO_ROUTIER = Boolean
+            AgentSpecifications.RIVER_ROAD_PROXIMITY = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.PROXIMITE_HYDRO_ROUTIER_IMP = Double
+            AgentSpecifications.RIVER_ROAD_PROXIMITY_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2603,14 +2603,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.ECOULEMENT_HYDRO = Boolean
+            AgentSpecifications.RIVER_FLOW_PRESERVATION = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.ECOULEMENT_HYDRO_IMP = Double
+            AgentSpecifications.RIVER_FLOW_PRESERVATION_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2621,14 +2621,14 @@ public class AgentUtil {
         if (contXML != null) {
           elXML = (Element) contXML.getElementsByTagName("contraindre").item(0);
           if (elXML != null) {
-            AgentSpecifications.PLATITUDE_LAC = Boolean
+            AgentSpecifications.LAKE_FLATNESS_PRESERVATION = Boolean
                 .parseBoolean(elXML.getFirstChild().getNodeValue());
           }
 
           contImpXML = (Element) contXML.getElementsByTagName("importance")
               .item(0);
           if (contImpXML != null) {
-            AgentSpecifications.PLATITUDE_LAC_IMP = Double
+            AgentSpecifications.LAKE_FLATNESS_PRESERVATION_IMP = Double
                 .parseDouble(contImpXML.getFirstChild().getNodeValue());
           }
         }
@@ -2675,14 +2675,14 @@ public class AgentUtil {
             elXML = (Element) contXML.getElementsByTagName("contraindre")
                 .item(0);
             if (elXML != null) {
-              AgentSpecifications.RELIEF_LONGUEUR_SEGMENT_CN = Boolean
+              AgentSpecifications.CONTOUR_LINE_SEGMENT_LENGTH = Boolean
                   .parseBoolean(elXML.getFirstChild().getNodeValue());
             }
 
             contImpXML = (Element) contXML.getElementsByTagName("importance")
                 .item(0);
             if (contImpXML != null) {
-              AgentSpecifications.RELIEF_LONGUEUR_SEGMENT_CN_IMP = Double
+              AgentSpecifications.CONTOUR_LINE_SEGMENT_LENGTH_IMP = Double
                   .parseDouble(contImpXML.getFirstChild().getNodeValue());
             }
           }
@@ -2694,14 +2694,14 @@ public class AgentUtil {
             elXML = (Element) contXML.getElementsByTagName("contraindre")
                 .item(0);
             if (elXML != null) {
-              AgentSpecifications.RELIEF_ORIENTATION_SEGMENT_CN = Boolean
+              AgentSpecifications.CONTOUR_LINE_SEGMENT_ORIENTATION = Boolean
                   .parseBoolean(elXML.getFirstChild().getNodeValue());
             }
 
             contImpXML = (Element) contXML.getElementsByTagName("importance")
                 .item(0);
             if (contImpXML != null) {
-              AgentSpecifications.RELIEF_ORIENTATION_SEGMENT_CN_IMP = Double
+              AgentSpecifications.CONTOUR_LINE_SEGMENT_ORIENTATION_IMP = Double
                   .parseDouble(contImpXML.getFirstChild().getNodeValue());
             }
           }
@@ -2718,14 +2718,14 @@ public class AgentUtil {
             elXML = (Element) contXML.getElementsByTagName("contraindre")
                 .item(0);
             if (elXML != null) {
-              AgentSpecifications.RELIEF_LONGUEUR_SEGMENT = Boolean
+              AgentSpecifications.RELIEF_SEGMENT_LENGTH = Boolean
                   .parseBoolean(elXML.getFirstChild().getNodeValue());
             }
 
             contImpXML = (Element) contXML.getElementsByTagName("importance")
                 .item(0);
             if (contImpXML != null) {
-              AgentSpecifications.RELIEF_LONGUEUR_SEGMENT_IMP = Double
+              AgentSpecifications.RELIEF_SEGMENT_LENGTH_IMP = Double
                   .parseDouble(contImpXML.getFirstChild().getNodeValue());
             }
           }
@@ -2737,14 +2737,14 @@ public class AgentUtil {
             elXML = (Element) contXML.getElementsByTagName("contraindre")
                 .item(0);
             if (elXML != null) {
-              AgentSpecifications.RELIEF_ORIENTATION_SEGMENT = Boolean
+              AgentSpecifications.RELIEF_SEGMENT_ORIENTATION = Boolean
                   .parseBoolean(elXML.getFirstChild().getNodeValue());
             }
 
             contImpXML = (Element) contXML.getElementsByTagName("importance")
                 .item(0);
             if (contImpXML != null) {
-              AgentSpecifications.RELIEF_ORIENTATION_SEGMENT_IMP = Double
+              AgentSpecifications.RELIEF_SEGMENT_ORIENTATION_IMP = Double
                   .parseDouble(contImpXML.getFirstChild().getNodeValue());
             }
           }
@@ -2760,14 +2760,14 @@ public class AgentUtil {
             elXML = (Element) contXML.getElementsByTagName("contraindre")
                 .item(0);
             if (elXML != null) {
-              AgentSpecifications.RELIEF_AIRE_TRIANGLE = Boolean
+              AgentSpecifications.RELIEF_TRIANGLE_AREA = Boolean
                   .parseBoolean(elXML.getFirstChild().getNodeValue());
             }
 
             contImpXML = (Element) contXML.getElementsByTagName("importance")
                 .item(0);
             if (contImpXML != null) {
-              AgentSpecifications.RELIEF_AIRE_TRIANGLE_IMP = Double
+              AgentSpecifications.RELIEF_TRIANGLE_AREA_IMP = Double
                   .parseDouble(contImpXML.getFirstChild().getNodeValue());
             }
           }
@@ -2779,14 +2779,14 @@ public class AgentUtil {
             elXML = (Element) contXML.getElementsByTagName("contraindre")
                 .item(0);
             if (elXML != null) {
-              AgentSpecifications.RELIEF_CENTREG_TRIANGLE = Boolean
+              AgentSpecifications.RELIEF_TRIANGLE_CENTROID = Boolean
                   .parseBoolean(elXML.getFirstChild().getNodeValue());
             }
 
             contImpXML = (Element) contXML.getElementsByTagName("importance")
                 .item(0);
             if (contImpXML != null) {
-              AgentSpecifications.RELIEF_CENTREG_TRIANGLE_IMP = Double
+              AgentSpecifications.RELIEF_TRIANGLE_CENTROID_IMP = Double
                   .parseDouble(contImpXML.getFirstChild().getNodeValue());
             }
           }
@@ -2798,7 +2798,7 @@ public class AgentUtil {
             contImpXML = (Element) contXML.getElementsByTagName("importance")
                 .item(0);
             if (contImpXML != null) {
-              AgentSpecifications.RELIEF_ALTITUDE_BATIMENT_IMP = Double
+              AgentSpecifications.RELIEF_ALTITUDE_BUILDING_IMP = Double
                   .parseDouble(contImpXML.getFirstChild().getNodeValue());
             }
           }
@@ -2810,7 +2810,7 @@ public class AgentUtil {
             contImpXML = (Element) contXML.getElementsByTagName("importance")
                 .item(0);
             if (contImpXML != null) {
-              AgentSpecifications.RELIEF_ECOULEMENT_HYDRO_IMP = Double
+              AgentSpecifications.RELIEF_RIVER_FLOW_IMP = Double
                   .parseDouble(contImpXML.getFirstChild().getNodeValue());
             }
           }

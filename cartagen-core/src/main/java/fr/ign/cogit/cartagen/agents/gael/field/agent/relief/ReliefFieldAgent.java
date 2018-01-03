@@ -297,71 +297,71 @@ public final class ReliefFieldAgent extends FieldAgent {
     }
 
     // segments CN
-    if (AgentSpecifications.RELIEF_LONGUEUR_SEGMENT_CN) {
+    if (AgentSpecifications.CONTOUR_LINE_SEGMENT_LENGTH) {
       if (ReliefFieldAgent.logger.isTraceEnabled()) {
         ReliefFieldAgent.logger.trace("ajout contraintes longueur segments CN");
       }
       for (ContourLineAgent cn : this.getContourLines()) {
         cn.ajouterContSegmentLongueur(
-            AgentSpecifications.RELIEF_LONGUEUR_SEGMENT_CN_IMP);
+            AgentSpecifications.CONTOUR_LINE_SEGMENT_LENGTH_IMP);
       }
     }
-    if (AgentSpecifications.RELIEF_ORIENTATION_SEGMENT_CN) {
+    if (AgentSpecifications.CONTOUR_LINE_SEGMENT_ORIENTATION) {
       if (ReliefFieldAgent.logger.isTraceEnabled()) {
         ReliefFieldAgent.logger.trace("ajout contraintes longueur segments CN");
       }
       for (ContourLineAgent cn : this.getContourLines()) {
         cn.ajouterContSegmentOrientation(
-            AgentSpecifications.RELIEF_ORIENTATION_SEGMENT_CN_IMP);
+            AgentSpecifications.CONTOUR_LINE_SEGMENT_ORIENTATION_IMP);
       }
     }
 
     // segments
-    if (AgentSpecifications.RELIEF_LONGUEUR_SEGMENT) {
+    if (AgentSpecifications.RELIEF_SEGMENT_LENGTH) {
       if (ReliefFieldAgent.logger.isTraceEnabled()) {
         ReliefFieldAgent.logger.trace("ajout contraintes longueur segments");
       }
       this.ajouterContSegmentLongueur(
-          AgentSpecifications.RELIEF_LONGUEUR_SEGMENT_IMP);
+          AgentSpecifications.RELIEF_SEGMENT_LENGTH_IMP);
     }
-    if (AgentSpecifications.RELIEF_ORIENTATION_SEGMENT) {
+    if (AgentSpecifications.RELIEF_SEGMENT_ORIENTATION) {
       if (ReliefFieldAgent.logger.isTraceEnabled()) {
         ReliefFieldAgent.logger.trace("ajout contraintes longueur segments");
       }
       this.ajouterContSegmentOrientation(
-          AgentSpecifications.RELIEF_ORIENTATION_SEGMENT_IMP);
+          AgentSpecifications.RELIEF_SEGMENT_ORIENTATION_IMP);
     }
 
     // triangles
-    if (AgentSpecifications.RELIEF_AIRE_TRIANGLE) {
+    if (AgentSpecifications.RELIEF_TRIANGLE_AREA) {
       if (ReliefFieldAgent.logger.isTraceEnabled()) {
         ReliefFieldAgent.logger.trace("ajout contraintes aire triangles CN");
       }
       this.ajouterContTriangleAire(
-          AgentSpecifications.RELIEF_AIRE_TRIANGLE_IMP);
+          AgentSpecifications.RELIEF_TRIANGLE_AREA_IMP);
     }
-    if (AgentSpecifications.RELIEF_CENTREG_TRIANGLE) {
+    if (AgentSpecifications.RELIEF_TRIANGLE_CENTROID) {
       if (ReliefFieldAgent.logger.isTraceEnabled()) {
         ReliefFieldAgent.logger.trace("ajout contraintes centreG triangles CN");
       }
       this.ajouterContTriangleGarderG(
-          AgentSpecifications.RELIEF_CENTREG_TRIANGLE_IMP);
+          AgentSpecifications.RELIEF_TRIANGLE_CENTROID_IMP);
     }
 
-    if (AgentSpecifications.ALTITUDE_BATIMENT) {
+    if (AgentSpecifications.BUILDING_ALTITUDE) {
       if (ReliefFieldAgent.logger.isTraceEnabled()) {
         ReliefFieldAgent.logger
             .trace("ajout contraintes triangles altitude batiments");
       }
       this.ajouterContTriangleFaireGarderAltitude(
-          AgentSpecifications.RELIEF_ALTITUDE_BATIMENT_IMP);
+          AgentSpecifications.RELIEF_ALTITUDE_BUILDING_IMP);
     }
-    if (AgentSpecifications.ECOULEMENT_HYDRO) {
+    if (AgentSpecifications.RIVER_FLOW_PRESERVATION) {
       if (ReliefFieldAgent.logger.isTraceEnabled()) {
         ReliefFieldAgent.logger.trace("ajout contraintes triangles ecoulement");
       }
       this.ajouterContTriangleFaireCouler(
-          AgentSpecifications.RELIEF_ECOULEMENT_HYDRO_IMP);
+          AgentSpecifications.RELIEF_RIVER_FLOW_IMP);
     }
   }
 

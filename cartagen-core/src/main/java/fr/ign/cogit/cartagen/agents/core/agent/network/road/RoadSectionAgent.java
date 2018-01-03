@@ -44,13 +44,13 @@ public class RoadSectionAgent extends SectionAgent
   @Override
   public void instantiateConstraints() {
     this.getConstraints().clear();
-    if (AgentSpecifications.ROUTIER_EMPATEMENT) {
+    if (AgentSpecifications.ROAD_COALESCENCE) {
       this.ajouterContrainteEmpatement(
-          AgentSpecifications.ROUTIER_EMPATEMENT_IMP);
+          AgentSpecifications.ROAD_COALESCENCE_IMP);
     }
-    if (AgentSpecifications.ROUTIER_CONTROLE_DEFORMATION) {
+    if (AgentSpecifications.ROAD_CONTROL_DISTORTION) {
       this.ajouterContrainteControleDeformation(
-          AgentSpecifications.ROUTIER_CONTROLE_DEFORMATION_IMP);
+          AgentSpecifications.ROAD_CONTROL_DISTORTION_IMP);
     }
     this.ajouterContrainteNonSuperposition(10.0);
   }

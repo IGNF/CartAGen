@@ -63,7 +63,7 @@ public class Convexity extends GeographicObjectConstraintImpl {
 
     this.setSatisfaction(
         100 + (int) ((GeneralisationSpecifications.BUILDING_CONVEXITE_MINI - d)
-            / AgentSpecifications.CONVEXITE_BATIMENT_POINT_SATISFACTION));
+            / AgentSpecifications.CONVEXITE_BUILDING_POINT_SATISFACTION));
     if (this.getSatisfaction() < 0) {
       this.setSatisfaction(0);
     }

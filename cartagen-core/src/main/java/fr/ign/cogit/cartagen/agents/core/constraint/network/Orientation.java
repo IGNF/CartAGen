@@ -83,7 +83,7 @@ public class Orientation extends GeographicObjectConstraintImpl {
       dOrientation -= Math.PI;
     }
     this.setSatisfaction(100 - (int) (100.0 * Math.abs(dOrientation)
-        / AgentSpecifications.ORIENTATION_BATIMENT_POINT_SATISFACTION));
+        / AgentSpecifications.ORIENTATION_BUILDING_POINT_SATISFACTION));
     if (this.getSatisfaction() < 0) {
       this.setSatisfaction(0);
     }

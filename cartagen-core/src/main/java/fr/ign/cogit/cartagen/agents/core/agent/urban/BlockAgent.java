@@ -261,27 +261,27 @@ public class BlockAgent extends MesoAgentGeneralisation<IUrbanElementAgent>
   @Override
   public void instantiateConstraints() {
     this.getConstraints().clear();
-    if (AgentSpecifications.SATISFACTION_BATIMENTS_ILOT) {
+    if (AgentSpecifications.BLOCK_MICRO_SATISFACTION) {
       this.ajouterContrainteSatisfactionComposants(
-          AgentSpecifications.SATISFACTION_BATIMENTS_ILOT_IMP);
+          AgentSpecifications.BLOCK_MICRO_SATISFACTION_IMP);
       this.ajouterContrainteSatisfactionStructuresInternes(
-          AgentSpecifications.SATISFACTION_BATIMENTS_ILOT_IMP);
+          AgentSpecifications.BLOCK_MICRO_SATISFACTION_IMP);
     }
-    if (AgentSpecifications.PROXIMITE_BATIMENT) {
+    if (AgentSpecifications.BLOCK_BUILDING_PROXIMITY) {
       this.ajouterContrainteProximite(
-          AgentSpecifications.PROXIMITE_BATIMENT_IMP);
+          AgentSpecifications.BLOCK_BUILDING_PROXIMITY_IMP);
     }
-    if (AgentSpecifications.DENSITE_ILOT_BATIMENT) {
+    if (AgentSpecifications.BLOCK_BUILDING_DENSITY) {
       this.ajouterContrainteDensite(
-          AgentSpecifications.DENSITE_ILOT_BATIMENT_IMP);
+          AgentSpecifications.BLOCK_BUILDING_DENSITY_IMP);
     }
-    if (AgentSpecifications.REPARTITION_SPATIALE_BATIMENT) {
+    if (AgentSpecifications.BUILDING_SPATIAL_DISTRIBUTION) {
       this.ajouterContrainteRepartitionSpatiale(
-          AgentSpecifications.REPARTITION_SPATIALE_BATIMENT_IMP);
+          AgentSpecifications.BUILDING_SPATIAL_DISTRIBUTION_IMP);
     }
-    if (AgentSpecifications.CONSERVATION_GRANDS_BATIMENTS) {
+    if (AgentSpecifications.LARGE_BUILDING_PRESERVATION) {
       this.ajouterContrainteConservationGdBatiments(
-          AgentSpecifications.CONSERVATION_GRANDS_BATIMENTS_IMP);
+          AgentSpecifications.LARGE_BUILDING_PRESERVATION_IMP);
     }
   }
 

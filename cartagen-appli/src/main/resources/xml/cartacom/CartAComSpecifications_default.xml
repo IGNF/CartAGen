@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The relational constraints to consider (among those defined as constraints descriptors) -->
+<cartacom-relational-constraints-to-consider>
+  <relational-constraint name = "BuildingNetFaceTopology">
+    <importance>10.0</importance>
+    <to-consider>true</to-consider>
+  </relational-constraint>
+  <relational-constraint name = "RoadBuildingProximity">
+    <importance>9.0</importance>
+    <to-consider>true</to-consider>
+  </relational-constraint>
+  <relational-constraint name = "SmallCompactsProximity">
+    <importance>8.0</importance>
+    <to-consider>true</to-consider>
+  </relational-constraint>
+  <relational-constraint name = "RoadBuildingParallelism">
+    <importance>8.0</importance>
+    <to-consider>true</to-consider>
+  </relational-constraint>
+</cartacom-relational-constraints-to-consider>
+  

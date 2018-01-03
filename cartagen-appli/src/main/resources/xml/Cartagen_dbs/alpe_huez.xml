@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <cartagen-dataset>
   <name>Calac</name>
-  <type host="localhost" port="5433" dbName="alpe_huez" user="postgres" password="cartagen" schema="public">fr.ign.cogit.cartagen.core.dataset.postgis.PostGISCartAGenDB</type>
+  <type host="localhost" port="5432" dbName="tuto_dataset" user="postgres" password="postgres" schema="public">fr.ign.cogit.cartagen.core.dataset.postgis.PostGISCartAGenDB</type>
   <dataset-type>fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet</dataset-type>
   <scale>25000</scale>
   <classes-list>

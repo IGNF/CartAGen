@@ -10,244 +10,260 @@ import fr.ign.cogit.geoxygene.contrib.agents.lifecycle.TreeExplorationLifeCycle;
 
 /**
  * ensemble de parametres utilises pour la generalisation
+ * 
  * @author julien Gaffuri
  */
 public final class AgentSpecifications {
-  @SuppressWarnings("unused")
-  private static Logger logger = Logger
-      .getLogger(AgentSpecifications.class.getName());
+    @SuppressWarnings("unused")
+    private static Logger logger = Logger.getLogger(AgentSpecifications.class.getName());
 
-  public static boolean STORE_STATES = false;
+    public static boolean STORE_STATES = false;
 
-  private static boolean roadAgents = true;
-  private static boolean hydroAgents = false;
-  private static boolean railAgents = true;
-  private static boolean elecAgents = false;
-  private static boolean urbanAgents = true;
+    private static boolean roadAgents = true;
+    private static boolean hydroAgents = false;
+    private static boolean railAgents = true;
+    private static boolean elecAgents = false;
+    private static boolean urbanAgents = true;
 
-  // les parametres sont en mm carte, ou bien en m terrain
-  // NB: distance_terrain_en_m = distance_carte_en_mm *
-  // Legend.getSYMBOLISATI0N_SCALE()/1000.0
+    // les parametres sont en mm carte, ou bien en m terrain
+    // NB: distance_terrain_en_m = distance_carte_en_mm *
+    // Legend.getSYMBOLISATI0N_SCALE()/1000.0
+    // The parameters are in map mm, or in real world meters (see the comments
+    // of each parameter).
+    // NB: distance_in_m = distance_map_mm *
+    // Legend.getSYMBOLISATI0N_SCALE()/1000.0
 
-  // the life cycle used for geographic agents
-  private static AgentLifeCycle lifeCycle = TreeExplorationLifeCycle
-      .getInstance();
+    // the life cycle used for geographic agents
+    private static AgentLifeCycle lifeCycle = TreeExplorationLifeCycle.getInstance();
 
-  public static AgentLifeCycle getLifeCycle() {
-    return AgentSpecifications.lifeCycle;
-  }
+    public static AgentLifeCycle getLifeCycle() {
+        return AgentSpecifications.lifeCycle;
+    }
 
-  public static void setLifeCycle(AgentLifeCycle lifeCycle) {
-    AgentSpecifications.lifeCycle = lifeCycle;
-  }
+    public static void setLifeCycle(AgentLifeCycle lifeCycle) {
+        AgentSpecifications.lifeCycle = lifeCycle;
+    }
 
-  // nb max d'etats a visiter dans un cycle de vie
-  private static int NB_MAX_ETATS_A_VISITES = 50;
+    // nb max d'etats a visiter dans un cycle de vie
+    // maximum number of states visited in the life cycle of an agent.
+    private static int MAX_NB_OF_STATES = 50;
 
-  public static int getNB_MAX_ETATS_A_VISITES() {
-    return AgentSpecifications.NB_MAX_ETATS_A_VISITES;
-  }
+    public static int getNB_MAX_ETATS_A_VISITES() {
+        return AgentSpecifications.MAX_NB_OF_STATES;
+    }
 
-  public static void setNB_MAX_ETATS_A_VISITES(int nb) {
-    AgentSpecifications.NB_MAX_ETATS_A_VISITES = nb;
-  }
+    public static void setNB_MAX_ETATS_A_VISITES(int nb) {
+        AgentSpecifications.MAX_NB_OF_STATES = nb;
+    }
 
-  private static double validitySatisfactionTreshold = 0.5;
+    private static double validitySatisfactionTreshold = 0.5;
 
-  public static double getValiditySatisfactionTreshold() {
-    return AgentSpecifications.validitySatisfactionTreshold;
-  }
+    public static double getValiditySatisfactionTreshold() {
+        return AgentSpecifications.validitySatisfactionTreshold;
+    }
 
-  public static void setValiditySatisfactionTreshold(
-      double validitySatisfactionTreshold) {
-    AgentSpecifications.validitySatisfactionTreshold = validitySatisfactionTreshold;
-  }
+    public static void setValiditySatisfactionTreshold(double validitySatisfactionTreshold) {
+        AgentSpecifications.validitySatisfactionTreshold = validitySatisfactionTreshold;
+    }
 
-  public static boolean isRoadAgents() {
-    return roadAgents;
-  }
+    public static boolean isRoadAgents() {
+        return roadAgents;
+    }
 
-  public static void setRoadAgents(boolean roadAgents) {
-    AgentSpecifications.roadAgents = roadAgents;
-  }
+    public static void setRoadAgents(boolean roadAgents) {
+        AgentSpecifications.roadAgents = roadAgents;
+    }
 
-  public static boolean isHydroAgents() {
-    return hydroAgents;
-  }
+    public static boolean isHydroAgents() {
+        return hydroAgents;
+    }
 
-  public static void setHydroAgents(boolean hydroAgents) {
-    AgentSpecifications.hydroAgents = hydroAgents;
-  }
+    public static void setHydroAgents(boolean hydroAgents) {
+        AgentSpecifications.hydroAgents = hydroAgents;
+    }
 
-  public static boolean isRailAgents() {
-    return railAgents;
-  }
+    public static boolean isRailAgents() {
+        return railAgents;
+    }
 
-  public static void setRailAgents(boolean railAgents) {
-    AgentSpecifications.railAgents = railAgents;
-  }
+    public static void setRailAgents(boolean railAgents) {
+        AgentSpecifications.railAgents = railAgents;
+    }
 
-  public static boolean isElecAgents() {
-    return elecAgents;
-  }
+    public static boolean isElecAgents() {
+        return elecAgents;
+    }
 
-  public static void setElecAgents(boolean elecAgents) {
-    AgentSpecifications.elecAgents = elecAgents;
-  }
+    public static void setElecAgents(boolean elecAgents) {
+        AgentSpecifications.elecAgents = elecAgents;
+    }
 
-  public static boolean isUrbanAgents() {
-    return urbanAgents;
-  }
+    public static boolean isUrbanAgents() {
+        return urbanAgents;
+    }
 
-  public static void setUrbanAgents(boolean urbanAgents) {
-    AgentSpecifications.urbanAgents = urbanAgents;
-  }
+    public static void setUrbanAgents(boolean urbanAgents) {
+        AgentSpecifications.urbanAgents = urbanAgents;
+    }
 
-  public static boolean INSTANCIER_AU_DEMARRAGE = false;
+    public static boolean STARTUP_INSTANCIATION = false;
 
-  // /////////////////////////
-  // Contraintes et importances
-  // /////////////////////////
+    // /////////////////////////
+    // Contraintes et importances
+    // /////////////////////////
 
-  // bati
+    // bati
 
-  // taille
-  public static boolean TAILLE_BATIMENT = false;
-  public static double TAILLE_BATIMENT_IMP = 1.0;
+    // taille
+    // size
+    public static boolean BUILDING_SIZE_CONSTRAINT = true;
+    public static double BUILDING_SIZE_CONSTRAINT_IMP = 1.0;
 
-  // granularite
-  public static boolean GRANULARITE_BATIMENT = false;
-  public static double GRANULARITE_BATIMENT_IMP = 1.0;
+    // granularite
+    // granularity
+    public static boolean BUILDING_GRANULARITY = true;
+    public static double BULDING_GRANULARITY_IMP = 1.0;
 
-  // equarrite
-  public static boolean EQUARRITE_BATIMENT = false;
-  public static double EQUARRITE_BATIMENT_IMP = 1.0;
+    // equarrite
+    // squareness
+    public static boolean BUILDING_SQUARENESS = true;
+    public static double BUILDING_SQUARENESS_IMP = 1.0;
 
-  // largeur locale
-  public static boolean LARGEUR_LOCALE_BATIMENT = false;
-  public static double LARGEUR_LOCALE_BATIMENT_IMP = 1.0;
+    // largeur locale
+    // local width
+    public static boolean BUILDING_LOCAL_WIDTH = false;
+    public static double BUILDING_LOCAL_WIDTH_IMP = 1.0;
 
-  // convexite
-  public static boolean CONVEXITE_BATIMENT = false;
-  public static double CONVEXITE_BATIMENT_IMP = 1.0;
-  // quantite de convexite correspondant a un point de satisfaction.
-  public static double CONVEXITE_BATIMENT_POINT_SATISFACTION = 0.005; // 0.5%
+    // convexite
+    // convexity
+    public static boolean BUILDING_CONVEXITY = false;
+    public static double BUILDING_CONVEXITY_IMP = 1.0;
+    // quantite de convexite correspondant a un point de satisfaction.
+    public static double CONVEXITE_BUILDING_POINT_SATISFACTION = 0.005; // 0.5%
 
-  // elongation
-  public static boolean ELONGATION_BATIMENT = false;
-  public static double ELONGATION_BATIMENT_IMP = 1.0;
-  // quantite d'elongation correspondant a un point de satisfaction.
-  public static double ELONGATION_BATIMENT_POINT_SATISFACTION = 0.01; // 1%
+    // elongation
+    public static boolean BUILDING_ELONGATION = false;
+    public static double BUILDING_ELONGATION_IMP = 1.0;
+    // quantite d'elongation correspondant a un point de satisfaction.
+    public static double ELONGATION_BUILDING_POINT_SATISFACTION = 0.01; // 1%
 
-  // orientation
-  public static boolean ORIENTATION_BATIMENT = false;
-  public static double ORIENTATION_BATIMENT_IMP = 1.0;
-  // deviation angulaire correspondant a un point de satisfaction.
-  public static double ORIENTATION_BATIMENT_POINT_SATISFACTION = Math.PI / 200;
+    // orientation
+    public static boolean BUILDING_ORIENTATION = false;
+    public static double BUILDING_ORIENTATION_IMP = 1.0;
+    // deviation angulaire correspondant a un point de satisfaction.
+    public static double ORIENTATION_BUILDING_POINT_SATISFACTION = Math.PI / 200;
 
-  // altitude
-  public static boolean ALTITUDE_BATIMENT = false;
-  public static double ALTITUDE_BATIMENT_IMP = 1.0;
-  // valeur d'un point de satisfaction (en m)
-  public static double DENIVELLEE_POINT_SATISFACTION = 0.3;
+    // altitude
+    public static boolean BUILDING_ALTITUDE = false;
+    public static double BUILDING_ALTITUDE_IMP = 1.0;
+    // valeur d'un point de satisfaction (en m)
+    public static double HEIGHT_DIFFERENCE_POINT_SATISFACTION = 0.3;
 
-  // occ sol
-  public static boolean OCCSOL_BATIMENT = false;
-  public static double OCCSOL_BATIMENT_IMP = 1.0;
+    // occ sol
+    // land use
+    public static boolean BUILDING_LANDUSE = false;
+    public static double BUILDING_LANDUSE_IMP = 1.0;
 
-  // proximite
-  public static boolean PROXIMITE_BATIMENT = false;
-  public static double PROXIMITE_BATIMENT_IMP = 1.0;
+    // proximite
+    // building proximity inside a block
+    public static boolean BLOCK_BUILDING_PROXIMITY = false;
+    public static double BLOCK_BUILDING_PROXIMITY_IMP = 1.0;
 
-  // densite
-  public static boolean DENSITE_ILOT_BATIMENT = false;
-  public static double DENSITE_ILOT_BATIMENT_IMP = 1.0;
+    // densite
+    // building density inside a block
+    public static boolean BLOCK_BUILDING_DENSITY = false;
+    public static double BLOCK_BUILDING_DENSITY_IMP = 1.0;
 
-  // repartition spatiale des batiments
-  public static boolean REPARTITION_SPATIALE_BATIMENT = false;
-  public static double REPARTITION_SPATIALE_BATIMENT_IMP = 1.0;
+    // repartition spatiale des batiments
+    public static boolean BUILDING_SPATIAL_DISTRIBUTION = false;
+    public static double BUILDING_SPATIAL_DISTRIBUTION_IMP = 1.0;
 
-  // conservation des grands batiments
-  public static boolean CONSERVATION_GRANDS_BATIMENTS = false;
-  public static double CONSERVATION_GRANDS_BATIMENTS_IMP = 1.0;
+    // conservation des grands batiments
+    public static boolean LARGE_BUILDING_PRESERVATION = false;
+    public static double LARGE_BUILDING_PRESERVATION_IMP = 1.0;
 
-  // satisfaction batiments d'un ilot
-  public static boolean SATISFACTION_BATIMENTS_ILOT = false;
-  public static double SATISFACTION_BATIMENTS_ILOT_IMP = 1.0;
+    // satisfaction batiments d'un ilot
+    public static boolean BLOCK_MICRO_SATISFACTION = true;
+    public static double BLOCK_MICRO_SATISFACTION_IMP = 1.0;
 
-  // satisfaction ilots d'une ville
-  public static boolean SATISFACTION_ILOTS_VILLE = false;
-  public static double SATISFACTION_ILOTS_VILLE_IMP = 1.0;
+    // satisfaction ilots d'une ville
+    public static boolean TOWN_BLOCK_SATISFACTION = true;
+    public static double TOWN_BLOCK_SATISFACTION_IMP = 1.0;
 
-  // routier
+    // routier
 
-  // satisfaction composants reseau routier
-  public static boolean SATISFACTION_COMPOSANTS_RESEAU_ROUTIER = false;
-  public static double SATISFACTION_COMPOSANTS_RESEAU_ROUTIER_IMP = 1.0;
+    // satisfaction composants reseau routier
+    public static boolean ROAD_NETWORK_MICRO_SATISFACTION = false;
+    public static double ROAD_NETWORK_MICRO_SATISFACTION_IMP = 1.0;
 
-  // empatement
-  public static boolean ROUTIER_EMPATEMENT = false;
-  public static double ROUTIER_EMPATEMENT_IMP = 5.0;
+    // empatement
+    // coalescence
+    public static boolean ROAD_COALESCENCE = false;
+    public static double ROAD_COALESCENCE_IMP = 5.0;
 
-  // empatement
-  public static boolean ROUTIER_CONTROLE_DEFORMATION = false;
-  public static double ROUTIER_CONTROLE_DEFORMATION_IMP = 1.0;
+    // empatement
+    public static boolean ROAD_CONTROL_DISTORTION = false;
+    public static double ROAD_CONTROL_DISTORTION_IMP = 1.0;
 
-  // impasse
-  public static boolean ROUTIER_IMPASSES = false;
-  public static double ROUTIER_IMPASSES_IMP = 1.0;
+    // impasse
+    public static boolean DEAD_END_ROADS = false;
+    public static double DEAD_END_ROADS_IMP = 1.0;
 
-  // densite
-  public static boolean ROUTIER_DENSITE = false;
-  public static double ROUTIER_DENSITE_IMP = 1.0;
+    // densite
+    public static boolean ROAD_DENSITY = false;
+    public static double ROAD_DENSITY_IMP = 1.0;
 
-  // hydro
+    // hydro
 
-  // satisfaction composants reseau hydro
-  public static boolean SATISFACTION_COMPOSANTS_RESEAU_HYDRO = false;
-  public static double SATISFACTION_COMPOSANTS_RESEAU_HYDRO_IMP = 1.0;
+    // satisfaction composants reseau hydro
+    public static boolean RIVER_NETWORK_MICRO_SATISFACTION = false;
+    public static double RIVER_NETWORK_MICRO_SATISFACTION_IMP = 1.0;
 
-  // empatement
-  public static boolean HYDRO_EMPATEMENT = false;
-  public static double HYDRO_EMPATEMENT_IMP = 1.0;
+    // empatement
+    public static boolean RIVER_COALESCENCE = false;
+    public static double RIVER_COALESCENCE_IMP = 1.0;
 
-  // proximite routier
-  public static boolean PROXIMITE_HYDRO_ROUTIER = false;
-  public static double PROXIMITE_HYDRO_ROUTIER_IMP = 1.0;
+    // proximite routier
+    public static boolean RIVER_ROAD_PROXIMITY = false;
+    public static double RIVER_ROAD_PROXIMITY_IMP = 1.0;
 
-  // ecoulement
-  public static boolean ECOULEMENT_HYDRO = false;
-  public static double ECOULEMENT_HYDRO_IMP = 1.0;
+    // ecoulement
+    // flow preservation
+    public static boolean RIVER_FLOW_PRESERVATION = false;
+    public static double RIVER_FLOW_PRESERVATION_IMP = 1.0;
 
-  // platitude lac
-  public static boolean PLATITUDE_LAC = false;
-  public static double PLATITUDE_LAC_IMP = 1.0;
+    // platitude lac
+    // lake flatness preservation
+    public static boolean LAKE_FLATNESS_PRESERVATION = false;
+    public static double LAKE_FLATNESS_PRESERVATION_IMP = 1.0;
 
-  // relief
+    // relief
 
-  // points
-  public static boolean RELIEF_POSITION_POINT = false;
-  public static double RELIEF_POSITION_POINT_IMP = 1.0;
+    // points
+    public static boolean RELIEF_POSITION_POINT = false;
+    public static double RELIEF_POSITION_POINT_IMP = 1.0;
 
-  // segments CN
-  public static boolean RELIEF_LONGUEUR_SEGMENT_CN = false;
-  public static double RELIEF_LONGUEUR_SEGMENT_CN_IMP = 1.0;
-  public static boolean RELIEF_ORIENTATION_SEGMENT_CN = false;
-  public static double RELIEF_ORIENTATION_SEGMENT_CN_IMP = 1.0;
+    // contour line segments
+    public static boolean CONTOUR_LINE_SEGMENT_LENGTH = false;
+    public static double CONTOUR_LINE_SEGMENT_LENGTH_IMP = 1.0;
+    public static boolean CONTOUR_LINE_SEGMENT_ORIENTATION = false;
+    public static double CONTOUR_LINE_SEGMENT_ORIENTATION_IMP = 1.0;
 
-  // segments
-  public static boolean RELIEF_LONGUEUR_SEGMENT = false;
-  public static double RELIEF_LONGUEUR_SEGMENT_IMP = 1.0;
-  public static boolean RELIEF_ORIENTATION_SEGMENT = false;
-  public static double RELIEF_ORIENTATION_SEGMENT_IMP = 1.0;
+    // field (i.e. triangulation) segments
+    public static boolean RELIEF_SEGMENT_LENGTH = false;
+    public static double RELIEF_SEGMENT_LENGTH_IMP = 1.0;
+    public static boolean RELIEF_SEGMENT_ORIENTATION = false;
+    public static double RELIEF_SEGMENT_ORIENTATION_IMP = 1.0;
 
-  // triangles
-  public static boolean RELIEF_AIRE_TRIANGLE = false;
-  public static double RELIEF_AIRE_TRIANGLE_IMP = 1.0;
-  public static boolean RELIEF_CENTREG_TRIANGLE = false;
-  public static double RELIEF_CENTREG_TRIANGLE_IMP = 1.0;
+    // triangles
+    public static boolean RELIEF_TRIANGLE_AREA = false;
+    public static double RELIEF_TRIANGLE_AREA_IMP = 1.0;
+    public static boolean RELIEF_TRIANGLE_CENTROID = false;
+    public static double RELIEF_TRIANGLE_CENTROID_IMP = 1.0;
 
-  public static double RELIEF_ALTITUDE_BATIMENT_IMP = 1.0;
-  public static double RELIEF_ECOULEMENT_HYDRO_IMP = 1.0;
+    // importance of the relational constraints of relief field agent regarding
+    // the field agent
+    public static double RELIEF_ALTITUDE_BUILDING_IMP = 1.0;
+    public static double RELIEF_RIVER_FLOW_IMP = 1.0;
 
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cartacom-relational-constraints>
+  <relational-constraint name = "BuildingNetFaceTopology">
+    <relation-java-class>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.relation.buildingnetface.Topology</relation-java-class>
+    <agent-type-1>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.SmallCompactAgent</agent-type-1>
+    <agent-type-2>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.NetworkFaceAgent</agent-type-2>
+  </relational-constraint>
+  <relational-constraint name = "RoadBuildingProximity">
+    <relation-java-class>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.relation.buildingRoad.Proximity</relation-java-class>
+    <agent-type-1>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.SmallCompactAgent</agent-type-1>
+    <agent-type-2>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.NetworkSectionAgent</agent-type-2>
+  </relational-constraint>
+  <relational-constraint name = "SmallCompactsProximity">
+    <relation-java-class>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.relation.buildingBuilding.Proximity</relation-java-class>
+    <agent-type-1>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.SmallCompactAgent</agent-type-1>
+    <agent-type-2>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.SmallCompactAgent</agent-type-2>
+  </relational-constraint>  
+  <relational-constraint name = "RoadBuildingParallelism">
+    <relation-java-class>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.relation.buildingRoad.Parallelism</relation-java-class>
+    <agent-type-1>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.SmallCompactAgent</agent-type-1>
+    <agent-type-2>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.NetworkSectionAgent</agent-type-2>
+  </relational-constraint>  
+</cartacom-relational-constraints>

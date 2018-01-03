@@ -40,7 +40,7 @@ public class MergedBuildingsAgent extends InternStructureAgentGeneralisation {
   public void instantiateConstraints() {
     this.getConstraints().clear();
     this.ajouterContrainteSatisfactionComposants(
-        AgentSpecifications.SATISFACTION_BATIMENTS_ILOT_IMP);
+        AgentSpecifications.BLOCK_MICRO_SATISFACTION_IMP);
   }
 
 }

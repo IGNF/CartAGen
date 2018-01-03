@@ -51,7 +51,7 @@ public class BuildingElevationRelation extends ObjectFieldRelation {
       return;
     }
     int nb = (int) ((deniv - GeneralisationSpecifications.DENIVELLEE_MINI)
-        / AgentSpecifications.DENIVELLEE_POINT_SATISFACTION);
+        / AgentSpecifications.HEIGHT_DIFFERENCE_POINT_SATISFACTION);
     this.setSatisfaction(100 - nb);
     if (this.getSatisfaction() < 0) {
       this.setSatisfaction(0);

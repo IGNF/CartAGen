@@ -91,9 +91,9 @@ public class TownAgent extends MesoAgentGeneralisation<IBlockAgent>
   @Override
   public void instantiateConstraints() {
     this.getConstraints().clear();
-    if (AgentSpecifications.SATISFACTION_ILOTS_VILLE) {
+    if (AgentSpecifications.TOWN_BLOCK_SATISFACTION) {
       this.ajouterContrainteSatisfactionComposants(
-          AgentSpecifications.SATISFACTION_ILOTS_VILLE_IMP);
+          AgentSpecifications.TOWN_BLOCK_SATISFACTION_IMP);
     }
     this.ajouterContrainteDensiteRues(1.0);
   }

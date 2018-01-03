@@ -101,56 +101,56 @@ public class BuildingAgent extends UrbanElementAgent implements IBuildingAgent {
     if (BuildingAgent.logger.isTraceEnabled()) {
       BuildingAgent.logger.trace("Ajout contrainte de taille");
     }
-    if (AgentSpecifications.TAILLE_BATIMENT) {
-      this.ajouterContrainteTaille(AgentSpecifications.TAILLE_BATIMENT_IMP);
+    if (AgentSpecifications.BUILDING_SIZE_CONSTRAINT) {
+      this.ajouterContrainteTaille(AgentSpecifications.BUILDING_SIZE_CONSTRAINT_IMP);
     }
     if (BuildingAgent.logger.isTraceEnabled()) {
       BuildingAgent.logger.trace("Ajout contrainte de granularite");
     }
-    if (AgentSpecifications.GRANULARITE_BATIMENT) {
+    if (AgentSpecifications.BUILDING_GRANULARITY) {
       this.ajouterContrainteGranularite(
-          AgentSpecifications.GRANULARITE_BATIMENT_IMP);
+          AgentSpecifications.BULDING_GRANULARITY_IMP);
     }
     if (BuildingAgent.logger.isTraceEnabled()) {
       BuildingAgent.logger.trace("Ajout contrainte d'equarrite");
     }
-    if (AgentSpecifications.EQUARRITE_BATIMENT) {
+    if (AgentSpecifications.BUILDING_SQUARENESS) {
       this.ajouterContrainteEquarrite(
-          AgentSpecifications.EQUARRITE_BATIMENT_IMP);
+          AgentSpecifications.BUILDING_SQUARENESS_IMP);
     }
     if (BuildingAgent.logger.isTraceEnabled()) {
       BuildingAgent.logger.trace("Ajout contrainte de largeur locale");
     }
-    if (AgentSpecifications.LARGEUR_LOCALE_BATIMENT) {
+    if (AgentSpecifications.BUILDING_LOCAL_WIDTH) {
       this.ajouterContrainteLargeurLocale(
-          AgentSpecifications.LARGEUR_LOCALE_BATIMENT_IMP);
+          AgentSpecifications.BUILDING_LOCAL_WIDTH_IMP);
     }
     if (BuildingAgent.logger.isTraceEnabled()) {
       BuildingAgent.logger.trace("Ajout contrainte de convexite");
     }
-    if (AgentSpecifications.CONVEXITE_BATIMENT) {
+    if (AgentSpecifications.BUILDING_CONVEXITY) {
       this.ajouterContrainteConvexite(
-          AgentSpecifications.CONVEXITE_BATIMENT_IMP);
+          AgentSpecifications.BUILDING_CONVEXITY_IMP);
     }
     if (BuildingAgent.logger.isTraceEnabled()) {
       BuildingAgent.logger.trace("Ajout contrainte d'elongation");
     }
-    if (AgentSpecifications.ELONGATION_BATIMENT) {
+    if (AgentSpecifications.BUILDING_ELONGATION) {
       this.ajouterContrainteElongation(
-          AgentSpecifications.ELONGATION_BATIMENT_IMP);
+          AgentSpecifications.BUILDING_ELONGATION_IMP);
     }
     if (BuildingAgent.logger.isTraceEnabled()) {
       BuildingAgent.logger.trace("Ajout contrainte de d'orientation");
     }
-    if (AgentSpecifications.ORIENTATION_BATIMENT) {
+    if (AgentSpecifications.BUILDING_ORIENTATION) {
       this.ajouterContrainteOrientation(
-          AgentSpecifications.ORIENTATION_BATIMENT_IMP);
+          AgentSpecifications.BUILDING_ORIENTATION_IMP);
     }
     if (BuildingAgent.logger.isTraceEnabled()) {
       BuildingAgent.logger.trace("Ajout contrainte d'altitude");
     }
-    if (AgentSpecifications.ALTITUDE_BATIMENT) {
-      this.ajouterContrainteAltitude(AgentSpecifications.ALTITUDE_BATIMENT_IMP);
+    if (AgentSpecifications.BUILDING_ALTITUDE) {
+      this.ajouterContrainteAltitude(AgentSpecifications.BUILDING_ALTITUDE_IMP);
     }
   }
 

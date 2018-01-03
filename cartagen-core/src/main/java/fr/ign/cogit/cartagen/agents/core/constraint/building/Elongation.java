@@ -78,7 +78,7 @@ public class Elongation extends GeographicObjectConstraintImpl {
 
     this.setSatisfaction(
         100 + (int) ((GeneralisationSpecifications.BUILDING_ELONGATION_MINI - d)
-            / AgentSpecifications.ELONGATION_BATIMENT_POINT_SATISFACTION));
+            / AgentSpecifications.ELONGATION_BUILDING_POINT_SATISFACTION));
     if (this.getSatisfaction() < 0) {
       this.setSatisfaction(0);
     }

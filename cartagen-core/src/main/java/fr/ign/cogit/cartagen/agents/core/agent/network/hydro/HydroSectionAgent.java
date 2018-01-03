@@ -63,19 +63,19 @@ public class HydroSectionAgent extends SectionAgent
   public void instantiateConstraints() {
     this.getConstraints().clear();
     // empatement
-    if (AgentSpecifications.HYDRO_EMPATEMENT) {
+    if (AgentSpecifications.RIVER_COALESCENCE) {
       this.ajouterContrainteEmpatement(
-          AgentSpecifications.HYDRO_EMPATEMENT_IMP);
+          AgentSpecifications.RIVER_COALESCENCE_IMP);
     }
     // proximite routier
-    if (AgentSpecifications.PROXIMITE_HYDRO_ROUTIER) {
+    if (AgentSpecifications.RIVER_ROAD_PROXIMITY) {
       this.ajouterContrainteProximiteRoutier(
-          AgentSpecifications.PROXIMITE_HYDRO_ROUTIER_IMP);
+          AgentSpecifications.RIVER_ROAD_PROXIMITY_IMP);
     }
     // ecoulement
-    if (AgentSpecifications.ECOULEMENT_HYDRO) {
+    if (AgentSpecifications.RIVER_FLOW_PRESERVATION) {
       this.ajouterContrainteEcoulement(
-          AgentSpecifications.ECOULEMENT_HYDRO_IMP);
+          AgentSpecifications.RIVER_FLOW_PRESERVATION_IMP);
     }
   }
 

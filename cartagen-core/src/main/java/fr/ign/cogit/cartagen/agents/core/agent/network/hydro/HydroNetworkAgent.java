@@ -42,9 +42,9 @@ public final class HydroNetworkAgent extends NetworkAgent {
   @Override
   public void instantiateConstraints() {
     this.getConstraints().clear();
-    if (AgentSpecifications.SATISFACTION_COMPOSANTS_RESEAU_HYDRO) {
+    if (AgentSpecifications.RIVER_NETWORK_MICRO_SATISFACTION) {
       this.ajouterContrainteSatisfactionComposants(
-          AgentSpecifications.SATISFACTION_COMPOSANTS_RESEAU_HYDRO_IMP);
+          AgentSpecifications.RIVER_NETWORK_MICRO_SATISFACTION_IMP);
     }
   }
 
