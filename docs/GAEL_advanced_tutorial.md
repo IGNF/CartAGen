@@ -9,6 +9,18 @@ This tutorial explains how to use the agent-based generalization model implement
 
 To be done...
 
+Adding new field-object relational constraints
+-------------
+
+
+
+Customizing the point agents sub-micro constraints
+-------------
+
+
+
+Advanced customization (life cycle, stopping criteria...)
+-------------
 
 See Also
 -------------

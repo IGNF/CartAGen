@@ -8,6 +8,26 @@ This tutorial explains how to use the [AGENT][2] agent-based generalization mode
 
 To be done...
 
+Adding new actions
+-------------
+
+
+Customizing constraints
+-------------
+
+
+Customizing the life cycle
+-------------
+
+
+Adding new features as agents
+-------------
+
+
+Understanding the mountain road generalization process
+-------------
+
+
 See Also
 -------------
 - [tutorial on data loading][8]

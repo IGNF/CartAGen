@@ -7,6 +7,21 @@
 
 To be done...
 
+
+Customizing constraints
+-------------
+
+
+
+Adding new relational constraints
+-------------
+
+
+
+Advanced customization of the model (life cycle, conversations...)
+-------------
+
+
 See Also
 -------------
 - [tutorial on data loading][8]
