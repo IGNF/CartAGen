@@ -119,18 +119,6 @@ public class AgentConfigurationFrame extends JFrame {
     public final static JCheckBox cBatiOccSol = new JCheckBox("Constrain", false);
     public final static JTextField tBatiOccSolImp = new JTextField("" + AgentSpecifications.BUILDING_LANDUSE_IMP, 5);
 
-    // proximite
-    public final static JPanel pBatiProximite = new JPanel(new GridBagLayout());
-    public final static JCheckBox cBatiProximite = new JCheckBox("Constrain", false);
-    public final static JTextField tBatiProximiteImp = new JTextField(
-            "" + AgentSpecifications.BLOCK_BUILDING_PROXIMITY_IMP, 5);
-
-    // densite ilot
-    public final static JPanel pBatiDensiteIlot = new JPanel(new GridBagLayout());
-    public final static JCheckBox cBatiDensiteIlot = new JCheckBox("Constrain", false);
-    public final static JTextField tBatiDensiteIlotImp = new JTextField(
-            "" + AgentSpecifications.BLOCK_BUILDING_DENSITY_IMP, 5);
-
     // routier
     public final static JPanel pRoutier = new JPanel(new GridBagLayout());
 
@@ -179,21 +167,40 @@ public class AgentConfigurationFrame extends JFrame {
     public final static JTextField tHydroPlatitudeLacImp = new JTextField(
             "" + AgentSpecifications.LAKE_FLATNESS_PRESERVATION_IMP, 5);
 
-    // champ relief
-    public final static JPanel pRelief = new JPanel(new GridBagLayout());
+    // block contraints
+    public final static JPanel pBlock = new JPanel(new GridBagLayout());
 
-    // position points
-    public final static JPanel pReliefPositionPoint = new JPanel(new GridBagLayout());
-    public final static JCheckBox cReliefPositionPoint = new JCheckBox("Constrain", false);
-    public final static JTextField tReliefPositionPointImp = new JTextField("", 5);
+    // proximite
+    public final static JPanel pBatiProximite = new JPanel(new GridBagLayout());
+    public final static JCheckBox cBatiProximite = new JCheckBox("Constrain", false);
+    public final static JTextField tBatiProximiteImp = new JTextField(
+            "" + AgentSpecifications.BLOCK_BUILDING_PROXIMITY_IMP, 5);
 
-    // occ sol
-    public final static JPanel pOccSol = new JPanel(new GridBagLayout());
+    // densite ilot
+    public final static JPanel pBatiDensiteIlot = new JPanel(new GridBagLayout());
+    public final static JCheckBox cBatiDensiteIlot = new JCheckBox("Constrain", false);
+    public final static JTextField tBatiDensiteIlotImp = new JTextField(
+            "" + AgentSpecifications.BLOCK_BUILDING_DENSITY_IMP, 5);
 
-    // position points
-    public final static JPanel pOccSolPositionPoint = new JPanel(new GridBagLayout());
-    public final static JCheckBox cOccSolPositionPoint = new JCheckBox("Constrain", false);
-    public final static JTextField tOccSolPositionPointImp = new JTextField("", 5);
+    // spatial distribution
+    public final static JPanel pSpatialDistribution = new JPanel(new GridBagLayout());
+    public final static JCheckBox cSpatialDistribution = new JCheckBox("Constrain", false);
+    public final static JTextField tSpatialDistribution = new JTextField(
+            "" + AgentSpecifications.BUILDING_SPATIAL_DISTRIBUTION_IMP, 5);
+
+    // big building preservation
+    public final static JPanel pBigBuildings = new JPanel(new GridBagLayout());
+    public final static JCheckBox cBigBuildings = new JCheckBox("Constrain", false);
+    public final static JTextField tBigBuildings = new JTextField(
+            "" + AgentSpecifications.LARGE_BUILDING_PRESERVATION_IMP, 5);
+
+    // town constraints
+    public final static JPanel pTown = new JPanel(new GridBagLayout());
+
+    // street density
+    public final static JPanel pStreetDensity = new JPanel(new GridBagLayout());
+    public final static JCheckBox cStreetDensity = new JCheckBox("Constrain", false);
+    public final static JTextField tStreetDensity = new JTextField("", 5);
 
     // boutons
     public final static JPanel panneauBoutons = new JPanel(new GridBagLayout());
@@ -319,30 +326,6 @@ public class AgentConfigurationFrame extends JFrame {
         c.fill = GridBagConstraints.BOTH;
         AgentConfigurationFrame.pBati.add(AgentConfigurationFrame.pBatiAltitude, c);
 
-        // proximite
-        AgentConfigurationFrame.pBatiProximite.add(AgentConfigurationFrame.cBatiProximite, cont);
-        AgentConfigurationFrame.pBatiProximite.add(new JLabel("Importance"), cont);
-        AgentConfigurationFrame.pBatiProximite.add(AgentConfigurationFrame.tBatiProximiteImp, cont);
-
-        AgentConfigurationFrame.pBatiProximite.setBorder(BorderFactory.createTitledBorder("Proximity"));
-        c = new GridBagConstraints();
-        c.gridx = 2;
-        c.gridy = GridBagConstraints.RELATIVE;
-        c.fill = GridBagConstraints.BOTH;
-        AgentConfigurationFrame.pBati.add(AgentConfigurationFrame.pBatiProximite, c);
-
-        // densite ilot
-        AgentConfigurationFrame.pBatiDensiteIlot.add(AgentConfigurationFrame.cBatiDensiteIlot, cont);
-        AgentConfigurationFrame.pBatiDensiteIlot.add(new JLabel("Importance"), cont);
-        AgentConfigurationFrame.pBatiDensiteIlot.add(AgentConfigurationFrame.tBatiDensiteIlotImp, cont);
-
-        AgentConfigurationFrame.pBatiDensiteIlot.setBorder(BorderFactory.createTitledBorder("Block density"));
-        c = new GridBagConstraints();
-        c.gridx = 3;
-        c.gridy = GridBagConstraints.RELATIVE;
-        c.fill = GridBagConstraints.BOTH;
-        AgentConfigurationFrame.pBati.add(AgentConfigurationFrame.pBatiDensiteIlot, c);
-
         AgentConfigurationFrame.tabbedPane.addTab(I18N.getString("ThemeLabel.buildingShort"),
                 new ImageIcon(
                         AgentConfigurationFrame.class.getResource("/images/bati.gif").getPath().replaceAll("%20", " ")),
@@ -453,43 +436,80 @@ public class AgentConfigurationFrame extends JFrame {
                         .getResource("/images/hydro.gif").getPath().replaceAll("%20", " ")),
                 AgentConfigurationFrame.pHydro, "Configure constraints on hydro network");
 
-        // champ relief
+        // blocks
 
-        // postion points
-        AgentConfigurationFrame.pReliefPositionPoint.add(AgentConfigurationFrame.cReliefPositionPoint, cont);
-        AgentConfigurationFrame.pReliefPositionPoint.add(new JLabel("Importance"), cont);
-        AgentConfigurationFrame.pReliefPositionPoint.add(AgentConfigurationFrame.tReliefPositionPointImp, cont);
+        // proximite
+        AgentConfigurationFrame.pBatiProximite.add(AgentConfigurationFrame.cBatiProximite, cont);
+        AgentConfigurationFrame.pBatiProximite.add(new JLabel("Importance"), cont);
+        AgentConfigurationFrame.pBatiProximite.add(AgentConfigurationFrame.tBatiProximiteImp, cont);
 
-        AgentConfigurationFrame.pReliefPositionPoint.setBorder(BorderFactory.createTitledBorder("Points position"));
+        AgentConfigurationFrame.pBatiProximite.setBorder(BorderFactory.createTitledBorder("Proximity"));
         c = new GridBagConstraints();
-        c.gridx = 0;
+        c.gridx = 2;
         c.gridy = GridBagConstraints.RELATIVE;
         c.fill = GridBagConstraints.BOTH;
-        AgentConfigurationFrame.pRelief.add(AgentConfigurationFrame.pReliefPositionPoint, c);
+        AgentConfigurationFrame.pBlock.add(AgentConfigurationFrame.pBatiProximite, c);
+
+        // densite ilot
+        AgentConfigurationFrame.pBatiDensiteIlot.add(AgentConfigurationFrame.cBatiDensiteIlot, cont);
+        AgentConfigurationFrame.pBatiDensiteIlot.add(new JLabel("Importance"), cont);
+        AgentConfigurationFrame.pBatiDensiteIlot.add(AgentConfigurationFrame.tBatiDensiteIlotImp, cont);
+
+        AgentConfigurationFrame.pBatiDensiteIlot.setBorder(BorderFactory.createTitledBorder("Block density"));
+        c = new GridBagConstraints();
+        c.gridx = 3;
+        c.gridy = GridBagConstraints.RELATIVE;
+        c.fill = GridBagConstraints.BOTH;
+        AgentConfigurationFrame.pBlock.add(AgentConfigurationFrame.pBatiDensiteIlot, c);
+
+        // spatial distribution
+        AgentConfigurationFrame.pSpatialDistribution.add(AgentConfigurationFrame.cSpatialDistribution, cont);
+        AgentConfigurationFrame.pSpatialDistribution.add(new JLabel("Importance"), cont);
+        AgentConfigurationFrame.pSpatialDistribution.add(AgentConfigurationFrame.tSpatialDistribution, cont);
+
+        AgentConfigurationFrame.pSpatialDistribution
+                .setBorder(BorderFactory.createTitledBorder("Spatial distribution"));
+        c = new GridBagConstraints();
+        c.gridx = 1;
+        c.gridy = GridBagConstraints.SOUTH;
+        c.fill = GridBagConstraints.BOTH;
+        AgentConfigurationFrame.pBlock.add(AgentConfigurationFrame.pSpatialDistribution, c);
+
+        // big building preservation
+        AgentConfigurationFrame.pBigBuildings.add(AgentConfigurationFrame.cBigBuildings, cont);
+        AgentConfigurationFrame.pBigBuildings.add(new JLabel("Importance"), cont);
+        AgentConfigurationFrame.pBigBuildings.add(AgentConfigurationFrame.tBigBuildings, cont);
+
+        AgentConfigurationFrame.pBigBuildings.setBorder(BorderFactory.createTitledBorder("Big buildings preservation"));
+        c = new GridBagConstraints();
+        c.gridx = 2;
+        c.gridy = GridBagConstraints.SOUTH;
+        c.fill = GridBagConstraints.BOTH;
+        AgentConfigurationFrame.pBlock.add(AgentConfigurationFrame.pBigBuildings, c);
 
         AgentConfigurationFrame.tabbedPane.addTab(
-                I18N.getString("ThemeLabel.reliefShort"), new ImageIcon(AgentConfigurationFrame.class
-                        .getResource("/images/relief.gif").getPath().replaceAll("%20", " ")),
-                AgentConfigurationFrame.pRelief, "Configure constraints on relief");
+                I18N.getString("ThemeLabel.blockShort"), new ImageIcon(AgentConfigurationFrame.class
+                        .getResource("/images/block.gif").getPath().replaceAll("%20", " ")),
+                AgentConfigurationFrame.pBlock, "Configure constraints on blocks");
 
-        // champ occ sol
+        // town constraints
 
-        // postion points
-        AgentConfigurationFrame.pOccSolPositionPoint.add(AgentConfigurationFrame.cOccSolPositionPoint, cont);
-        AgentConfigurationFrame.pOccSolPositionPoint.add(new JLabel("Importance"), cont);
-        AgentConfigurationFrame.pOccSolPositionPoint.add(AgentConfigurationFrame.tOccSolPositionPointImp, cont);
+        // street density
+        AgentConfigurationFrame.pStreetDensity.add(AgentConfigurationFrame.cStreetDensity, cont);
+        AgentConfigurationFrame.pStreetDensity.add(new JLabel("Importance"), cont);
+        AgentConfigurationFrame.pStreetDensity.add(AgentConfigurationFrame.tStreetDensity, cont);
 
-        AgentConfigurationFrame.pOccSolPositionPoint.setBorder(BorderFactory.createTitledBorder("Points position"));
+        AgentConfigurationFrame.pStreetDensity.setBorder(BorderFactory.createTitledBorder("Street density"));
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = GridBagConstraints.RELATIVE;
         c.fill = GridBagConstraints.BOTH;
-        AgentConfigurationFrame.pOccSol.add(AgentConfigurationFrame.pOccSolPositionPoint, c);
+        AgentConfigurationFrame.pTown.add(AgentConfigurationFrame.pStreetDensity, c);
 
-        AgentConfigurationFrame.tabbedPane.addTab(I18N.getString("ThemeLabel.landuseShort"),
-                new ImageIcon(AgentConfigurationFrame.class.getResource("/images/occsol.gif").getPath()
-                        .replaceAll("%20", " ")),
-                AgentConfigurationFrame.pOccSol, "Configure constraints on landscape");
+        AgentConfigurationFrame.tabbedPane.addTab(I18N.getString("ThemeLabel.townShort"),
+                new ImageIcon(
+                        AgentConfigurationFrame.class.getResource("/images/town.gif").getPath().replaceAll("%20", " ")),
+                AgentConfigurationFrame.pTown, "Configure constraints on towns");
 
         // panneau des boutons
 
