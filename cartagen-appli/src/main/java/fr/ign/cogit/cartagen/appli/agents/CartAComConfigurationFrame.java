@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -29,6 +30,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import fr.ign.cogit.cartagen.agents.cartacom.CartacomSpecifications;
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
 import fr.ign.cogit.cartagen.core.GeneralisationSpecifications;
 import fr.ign.cogit.geoxygene.appli.plugin.cartagen.CartAGenPlugin;
@@ -57,6 +59,7 @@ public class CartAComConfigurationFrame extends JFrame {
     public static Set<RelationalConstraintPanel> constraintPanels;
     // a panel for the advanced parameters tab
     public static JPanel advancedPanel = new JPanel(new GridBagLayout());
+    private JSpinner spinLimitZones, spinDist, spinEnv;
 
     // boutons
     public final static JPanel panneauBoutons = new JPanel(new GridBagLayout());
@@ -100,7 +103,27 @@ public class CartAComConfigurationFrame extends JFrame {
         // TODO
 
         // a panel for advanced parameters
-        // TODO
+
+        // environment zone offset
+        SpinnerModel modelEnv = new SpinnerNumberModel(CartacomSpecifications.ENVIRONMENT_ZONE_OFFSET, 0.0, 250.0, 1.0);
+        this.spinEnv = new JSpinner(modelEnv);
+        advancedPanel.add(new JLabel("Offset of the environment zone"), cont);
+        advancedPanel.add(spinEnv, cont);
+
+        // Number of limit zones
+        SpinnerModel modelLimit = new SpinnerNumberModel(CartacomSpecifications.NB_LIMIT_ZONES, 1, 5, 1);
+        this.spinLimitZones = new JSpinner(modelLimit);
+        advancedPanel.add(new JLabel("Nb of limit zones in the environment"), cont);
+        advancedPanel.add(spinLimitZones, cont);
+
+        // Distance under which a small compact is considered 'close' enough to
+        // a
+        // network section
+        SpinnerModel modelDist = new SpinnerNumberModel(
+                CartacomSpecifications.DIST_SMALLCOMPACT_CLOSE_TO_NETWORK_SECTION, 0.0, 250.0, 1.0);
+        this.spinDist = new JSpinner(modelDist);
+        advancedPanel.add(new JLabel("Maximum distance to be considered close"), cont);
+        advancedPanel.add(spinDist, cont);
 
         // panneau des boutons
 
@@ -224,7 +247,20 @@ public class CartAComConfigurationFrame extends JFrame {
             this.setBorder(border);
 
             // layout of the panel
-            // TODO
+            GridBagConstraints cont = new GridBagConstraints();
+            cont.gridy = GridBagConstraints.RELATIVE;
+            cont.gridx = 0;
+            cont.anchor = GridBagConstraints.ABOVE_BASELINE_LEADING;
+
+            this.add(this.toConsider, cont);
+            this.add(new JLabel("Importance"), cont);
+            this.add(this.importance, cont);
+
+            AgentConfigurationFrame.pBatiTaille.setBorder(BorderFactory.createTitledBorder("Size"));
+            GridBagConstraints c = new GridBagConstraints();
+            c.gridx = 0;
+            c.gridy = 0;
+            CartAComConfigurationFrame.constraintsPanel.add(this, c);
 
             this.add(this.toConsider);
             this.add(this.importance);
