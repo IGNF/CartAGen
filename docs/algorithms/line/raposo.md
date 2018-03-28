@@ -44,7 +44,7 @@ See Also
 
 
 [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
-[2]: /algorithms/line/visvalingam.md
-[3]: /algorithms/line/douglas_peucker.md
-[4]: /algorithms/line/li_openshaw.md
+[2]: /CartAGen/docs/algorithms/line/visvalingam.md
+[3]: /CartAGen/docs/algorithms/line/douglas_peucker.md
+[4]: /CartAGen/docs/algorithms/line/li_openshaw.md
 [5]: http://dx.doi.org/10.1080/15230406.2013.803707

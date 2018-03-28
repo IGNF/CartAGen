@@ -13,6 +13,7 @@ A list, not exhaustive yet, of the generalization algorithms available in CartAG
 | [Douglas & Peucker][36]    | [Douglas & Peucker 1973][13] 		| JTS implementation  			| basic implementation								|
 | [Visvalingam-Whyatt][37]	| [Visvalingam & Whyatt 1993][14]	| [VisvalingamWhyatt][15]  | topology safe implementation (checks potential intersections when removing a vertex)	|
 | [Hexagon based][38]    | [Raposo 2013][16]      			| [RaposoSimplification][17] | basic implementation of all versions of the algorithm 	|
+| [Li-Openshaw][85]    	| [Li & Openshaw 1992][86] 				| [LiOpenshawSimplification][87]  | Raster implementation of the Li-Openshaw algorithm	|
 | [Accordion][39]    	| [Plazanet 1996][18] 				| [BendSeriesAlgorithm][19]  | Port from the initial ADA code					|
 | [Bend schematisation][40]   | [Lecordix et al 1997][20] 		| [BendSeriesAlgorithm][19]  | Port from the initial ADA code					|
 
@@ -145,3 +146,6 @@ A list, not exhaustive yet, of the generalization algorithms available in CartAG
 [82]: /algorithms/networks/strokes_selection.md
 [83]: /algorithms/networks/collapse_railways.md
 [84]: /algorithms/networks/typify_sidetracks.md
+[85]: /algorithms/line/li_openshaw.md
+[86]: https://www.tandfonline.com/doi/abs/10.1080/02693799208901921
+[87]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/polygon/LiOpenshawSimplification.java

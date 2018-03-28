@@ -8,15 +8,17 @@
 
 Description of the algorithm
 -------------
-
+To do...
 
 
 Examples of generalization
 -------------
+To do...
 
 
 When to use the algorithm?
 -------------
+To do...
 
 
 
@@ -26,4 +28,4 @@ See Also
 
 
 [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
-[2]: /algorithms/line/accordion.md
+[2]: /CartAGen/docs/algorithms/line/accordion.md

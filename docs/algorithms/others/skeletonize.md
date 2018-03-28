@@ -1,4 +1,4 @@
-# Description of the Spinalize Algorithm
+# Description of the Skeletonize Algorithm
 
 > - Date 20/07/2017.
 > - Author: [Guillaume Touya][1]

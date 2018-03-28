@@ -40,7 +40,7 @@ See Also
 
 
 [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
-[2]: /algorithms/line/douglas_peucker.md
-[3]: /algorithms/line/raposo.md
-[4]: /algorithms/line/li_openshaw.md
+[2]: /CartAGen/docs/algorithms/line/douglas_peucker.md
+[3]: /CartAGen/docs/algorithms/line/raposo.md
+[4]: /CartAGen/docs/algorithms/line/li_openshaw.md
 [5]: http://www.tandfonline.com/doi/abs/10.1179/000870493786962263
