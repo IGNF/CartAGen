@@ -39,8 +39,8 @@ See Also
 
 
 [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
-[2]: /CartAGen/docs/algorithms/line/visvalingam.md
-[3]: /CartAGen/docs/algorithms/line/raposo.md
-[4]: /CartAGen/docs/algorithms/line/li_openshaw.md
+[2]: /visvalingam.md
+[3]: /raposo.md
+[4]: /li_openshaw.md
 [5]: http://dx.doi.org/10.3138/FM57-6770-U75U-7727
 [6]: http://dx.doi.org/10.3138/FM57-6770-U75U-7727
