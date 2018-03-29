@@ -15,7 +15,7 @@ The algorithm iteratively searches the most characteristics vertices of portions
 ![Line simplified by the Douglas & Peucker algorithm](/images/Douglas-Peucker_animated.gif)
 
 The initial paper can be found [here][5]
-More details from Wikipedia [here][6].
+More details from Wikipedia [here][7].
 
 | Parameter name        | Description         				| Type 							| Default value			|
 |:----------------------|:----------------------------------|:------------------------------|:--------------------------------------------------|
@@ -37,10 +37,13 @@ See Also
 - [Hexagon based Raposo algorithm][3]
 - [Li-Openshaw algorithm][4]
 
+- [Return to home page][6]
+
 
 [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
 [2]: /visvalingam.md
 [3]: /raposo.md
 [4]: /li_openshaw.md
 [5]: http://dx.doi.org/10.3138/FM57-6770-U75U-7727
-[6]: http://dx.doi.org/10.3138/FM57-6770-U75U-7727
+[6]: https://ignf.github.io/CartAGen
+[7]: https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm

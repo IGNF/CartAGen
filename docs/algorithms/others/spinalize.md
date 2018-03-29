@@ -35,7 +35,10 @@ See Also
 -------------
 - [Skeletonize algorithms][2]
 
+- [Return to home page][5]
+
 [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
-[2]: /algorithms/other/skeletonize.md
+[2]: /skeletonize.md
 [3]: http://www.tandfonline.com/doi/abs/10.1080/15230406.2013.809233
 [4]: https://kartographie.geo.tu-dresden.de/downloads/ica-gen/workshop2014/genemr2014_submission_6.pdf
+[5]: https://ignf.github.io/CartAGen

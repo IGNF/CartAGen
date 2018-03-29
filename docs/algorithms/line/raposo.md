@@ -42,9 +42,12 @@ See Also
 - [Douglas-Peucker][3]
 - [Li-Openshaw algorithm][4]
 
+- [Return to home page][6]
+
 
 [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
 [2]: /visvalingam.md
 [3]: /douglas_peucker.md
 [4]: /li_openshaw.md
 [5]: http://dx.doi.org/10.1080/15230406.2013.803707
+[6]: https://ignf.github.io/CartAGen

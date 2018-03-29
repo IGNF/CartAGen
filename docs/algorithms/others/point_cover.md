@@ -46,7 +46,10 @@ See Also
 -------------
 - [Point reduction algorithm algorithm][2]
 
+- [Return to home page][4]
+
 
 [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
 [2]: /algorithms/line/point_reduction.md
 [3]: https://link.springer.com/chapter/10.1007%2F11863939_6
+[4]: https://ignf.github.io/CartAGen

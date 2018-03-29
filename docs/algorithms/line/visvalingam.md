@@ -38,9 +38,12 @@ See Also
 - [Hexagon based Raposo algorithm][3]
 - [Li-Openshaw algorithm][4]
 
+- [Return to home page][6]
+
 
 [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
 [2]: /douglas_peucker.md
 [3]: /raposo.md
 [4]: /li_openshaw.md
 [5]: http://www.tandfonline.com/doi/abs/10.1179/000870493786962263
+[6]: https://ignf.github.io/CartAGen

@@ -33,7 +33,10 @@ See Also
 -------------
 - [point cloud covering algorithm][2]
 
+- [Return to home page][4]
+
 
 [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
 [2]: /algorithms/line/point_cover.md
 [3]: https://en.wikipedia.org/wiki/K-means_clustering
+[4]: https://ignf.github.io/CartAGen

@@ -36,7 +36,10 @@ See Also
 -------------
 - [Spinalize algorithm][2]
 
+- [Return to home page][5]
+
 [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
-[2]: /algorithms/other/spinalize.md
+[2]: /spinalize.md
 [3]: https://link.springer.com/article/10.1007%2Fs10707-007-0028-x
 [4]: http://www.dma.fi.upm.es/mabellanas/tfcs/skeleton/html/documentacion/Straight%20Skeletons%20Implementation.pdf
+[5]: https://ignf.github.io/CartAGen

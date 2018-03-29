@@ -41,6 +41,7 @@ Getting Started
 > - [How to use the agent-based generalization processes?][5]
 
 - Advanced use of CartAGen:
+
 > - [Understanding CartAGen data schema for generalization][8]
 
 
