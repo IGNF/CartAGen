@@ -1,7 +1,17 @@
+/*******************************************************************************
+ * This software is released under the licence CeCILL
+ * 
+ * see Licence_CeCILL-C_fr.html see Licence_CeCILL-C_en.html
+ * 
+ * see <a href="http://www.cecill.info/">http://www.cecill.info/a>
+ * 
+ * @copyright IGN
+ ******************************************************************************/
 package fr.ign.cogit.cartagen.osm.schema.road;
 
 import java.awt.Color;
 import java.util.Date;
+import java.util.Map;
 
 import javax.persistence.Transient;
 
@@ -21,6 +31,8 @@ import fr.ign.cogit.geoxygene.schemageo.impl.support.reseau.ReseauImpl;
 
 public class OsmRoadLine extends OsmNetworkSection implements IRoadLine {
 
+  public static final Class<?> associatedNodeClass = OsmRoadNode.class;
+
   /**
    * Associated Geoxygene schema object
    */
@@ -35,6 +47,17 @@ public class OsmRoadLine extends OsmNetworkSection implements IRoadLine {
     this.setImportance(importance);
   }
 
+  public OsmRoadLine(TronconDeRoute geoxObj, int importance) {
+    super();
+    this.geoxObj = geoxObj;
+    this.setInitialGeom(geoxObj.getGeom());
+    this.setEliminated(false);
+    this.setImportance(importance);
+    this.setDeadEnd(false);
+    this.initialNode = null;
+    this.finalNode = null;
+  }
+
   public OsmRoadLine(String contributor, IGeometry geom, int id, int changeSet,
       int version, int uid, Date date) {
     super(contributor, geom, id, changeSet, version, uid, date);
@@ -42,55 +65,21 @@ public class OsmRoadLine extends OsmNetworkSection implements IRoadLine {
         (ICurve) geom);
   }
 
+  public OsmRoadLine() {
+    super();
+    this.geoxObj = new TronconDeRouteImpl(new ReseauImpl(), false, null);
+  }
+
   @Override
   public double getWidth() {
-    if (this.getSymbolId() == -1) {// old way of calculating the width
-
-      if (this.getImportance() == 0) {
-        return GeneralisationLegend.ROUTIER_LARGEUR_DESSOUS_0;
-      }
-      if (this.getImportance() == 1) {
-        return GeneralisationLegend.ROUTIER_LARGEUR_DESSOUS_1;
-      }
-      if (this.getImportance() == 2) {
-        return GeneralisationLegend.ROUTIER_LARGEUR_DESSOUS_2;
-      }
-      if (this.getImportance() == 3) {
-        return GeneralisationLegend.ROUTIER_LARGEUR_DESSOUS_3;
-      }
-      if (this.getImportance() == 4) {
-        return GeneralisationLegend.ROUTIER_LARGEUR_DESSOUS_4;
-      }
-
-    } else if (this.getSymbolId() == -2) {// SLD width
-      return SLDUtilCartagen.getSymbolMaxWidthMapMm(this);
-    }
-
-    return 0.0;
+    return SLDUtilCartagen.getSymbolMaxWidthMapMm(this);
   }
 
   @Override
   public double getInternWidth() {
-    if (this.getSymbolId() == -1) {// old way
-      if (this.getImportance() == 0) {
-        return GeneralisationLegend.ROUTIER_LARGEUR_DESSUS_0;
-      }
-      if (this.getImportance() == 1) {
-        return GeneralisationLegend.ROUTIER_LARGEUR_DESSUS_1;
-      }
-      if (this.getImportance() == 2) {
-        return GeneralisationLegend.ROUTIER_LARGEUR_DESSUS_2;
-      }
-      if (this.getImportance() == 3) {
-        return GeneralisationLegend.ROUTIER_LARGEUR_DESSUS_3;
-      }
-      if (this.getImportance() == 4) {
-        return GeneralisationLegend.ROUTIER_LARGEUR_DESSUS_4;
-      }
-    } else if (this.getSymbolId() == -2) {// SLD width
-      return SLDUtilCartagen.getSymbolInnerWidthMapMm(this);
-    }
-    return 0.0;
+
+    return SLDUtilCartagen.getSymbolInnerWidthMapMm(this);
+
   }
 
   @Override
@@ -177,6 +166,13 @@ public class OsmRoadLine extends OsmNetworkSection implements IRoadLine {
   public IGeometry getSymbolGeom() {
     return super.getGeom()
         .buffer(getWidth() * Legend.getSYMBOLISATI0N_SCALE() / 2000);
+  }
+
+  @Override
+  public void setTags(Map<String, String> tags) {
+    super.setTags(tags);
+    // compute the importance from tags
+    this.computeImportance();
   }
 
 }

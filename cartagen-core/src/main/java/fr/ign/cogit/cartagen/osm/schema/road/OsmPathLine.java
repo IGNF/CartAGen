@@ -65,6 +65,17 @@ public class OsmPathLine extends OsmGeneObjLin implements IPathLine {
     this.finalNode = null;
   }
 
+  /**
+   * Constructor
+   */
+  public OsmPathLine() {
+    super();
+    this.setEliminated(false);
+    this.deadEnd = false;
+    this.initialNode = null;
+    this.finalNode = null;
+  }
+
   @Override
   @Transient
   public IFeature getGeoxObj() {

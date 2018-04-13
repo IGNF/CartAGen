@@ -29,6 +29,11 @@ public class OsmWaterLine extends OsmNetworkSection implements IWaterLine {
     this.setImportance(0);
   }
 
+  public OsmWaterLine() {
+    super();
+    this.setImportance(0);
+  }
+
   @Override
   public double getWidth() {
     if (this.getSymbolId() == -2) {// SLD width

@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Random;
 
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
+import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.genericschema.misc.ILabelPoint;
 import fr.ign.cogit.cartagen.core.genericschema.misc.ILabelPoint.LabelCategory;
 import fr.ign.cogit.cartagen.core.genericschema.misc.IPointOfInterest;
@@ -31,8 +32,8 @@ import fr.ign.cogit.geoxygene.feature.DefaultFeature;
 
 /**
  * A class that handles the detection of attraction points in a road network
- * from a complete dataset, following the principles of (Touya, 2010,
- * "A Road Network Selection Process Based on Data Enrichment and Structure Detection"
+ * from a complete dataset, following the principles of (Touya, 2010, "A Road
+ * Network Selection Process Based on Data Enrichment and Structure Detection"
  * ).
  * @author GTouya
  * 
@@ -314,7 +315,7 @@ public class AttractionPointDetection {
 
   public void createRandomAttractionPoints(double ratio) {
     List<INetworkNode> nodes = new ArrayList<INetworkNode>();
-    nodes.addAll(network.getNodes());
+    nodes.addAll(CartAGenDoc.getInstance().getCurrentDataset().getRoadNodes());
     int nbPoints = Math.round((float) ratio * nodes.size());
     Random random = new Random();
     for (int i = 0; i < nbPoints; i++) {

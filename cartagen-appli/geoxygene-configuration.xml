@@ -28,7 +28,7 @@
     <plugin>fr.ign.cogit.geoxygene.appli.plugin.density.TriangulationPlugin</plugin>
     <plugin>fr.ign.cogit.geoxygene.appli.plugin.density.VoronoiPlugin</plugin>
     <plugin>fr.ign.cogit.geoxygene.appli.plugin.density.GridPlugin</plugin>
-    <lastOpenedFile>D:\Donnees\MapMuxing\groupe_urbain_25_zone2.shp</lastOpenedFile>
+    <lastOpenedFile>D:\Donnees\OSM\Lund_workshop\lund_osm_shp\buildings.shp</lastOpenedFile>
     <sld></sld>
     <ConnectionParam>
         <dbtype>postgis</dbtype>
@@ -46,5 +46,7 @@
     <recent>D:\Donnees</recent>
     <recent>D:\Donnees\Workshop ENERGIC\OSM\derived</recent>
     <recent>D:\Donnees\MapMuxing</recent>
+    <recent>D:\Donnees\OSM\Lund_workshop\lund_osm_shp</recent>
+    <recent>D:\Donnees\OSM\Lund_workshop\derived layers</recent>
     <GeometryEngine>JTS</GeometryEngine>
 </GeOxygeneApplicationProperties>

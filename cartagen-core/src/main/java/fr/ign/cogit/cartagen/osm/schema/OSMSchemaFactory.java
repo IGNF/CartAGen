@@ -25,22 +25,33 @@ import fr.ign.cogit.cartagen.core.genericschema.hydro.IWaterArea;
 import fr.ign.cogit.cartagen.core.genericschema.hydro.IWaterLine;
 import fr.ign.cogit.cartagen.core.genericschema.land.ISimpleLandUseArea;
 import fr.ign.cogit.cartagen.core.genericschema.land.ITreePoint;
+import fr.ign.cogit.cartagen.core.genericschema.misc.ILabelPoint;
+import fr.ign.cogit.cartagen.core.genericschema.misc.IMiscArea;
+import fr.ign.cogit.cartagen.core.genericschema.misc.IMiscLine;
+import fr.ign.cogit.cartagen.core.genericschema.misc.IMiscPoint;
 import fr.ign.cogit.cartagen.core.genericschema.misc.IPointOfInterest;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetwork;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkFace;
+import fr.ign.cogit.cartagen.core.genericschema.network.INetworkNode;
 import fr.ign.cogit.cartagen.core.genericschema.railway.ICable;
 import fr.ign.cogit.cartagen.core.genericschema.railway.IRailwayLine;
 import fr.ign.cogit.cartagen.core.genericschema.railway.IRailwayNode;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IReliefElementPoint;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IReliefField;
+import fr.ign.cogit.cartagen.core.genericschema.road.IBranchingCrossroad;
 import fr.ign.cogit.cartagen.core.genericschema.road.ICycleWay;
+import fr.ign.cogit.cartagen.core.genericschema.road.IDualCarriageWay;
 import fr.ign.cogit.cartagen.core.genericschema.road.IPathLine;
 import fr.ign.cogit.cartagen.core.genericschema.road.IRoadLine;
 import fr.ign.cogit.cartagen.core.genericschema.road.IRoadNode;
+import fr.ign.cogit.cartagen.core.genericschema.road.IRoundAbout;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuildPoint;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
+import fr.ign.cogit.cartagen.core.genericschema.urban.ICemetery;
 import fr.ign.cogit.cartagen.core.genericschema.urban.ISportsField;
 import fr.ign.cogit.cartagen.core.genericschema.urban.ISquareArea;
+import fr.ign.cogit.cartagen.core.genericschema.urban.ITown;
+import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanBlock;
 import fr.ign.cogit.cartagen.osm.schema.aero.OsmAirportArea;
 import fr.ign.cogit.cartagen.osm.schema.aero.OsmRunwayArea;
 import fr.ign.cogit.cartagen.osm.schema.aero.OsmRunwayLine;
@@ -58,16 +69,23 @@ import fr.ign.cogit.cartagen.osm.schema.network.OsmNetworkFace;
 import fr.ign.cogit.cartagen.osm.schema.rail.OsmCable;
 import fr.ign.cogit.cartagen.osm.schema.rail.OsmRailwayLine;
 import fr.ign.cogit.cartagen.osm.schema.rail.OsmRailwayNode;
+import fr.ign.cogit.cartagen.osm.schema.road.OsmBranchingCrossroad;
 import fr.ign.cogit.cartagen.osm.schema.road.OsmCycleWay;
+import fr.ign.cogit.cartagen.osm.schema.road.OsmDualCarriageway;
 import fr.ign.cogit.cartagen.osm.schema.road.OsmPathLine;
 import fr.ign.cogit.cartagen.osm.schema.road.OsmRoadLine;
 import fr.ign.cogit.cartagen.osm.schema.road.OsmRoadNode;
+import fr.ign.cogit.cartagen.osm.schema.road.OsmRoundabout;
 import fr.ign.cogit.cartagen.osm.schema.urban.OsmBuildPoint;
 import fr.ign.cogit.cartagen.osm.schema.urban.OsmBuilding;
 import fr.ign.cogit.cartagen.osm.schema.urban.OsmCemetery;
 import fr.ign.cogit.cartagen.osm.schema.urban.OsmParkArea;
 import fr.ign.cogit.cartagen.osm.schema.urban.OsmPointOfInterest;
 import fr.ign.cogit.cartagen.osm.schema.urban.OsmSportsField;
+import fr.ign.cogit.cartagen.osm.schema.urban.OsmTown;
+import fr.ign.cogit.cartagen.osm.schema.urban.OsmUrbanBlock;
+import fr.ign.cogit.cartagen.spatialanalysis.network.roads.PatteOie;
+import fr.ign.cogit.cartagen.spatialanalysis.network.roads.RondPoint;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
 import fr.ign.cogit.geoxygene.api.spatial.geomprim.IPoint;
@@ -79,6 +97,7 @@ import fr.ign.cogit.geoxygene.osm.importexport.OSMResource;
 import fr.ign.cogit.geoxygene.osm.importexport.OSMWay;
 import fr.ign.cogit.geoxygene.osm.schema.OsmGeometryConversion;
 import fr.ign.cogit.geoxygene.schemageo.api.routier.NoeudRoutier;
+import fr.ign.cogit.geoxygene.schemageo.api.routier.TronconDeRoute;
 import fr.ign.cogit.geoxygene.schemageo.api.support.champContinu.ChampContinu;
 import fr.ign.cogit.geoxygene.schemageo.api.support.reseau.Reseau;
 
@@ -403,6 +422,11 @@ public class OSMSchemaFactory extends AbstractCreationFactory {
     return new OsmRoadLine(line, -1);
   }
 
+  @Override
+  public IRoadLine createRoadLine(TronconDeRoute geoxObj, int importance) {
+    return new OsmRoadLine(geoxObj, importance);
+  }
+
   // /////////////////
   // RAILWAY
   // /////////////////
@@ -549,6 +573,137 @@ public class OSMSchemaFactory extends AbstractCreationFactory {
   @Override
   public IRailwayNode createRailwayNode(Noeud noeud) {
     return new OsmRailwayNode(noeud);
+  }
+
+  @Override
+  public IBuilding createBuilding() {
+    return new OsmBuilding();
+  }
+
+  @Override
+  public IUrbanBlock createUrbanBlock() {
+    return new OsmUrbanBlock();
+  }
+
+  @Override
+  public ITown createTown() {
+    return new OsmTown();
+  }
+
+  @Override
+  public ISportsField createSportsField() {
+    return new OsmSportsField();
+  }
+
+  @Override
+  public ICemetery createCemetery() {
+    return new OsmCemetery();
+  }
+
+  @Override
+  public IRoadLine createRoadLine() {
+    return new OsmRoadLine();
+  }
+
+  @Override
+  public IPathLine createPath() {
+    return new OsmPathLine();
+  }
+
+  @Override
+  public IRailwayLine createRailwayLine() {
+    return new OsmRailwayLine();
+  }
+
+  @Override
+  public ICable createCable() {
+    return new OsmCable();
+  }
+
+  @Override
+  public IWaterLine createWaterLine() {
+    return new OsmWaterLine();
+  }
+
+  @Override
+  public IWaterArea createWaterArea() {
+    return new OsmWaterArea();
+  }
+
+  @Override
+  public ISimpleLandUseArea createSimpleLandUseArea() {
+    return new OsmSimpleLandUseArea();
+  }
+
+  @Override
+  public ILabelPoint createLabelPoint() {
+    // TODO Auto-generated method stub
+    return super.createLabelPoint();
+  }
+
+  @Override
+  public IMiscPoint createMiscPoint() {
+    // TODO Auto-generated method stub
+    return super.createMiscPoint();
+  }
+
+  @Override
+  public IMiscLine createMiscLine() {
+    // TODO Auto-generated method stub
+    return super.createMiscLine();
+  }
+
+  @Override
+  public IMiscArea createMiscArea() {
+    // TODO Auto-generated method stub
+    return super.createMiscArea();
+  }
+
+  @Override
+  public IDualCarriageWay createDualCarriageways(IPolygon poly,
+      int importance) {
+    return new OsmDualCarriageway(poly, importance);
+  }
+
+  @Override
+  public IDualCarriageWay createDualCarriageways(IPolygon poly, int importance,
+      Collection<IRoadLine> innerRoads) {
+    return new OsmDualCarriageway(poly, importance, innerRoads);
+  }
+
+  @Override
+  public IDualCarriageWay createDualCarriageways(IPolygon poly, int importance,
+      Collection<IRoadLine> innerRoads, Collection<IRoadLine> outerRoads) {
+    return new OsmDualCarriageway(poly, importance, innerRoads, outerRoads);
+  }
+
+  @Override
+  public IBranchingCrossroad createBranchingCrossroad() {
+    return new OsmBranchingCrossroad();
+  }
+
+  @Override
+  public IBranchingCrossroad createBranchingCrossroad(PatteOie geoxObj,
+      Collection<IRoadLine> roads, Collection<IRoadNode> nodes) {
+    return new OsmBranchingCrossroad(geoxObj, roads, nodes);
+  }
+
+  @Override
+  public IRoundAbout createRoundAbout() {
+    return new OsmRoundabout();
+  }
+
+  @Override
+  public IRoundAbout createRoundAbout(RondPoint geoxObj,
+      Collection<IRoadLine> roads, Collection<IRoadNode> nodes) {
+    return new OsmRoundabout(geoxObj, roads, nodes);
+  }
+
+  @Override
+  public IRoundAbout createRoundAbout(IPolygon geom,
+      Collection<IRoadLine> externalRoads, Collection<IRoadLine> internalRoads,
+      Collection<INetworkNode> initialNodes) {
+    return new OsmRoundabout(geom, externalRoads, internalRoads, initialNodes);
   }
 
 }

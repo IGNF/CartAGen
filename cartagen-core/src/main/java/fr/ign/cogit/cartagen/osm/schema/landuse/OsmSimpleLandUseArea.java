@@ -13,6 +13,10 @@ public class OsmSimpleLandUseArea extends OsmGeneObjSurf
     super(geom);
   }
 
+  public OsmSimpleLandUseArea() {
+    super();
+  }
+
   @Override
   public int getType() {
     return type.ordinal();

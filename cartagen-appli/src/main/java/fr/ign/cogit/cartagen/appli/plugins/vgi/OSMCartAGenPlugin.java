@@ -51,13 +51,17 @@ import fr.ign.cogit.cartagen.osm.lodharmonisation.gui.HarmonisationFrame;
 import fr.ign.cogit.cartagen.osm.schema.OSMLoader;
 import fr.ign.cogit.cartagen.osm.schema.OSMLoader.OSMLoaderType;
 import fr.ign.cogit.cartagen.osm.schema.OSMLoader.OsmLoadingTask;
+import fr.ign.cogit.cartagen.osm.schema.OSMShapefileLoader;
 import fr.ign.cogit.cartagen.osm.schema.OpenStreetMapDb;
 import fr.ign.cogit.cartagen.osm.schema.OsmDataset;
+import fr.ign.cogit.cartagen.osm.schema.ShapeOSMToLayerMapping;
 import fr.ign.cogit.cartagen.util.LastSessionParameters;
 import fr.ign.cogit.geoxygene.appli.GeOxygeneApplication;
 import fr.ign.cogit.geoxygene.appli.api.ProjectFrame;
 import fr.ign.cogit.geoxygene.appli.layer.LayerFactory;
 import fr.ign.cogit.geoxygene.appli.panel.OsmFileFilter;
+import fr.ign.cogit.geoxygene.appli.panel.ShapeFileFilter;
+import fr.ign.cogit.geoxygene.appli.panel.XMLFileFilter;
 import fr.ign.cogit.geoxygene.appli.plugin.cartagen.CartAGenPlugin;
 import fr.ign.cogit.geoxygene.appli.plugin.cartagen.CartAGenProjectPlugin;
 import fr.ign.cogit.geoxygene.appli.plugin.cartagen.selection.SelectionUtil;
@@ -91,6 +95,7 @@ public class OSMCartAGenPlugin extends JMenu {
     application = CartAGenPlugin.getInstance().getApplication();
     loadRecentFiles();
     this.add(new JMenuItem(new ImportOSMFileAction()));
+    this.add(new JMenuItem(new ImportOSMShapeAction()));
     JMenu menuRecent = new JMenu("Import recent file");
     for (OSMFile recentDoc : recentFiles) {
       menuRecent.add(new JMenuItem(new ImportOSMNamedFileAction(recentDoc)));
@@ -295,59 +300,59 @@ public class OSMCartAGenPlugin extends JMenu {
     // load road sld
     StyledLayerDescriptor defaultSld = StyledLayerDescriptor
         .unmarshall(OSMLoader.class.getClassLoader()
-            .getResourceAsStream("sld/roads_sld.xml")); //$NON-NLS-1$
+            .getResourceAsStream("sld/osm/roads_sld.xml")); //$NON-NLS-1$
     // load buildings sld
     StyledLayerDescriptor buildingSld = StyledLayerDescriptor
         .unmarshall(OSMLoader.class.getClassLoader()
-            .getResourceAsStream("sld/buildings_sld.xml")); //$NON-NLS-1$
+            .getResourceAsStream("sld/osm/buildings_sld.xml")); //$NON-NLS-1$
     for (Layer layer : buildingSld.getLayers())
       defaultSld.add(layer);
     // load waterway sld
     StyledLayerDescriptor waterSld = StyledLayerDescriptor
-        .unmarshall(OSMLoader.class.getClassLoader()
-            .getResourceAsStream("sld/waterway_sld.xml")); //$NON-NLS-1$
+        .unmarshall(OSMCartAGenPlugin.class.getClassLoader()
+            .getResourceAsStream("sld/osm/waterway_sld.xml")); //$NON-NLS-1$
     for (Layer layer : waterSld.getLayers())
       defaultSld.add(layer);
     // load landuse sld
     StyledLayerDescriptor landuseSld = StyledLayerDescriptor
-        .unmarshall(OSMLoader.class.getClassLoader()
-            .getResourceAsStream("sld/landuse_sld.xml")); //$NON-NLS-1$
+        .unmarshall(OSMCartAGenPlugin.class.getClassLoader()
+            .getResourceAsStream("sld/osm/landuse_sld.xml")); //$NON-NLS-1$
     for (Layer layer : landuseSld.getLayers())
       defaultSld.add(layer);
     // load point features sld
     StyledLayerDescriptor ptsSld = StyledLayerDescriptor
-        .unmarshall(OSMLoader.class.getClassLoader()
-            .getResourceAsStream("sld/point_features_sld.xml")); //$NON-NLS-1$
+        .unmarshall(OSMCartAGenPlugin.class.getClassLoader()
+            .getResourceAsStream("sld/osm/point_features_sld.xml")); //$NON-NLS-1$
     for (Layer layer : ptsSld.getLayers())
       defaultSld.add(layer);
     // load railways sld
     StyledLayerDescriptor railSld = StyledLayerDescriptor
-        .unmarshall(OSMLoader.class.getClassLoader()
-            .getResourceAsStream("sld/railway_sld.xml")); //$NON-NLS-1$
+        .unmarshall(OSMCartAGenPlugin.class.getClassLoader()
+            .getResourceAsStream("sld/osm/railway_sld.xml")); //$NON-NLS-1$
     for (Layer layer : railSld.getLayers())
       defaultSld.add(layer);
     // load natural sld
     StyledLayerDescriptor naturalSld = StyledLayerDescriptor
-        .unmarshall(OSMLoader.class.getClassLoader()
-            .getResourceAsStream("sld/natural_sld.xml")); //$NON-NLS-1$
+        .unmarshall(OSMCartAGenPlugin.class.getClassLoader()
+            .getResourceAsStream("sld/osm/natural_sld.xml")); //$NON-NLS-1$
     for (Layer layer : naturalSld.getLayers())
       defaultSld.add(layer);
     // load leisure sld
     StyledLayerDescriptor leisureSld = StyledLayerDescriptor
-        .unmarshall(OSMLoader.class.getClassLoader()
-            .getResourceAsStream("sld/leisure_sld.xml")); //$NON-NLS-1$
+        .unmarshall(OSMCartAGenPlugin.class.getClassLoader()
+            .getResourceAsStream("sld/osm/leisure_sld.xml")); //$NON-NLS-1$
     for (Layer layer : leisureSld.getLayers())
       defaultSld.add(layer);
     // load airport sld
     StyledLayerDescriptor airportSld = StyledLayerDescriptor
-        .unmarshall(OSMLoader.class.getClassLoader()
-            .getResourceAsStream("sld/airport_sld.xml")); //$NON-NLS-1$
+        .unmarshall(OSMCartAGenPlugin.class.getClassLoader()
+            .getResourceAsStream("sld/osm/airport_sld.xml")); //$NON-NLS-1$
     for (Layer layer : airportSld.getLayers())
       defaultSld.add(layer);
     // load amenity sld
     StyledLayerDescriptor amenitySld = StyledLayerDescriptor
-        .unmarshall(OSMLoader.class.getClassLoader()
-            .getResourceAsStream("sld/amenity_sld.xml")); //$NON-NLS-1$
+        .unmarshall(OSMCartAGenPlugin.class.getClassLoader()
+            .getResourceAsStream("sld/osm/amenity_sld.xml")); //$NON-NLS-1$
     for (Layer layer : amenitySld.getLayers())
       defaultSld.add(layer);
     // TODO fill with the other SLDs
@@ -805,6 +810,311 @@ public class OSMCartAGenPlugin extends JMenu {
 
       public boolean createPostGis() {
         return postGisCheck.isSelected();
+      }
+    }
+  }
+
+  /**
+   * Import shapefiles of OSM data (structured similarly to geofabrik files).
+   * 
+   * @author GTouya
+   * 
+   */
+  public class ImportOSMShapeAction extends AbstractAction
+      implements PropertyChangeListener {
+
+    /****/
+    private static final long serialVersionUID = 1L;
+
+    public File osmFile;
+    public String epsg;
+    public String tagFilter;
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+      ImportOSMShapeFrame dialogImportOsmFrame = new ImportOSMShapeFrame(this);
+      if (dialogImportOsmFrame.getAction().equals("OK")) {
+        //
+        CartAGenDoc doc = CartAGenDoc.getInstance();
+        String name = null;
+        if (doc.getName() == null) {
+          doc.setName("osm");
+          if (dialogImportOsmFrame.createPostGis()) {
+            try {
+              doc.setPostGisDb(PostgisDB.get(name, true));
+            } catch (Exception e) {
+              // do nothing
+            }
+          }
+        }
+
+        fillLayersTask = new Runnable() {
+          @Override
+          public void run() {
+            try {
+              addOsmDatabaseToFrame();
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
+            application.getMainFrame().getGui().setCursor(null);
+          }
+        };
+
+        // build database & dataset
+        CartAGenDoc.getInstance().setZone(new DataSetZone(name, null));
+
+        // create the new CartAGen dataset
+        database = new OpenStreetMapDb(name);
+        database.setSourceDLM(SourceDLM.OpenStreetMap);
+        database.setSymboScale(25000);
+        database.setDocument(CartAGenDoc.getInstance());
+        OsmDataset dataset = new OsmDataset();
+        CartAGenDoc.getInstance().addDatabase(name, database);
+        CartAGenDoc.getInstance().setCurrentDataset(dataset);
+        database.setDataSet(dataset);
+        database.setType(new DigitalCartographicModel());
+
+        // create the mapping instance
+        try {
+          ShapeOSMToLayerMapping mapping = new ShapeOSMToLayerMapping(
+              new File(dialogImportOsmFrame.txtMapping.getText()));
+
+          OSMShapefileLoader loader = new OSMShapefileLoader(
+              dialogImportOsmFrame.selectedFiles, dataset, fillLayersTask, epsg,
+              mapping);
+          loader.setProject(dialogImportOsmFrame.checkProject.isSelected());
+          /*
+           * createProgressDialog(); loader.setDialog(dialog);
+           * dialog.setVisible(true);
+           */
+          application.getMainFrame().getGui()
+              .setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+          loader.addPropertyChangeListener(this);
+          loader.execute();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+
+      }
+    }
+
+    public ImportOSMShapeAction() {
+      this.putValue(Action.SHORT_DESCRIPTION,
+          "Import OSM data from shapefiles in a new Dataset");
+      this.putValue(Action.NAME, "Import OSM Shapefiles");
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+      if ("progress" == evt.getPropertyName()) {
+        int progress = (Integer) evt.getNewValue();
+        progressBar.setValue(progress);
+        taskOutput.append(
+            String.format("Completed %d%% of task.\n", loader.getProgress()));
+        if (!currentTask.equals(loader.getCurrentTask())) {
+          currentTask = loader.getCurrentTask();
+          taskLabel.setText(currentTask.getLabel() + " loading...");
+        }
+      }
+    }
+
+    class ImportOSMShapeFrame extends JDialog implements ActionListener {
+
+      /** Serial version UID. */
+      private static final long serialVersionUID = 1L;
+
+      ImportOSMShapeAction importPlugin;
+
+      private String action;
+
+      /** Fields. */
+      private JTextField txtPath, txtEpsg, txtMapping;
+      private Map<String, String> currentProjections = new HashMap<String, String>();
+      private JButton browseBtn, usedBtn, cancelBtn, okBtn, mappingBtn;
+      private JComboBox<String> usedCombo;
+      private JCheckBox postGisCheck, checkProject;
+      private File[] selectedFiles;
+
+      /**
+       * Constructor, build the frame.
+       * 
+       * @param importPlugin
+       */
+      public ImportOSMShapeFrame(ImportOSMShapeAction importPlugin) {
+        this.importPlugin = importPlugin;
+
+        setModal(true);
+        setTitle("Import OSM shapefiles");
+        setIconImage(new ImageIcon(
+            GeOxygeneApplication.class.getResource("/images/icons/map_add.png"))
+                .getImage());
+
+        initPanel();
+
+        pack();
+        setLocation(300, 300);
+        setSize(800, 200);
+        setVisible(true);
+      }
+
+      @Override
+      public void actionPerformed(ActionEvent evt) {
+        Object source = evt.getSource();
+        if (source == cancelBtn) {
+          action = "cancel";
+          dispose();
+        } else if (source == usedBtn) {
+          txtEpsg.setText(currentProjections.get(usedCombo.getSelectedItem()));
+        } else if (source == browseBtn) {
+          JFileChooser fc = new JFileChooser();
+          fc.setFileFilter(new ShapeFileFilter());
+          fc.setMultiSelectionEnabled(true);
+          // fc.setCurrentDirectory(new
+          // File("src/main/resources/xml/"));
+          fc.setCurrentDirectory(
+              new File(application.getProperties().getLastOpenedFile()));
+          int returnVal = fc
+              .showSaveDialog(application.getMainFrame().getGui());
+          if (returnVal != JFileChooser.APPROVE_OPTION) {
+            return;
+          }
+          selectedFiles = fc.getSelectedFiles();
+          StringBuffer filesText = new StringBuffer();
+          for (File file : selectedFiles)
+            filesText.append(file.getAbsolutePath() + ";");
+          this.txtPath.setText(filesText.toString());
+        } else if (source == mappingBtn) {
+          JFileChooser fc = new JFileChooser();
+          fc.setFileFilter(new XMLFileFilter());
+          fc.setCurrentDirectory(new File("src/main/resources/xml/"));
+          /*
+           * fc.setCurrentDirectory( new
+           * File(application.getProperties().getLastOpenedFile()));
+           */
+          int returnVal = fc
+              .showSaveDialog(application.getMainFrame().getGui());
+          if (returnVal != JFileChooser.APPROVE_OPTION) {
+            return;
+          }
+          File file = fc.getSelectedFile();
+          this.txtMapping.setText(file.getAbsolutePath());
+        } else if (source == okBtn) {
+          action = "OK";
+          importPlugin.epsg = txtEpsg.getText();
+          dispose();
+        }
+      }
+
+      /**
+       * Initialize and display fields.
+       */
+      private void initPanel() {
+
+        FormLayout layout = new FormLayout(
+            "20dlu, pref, pref, 10dlu, pref, pref, pref, pref, pref, pref, 20dlu", // Colonnes
+            "10dlu, pref, pref, 20dlu, pref, pref, 20dlu"); // Lignes
+        setLayout(layout);
+
+        CellConstraints cc = new CellConstraints();
+
+        currentProjections.put("Lambert93", "2154");
+        currentProjections.put("Lambert Belge 2008", "3812");
+        currentProjections.put("UTM 18N (New York)", "32618");
+        currentProjections.put("UTM 51N (Philippines)", "32651");
+        currentProjections.put("UTM 16N (Chicago)", "32616");
+        currentProjections.put("UTM 28N (Dakar)", "32628");
+        currentProjections.put("UTM 32N (Italie)", "32632");
+        currentProjections.put("UTM 33N (Vienna)", "32633");
+        currentProjections.put("UTM 35N (Ukraine)", "32635");
+        currentProjections.put("UTM 23S (Rio)", "32723");
+        currentProjections.put("UTM 55S (Melbourne)", "32755");
+        currentProjections.put("Gauss-Krueger zone 4 (East Germany)", "31468");
+        currentProjections.put("Gauss-Krueger zone 3 (Center Germany)",
+            "31467");
+        currentProjections.put("SWEREF99 13 30", "3008");
+        this.setPreferredSize(new Dimension(350, 150));
+
+        // JPanel filePanel = new JPanel();
+        add(new JLabel("Files : "), cc.xy(2, 2));
+        txtPath = new JTextField(40);
+        add(txtPath, cc.xyw(3, 2, 6));
+        browseBtn = new JButton(new ImageIcon(
+            this.getClass().getResource("/images/icons/magnifier.png")));
+        browseBtn.addActionListener(this);
+        browseBtn.setActionCommand("browse");
+        add(browseBtn, cc.xy(9, 2));
+        add(new JLabel(" (*.osm) "), cc.xy(10, 2));
+
+        add(new JLabel("EPSG of projection: "), cc.xy(2, 3));
+        txtEpsg = new JTextField();
+        txtEpsg.setPreferredSize(new Dimension(60, 20));
+        txtEpsg.setMaximumSize(new Dimension(60, 20));
+        txtEpsg.setMinimumSize(new Dimension(60, 20));
+        txtEpsg.setText("2154");
+        add(txtEpsg, cc.xy(3, 3));
+
+        add(new JLabel("( "), cc.xy(5, 3));
+        usedBtn = new JButton("<<");
+        usedBtn.addActionListener(this);
+        usedBtn.setActionCommand("used");
+        add(usedBtn, cc.xy(6, 3));
+        usedCombo = new JComboBox<String>(
+            (String[]) currentProjections.keySet().toArray(new String[0]));
+        usedCombo.setPreferredSize(new Dimension(130, 20));
+        usedCombo.setMaximumSize(new Dimension(130, 20));
+        usedCombo.setMinimumSize(new Dimension(130, 20));
+        add(usedCombo, cc.xy(7, 3));
+        add(new JLabel(" )  "), cc.xy(8, 3));
+
+        postGisCheck = new JCheckBox("Create PostGis Db");
+        postGisCheck.setSelected(false);
+        add(postGisCheck, cc.xy(3, 4));
+        checkProject = new JCheckBox("Project dataset");
+        checkProject.setSelected(true);
+        add(checkProject, cc.xy(6, 4));
+
+        add(new JLabel("Mapping file : "), cc.xy(2, 5));
+        txtMapping = new JTextField(40);
+        add(txtMapping, cc.xyw(3, 5, 6));
+        mappingBtn = new JButton(new ImageIcon(
+            this.getClass().getResource("/images/icons/magnifier.png")));
+        mappingBtn.addActionListener(this);
+        mappingBtn.setActionCommand("mapping");
+        add(mappingBtn, cc.xy(9, 5));
+        add(new JLabel(" (*.xml) "), cc.xy(10, 5));
+
+        // Define a panel with the OK and Cancel buttons
+        JPanel btnPanel = new JPanel();
+        okBtn = new JButton("OK");
+        okBtn.addActionListener(this);
+        okBtn.setActionCommand("ok");
+        cancelBtn = new JButton(I18N.getString("MainLabels.lblCancel"));
+        cancelBtn.addActionListener(this);
+        cancelBtn.setActionCommand("cancel");
+        btnPanel.add(okBtn);
+        btnPanel.add(cancelBtn);
+        btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
+        add(btnPanel, cc.xy(3, 6));
+
+      }
+
+      /**
+       * @return name of action (ok, cancel).
+       */
+      public String getAction() {
+        return action;
+      }
+
+      public boolean createPostGis() {
+        return postGisCheck.isSelected();
+      }
+
+      public JCheckBox getCheckProject() {
+        return checkProject;
+      }
+
+      public void setCheckProject(JCheckBox checkProject) {
+        this.checkProject = checkProject;
       }
     }
   }
