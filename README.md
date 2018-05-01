@@ -43,6 +43,7 @@ Getting Started
 - Advanced use of CartAGen:
 
 > - [Understanding CartAGen data schema for generalization][8]
+> - [Spatial analysis and enrichment in CartAGen][17]
 
 
 
@@ -79,3 +80,4 @@ Implemented generalization algorithms
 [14]: http://recherche.ign.fr/labos/util_basilic/publicDownload.php?id=3044
 [15]: http://icaci.org/files/documents/ICC_proceedings/ICC2001/icc2001/file/f13041.pdf
 [16]: http://dx.doi.org/10.1080/13658816.2011.639302
+[17]: docs/spatial_analysis.md
