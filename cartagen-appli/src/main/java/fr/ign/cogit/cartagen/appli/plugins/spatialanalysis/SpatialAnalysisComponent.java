@@ -1,7 +1,10 @@
 package fr.ign.cogit.cartagen.appli.plugins.spatialanalysis;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,8 +14,19 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
@@ -94,6 +108,7 @@ public class SpatialAnalysisComponent extends JMenu {
     menuRoads.add(menuBranch);
     JMenu menuDual = new JMenu("Dual Carriageways");
     menuDual.add(new JMenuItem(new DualCarriagewaysAllAction()));
+    menuDual.add(new JMenuItem(new DualCarriagewaysDefaultAction()));
     menuRoads.add(menuDual);
     JMenu menuEscape = new JMenu("Escape Crossroads");
     menuEscape.add(new JMenuItem(new ShowEscapeAction()));
@@ -258,8 +273,8 @@ public class SpatialAnalysisComponent extends JMenu {
       for (RondPoint round : detect.getRoundabouts()) {
         dataset.getRoundabouts()
             .add(CartAGenDoc.getInstance().getCurrentDataset().getCartAGenDB()
-                .getGeneObjImpl().getCreationFactory().createRoundAbout(round,
-                    dataset.getRoads(), nodes));
+                .getGeneObjImpl().getCreationFactory()
+                .createRoundAbout(round, dataset.getRoads(), nodes));
       }
 
       // put the roundabouts in a new layer
@@ -451,7 +466,7 @@ public class SpatialAnalysisComponent extends JMenu {
    * @author GTouya
    * 
    */
-  class DualCarriagewaysAllAction extends AbstractAction {
+  class DualCarriagewaysDefaultAction extends AbstractAction {
 
     /****/
     private static final long serialVersionUID = 1L;
@@ -477,10 +492,176 @@ public class SpatialAnalysisComponent extends JMenu {
       frame.getSld().add(layer);
     }
 
+    public DualCarriagewaysDefaultAction() {
+      this.putValue(Action.SHORT_DESCRIPTION,
+          "Create dual carriageways in all dataset roads with default parameters and add them as a new layer");
+      this.putValue(Action.NAME, "Identify dual carriageways");
+    }
+  }
+
+  /**
+   * Identifies the dual carriageways in the selected road layer, and creates
+   * two new layers.
+   * 
+   * @author GTouya
+   * 
+   */
+  class DualCarriagewaysAllAction extends AbstractAction {
+
+    /****/
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+
+      CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+      DualCarriageWaysFrame frame = new DualCarriageWaysFrame(dataset);
+      frame.setVisible(true);
+    }
+
     public DualCarriagewaysAllAction() {
       this.putValue(Action.SHORT_DESCRIPTION,
           "Create dual carriageways in all dataset roads and add them as a new layer");
-      this.putValue(Action.NAME, "Identify dual carriageways");
+      this.putValue(Action.NAME,
+          "Identify dual carriageways with custom parameters");
+    }
+
+    class DualCarriageWaysFrame extends JFrame implements ActionListener {
+
+      /****/
+      private static final long serialVersionUID = 1L;
+      private CartAGenDataSet dataset;
+      private JSlider impSlider;
+      private JSpinner elongSpinner, compSpinner, concSpinner, areaSpinner,
+          widthSpinner;
+      private JCheckBox checkDebug;
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("OK")) {
+          RoadStructureDetection algo = new RoadStructureDetection();
+          algo.setElongLimit((Double) elongSpinner.getValue());
+          algo.setAreaLimit((Double) areaSpinner.getValue());
+          algo.setCompLimit((Double) compSpinner.getValue());
+          algo.setConcLimit((Double) concSpinner.getValue());
+          if (checkDebug.isSelected())
+            algo.setDebugMode(true);
+          IPopulation<IDualCarriageWay> duals = algo
+              .detectAndBuildDualCarriageways("Dual Carriageways",
+                  impSlider.getValue());
+
+          // put the roundabouts in a new layer
+          ProjectFrame frame = application.getMainFrame()
+              .getSelectedProjectFrame();
+
+          if (checkDebug.isSelected()) {
+            ProjectFrame project = application.getMainFrame()
+                .getSelectedProjectFrame();
+            project.addUserLayer(algo.getFaces(), "faces", null);
+          }
+
+          NamedLayerFactory factory = new NamedLayerFactory();
+          factory.setModel(frame.getSld());
+          factory.setName("Dual Carriageways");
+          factory.setGeometryType(IPolygon.class);
+          dataset.addPopulation(duals);
+          Layer layer = factory.createLayer();
+          frame.getSld().add(layer);
+          this.dispose();
+        } else {
+          this.dispose();
+        }
+      }
+
+      public DualCarriageWaysFrame(CartAGenDataSet dataset)
+          throws HeadlessException {
+        super("Detect dual carriageways");
+        this.dataset = dataset;
+        this.setSize(550, 150);
+        this.setPreferredSize(new Dimension(550, 150));
+
+        JPanel panel1 = new JPanel();
+        SpinnerModel areaModel = new SpinnerNumberModel(80000.0, 5000.0,
+            500000.0, 5000.0);
+        areaSpinner = new JSpinner(areaModel);
+        areaSpinner.setMinimumSize(new Dimension(80, 20));
+        areaSpinner.setMaximumSize(new Dimension(80, 20));
+        areaSpinner.setPreferredSize(new Dimension(80, 20));
+        impSlider = new JSlider(-1, 5, 5);
+        impSlider.setPaintTicks(true);
+        impSlider.setMajorTickSpacing(1);
+        impSlider.setPaintLabels(true);
+        impSlider.setPreferredSize(new Dimension(90, 40));
+        impSlider.setMinimumSize(new Dimension(90, 40));
+        impSlider.setMaximumSize(new Dimension(90, 40));
+        impSlider.setToolTipText("-1 means motorways are not searched");
+        checkDebug = new JCheckBox("Debug mode");
+        checkDebug.setToolTipText(
+            "Debug mode creates a layer with the road graph faces");
+        panel1.add(new JLabel("motorway importance"));
+        panel1.add(impSlider);
+        panel1.add(Box.createHorizontalGlue());
+        panel1.add(new JLabel("max area"));
+        panel1.add(areaSpinner);
+        panel1.add(Box.createHorizontalGlue());
+        panel1.add(checkDebug);
+        panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
+
+        JPanel panel2 = new JPanel();
+        SpinnerModel elongModel = new SpinnerNumberModel(5.0, 0.0, 50.0, 0.2);
+        elongSpinner = new JSpinner(elongModel);
+        elongSpinner.setMinimumSize(new Dimension(50, 20));
+        elongSpinner.setMaximumSize(new Dimension(50, 20));
+        elongSpinner.setPreferredSize(new Dimension(50, 20));
+        SpinnerModel compModel = new SpinnerNumberModel(0.1, 0.0, 1.0, 0.02);
+        compSpinner = new JSpinner(compModel);
+        compSpinner.setMinimumSize(new Dimension(50, 20));
+        compSpinner.setMaximumSize(new Dimension(50, 20));
+        compSpinner.setPreferredSize(new Dimension(50, 20));
+        SpinnerModel concModel = new SpinnerNumberModel(0.8, 0.0, 1.0, 0.02);
+        concSpinner = new JSpinner(concModel);
+        concSpinner.setMinimumSize(new Dimension(50, 20));
+        concSpinner.setMaximumSize(new Dimension(50, 20));
+        concSpinner.setPreferredSize(new Dimension(50, 20));
+        SpinnerModel widthModel = new SpinnerNumberModel(20.0, 0.0, 100.0, 1.0);
+        widthSpinner = new JSpinner(widthModel);
+        widthSpinner.setMinimumSize(new Dimension(50, 20));
+        widthSpinner.setMaximumSize(new Dimension(50, 20));
+        widthSpinner.setPreferredSize(new Dimension(50, 20));
+        panel2.add(new JLabel("elongation"));
+        panel2.add(elongSpinner);
+        panel2.add(Box.createHorizontalGlue());
+        panel2.add(new JLabel("compactness"));
+        panel2.add(compSpinner);
+        panel2.add(Box.createHorizontalGlue());
+        panel2.add(new JLabel("concavity ratio"));
+        panel2.add(concSpinner);
+        panel2.add(Box.createHorizontalGlue());
+        panel2.add(new JLabel("width"));
+        panel2.add(widthSpinner);
+        panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
+
+        JPanel panelBtn = new JPanel();
+        panelBtn.setLayout(new BoxLayout(panelBtn, BoxLayout.X_AXIS));
+        JButton bouton0 = new JButton("OK");
+        bouton0.addActionListener(this);
+        bouton0.setActionCommand("OK");
+        JButton bouton1 = new JButton("Cancel");
+        bouton1.addActionListener(this);
+        bouton1.setActionCommand("Cancel");
+        panelBtn.add(bouton0);
+        panelBtn.add(bouton1);
+
+        this.getContentPane().add(panel1);
+        this.getContentPane().add(Box.createVerticalGlue());
+        this.getContentPane().add(panel2);
+        this.getContentPane().add(Box.createVerticalGlue());
+        this.getContentPane().add(panelBtn);
+        this.getContentPane()
+            .setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        this.pack();
+      }
+
     }
   }
 
@@ -622,8 +803,9 @@ public class SpatialAnalysisComponent extends JMenu {
     public void actionPerformed(ActionEvent arg0) {
 
       RoadStructureDetection detect = new RoadStructureDetection();
-      Collection<IPolygon> interchanges = detect.detectInterchanges();
-
+      Collection<IPolygon> interchanges = detect.detectInterchanges(4);
+      System.out.println(
+          interchanges.size() + " interchanges detected in the dataset");
       // put the roundabouts in a new layer
       ProjectFrame frame = application.getMainFrame().getSelectedProjectFrame();
       GeometryPool pool = CartAGenDoc.getInstance().getCurrentDataset()
@@ -631,6 +813,24 @@ public class SpatialAnalysisComponent extends JMenu {
       pool.setSld(frame.getSld());
       for (IPolygon face : interchanges)
         pool.addFeatureToGeometryPool(face, Color.RED, 4);
+
+      for (SimpleCrossRoad simple : detect.getSimples()) {
+        if (simple instanceof ForkCrossRoad)
+          pool.addPointFeatureToGeometryPool(simple.getGeom(), Color.RED, 4,
+              "triangle");
+        if (simple instanceof YCrossRoad)
+          pool.addPointFeatureToGeometryPool(simple.getGeom(), Color.PINK, 4,
+              "circle");
+        if (simple instanceof TCrossRoad)
+          pool.addPointFeatureToGeometryPool(simple.getGeom(), Color.ORANGE, 4,
+              "square");
+        if (simple instanceof PlusCrossRoad)
+          pool.addPointFeatureToGeometryPool(simple.getGeom(), Color.MAGENTA, 4,
+              "cross");
+        if (simple instanceof StarCrossRoad)
+          pool.addPointFeatureToGeometryPool(simple.getGeom(), Color.DARK_GRAY,
+              4, "star");
+      }
 
     }
 

@@ -51,6 +51,9 @@ import fr.ign.cogit.geoxygene.contrib.geometrie.Angle;
 import fr.ign.cogit.geoxygene.feature.DefaultFeature;
 import fr.ign.cogit.geoxygene.feature.FT_FeatureCollection;
 import fr.ign.cogit.geoxygene.feature.Population;
+import fr.ign.cogit.geoxygene.feature.SchemaDefaultFeature;
+import fr.ign.cogit.geoxygene.schema.schemaConceptuelISOJeu.AttributeType;
+import fr.ign.cogit.geoxygene.schema.schemaConceptuelISOJeu.FeatureType;
 import fr.ign.cogit.geoxygene.schemageo.api.routier.TronconDeRoute;
 import fr.ign.cogit.geoxygene.schemageo.api.support.reseau.NoeudReseau;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineSegment;
@@ -68,22 +71,29 @@ public class RoadStructureDetection {
   private static Logger logger = Logger.getLogger(RoadStructureDetection.class);
 
   private CarteTopo topoMap;
+  private boolean debugMode = false;
+  private Population<DefaultFeature> faces;
+  private Set<SimpleCrossRoad> simples;
 
   // Parameters on geometric properties for dual carriageways
-  private final double concLimit;
-  private final double elongLimit;
-  private final double compLimit;
-  private final double areaLimit;
+  private double concLimit;
+  private double elongLimit;
+  private double compLimit;
+  private double areaLimit;
+  private double widthLimit;
+  private boolean badFacesMax = false;
+  private boolean badFacesMin = true;
   // parameters for interchanges
-  private final double distMaxClustering;
-  private final double euclMaxDist;
-  private final int clusterMinSize;
+  private double distMaxClustering;
+  private double euclMaxDist;
+  private int clusterMinSize;
 
   public RoadStructureDetection() {
-    this.concLimit = 0.8;
-    this.elongLimit = 5.0;
-    this.compLimit = 0.1;
-    this.areaLimit = 80000.0;
+    this.concLimit = 0.85;
+    this.elongLimit = 6.0;
+    this.compLimit = 0.12;
+    this.areaLimit = 60000.0;
+    this.widthLimit = 20.0;
     this.distMaxClustering = 600.0;
     this.euclMaxDist = 50.0;
     this.clusterMinSize = 6;
@@ -130,8 +140,8 @@ public class RoadStructureDetection {
 
     // detects the primary separators based on geometry
     List<Face> separators = this.detectLongFaces(allFaces);
-    separators.removeAll(this.detectSharpAngleFaces(separators));
-    separators.removeAll(this.detectBadFaces(separators));
+    // separators.removeAll(this.detectSharpAngleFaces(separators));
+    // separators.removeAll(this.detectBadFaces(separators));
 
     // detects the remaining little separators based on continuity
     separators
@@ -301,7 +311,7 @@ public class RoadStructureDetection {
 
   private double[] calculeFaceGeomProperties(Face face) {
 
-    double[] geomProp = new double[4];
+    double[] geomProp = new double[6];
 
     // Area and perimeter
     double area = face.getGeom().area();
@@ -336,6 +346,8 @@ public class RoadStructureDetection {
     }
     double elongation = length / width;
     geomProp[3] = elongation;
+    geomProp[4] = width;
+    geomProp[5] = (perim - Math.sqrt(perim * perim - 16.0 * area)) / 4;
 
     return geomProp;
 
@@ -351,6 +363,54 @@ public class RoadStructureDetection {
 
     List<Face> longFaces = new ArrayList<Face>();
 
+    FeatureType featureType = new FeatureType();
+    SchemaDefaultFeature schema = new SchemaDefaultFeature();
+    faces = new Population<DefaultFeature>(false, "faces", DefaultFeature.class,
+        true);
+    if (debugMode) {
+      featureType.setTypeName("Face");
+      featureType.setGeometryType(IPolygon.class);
+
+      AttributeType areaAttribute = new AttributeType("area", "area", "double");
+      featureType.addFeatureAttribute(areaAttribute);
+      AttributeType compactnessAttribute = new AttributeType("compactness",
+          "compactness", "double");
+      featureType.addFeatureAttribute(compactnessAttribute);
+      AttributeType concavityAttribute = new AttributeType("concavity",
+          "concavity", "double");
+      featureType.addFeatureAttribute(concavityAttribute);
+      AttributeType elongationAttribute = new AttributeType("elongation",
+          "elongation", "double");
+      featureType.addFeatureAttribute(elongationAttribute);
+      AttributeType widthAttribute = new AttributeType("width", "width",
+          "double");
+      featureType.addFeatureAttribute(widthAttribute);
+      AttributeType huberAttribute = new AttributeType("Huber_width",
+          "Huber_width", "double");
+      featureType.addFeatureAttribute(huberAttribute);
+
+      schema.setFeatureType(featureType);
+      featureType.setSchema(schema);
+      Map<Integer, String[]> attLookup = new HashMap<Integer, String[]>(0);
+      attLookup.put(new Integer(0), new String[] { areaAttribute.getNomField(),
+          areaAttribute.getMemberName() });
+      attLookup.put(new Integer(1),
+          new String[] { compactnessAttribute.getNomField(),
+              compactnessAttribute.getMemberName() });
+      attLookup.put(new Integer(2),
+          new String[] { concavityAttribute.getNomField(),
+              concavityAttribute.getMemberName() });
+      attLookup.put(new Integer(3),
+          new String[] { elongationAttribute.getNomField(),
+              elongationAttribute.getMemberName() });
+      attLookup.put(new Integer(4), new String[] { widthAttribute.getNomField(),
+          widthAttribute.getMemberName() });
+      attLookup.put(new Integer(5), new String[] { huberAttribute.getNomField(),
+          huberAttribute.getMemberName() });
+      schema.setAttLookup(attLookup);
+      faces.setFeatureType(featureType);
+    }
+
     for (Face face : allFaces) {
 
       // Geometric properties of the face
@@ -359,9 +419,28 @@ public class RoadStructureDetection {
       double compactness = geomProp[1];
       double concavity = geomProp[2];
       double elongation = geomProp[3];
+      double width = geomProp[4];
+      double huberWidth = geomProp[5];
+
+      if (debugMode) {
+        DefaultFeature feat = faces.nouvelElement(face.getGeom());
+        feat.setFeatureType(featureType);
+        feat.setSchema(schema);
+        Object[] attributes = new Object[] { "area", "compactness", "concavity",
+            "elongation", "width", "Huber_width" };
+        feat.setAttributes(attributes);
+        feat.setAttribute("area", area);
+        feat.setAttribute("compactness", compactness);
+        feat.setAttribute("concavity", concavity);
+        feat.setAttribute("elongation", elongation);
+        feat.setAttribute("width", width);
+        feat.setAttribute("Huber_width", huberWidth);
+      }
 
       // if the face is convex, we consider the elongation
       if (concavity > this.concLimit) {
+        if (width > this.widthLimit)
+          continue;
         if ((elongation > this.elongLimit) || ((compactness < this.compLimit)
             && (elongation > this.elongLimit / 2))) {
           longFaces.add(face);
@@ -371,7 +450,15 @@ public class RoadStructureDetection {
 
       // if the face is not convex, we consider the compactness
       else {
-        if (compactness < this.compLimit) {
+        if (compactness < this.compLimit && (area < this.areaLimit)) {
+          if (compactness > this.compLimit / 2) {
+            /*
+             * IGeometry eroded = face.getGeom().buffer(-this.widthLimit); if
+             * (eroded != null) continue;
+             */
+            if (huberWidth > 16)
+              continue;
+          }
           longFaces.add(face);
           continue;
         }
@@ -495,11 +582,17 @@ public class RoadStructureDetection {
       List<Arc> arcs = new ArrayList<Arc>();
       arcs.addAll(face.getArcsDirects());
       arcs.addAll(face.getArcsIndirects());
-      if (arcs.size() < 4) {
+      if (badFacesMin && arcs.size() < 4) {
         badFaces.add(face);
         continue;
       }
-      if (arcs.size() > 8) {
+      if (badFacesMax && arcs.size() > 8) {
+        badFaces.add(face);
+        continue;
+      }
+
+      // a separator shoud not contain a pending road
+      if (face.getArcsPendants().size() != 0) {
         badFaces.add(face);
         continue;
       }
@@ -599,7 +692,12 @@ public class RoadStructureDetection {
   // ///////////////////////////////////
   // DETECTION OF THE INTERCHANGES
   // ///////////////////////////////////
-  public Collection<IPolygon> detectInterchanges() {
+  /**
+   * Main detection method, which creates polygon geometries for the detected
+   * interchange instances.
+   * @param importance the importance of the roads to use (-1 to use all roads)
+   */
+  public Collection<IPolygon> detectInterchanges(int importance) {
     // initialisation
     Collection<IPolygon> interchangeExtents = new HashSet<>();
     CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
@@ -608,7 +706,9 @@ public class RoadStructureDetection {
     NetworkEnrichment.buildTopology(dataset, dataset.getRoadNetwork(), false);
     Set<TronconDeRoute> roads = new HashSet<TronconDeRoute>();
     for (IRoadLine feat : dataset.getRoads()) {
-      roads.add((TronconDeRoute) feat.getGeoxObj());
+      // filter roads by importance
+      if (feat.getImportance() >= importance)
+        roads.add((TronconDeRoute) feat.getGeoxObj());
     }
 
     // map the NoeudReseau instances to the IRoadNode instances of the network
@@ -618,8 +718,9 @@ public class RoadStructureDetection {
     }
 
     // classify the simple crossroads
+    logger.trace("simple crossroad classification");
     CrossRoadDetection algo = new CrossRoadDetection();
-    Set<SimpleCrossRoad> simples = algo.classifyCrossRoads(roads);
+    simples = algo.classifyCrossRoads(roads);
     // filter to keep only Y and Fork nodes
     IFeatureCollection<SimpleCrossRoad> crossroads = new FT_FeatureCollection<>();
     for (SimpleCrossRoad simple : simples) {
@@ -635,6 +736,7 @@ public class RoadStructureDetection {
             new MetricalGraphWeighter());
 
     // cluster the simple crossroads based on network distance
+    logger.trace("cluster the simple crossroads");
     Set<Set<SimpleCrossRoad>> clusters = new HashSet<Set<SimpleCrossRoad>>();
     Stack<SimpleCrossRoad> stack = new Stack<>();
     stack.addAll(crossroads);
@@ -676,9 +778,11 @@ public class RoadStructureDetection {
         clusters.add(cluster);
       stack.removeAll(cluster);
     }
+    logger.trace(clusters.size() + " clusters found in the dataset");
 
     // filter the clusters to only keep the interchanges
     clusters = filterInterchangeClusters(clusters);
+    logger.trace(clusters.size() + " clusters left after filtering");
 
     // reshape the clusters to exclude the crossroads that do not belong to the
     // interchange
@@ -699,17 +803,126 @@ public class RoadStructureDetection {
       Set<Set<SimpleCrossRoad>> clusters) {
     Set<Set<SimpleCrossRoad>> realClusters = new HashSet<>();
     // TODO
-    return realClusters;
+    return clusters;
   }
 
   private Set<Set<SimpleCrossRoad>> reshapeInterchangeClusters(
       Set<Set<SimpleCrossRoad>> clusters) {
     Set<Set<SimpleCrossRoad>> reshapedClusters = new HashSet<>();
     // TODO
-    return reshapedClusters;
+    return clusters;
   }
 
   // ///////////////////////////////////
   // DETECTION OF THE REST AREAS
   // ///////////////////////////////////
+
+  // ///////////////////////////////////
+  // getters and setters
+  // ///////////////////////////////////
+
+  public double getConcLimit() {
+    return concLimit;
+  }
+
+  public double getElongLimit() {
+    return elongLimit;
+  }
+
+  public double getCompLimit() {
+    return compLimit;
+  }
+
+  public double getAreaLimit() {
+    return areaLimit;
+  }
+
+  public double getDistMaxClustering() {
+    return distMaxClustering;
+  }
+
+  public double getEuclMaxDist() {
+    return euclMaxDist;
+  }
+
+  public int getClusterMinSize() {
+    return clusterMinSize;
+  }
+
+  public void setConcLimit(double concLimit) {
+    this.concLimit = concLimit;
+  }
+
+  public void setElongLimit(double elongLimit) {
+    this.elongLimit = elongLimit;
+  }
+
+  public void setCompLimit(double compLimit) {
+    this.compLimit = compLimit;
+  }
+
+  public void setAreaLimit(double areaLimit) {
+    this.areaLimit = areaLimit;
+  }
+
+  public void setDistMaxClustering(double distMaxClustering) {
+    this.distMaxClustering = distMaxClustering;
+  }
+
+  public void setEuclMaxDist(double euclMaxDist) {
+    this.euclMaxDist = euclMaxDist;
+  }
+
+  public void setClusterMinSize(int clusterMinSize) {
+    this.clusterMinSize = clusterMinSize;
+  }
+
+  public double getWidthLimit() {
+    return widthLimit;
+  }
+
+  public void setWidthLimit(double widthLimit) {
+    this.widthLimit = widthLimit;
+  }
+
+  public boolean isDebugMode() {
+    return debugMode;
+  }
+
+  public void setDebugMode(boolean debugMode) {
+    this.debugMode = debugMode;
+  }
+
+  public Population<DefaultFeature> getFaces() {
+    return faces;
+  }
+
+  public void setFaces(Population<DefaultFeature> faces) {
+    this.faces = faces;
+  }
+
+  public boolean isBadFacesMax() {
+    return badFacesMax;
+  }
+
+  public void setBadFacesMax(boolean badFacesMax) {
+    this.badFacesMax = badFacesMax;
+  }
+
+  public boolean isBadFacesMin() {
+    return badFacesMin;
+  }
+
+  public void setBadFacesMin(boolean badFacesMin) {
+    this.badFacesMin = badFacesMin;
+  }
+
+  public Set<SimpleCrossRoad> getSimples() {
+    return simples;
+  }
+
+  public void setSimples(Set<SimpleCrossRoad> simples) {
+    this.simples = simples;
+  }
+
 }

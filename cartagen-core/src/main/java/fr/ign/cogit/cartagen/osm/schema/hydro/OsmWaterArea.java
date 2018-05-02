@@ -12,6 +12,10 @@ public class OsmWaterArea extends OsmGeneObjSurf implements IWaterArea {
     super(polygon);
   }
 
+  public OsmWaterArea() {
+    super();
+  }
+
   @Override
   public WaterAreaNature getNature() {
     return nature;
