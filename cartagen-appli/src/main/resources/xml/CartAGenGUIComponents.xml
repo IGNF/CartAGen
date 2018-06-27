@@ -27,8 +27,4 @@
 		<name>OpenStreetMap</name>
 		<path>fr.ign.cogit.cartagen.appli.plugins.vgi.OSMCartAGenPlugin</path>
 	</Component>
-	<Component>
-		<name>Guillaume</name>
-		<path>fr.ign.cogit.cartagen.appli.plugins.perso.PluginGuillaume</path>
-	</Component>
 </Config-CartAGen-GUI-Components>

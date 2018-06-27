@@ -10,6 +10,7 @@
 package fr.ign.cogit.cartagen.core;
 
 import java.awt.Color;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -25,6 +26,7 @@ import fr.ign.cogit.geoxygene.filter.expression.Literal;
 import fr.ign.cogit.geoxygene.filter.expression.PropertyName;
 import fr.ign.cogit.geoxygene.style.FeatureTypeStyle;
 import fr.ign.cogit.geoxygene.style.Fill;
+import fr.ign.cogit.geoxygene.style.Font;
 import fr.ign.cogit.geoxygene.style.Graphic;
 import fr.ign.cogit.geoxygene.style.Layer;
 import fr.ign.cogit.geoxygene.style.LineSymbolizer;
@@ -38,6 +40,7 @@ import fr.ign.cogit.geoxygene.style.Stroke;
 import fr.ign.cogit.geoxygene.style.Style;
 import fr.ign.cogit.geoxygene.style.StyledLayerDescriptor;
 import fr.ign.cogit.geoxygene.style.Symbolizer;
+import fr.ign.cogit.geoxygene.style.TextSymbolizer;
 import fr.ign.cogit.geoxygene.style.UserStyle;
 
 public class SLDUtilCartagen extends SLDUtil {
@@ -446,4 +449,55 @@ public class SLDUtilCartagen extends SLDUtil {
     }
   }
 
+  /**
+   * Given a list of features, adds a text symbolizer on top of the feature that
+   * gives the order of the feature in a list (e.g. the first feature in the
+   * list has "1" displayed on top of it).
+   * @param sld the SLD instance in which the text symbolizer is added
+   * @param orderedFeatures the ordered list of features.
+   * @param layerName the name of the layer of the features.
+   * @param color the color of the text to display.
+   * @param size the size of the text to display.
+   */
+  public static void addOrderTextSymbolizer(StyledLayerDescriptor sld,
+      List<IFeature> orderedFeatures, String layerName, Color color, int size) {
+
+    for (Layer layer : sld.getLayers()) {
+      if (layer.getName().equals(layerName)) {
+        Style style = layer.getStyles().get(0);
+        FeatureTypeStyle ftStyle = new FeatureTypeStyle();
+        ftStyle.setName("text order");
+        // create a rule for each feature
+        for (int i = 0; i < orderedFeatures.size(); i++) {
+          IFeature feat = orderedFeatures.get(i);
+          Rule rule = new Rule();
+          // create a Filter to apply this rule only to feat
+          Filter filter = new PropertyIsEqualTo(new PropertyName("id"),
+              new Literal(String.valueOf(feat.getId())));
+          rule.setFilter(filter);
+
+          // ************************************************************
+          // create a text symbolizer
+          TextSymbolizer symbolizer = new TextSymbolizer();
+
+          // Name definition
+          symbolizer.setLabel(String.valueOf(i));
+
+          // Font definition
+          Font font = new Font();
+          font.setFontSize(size);
+          symbolizer.setFont(font);
+
+          // Fill the label
+          Fill t_fill = new Fill();
+          t_fill.setColor(color);
+          symbolizer.setFill(t_fill);
+
+          rule.getSymbolizers().add(symbolizer);
+          ftStyle.addRule(rule);
+        }
+        style.addFeatureTypeStyle(ftStyle);
+      }
+    }
+  }
 }
