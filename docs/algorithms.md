@@ -40,7 +40,7 @@ A list, not exhaustive yet, of the generalization algorithms available in CartAG
 
 | Algorithm name        | Reference         				| Code 							| Description of the implementation 				|
 |:----------------------|:----------------------------------|:------------------------------|:--------------------------------------------------|
-| [River network selection][79]   | [Touya 2007][54] | [RiverNetworkSelection][41]  			|  some of the structures detection algorithms (e.g. irrigation areas) have not been ported from the initial implementation on 1Spatial's LAMPS2 software.	|
+| [River network selection][79]   | [Touya 2007][54] | [RiverNetworkSelection][41]  			|  some of the structures detection algorithms (e.g. irrigation areas) have not been ported from the initial implementation on 1Spatial's LAMPS2 software (that was used in the paper experiments).	|
 | [Roundabout detection/collapse][80]	    | [Touya 2010][53] | [CollapseRoundabout][58]  			| 	|
 | [Road network selection][81]   | [Touya 2010][53] | [RoadNetworkTrafficBasedSelection][59]  			|  some of the structures detection algorithms (e.g. highway interchange) have not been ported	from the initial implementation on 1Spatial's LAMPS2 software.|
 | [Strokes based road selection][82]	    | [Thomson & Richardson 1999][57] | [RoadNetworkStrokesBasedSelection][60]  		|  Two criteria can be used for Stroke saliency: lenght of course, and the number T-shaped intersections	|
