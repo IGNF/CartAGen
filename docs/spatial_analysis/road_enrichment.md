@@ -8,16 +8,16 @@
 Simple crossroads classification
 -------------
 Road crossroads can be considered as an atomic element of road network and it is very useful to characterize them for selection according to [Heinzle et al. (2005)][7]. For example, y-nodes correspond to slip roads and T-nodes represent crossroads between a minor and a major road. A simple taxonomy of crossroads has been designed based on Grosso (2004) and Sester (1995). It contains T-shaped nodes (T-nodes), fork nodes, y-shaped nodes (slip road end), plus-shaped nodes (CRS-nodes), star nodes and standard nodes.
-The spatial analysis algorithms developed rely on a mixed use of geometry and graph measures. The road network is seen as a graph thanks to GIS topology tools.
-- T-nodes are topologically characterized by a degree 3 node and geometrically characterized by two nearly right angle &alpha and a flat angle &beta between the arcs entering the node. With abstraction, the T-node is characterized by a minor road leading to a major road. The tolerance thresholds used for &alpha and &beta in the test case are 20° and 15°.
-- y-nodes are characterized by a flat angle &beta (5° threshold), a slipping angle &alpha (15° threshold) and an arc shape for the slip road.
+The spatial analysis algorithms developed rely on a mixed use of geometry and graph measures. The road network is seen as a graph.
+- T-nodes are topologically characterized by a degree 3 node and geometrically characterized by two nearly right angle &#913; and a flat angle &#914; between the arcs entering the node. With abstraction, the T-node is characterized by a minor road leading to a major road. The tolerance thresholds used for &#913; and &#914; in the test case are 20° and 15°.
+- y-nodes are characterized by a flat angle &#914; (5° threshold), a slipping angle &#913; (15° threshold) and an arc shape for the slip road.
 - fork-nodes are also topologically characterized by a degree 3 node. Geometrically, they are characterized by one fork angle close to 60°, and two other angles nearly equal and close to 150°. With abstraction, fork nodes occur when a road is separated in two directions.
 - CRS nodes are topologically characterized by a degree 4 node, and all angles should be close to 90°.
 - star nodes are topologically characterized by an even node degree, bigger than 4, and aligned roads, i.e. each connected road is aligned (or close to) with another connected road.
 
-The Undifferentiated nodes are the remaining nodes.
+The standard nodes are the remaining nodes.
 
-![simple crossroads automatically detected](images/simple_crossroads.tif)
+![simple crossroads automatically detected](images/simple_crossroads.png)
 
 
 
@@ -63,7 +63,7 @@ Highway interchange
 -------------
 To be filled...
 
-![highway interchange automatically detected](images/interchange.tif)
+![highway interchange automatically detected](images/interchange.png)
 
 
 Dead end roads
