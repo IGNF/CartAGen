@@ -72,6 +72,10 @@ public class CongestionComputation {
     double pas = 2 * Math.PI
         / CongestionComputation.NB_ORIENTATIONS_ENCOMBREMENT;
 
+    // isolated building case (no congestion)
+    if (feature.getProximitySegments() == null)
+      return;
+
     // parcours des segments de proximite du batiment
     for (IEdge s : feature.getProximitySegments()) {
       if (s.getWeight() > distanceMax) {

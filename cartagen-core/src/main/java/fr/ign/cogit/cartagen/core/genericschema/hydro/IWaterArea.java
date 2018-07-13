@@ -24,4 +24,16 @@ public interface IWaterArea extends IGeneObjSurf {
   }
 
   public WaterAreaNature getNature();
+
+  /**
+   * Get the type as a String value for symbolisation purposes
+   * @return
+   */
+  public String getTypeSymbol();
+
+  /**
+   * The name of the lake or river.
+   * @return
+   */
+  public String getName();
 }

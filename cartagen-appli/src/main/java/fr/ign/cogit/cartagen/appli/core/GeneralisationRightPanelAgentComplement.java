@@ -244,7 +244,7 @@ public class GeneralisationRightPanelAgentComplement implements AgentObserver {
                     GeneralisationRightPanelAgentComplement.this.bDemarrerArreterMoteur
                             .setIcon(new ImageIcon("images/stop.gif"));
                 } else {
-                    AgentGeneralisationScheduler.getInstance().desactivate();
+                    AgentGeneralisationScheduler.getInstance().deactivate();
                     GeneralisationRightPanelAgentComplement.this.bDemarrerArreterMoteur
                             .setIcon(new ImageIcon("images/start.gif"));
                 }

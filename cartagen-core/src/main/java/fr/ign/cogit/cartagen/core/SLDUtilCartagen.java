@@ -24,16 +24,20 @@ import fr.ign.cogit.geoxygene.filter.Filter;
 import fr.ign.cogit.geoxygene.filter.PropertyIsEqualTo;
 import fr.ign.cogit.geoxygene.filter.expression.Literal;
 import fr.ign.cogit.geoxygene.filter.expression.PropertyName;
+import fr.ign.cogit.geoxygene.style.Displacement;
 import fr.ign.cogit.geoxygene.style.FeatureTypeStyle;
 import fr.ign.cogit.geoxygene.style.Fill;
 import fr.ign.cogit.geoxygene.style.Font;
 import fr.ign.cogit.geoxygene.style.Graphic;
+import fr.ign.cogit.geoxygene.style.LabelPlacement;
 import fr.ign.cogit.geoxygene.style.Layer;
 import fr.ign.cogit.geoxygene.style.LineSymbolizer;
 import fr.ign.cogit.geoxygene.style.Mark;
 import fr.ign.cogit.geoxygene.style.NamedLayer;
+import fr.ign.cogit.geoxygene.style.PointPlacement;
 import fr.ign.cogit.geoxygene.style.PointSymbolizer;
 import fr.ign.cogit.geoxygene.style.PolygonSymbolizer;
+import fr.ign.cogit.geoxygene.style.RotationLabel;
 import fr.ign.cogit.geoxygene.style.Rule;
 import fr.ign.cogit.geoxygene.style.SLDUtil;
 import fr.ign.cogit.geoxygene.style.Stroke;
@@ -481,12 +485,25 @@ public class SLDUtilCartagen extends SLDUtil {
           TextSymbolizer symbolizer = new TextSymbolizer();
 
           // Name definition
-          symbolizer.setLabel(String.valueOf(i));
+          symbolizer.setLabel(String.valueOf(i + 1));
 
           // Font definition
           Font font = new Font();
           font.setFontSize(size);
           symbolizer.setFont(font);
+
+          // build the label placement
+          LabelPlacement placement = new LabelPlacement();
+          PointPlacement ptPlacement = new PointPlacement();
+          Displacement displ = new Displacement();
+          displ.setDisplacementX(0f);
+          displ.setDisplacementY(0f);
+          ptPlacement.setDisplacement(displ);
+          placement.setPlacement(ptPlacement);
+          RotationLabel rotationLabel = new RotationLabel();
+          rotationLabel.setRotationValue(0f);
+          ptPlacement.setRotation(rotationLabel);
+          symbolizer.setLabelPlacement(placement);
 
           // Fill the label
           Fill t_fill = new Fill();

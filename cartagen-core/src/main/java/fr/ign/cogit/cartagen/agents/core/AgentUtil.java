@@ -92,14 +92,13 @@ public class AgentUtil {
       .getLogger(AgentUtil.class.getName());
 
   public static Logger getLogger() {
-      return logger;
+    return logger;
   }
 
   // /////////////////////////////////
   // RECUPERATION OF AGENTS (AGENT AND GAEL)
   // /////////////////////////////////
 
-    
   /**
    * Returns the AGENT agent attached to a generalisation object
    * @param geneObj
@@ -2007,8 +2006,10 @@ public class AgentUtil {
 
     // water areas
     for (IWaterArea se : dataset.getWaterAreas()) {
-      ((HydroSurfaceAgent) AgentUtil.getAgentFromGeneObj(se))
-          .instantiateConstraints();
+      HydroSurfaceAgent agent = ((HydroSurfaceAgent) AgentUtil
+          .getAgentFromGeneObj(se));
+      if (agent != null)
+        agent.instantiateConstraints();
     }
 
     // relief

@@ -39,6 +39,7 @@ public class WaterArea extends GeneObjSurfDefault implements IWaterArea {
    */
   private SurfaceDEau geoxObj;
   private String name;
+  private String typeSymbol;
   private WaterAreaNature nature = WaterAreaNature.UNKNOWN;
 
   /**
@@ -131,4 +132,12 @@ public class WaterArea extends GeneObjSurfDefault implements IWaterArea {
     return nature;
   }
 
+  @Override
+  public String getTypeSymbol() {
+    return typeSymbol;
+  }
+
+  public void setTypeSymbol(String typeSymbol) {
+    this.typeSymbol = typeSymbol;
+  }
 }

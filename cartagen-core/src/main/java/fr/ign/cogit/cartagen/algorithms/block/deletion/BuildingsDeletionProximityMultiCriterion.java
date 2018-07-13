@@ -20,6 +20,7 @@ import fr.ign.cogit.cartagen.core.Legend;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanBlock;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanElement;
+import fr.ign.cogit.cartagen.spatialanalysis.measures.BlockTriangulation;
 import fr.ign.cogit.cartagen.spatialanalysis.urban.CornerBuildings;
 import fr.ign.cogit.cartagen.util.multicriteriadecision.ranking.electre3.buildingelimination.BuildElimCongDirCriterion;
 import fr.ign.cogit.cartagen.util.multicriteriadecision.ranking.electre3.buildingelimination.BuildElimCongestionCriterion;
@@ -60,7 +61,8 @@ public class BuildingsDeletionProximityMultiCriterion {
 
     List<IUrbanElement> removedBuildings = new ArrayList<IUrbanElement>();
 
-    // le nombre de batiments non supprimes
+    // compute block triangulation
+    BlockTriangulation.buildTriangulation(ai, 100.0);
 
     List<ELECTREIIIAction> actions = new ArrayList<ELECTREIIIAction>();
 
