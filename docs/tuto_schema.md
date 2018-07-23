@@ -18,7 +18,7 @@ When a user wants to generalize its dataset with CartAGen, the difficulty is not
 
 ![difference between IGeneObj and IFeature](assets/images/geneobj_class.png)
 
-IFeature is the GeOxygene version of the Simple Feature Class OGC/ISO standard. IFeature is an interface for objects that have a geometry and semantic attributes (that also follow the OGC/ISO standards). 
+IFeature is the GeOxygene version of the Simple Feature Class OGC/ISO standard. IFeature is an interface for objects that have a geometry and semantic attributes (that also follow the OGC/ISO standards).
 The geometry implementation uses the Java Topology Suite (JTS) library.
 The CartAGen interface IGeneObj is an extension of this IFeature interface, that contains specific method related to map generalization (see figure above).
 
@@ -51,7 +51,7 @@ Implementations of the centralized schema
 -------------
 
 The schema described above is composed of Java interfaces for genericity. But in order to instantiate this schema, proper Java classes are necessary (an interface cannot be instantiated, it's only a skeleton that the classes must respect).
- 
+
 There are two available implementations of the centralized schema:
 - [a default one][3] that only implements the interfaces without any additional attribute,
 - an [OSM implementation][5] that also stores raw tags and OSM metadata on each feature.
@@ -65,7 +65,7 @@ This part of the tutorial explains how to extend the centralized schema when a t
 
 ### [](#header-3) Add a new interface to the centralized schema
 
-The first step is to check if there is an interface that models cycle ways in the CartAGen centralized schema. Now there is one existing, but let's pretend there is none. 
+The first step is to check if there is an interface that models cycle ways in the CartAGen centralized schema. Now there is one existing, but let's pretend there is none.
 We want to model cycle ways as a network, so the new interface has to extend the _INetworkSection_ interface. If our new type of feature were a point feature, it would extend _IGeneObjPoint_, _IGeneObjLin_ for line features not structured in networks, and _IGeneObjSurf_ for polygon features.
 
 The code below defines the new interface ICycleWay, whose fields are derived from common characteristics of OSM cycle ways: the cycle way surface and its width (named realWidth here to avoid confusions with the getWidth() method used in CartAGen to retrieve map symbol width).
@@ -198,7 +198,7 @@ So we add the following in the class declaration:
 ### [](#header-3) Extended the factory of the chosen implementation
 
 The centralized CartAGen schema is coded following the principles of the [_factory_ design pattern][4]: we do not directly instantiate the implemented classes of the centralized schema, we use a factory to create new objects, the factory using the good implementation. Using this pattern, the generalization code is not dependant on the implementations.
-In the use case, the abstract factory needs to contain a createCycleWay(ILineString line) method and the OSM version of the factory extends this method by creating an OsmCycleWay instance, while the default factory creates a CycleWay instance. 
+In the use case, the abstract factory needs to contain a createCycleWay(ILineString line) method and the OSM version of the factory extends this method by creating an OsmCycleWay instance, while the default factory creates a CycleWay instance.
 
 So let's start by adding one (or more) constructors within the OsmCycleWay class:
 
@@ -252,7 +252,7 @@ There is a final step, specific to OSM implementations because .osm files do not
 	}
 ```
 
-### [](#header-3) Creating a dedicated population in the dataset 
+### [](#header-3) Creating a dedicated population in the dataset
 
 In order to be stored and displayed in CartAGen, the features of the centralized schema have the be added in a dedicated population of features, the populations being stored in a _CartAGenDataset_ instance. Each interface of the centralized schema has a dedicated population in the dataset and the name of the population is standardized as a static field in the CartAGenDataset class.
 Four additions are necessary in the _CartAGenDataset_ class:
@@ -293,7 +293,7 @@ public class CartAGenDataSet {
 ```java
   /**
    * Gets the cycleways of the dataset
-   * 
+   *
    * @return
    */
   @SuppressWarnings("unchecked")
@@ -305,8 +305,45 @@ public class CartAGenDataSet {
 
 ### [](#header-3) Displaying the new features
 
+In order to display the newly added features, they have to be included in the data loading options, see the [tutorial on data loading][8].
+
+Then, once the layer is loaded, its display is encoded using the Styled Layer Descriptor (SLD/SE) [OGC standard][5]. SLD is standardized way of describing the map symbols (e.g. width and color of a line symbol).
+
+You can find more information on SLD symbolization in [this][3] dedicated tutorial.
+
+The following code is the SLD encoding that enables to mimic the standard OSM style of cycle ways (see image below).
+
+```xml
+  <NamedLayer>
+    <Name>cycleWay</Name> <!-- this name corresponds to the layer name, i.e. the
+    name of the CycleWay population (CartAGenDataSet.CYCLEWAY_POP) -->
+      <UserStyle>
+        <FeatureTypeStyle>
+          <Rule>
+            <Filter>
+              <PropertyIsEqualTo>
+              <PropertyName>highway</PropertyName>
+               <Literal>cycleway</Literal>
+              </PropertyIsEqualTo>
+            </Filter>	 	
+          <LineSymbolizer>
+            <Stroke>
+              <CssParameter name="stroke">#D391BE</CssParameter>
+              <CssParameter name="stroke-width">2.0</CssParameter>
+              <CssParameter name="stroke-linejoin">round</CssParameter>
+              <CssParameter name="stroke-linecap">round</CssParameter>
+              <CssParameter name="stroke-dasharray">6 3</CssParameter>
+            </Stroke>
+          </LineSymbolizer>          	
+        </Rule>  
+      </FeatureTypeStyle>		  
+    </UserStyle>
+  </NamedLayer>
+```
+
 
 ![cycleway displayed with pink dashes](assets/images/Affichage_piste_cyclable.png)
+
 
 
 See Also
@@ -318,9 +355,9 @@ See Also
 
 [1]: http://www.tandfonline.com/doi/abs/10.1080/13658810410001672881
 [2]: https://github.com/IGNF/geoxygene
-[3]: https://github.com/IGNF/CartAGen/tree/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/core/defaultschema
+[3]: /tuto_sld.md https://github.com/IGNF/CartAGen/tree/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/core/defaultschema
 [4]: https://en.wikipedia.org/wiki/Factory_method_pattern
-[5]: https://github.com/IGNF/CartAGen/tree/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/osm/schema
+[5 http://www.opengeospatial.org/standards/sld https://github.com/IGNF/CartAGen/tree/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/osm/schema
 [6]: http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.202.4737
 [7]: /tuto_agents.md
 [8]: /tuto_import_data.md
