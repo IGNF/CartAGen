@@ -17,14 +17,14 @@ This tutorial explains how to quickly generalize the urban areas of the sample d
 
 #### [](#header-4)Set the target scale
 
-Then, we need to set the target scale of generalization. In this tutorial, we will set it to 1:50000 to have a significant simplification of the map. 
-To change the target scale, you need to open the generalization configuration frame by selecting it in the "Generalisation" menu (see image below). 
+Then, we need to set the target scale of generalization. In this tutorial, we will set it to 1:50000 to have a significant simplification of the map.
+To change the target scale, you need to open the generalization configuration frame by selecting it in the "Generalisation" menu (see image below).
 In the frame, just change the scale and click on the validate button. The symbol sizes of roads, rivers, etc. should adjust to this target scale change, and you should see a clear need for generalization at this scale (symbols overlap).
 
 ![configuration menu](assets/images/cartagen_config_scale.png)  ![set the target scale](assets/images/cartagen_set_scale_50k.png)
 
 #### [](#header-4)Set the AGENT parameters
-The AGENT parameters allow the choice of the constraints that the agents will have to satisfy during generalization, and their relative importance. 
+The AGENT parameters allow the choice of the constraints that the agents will have to satisfy during generalization, and their relative importance.
 To set the parameters, you need to open the dedicated frame by clicking on "AGENT configuration" in the "Generalisation" menu (see image below).
 
 ![AGENT configuration menu](assets/images/AGENT_configuration_menu.png)
@@ -53,8 +53,8 @@ To create these agents, simply click on the "Create all agents" item in the "Age
 
 ![create AGENT agents from geographic features](assets/images/AGENT_create_agents.png)
 
-Nothing should change in the GUI, but the agents do exist. 
-To verify that they exist, you can select any building with one of the selection buttons of the toolbar, and click on the "Load selection" button in the right panel. 
+Nothing should change in the GUI, but the agents do exist.
+To verify that they exist, you can select any building with one of the selection buttons of the toolbar, and click on the "Load selection" button in the right panel.
 This should add the agent to the list of the scheduler.
 
 #### [](#header-4)Generalize a building
@@ -68,7 +68,7 @@ Select any building of the dataset. You have two possibilities to generalize it 
 This works similarly to the generalization of a building but select a block feature rather than a building feature.
 
 #### [](#header-4)Generalize a town
-This works similarly to the generalization of a building but select a town feature rather than a building feature. 
+This works similarly to the generalization of a building but select a town feature rather than a building feature.
 The generalization might be quite longer in this case as a town might contain many agents.
 
 
@@ -78,14 +78,21 @@ Generalizing data with CartACom
 -------------
 To be done...
 
+> To go further in the use of CartACom, see [this advanced tutorial][11].
+
 Generalizing data with GAEL
 -------------
 The implementation of the GAEL model is for now only partially functional in CartAGen.
 To be done...
 
+> To go further in the use of GAEL, see [this advanced tutorial][12].
+
 Generalizing data with DIOGEN
 -------------
 To be done...
+
+
+> To go further in the use of DIOGEN, see [this advanced tutorial][13].
 
 See Also
 -------------
@@ -95,6 +102,8 @@ See Also
 - [advanced tutorial on AGENT][10]
 - [advanced tutorial on CartACom][11]
 - [advanced tutorial on GAEL][12]
+- [advanced tutorial on DIOGEN][13]
+- [advanced tutorial on CollaGen][14]
 
 - [Return to main page][6]
 
@@ -108,6 +117,8 @@ See Also
 [7]: /tuto_agents.md
 [8]: /tuto_import_data.md
 [9]: /tuto_schema.md
-[10]: /AGENT_advanced_tutorial.md
-[11]: /CartACom_advanced_tutorial.md
-[12]: /GAEL_advanced_tutorial.md
+[10]: /agents/AGENT_advanced.md
+[11]: /agents/CartACom_advanced.md
+[12]: /agents/GAEL_advanced.md
+[13]: /agents/DIOGEN_advanced.md
+[14]: /agents/CollaGen_advanced.md
