@@ -25,17 +25,17 @@ It also enables the enrichment of the dataset with geographic features that were
 
 | Algorithm name        | Reference         				| Code 							|
 |:----------------------|:----------------------------------|:------------------------------|
-| Compactness |   | [28] |
-| Orientation	| 	| [36] |
-| Elongation |   | [37] |
-| Convexity	|  	| [37] | 	
-| Squareness	|  	| [29] |
-| Block density	|  	| [34] |
+| Compactness | [MacEachren 1985][38]  | [28] |
+| Orientation	| [Duchêne et al. 2003][39]	| [36] |
+| Elongation | [AGENT project][43]  | [37] |
+| Convexity	| [AGENT project][43] 	| [37] | 	
+| Squareness	| [Lokhat & Touya 2016][40] 	| [29] |
+| Block density	| [AGENT project][43] 	| [34] |
 | Building classification	| [(Steiniger et al. 2004)][13] 	| [33] |
-| Corner buildings	|  	| [30] |
-| Empty spaces in blocks	|  	| [31] |
-| Congestion	|  	| [32] |
-| Building alignments	|  	| [35] |
+| Corner buildings	| [Taillandier 2008][41] 	| [30] |
+| Empty spaces in blocks	| [Gaffuri & Trévisan 2004][42]	| [31] |
+| Congestion	|  [AGENT project][43]	| [32] |
+| Building alignments	|  [Renard & Duchêne 2014][44]	| [35] |
 
 #### [](#header-4)[Geographic spaces][5] from CollaGen (but can be used in other cases)
 
@@ -97,3 +97,10 @@ It also enables the enrichment of the dataset with geographic features that were
 [35]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/spatialanalysis/measures/UrbanAlignmentsMeasures.java
 [36]: https://github.com/IGNF/geoxygene/blob/master/geoxygene-spatial/src/main/java/fr/ign/cogit/geoxygene/util/algo/OrientationMeasure.java
 [37]: https://github.com/IGNF/geoxygene/blob/master/geoxygene-spatial/src/main/java/fr/ign/cogit/geoxygene/util/algo/CommonAlgorithms.java
+[38]:http://www.geovista.psu.edu/publications/maceachren/MacEachren_GA-B_85.pdf
+[39]:https://kartographie.geo.tu-dresden.de/downloads/ica-gen/workshop2003/duchene_et_al_v1.pdf
+[40]:http://dx.doi.org/10.5311/JOSIS.2016.13.276
+[41]:http://recherche.ign.fr/labos/cogit/pdf/THESES/TAILLANDIER/TheseTaillandier.pdf
+[42]:https://kartographie.geo.tu-dresden.de/downloads/ica-gen/workshop2004/Gaffuri-v2-ICAWorkshop.pdf
+[43]:http://agent.ign.fr/deliverable/DC1.pdf
+[44]:http://dx.doi.org/10.1111/tgis.12018
