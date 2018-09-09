@@ -7,6 +7,9 @@ This tutorial explains how to use the CartAGen symbolization system based on the
 
 The SLD/SE OGC standard
 -------------
+[Symbology Encoding][3] (SE) is a XML language for styling information that can be applied to digital geographic information. [Styled Layer Descriptor][2] is a specialization of the SE standard for WMS services, even if it is often stated as the core standard compared to SE.
+
+SLD/SE is used in several mainstream open source GIS software such as QGIS or GeoServer, and is also implemented in GeOxygene open source research Java platform, on which CartAGen is based.
 
 CartAGen/GeOxygene implementation of the standards
 -------------
