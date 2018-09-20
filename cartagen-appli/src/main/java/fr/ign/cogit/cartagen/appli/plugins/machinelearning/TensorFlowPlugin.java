@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -242,7 +243,7 @@ public class TensorFlowPlugin extends JMenu {
         @Override
         public void run() {
 
-          int imageSize = 1000;
+          int imageSize = 128;
           CartAGenDataSet dataset = CartAGenDoc.getInstance()
               .getCurrentDataset();
           Legend.setSYMBOLISATI0N_SCALE(50000.0);
@@ -294,18 +295,33 @@ public class TensorFlowPlugin extends JMenu {
             // get the initial geometry of the building
             IPolygon polygon = (IPolygon) building.getInitialGeom();
             Polygon shape = (Polygon) toPolygonShape(
-                toImageCoords(polygon.exteriorLineString(), imageSize));
+                toImageCoords2(polygon.exteriorLineString(), imageSize));
 
             // Generate an image with the initial building
             BufferedImage bi = new BufferedImage(imageSize, imageSize,
                 BufferedImage.TYPE_INT_RGB);
             Graphics2D g2d = bi.createGraphics();
-            g2d.setBackground(Color.WHITE);
+            g2d.setBackground(Color.LIGHT_GRAY);
             g2d.clearRect(0, 0, imageSize, imageSize);
 
             if (shape != null) {
               g2d.setColor(Color.DARK_GRAY);
               g2d.fill(shape);
+            }
+
+            // introduce some noise in the background
+            Random random = new Random();
+            for (int i = 0; i < imageSize; i++) {
+              for (int j = 0; j < imageSize; j++) {
+                // check if pixel is part of the background
+                if (bi.getRGB(i, j) == Color.LIGHT_GRAY.getRGB()) {
+                  int noise = random.nextInt(3);
+                  if (noise == 1)
+                    bi.setRGB(i, j, Color.LIGHT_GRAY.brighter().getRGB());
+                  else if (noise == 2)
+                    bi.setRGB(i, j, Color.LIGHT_GRAY.darker().getRGB());
+                }
+              }
             }
 
             File outputfile = new File(
@@ -322,15 +338,29 @@ public class TensorFlowPlugin extends JMenu {
             BufferedImage biGen = new BufferedImage(imageSize, imageSize,
                 BufferedImage.TYPE_INT_RGB);
             Graphics2D g2dGen = biGen.createGraphics();
-            g2dGen.setBackground(Color.WHITE);
+            g2dGen.setBackground(Color.LIGHT_GRAY);
             g2dGen.clearRect(0, 0, imageSize, imageSize);
             IPolygon genGeom = building.getGeom();
             Polygon genShape = (Polygon) toPolygonShape(
-                toImageCoords(genGeom.exteriorLineString(), imageSize));
+                toImageCoords2(genGeom.exteriorLineString(), imageSize));
 
             if (genShape != null) {
               g2dGen.setColor(Color.DARK_GRAY);
               g2dGen.fill(genShape);
+            }
+
+            // introduce some noise in the background
+            for (int i = 0; i < imageSize; i++) {
+              for (int j = 0; j < imageSize; j++) {
+                // check if pixel is part of the background
+                if (biGen.getRGB(i, j) == Color.LIGHT_GRAY.getRGB()) {
+                  int noise = random.nextInt(3);
+                  if (noise == 1)
+                    biGen.setRGB(i, j, Color.LIGHT_GRAY.brighter().getRGB());
+                  else if (noise == 2)
+                    biGen.setRGB(i, j, Color.LIGHT_GRAY.darker().getRGB());
+                }
+              }
             }
 
             File outputfile2 = new File(
@@ -360,6 +390,30 @@ public class TensorFlowPlugin extends JMenu {
       for (IDirectPosition dp : line.coord()) {
         double x = (dp.getX() - env.minX()) * ratio + imageSize / 3;
         double y = (dp.getY() - env.minY()) * ratio + imageSize / 3;
+        if (y < imageSize / 2)
+          y = y + 2 * (imageSize / 2 - y);
+        else
+          y = y - 2 * (y - imageSize / 2);
+        imageCoords.add(new DirectPosition(x, y));
+      }
+      return imageCoords;
+    }
+
+    private IDirectPositionList toImageCoords2(ILineString line,
+        int imageSize) {
+      IDirectPositionList imageCoords = new DirectPositionList();
+
+      // xMin is 10, xMax is imageSize-10, same for y coordinate.
+      // there is a need for a translation and a homothetic transformation
+      IEnvelope env = line.getEnvelope();
+      double ratio = 0.0;
+      if (env.width() > env.length()) {
+        ratio = (imageSize - 20) / env.width();
+      } else
+        ratio = (imageSize - 20) / env.length();
+      for (IDirectPosition dp : line.coord()) {
+        double x = (dp.getX() - env.minX()) * ratio + 10;
+        double y = (dp.getY() - env.minY()) * ratio + 10;
         if (y < imageSize / 2)
           y = y + 2 * (imageSize / 2 - y);
         else

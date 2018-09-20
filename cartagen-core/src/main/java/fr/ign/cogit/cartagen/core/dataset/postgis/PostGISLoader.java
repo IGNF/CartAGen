@@ -15,6 +15,7 @@ import org.postgresql.util.PSQLException;
 
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDB;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
+import fr.ign.cogit.cartagen.core.dataset.postgis.MappingXMLParser.AttributeFilter;
 import fr.ign.cogit.cartagen.core.genericschema.AbstractCreationFactory;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.cartagen.core.genericschema.urban.ITown;
@@ -59,7 +60,16 @@ public class PostGISLoader {
   // ***************
 
   // *** getWherePart ***
-  public String getWherePart() {
+  public String getWherePart(String layer) {
+    if (this.mapping.getFilter(layer) != null) {
+      AttributeFilter filter = this.mapping.getFilter(layer);
+      this.where = "(";
+      for (String value : filter.getValues())
+        this.where += filter.getKey() + "='" + value + "' or ";
+    }
+    this.where = this.where.substring(0, this.where.length() - 4);
+    this.where += ")";
+
     String wherePart = "";
     if (this.where != null && !this.where.equals("")) {
       wherePart = " where " + where;
@@ -123,10 +133,11 @@ public class PostGISLoader {
       boolean createGeoClass) {
     AbstractCreationFactory factory = this.mapping.getGeneObjImplementation()
         .getCreationFactory();
-    System.out.println(layer);
+
     Method method = this.mapping.getCreationMethod(layer);
     Hashtable<String, String> attrMapping = this.mapping.getListAttr(layer);
-    String wherePart = getWherePart();
+    String wherePart = getWherePart(layer);
+
     try {
       doTheActualLoading(conn, dataset, layer, schema, method, wherePart,
           factory, attrMapping, createGeoClass);

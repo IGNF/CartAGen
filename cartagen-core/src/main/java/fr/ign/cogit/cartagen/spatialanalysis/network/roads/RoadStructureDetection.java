@@ -164,10 +164,14 @@ public class RoadStructureDetection {
           innerRoads.add((IRoadLine) feat);
       }
       Set<IRoadLine> outerRoads = new HashSet<>();
-      for (Arc arc : (List<Arc>) separator.arcsExterieursClasses().get(0)) {
-        for (IFeature feat : arc.getCorrespondants())
-          outerRoads.add((IRoadLine) feat);
+      if (!separator.arcsExterieursClasses().isEmpty()) {
+        for (Arc arc : (List<Arc>) separator.arcsExterieursClasses().get(0)) {
+          for (IFeature feat : arc.getCorrespondants())
+            outerRoads.add((IRoadLine) feat);
+        }
       }
+      if (innerRoads.isEmpty())
+        continue;
       int mainImportance = innerRoads.iterator().next().getImportance();
       duals.add(factory.createDualCarriageways(separator.getGeometrie(),
           mainImportance, innerRoads, outerRoads));
@@ -331,6 +335,9 @@ public class RoadStructureDetection {
     // Elongation
     IPolygon rectEngl = SmallestSurroundingRectangleComputation
         .getSSR(face.getGeom());
+    if (rectEngl == null)
+      rectEngl = SmallestSurroundingRectangleComputation
+          .getSSR(face.getGeom().buffer(0.1));
     double X0 = rectEngl.coord().get(0).getX();
     double X1 = rectEngl.coord().get(1).getX();
     double X2 = rectEngl.coord().get(2).getX();

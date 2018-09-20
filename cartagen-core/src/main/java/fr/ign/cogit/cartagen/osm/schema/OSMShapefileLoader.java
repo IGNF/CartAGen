@@ -208,7 +208,6 @@ public class OSMShapefileLoader extends SwingWorker<Void, Void> {
             element.setGeom(geomListPart);
             // get the tags of the object
             element.setTags(tags);
-            System.out.println(tags);
 
             // set the OSM id
             element.setOsmId(Long.valueOf((String) fields.get("osm_id")));

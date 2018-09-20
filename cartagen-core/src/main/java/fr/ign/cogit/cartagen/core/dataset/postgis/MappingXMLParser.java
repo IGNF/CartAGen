@@ -11,6 +11,7 @@ package fr.ign.cogit.cartagen.core.dataset.postgis;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Set;
 
@@ -95,6 +96,23 @@ public class MappingXMLParser {
         String theme = matching.getElementsByTagName("theme").item(0)
             .getTextContent();
 
+        // get the filters if any
+        Set<String> filters = new HashSet<>();
+        Element filter = (Element) matching.getElementsByTagName("filter")
+            .item(0);
+        AttributeFilter tagFilter = null;
+        if (filter != null) {
+          String key = filter.getElementsByTagName("key").item(0)
+              .getTextContent();
+          for (int i = 0; i < filter.getElementsByTagName("value")
+              .getLength(); i++) {
+            String value = filter.getElementsByTagName("value").item(i)
+                .getTextContent();
+            filters.add(value);
+          }
+          tagFilter = new AttributeFilter(key, filters);
+        }
+
         // get matching attributes mapping
         Element attributes = (Element) matching
             .getElementsByTagName("attributes").item(0);
@@ -116,7 +134,7 @@ public class MappingXMLParser {
         // create the corresponding CalacMatching
         PostGISToLayerMatching matchingObj = mapping.new PostGISToLayerMatching(
             postgisLayer, factory.getClass().getDeclaredMethod(creationMethod),
-            scaleRef, theme, attrMappingStorage);
+            scaleRef, theme, attrMappingStorage, tagFilter);
         // add it to CalacMatchings
         calacMatchings.add(matchingObj);
       }
@@ -237,4 +255,36 @@ public class MappingXMLParser {
     return null;
   }
 
+  /**
+   * To filter the loaded features according to the attributes
+   * @author GTouya
+   *
+   */
+  public class AttributeFilter {
+
+    private String key;
+    private Set<String> values;
+
+    public String getKey() {
+      return key;
+    }
+
+    public void setKey(String key) {
+      this.key = key;
+    }
+
+    public Set<String> getValues() {
+      return values;
+    }
+
+    public void setValues(Set<String> values) {
+      this.values = values;
+    }
+
+    public AttributeFilter(String key, Set<String> values) {
+      super();
+      this.key = key;
+      this.values = values;
+    }
+  }
 }
