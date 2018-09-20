@@ -597,6 +597,11 @@ public class OSMCartAGenPlugin extends JMenu {
         fillLayersTask = new Runnable() {
           @Override
           public void run() {
+            try {
+              addOsmDatabaseToFrame();
+            } catch (JAXBException e) {
+              e.printStackTrace();
+            }
             application.getMainFrame().getGui().setCursor(null);
           }
         };
