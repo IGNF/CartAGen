@@ -39,6 +39,7 @@ Getting Started
 
 > - [How to trigger generalization algorithms in CartAGen?][4]
 > - [How to use the agent-based generalization processes?][5]
+> - [How to use the ScaleMaster2.0?][18]
 
 - Advanced use of CartAGen:
 
@@ -81,3 +82,4 @@ Implemented generalization algorithms
 [15]: http://icaci.org/files/documents/ICC_proceedings/ICC2001/icc2001/file/f13041.pdf
 [16]: http://dx.doi.org/10.1080/13658816.2011.639302
 [17]: docs/spatial_analysis.md
+[18]: docs/tuto_scalemaster.md
