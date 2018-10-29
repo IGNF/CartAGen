@@ -77,17 +77,17 @@ Issues that require a vote decision are considered as enhancement proposals.
 >- Proposals may be made by any interested party (PSC, Non-PSC, committer, user, etc...)
 >- Proposals should be addressed within 15 working days of being submitted, votes take place on issues created on the cartagen <i class="icon-provider-github"></i>GitHub repository, as well as discussions on the proposal, by any interested party, not just committee members
 >- Anyone may comment and even cast votes on proposals on the issue, but only members of the Project Steering Committee's votes will be counted.
->- Each PSC member may vote one of the following in support of the proposal: 
+>- Each PSC member may vote one of the following in support of the proposal:
 >  -  +1 : For
 >  -  -1 : Against
 >  - +0: Mildly for, but mostly indifferent
 >  - -0: Mildly against, but mostly indifferent
 > - A -1 vote must be accompanied with a detailed reason of being against.
 > - A vote is *successful* if there is a majority of positive votes.
-> - A vote is *unanimous*, if there are either: 
+> - A vote is *unanimous*, if there are either:
 >  - No -1 votes against it, or
 >  - No +1 votes for it.
-> - In the event of a *successful non unanimous* vote, the following steps are taken: 
+> - In the event of a *successful non unanimous* vote, the following steps are taken:
 >  - Each member who votes -1 *may* supply an alternative which the original author can use to rework the proposal in order to satisfy that PSC member.
 >   - If at least one -1 voting PSC member supplies some alternative criteria, the original author must rework the proposal and resubmit, and the voting process starts again from scratch.
 >  - If no -1 voters are able to supply alternative criteria, the proposal is accepted.
@@ -159,9 +159,9 @@ References
 
 This document has been inspired by and adapted from :
 
-- iTowns PSC document : https://github.com/iTowns/itowns-project/blob/master/PSC.md 
-- Mapserver PSC document : https://raw.githubusercontent.com/mapserver/docs/branch-7-0/en/development/rfc/ms-rfc-23.txtGeoserver 
-- PSC document : http://docs.geoserver.org/2.5.x/en/developer/policies/psc.html
+- iTowns PSC document : https://github.com/iTowns/itowns-project/blob/master/PSC.md
+- Mapserver PSC document : https://raw.githubusercontent.com/mapserver/docs/branch-7-0/en/development/rfc/ms-rfc-23.txtGeoserver
+- GeoServer PSC document : http://docs.geoserver.org/2.5.x/en/developer/policies/psc.html
 
 
   [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
