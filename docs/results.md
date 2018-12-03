@@ -1,9 +1,3 @@
----
-  title: Results
-  order: 2
----
-
-
 # Examples of maps auotmatically generalized with CartAGen
 This page gathers images or videos showing results of map generalization obtained with CartAGen.
 
