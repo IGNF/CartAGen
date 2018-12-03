@@ -1,3 +1,9 @@
+---
+  title: Spatial Analysis tools
+  layout: page
+  order: 5
+---
+
 # List of the available spatial analysis tools in CartAGen
 
 > - Date 18/05/2017.

@@ -20,6 +20,44 @@ The ScaleMaster2.0 is updated version of the ScaleMaster dedicated to automated 
 
 > To go further in the use of AGENT, see [this advanced tutorial][10].
 
+Input files
+-------------
+
+The ScaleMaster2.0 model requires several input files to work, and these files are described in this section of the tutorial.
+
+## ScaleMasterThemes.xml file
+
+The ScaleMasterThemes file describe all the themes that can be used in a ScaleMaster2 model, a theme being a line in the model. With this file, the process can interpret lines of the model as feature classes of CartAGen. For instance, the theme 'roadl' corresponds to the linear road features of the class RoadLine in CartAGen. This file is supposed to be filled for once, and then the map designer that parameterizes the ScaleMaster only needs to know the theme names, and not the name of the classes in CartAGen. The name of the theme is given in the tag <name> of the file (see the extract below). 
+
+The tag <concept> describes a reference to a concept in an ontology for map generalization, such as the one promoted by the [ICA commission on map generalization][15]. This tag is just a formal description for now, it is not used in the automatic processing of the file.
+The tag <description> contains a textual description of the theme.
+The tag <geometry-type> the geometry type of the features in this theme that can be POINT, LINE or POLYGON. All the features in a theme must have the same geometry type, so you have to use two themes if you have lines and polygons for rivers for instance.
+
+The code below is an extract of the default ScaleMasterThemes.xml available in CartAGen repository:
+
+```xml
+<scale-master-theme>
+    <theme>
+        <name>roadl</name>
+        <concept>road</concept>
+        <description>sections of road lines</description>
+        <geometry-type>LINE</geometry-type>
+        <cartagen-classes>
+            <class>fr.ign.cogit.cartagen.core.defaultschema.road.RoadLine</class>
+            <class>fr.ign.cogit.cartagen.osm.schema.road.OsmRoadLine</class>
+        </cartagen-classes>
+    </theme>
+    <theme>
+        <name>building</name>
+        <concept>building</concept>
+        <description>Building polygon</description>
+        <geometry-type>POLYGON</geometry-type>
+        <cartagen-classes>
+            <class>fr.ign.cogit.cartagen.core.defaultschema.urban.Building</class>
+            <class>fr.ign.cogit.cartagen.osm.schema.urban.OsmBuilding</class>
+        </cartagen-classes>
+    </theme>
+```
 
 See Also
 -------------
@@ -49,3 +87,4 @@ See Also
 [12]: /agents/GAEL_advanced.md
 [13]: /agents/DIOGEN_advanced.md
 [14]: /agents/CollaGen_advanced.md
+[15]: http://generalisation.icaci.org/generalisation-ontologies.html

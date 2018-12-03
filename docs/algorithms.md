@@ -1,3 +1,9 @@
+---
+  title: Algorithms
+  layout: page
+  order: 4
+---
+
 # List of the available algorithms in CartAGen
 
 > - Date 18/05/2017.
