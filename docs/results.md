@@ -1,6 +1,5 @@
 ---
   title: Results
-  layout: page
   order: 2
 ---
 

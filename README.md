@@ -1,6 +1,5 @@
 ---
   title: Homepage
-  layout: page
   order: 1
 ---
 

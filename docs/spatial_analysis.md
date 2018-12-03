@@ -1,6 +1,5 @@
 ---
   title: Spatial Analysis tools
-  layout: page
   order: 5
 ---
 

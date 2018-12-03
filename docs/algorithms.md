@@ -1,6 +1,5 @@
 ---
   title: Algorithms
-  layout: page
   order: 4
 ---
 
