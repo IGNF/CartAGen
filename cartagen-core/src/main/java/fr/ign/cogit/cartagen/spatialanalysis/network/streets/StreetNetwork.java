@@ -152,7 +152,7 @@ public class StreetNetwork extends AbstractFeature {
     this.branchings = branchings.select(geom);
     this.dualCarriageways = dualCarriageways.select(geom);
     this.importanceThreshold = StreetNetworkParameters.importanceThreshold;
-    this.buildingMinSize = GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT
+    this.buildingMinSize = GeneralisationSpecifications.BUILDING_MIN_AREA
         * Math.pow(Legend.getSYMBOLISATI0N_SCALE(), 2.0) / 1000000.0;
     // compute city size
     if (geom.area() > StreetNetwork.CITY_LARGE_SIZE) {
@@ -258,7 +258,7 @@ public class StreetNetwork extends AbstractFeature {
     this.branchings = branchings.select(geom);
     this.dualCarriageways = dualCarriageways.select(geom);
     this.importanceThreshold = StreetNetworkParameters.importanceThreshold;
-    this.buildingMinSize = GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT
+    this.buildingMinSize = GeneralisationSpecifications.BUILDING_MIN_AREA
         * Math.pow(Legend.getSYMBOLISATI0N_SCALE(), 2.0) / 1000000.0;
     // compute city size
     if (geom.area() > StreetNetwork.CITY_LARGE_SIZE) {
@@ -346,7 +346,7 @@ public class StreetNetwork extends AbstractFeature {
     this.branchings = branchings.select(geom);
     this.dualCarriageways = dualCarriageways.select(geom);
     this.importanceThreshold = StreetNetworkParameters.importanceThreshold;
-    this.buildingMinSize = GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT
+    this.buildingMinSize = GeneralisationSpecifications.BUILDING_MIN_AREA
         * Math.pow(Legend.getSYMBOLISATI0N_SCALE(), 2.0) / 1000000.0;
     // compute city size
     if (geom.area() > StreetNetwork.CITY_LARGE_SIZE) {

@@ -63,16 +63,16 @@ public class Size extends GeographicObjectConstraintImpl {
 
       // under the specification value AIRE_SEUIL_SUPPRESSION_BATIMENT, the goal
       // is deletion
-      if (area < GeneralisationSpecifications.AIRE_SEUIL_SUPPRESSION_BATIMENT) {
+      if (area < GeneralisationSpecifications.BUILDING_ELIMINATION_AREA_THRESHOLD) {
         this.goalArea = 0.0;
       } else {
-        double aireMini = GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT
+        double areaMin = GeneralisationSpecifications.BUILDING_MIN_AREA
             * Legend.getSYMBOLISATI0N_SCALE() * Legend.getSYMBOLISATI0N_SCALE()
             / 1000000.0;
-        if (area > aireMini) {
+        if (area > areaMin) {
           this.goalArea = area;
         } else {
-          this.goalArea = aireMini;
+          this.goalArea = areaMin;
         }
       }
     }

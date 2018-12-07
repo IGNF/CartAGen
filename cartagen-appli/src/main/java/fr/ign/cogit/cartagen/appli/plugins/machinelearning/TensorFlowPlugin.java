@@ -17,7 +17,6 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -32,10 +31,6 @@ import javax.swing.Action;
 import javax.swing.JMenu;
 
 import org.apache.log4j.Logger;
-import org.tensorflow.Graph;
-import org.tensorflow.Session;
-import org.tensorflow.Tensor;
-import org.tensorflow.TensorFlow;
 
 import com.vividsolutions.jts.geom.Geometry;
 
@@ -43,12 +38,14 @@ import fr.ign.cogit.cartagen.agents.core.AgentGeneralisationScheduler;
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
 import fr.ign.cogit.cartagen.agents.core.agent.GeographicAgentGeneralisation;
 import fr.ign.cogit.cartagen.appli.agents.AgentConfigurationFrame;
+import fr.ign.cogit.cartagen.core.GeneralisationSpecifications;
 import fr.ign.cogit.cartagen.core.Legend;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
 import fr.ign.cogit.cartagen.spatialanalysis.clustering.AdjacencyClustering;
+import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.feature.IPopulation;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPositionList;
@@ -59,6 +56,7 @@ import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IMultiSurface;
 import fr.ign.cogit.geoxygene.api.spatial.geomprim.IOrientableSurface;
 import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
 import fr.ign.cogit.geoxygene.appli.plugin.cartagen.CartAGenPlugin;
+import fr.ign.cogit.geoxygene.appli.plugin.cartagen.selection.SelectionUtil;
 import fr.ign.cogit.geoxygene.contrib.agents.AgentObserver;
 import fr.ign.cogit.geoxygene.contrib.agents.lifecycle.TreeExplorationLifeCycle;
 import fr.ign.cogit.geoxygene.feature.Population;
@@ -101,6 +99,7 @@ public class TensorFlowPlugin extends JMenu {
 
     this.add(new TestAction());
     this.add(new GenerateInitialImageAction());
+    this.add(new ImageWithEnlargementAction());
     this.add(new BuildingAggrAction());
   }
 
@@ -113,31 +112,15 @@ public class TensorFlowPlugin extends JMenu {
       Thread th = new Thread(new Runnable() {
         @Override
         public void run() {
-
-          try (Graph g = new Graph()) {
-            final String value = "Hello from " + TensorFlow.version();
-
-            // Construct the computation graph with a single operation, a
-            // constant
-            // named "MyConst" with a value "value".
-            try (Tensor t = Tensor.create(value.getBytes("UTF-8"))) {
-              // The Java API doesn't yet include convenience functions for
-              // adding operations.
-              g.opBuilder("Const", "MyConst").setAttr("dtype", t.dataType())
-                  .setAttr("value", t).build();
-            } catch (UnsupportedEncodingException e1) {
-              e1.printStackTrace();
-            }
-
-            // Execute the "MyConst" operation in a Session.
-            try (Session s = new Session(g);
-                Tensor output = s.runner().fetch("MyConst").run().get(0)) {
-              System.out.println(new String(output.bytesValue(), "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-              e.printStackTrace();
-            }
-          }
-
+          IFeature building = SelectionUtil.getFirstSelectedObject(
+              CartAGenPlugin.getInstance().getApplication());
+          IPolygon polygon = (IPolygon) building.getGeom();
+          // first 512 image size
+          createImageFromPolygon(polygon, 512, 1);
+          // then 128 image size
+          createImageFromPolygon(polygon, 128, 1);
+          // then 64 image size
+          createImageFromPolygon(polygon, 64, 1);
         }
       });
       th.start();
@@ -146,6 +129,48 @@ public class TensorFlowPlugin extends JMenu {
     public TestAction() {
       super();
       this.putValue(Action.NAME, "Custom test");
+    }
+
+  }
+
+  private void createImageFromPolygon(IPolygon pol, int imageSize, int id) {
+
+    Polygon shape = (Polygon) toPolygonShape(
+        toImageCoords2(pol.exteriorLineString(), imageSize));
+
+    // Generate an image with the initial building
+    BufferedImage bi = new BufferedImage(imageSize, imageSize,
+        BufferedImage.TYPE_INT_RGB);
+    Graphics2D g2d = bi.createGraphics();
+    g2d.setBackground(Color.LIGHT_GRAY);
+    g2d.clearRect(0, 0, imageSize, imageSize);
+
+    if (shape != null) {
+      g2d.setColor(Color.DARK_GRAY);
+      g2d.fill(shape);
+    }
+
+    // introduce some noise in the background
+    Random random = new Random();
+    for (int i = 0; i < imageSize; i++) {
+      for (int j = 0; j < imageSize; j++) {
+        // check if pixel is part of the background
+        if (bi.getRGB(i, j) == Color.LIGHT_GRAY.getRGB()) {
+          int noise = random.nextInt(3);
+          bi.setRGB(i, j,
+              new Color(Color.LIGHT_GRAY.getRed() - noise,
+                  Color.LIGHT_GRAY.getGreen() - noise,
+                  Color.LIGHT_GRAY.getBlue() - noise).getRGB());
+        }
+      }
+    }
+
+    File outputfile = new File(
+        "F://tensorflow//building_" + imageSize + "_" + id + ".png");
+    try {
+      ImageIO.write(bi, "png", outputfile);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
 
   }
@@ -316,10 +341,16 @@ public class TensorFlowPlugin extends JMenu {
                 // check if pixel is part of the background
                 if (bi.getRGB(i, j) == Color.LIGHT_GRAY.getRGB()) {
                   int noise = random.nextInt(3);
-                  if (noise == 1)
-                    bi.setRGB(i, j, Color.LIGHT_GRAY.brighter().getRGB());
-                  else if (noise == 2)
-                    bi.setRGB(i, j, Color.LIGHT_GRAY.darker().getRGB());
+                  bi.setRGB(i, j,
+                      new Color(Color.LIGHT_GRAY.getRed() - noise,
+                          Color.LIGHT_GRAY.getGreen() - noise,
+                          Color.LIGHT_GRAY.getBlue() - noise).getRGB());
+                  /*
+                   * bi.setRGB(i, j, Color.LIGHT_GRAY.getRGB()); if (noise == 1)
+                   * bi.setRGB(i, j, Color.LIGHT_GRAY.brighter().getRGB()); else
+                   * if (noise == 2) bi.setRGB(i, j,
+                   * Color.LIGHT_GRAY.darker().getRGB());
+                   */
                 }
               }
             }
@@ -355,10 +386,15 @@ public class TensorFlowPlugin extends JMenu {
                 // check if pixel is part of the background
                 if (biGen.getRGB(i, j) == Color.LIGHT_GRAY.getRGB()) {
                   int noise = random.nextInt(3);
-                  if (noise == 1)
-                    biGen.setRGB(i, j, Color.LIGHT_GRAY.brighter().getRGB());
-                  else if (noise == 2)
-                    biGen.setRGB(i, j, Color.LIGHT_GRAY.darker().getRGB());
+                  bi.setRGB(i, j,
+                      new Color(Color.LIGHT_GRAY.getRed() - noise,
+                          Color.LIGHT_GRAY.getGreen() - noise,
+                          Color.LIGHT_GRAY.getBlue() - noise).getRGB());
+                  /*
+                   * if (noise == 1) biGen.setRGB(i, j,
+                   * Color.LIGHT_GRAY.brighter().getRGB()); else if (noise == 2)
+                   * biGen.setRGB(i, j, Color.LIGHT_GRAY.darker().getRGB());
+                   */
                 }
               }
             }
@@ -376,75 +412,275 @@ public class TensorFlowPlugin extends JMenu {
       th.start();
     }
 
-    private IDirectPositionList toImageCoords(ILineString line, int imageSize) {
-      IDirectPositionList imageCoords = new DirectPositionList();
-
-      // xMin is imageSize/3, xMax is 2*imageSize/3, same for y coordinate.
-      // there is a need for a translation and a homothetic transformation
-      IEnvelope env = line.getEnvelope();
-      double ratio = 0.0;
-      if (env.width() > env.length()) {
-        ratio = imageSize / (3 * env.width());
-      } else
-        ratio = imageSize / (3 * env.length());
-      for (IDirectPosition dp : line.coord()) {
-        double x = (dp.getX() - env.minX()) * ratio + imageSize / 3;
-        double y = (dp.getY() - env.minY()) * ratio + imageSize / 3;
-        if (y < imageSize / 2)
-          y = y + 2 * (imageSize / 2 - y);
-        else
-          y = y - 2 * (y - imageSize / 2);
-        imageCoords.add(new DirectPosition(x, y));
-      }
-      return imageCoords;
-    }
-
-    private IDirectPositionList toImageCoords2(ILineString line,
-        int imageSize) {
-      IDirectPositionList imageCoords = new DirectPositionList();
-
-      // xMin is 10, xMax is imageSize-10, same for y coordinate.
-      // there is a need for a translation and a homothetic transformation
-      IEnvelope env = line.getEnvelope();
-      double ratio = 0.0;
-      if (env.width() > env.length()) {
-        ratio = (imageSize - 20) / env.width();
-      } else
-        ratio = (imageSize - 20) / env.length();
-      for (IDirectPosition dp : line.coord()) {
-        double x = (dp.getX() - env.minX()) * ratio + 10;
-        double y = (dp.getY() - env.minY()) * ratio + 10;
-        if (y < imageSize / 2)
-          y = y + 2 * (imageSize / 2 - y);
-        else
-          y = y - 2 * (y - imageSize / 2);
-        imageCoords.add(new DirectPosition(x, y));
-      }
-      return imageCoords;
-    }
-
-    /**
-     * Transform a direct position list in view coordinates to an awt shape.
-     * 
-     * @param viewDirectPositionList a direct position list in view coordinates
-     * @return A shape representing the polygon in view coordinates
-     */
-    private Shape toPolygonShape(
-        final IDirectPositionList viewDirectPositionList) {
-      int numPoints = viewDirectPositionList.size();
-      int[] xpoints = new int[numPoints];
-      int[] ypoints = new int[numPoints];
-      for (int i = 0; i < viewDirectPositionList.size(); i++) {
-        IDirectPosition p = viewDirectPositionList.get(i);
-        xpoints[i] = (int) p.getX();
-        ypoints[i] = (int) p.getY();
-      }
-      return new Polygon(xpoints, ypoints, numPoints);
-    }
-
     public GenerateInitialImageAction() {
       super();
       this.putValue(Action.NAME, "Generate initial images for buildings");
+    }
+
+  }
+
+  private IDirectPositionList toImageCoords(ILineString line, int imageSize) {
+    IDirectPositionList imageCoords = new DirectPositionList();
+
+    // xMin is imageSize/3, xMax is 2*imageSize/3, same for y coordinate.
+    // there is a need for a translation and a homothetic transformation
+    IEnvelope env = line.getEnvelope();
+    double ratio = 0.0;
+    if (env.width() > env.length()) {
+      ratio = imageSize / (3 * env.width());
+    } else
+      ratio = imageSize / (3 * env.length());
+    for (IDirectPosition dp : line.coord()) {
+      double x = (dp.getX() - env.minX()) * ratio + imageSize / 3;
+      double y = (dp.getY() - env.minY()) * ratio + imageSize / 3;
+      if (y < imageSize / 2)
+        y = y + 2 * (imageSize / 2 - y);
+      else
+        y = y - 2 * (y - imageSize / 2);
+      imageCoords.add(new DirectPosition(x, y));
+    }
+    return imageCoords;
+  }
+
+  /**
+   * Transform a direct position list in view coordinates to an awt shape.
+   * 
+   * @param viewDirectPositionList a direct position list in view coordinates
+   * @return A shape representing the polygon in view coordinates
+   */
+  private Shape toPolygonShape(
+      final IDirectPositionList viewDirectPositionList) {
+    int numPoints = viewDirectPositionList.size();
+    int[] xpoints = new int[numPoints];
+    int[] ypoints = new int[numPoints];
+    for (int i = 0; i < viewDirectPositionList.size(); i++) {
+      IDirectPosition p = viewDirectPositionList.get(i);
+      xpoints[i] = (int) p.getX();
+      ypoints[i] = (int) p.getY();
+    }
+    return new Polygon(xpoints, ypoints, numPoints);
+  }
+
+  private IDirectPositionList toImageCoords2(ILineString line, int imageSize) {
+    IDirectPositionList imageCoords = new DirectPositionList();
+
+    // xMin is 10, xMax is imageSize-10, same for y coordinate.
+    // there is a need for a translation and a homothetic transformation
+    IEnvelope env = line.getEnvelope();
+    double ratio = 0.0;
+    if (env.width() > env.length()) {
+      ratio = (imageSize - 20) / env.width();
+    } else
+      ratio = (imageSize - 20) / env.length();
+    for (IDirectPosition dp : line.coord()) {
+      double x = (dp.getX() - env.minX()) * ratio + 10;
+      double y = (dp.getY() - env.minY()) * ratio + 10;
+      if (y < imageSize / 2)
+        y = y + 2 * (imageSize / 2 - y);
+      else
+        y = y - 2 * (y - imageSize / 2);
+      imageCoords.add(new DirectPosition(x, y));
+    }
+    return imageCoords;
+  }
+
+  private IDirectPositionList toImageCoordsAreaMin(IPolygon polygon,
+      int imageSize, double areaMin) {
+    IDirectPositionList imageCoords = new DirectPositionList();
+
+    // xMin is 10, xMax is imageSize-10, same for y coordinate when the building
+    // reaches the areaMin ratio (the building is not enlarged). If the building
+    // is smaller, it is displayed smaller on the image.
+    // there is a need for a translation and a homothetic transformation in each
+    // case.
+    double enlargementRatio = polygon.area() / areaMin;
+
+    IEnvelope env = polygon.getEnvelope();
+
+    double ratio = 0.0;
+    if (env.width() > env.length()) {
+      ratio = (imageSize - 20) / env.width();
+    } else
+      ratio = (imageSize - 20) / env.length();
+    if (enlargementRatio < 1.0)
+      ratio = ratio * enlargementRatio;
+    for (IDirectPosition dp : polygon.exteriorLineString().coord()) {
+      double x = (dp.getX() - env.minX()) * ratio + 10;
+      double y = (dp.getY() - env.minY()) * ratio + 10;
+      if (y < imageSize / 2)
+        y = y + 2 * (imageSize / 2 - y);
+      else
+        y = y - 2 * (y - imageSize / 2);
+      imageCoords.add(new DirectPosition(x, y));
+    }
+
+    return imageCoords;
+  }
+
+  private class ImageWithEnlargementAction extends AbstractAction {
+
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+      Thread th = new Thread(new Runnable() {
+        @Override
+        public void run() {
+
+          int imageSize = 128;
+          CartAGenDataSet dataset = CartAGenDoc.getInstance()
+              .getCurrentDataset();
+          Legend.setSYMBOLISATI0N_SCALE(30000.0);
+
+          // first create agents from the buildings of the dataset
+          AgentUtil.createAgentAgentsInDataset(dataset);
+          AgentConfigurationFrame.getInstance().validateValues();
+          AgentUtil.instanciateConstraints();
+          // initialisation
+          AgentGeneralisationScheduler.getInstance().initList();
+          // attach an observer to the tree-based lifecycle to be able to stop
+          // during the process and log the generalisation
+          TreeExplorationLifeCycle.getInstance().attach(
+              (AgentObserver) CartAGenPlugin.getInstance().getApplication());
+          // generalise all buildings
+          for (IBuilding building : dataset.getBuildings()) {
+            if (building.isEliminated())
+              continue;
+
+            // then generalize the geometry
+            GeographicAgentGeneralisation ago = AgentUtil
+                .getAgentFromGeneObj(building);
+            if (ago == null) {
+              continue;
+            }
+            logger.info("Chargement de " + ago);
+            AgentGeneralisationScheduler.getInstance().add(ago);
+          }
+          System.out.println(
+              AgentGeneralisationScheduler.getInstance().getList().size()
+                  + " features in the scheduler");
+
+          // run generalisation
+          ExecutorService service = Executors
+              .newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+          List<AgentGeneralisationScheduler> futureList = new ArrayList<>();
+          futureList.add(AgentGeneralisationScheduler.getInstance());
+
+          try {
+            List<Future<Integer>> futures = service.invokeAll(futureList);
+          } catch (Exception err) {
+            err.printStackTrace();
+          }
+          service.shutdown();
+
+          double areaMin = GeneralisationSpecifications.BUILDING_MIN_AREA
+              * Legend.getSYMBOLISATI0N_SCALE()
+              * Legend.getSYMBOLISATI0N_SCALE() / 1000000.0;
+
+          // then loop on the buildings to create examples from each
+          for (IBuilding building : dataset.getBuildings()) {
+            if (building.isEliminated())
+              continue;
+            // get the initial geometry of the building
+            IPolygon polygon = (IPolygon) building.getInitialGeom();
+            Polygon shape = (Polygon) toPolygonShape(
+                toImageCoordsAreaMin(polygon, imageSize, areaMin));
+
+            // Generate an image with the initial building
+            BufferedImage bi = new BufferedImage(imageSize, imageSize,
+                BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2d = bi.createGraphics();
+            g2d.setBackground(Color.LIGHT_GRAY);
+            g2d.clearRect(0, 0, imageSize, imageSize);
+
+            if (shape != null) {
+              g2d.setColor(Color.DARK_GRAY);
+              g2d.fill(shape);
+            }
+
+            // introduce some noise in the background
+            Random random = new Random();
+            for (int i = 0; i < imageSize; i++) {
+              for (int j = 0; j < imageSize; j++) {
+                // check if pixel is part of the background
+                if (bi.getRGB(i, j) == Color.LIGHT_GRAY.getRGB()) {
+                  int noise = random.nextInt(3);
+                  bi.setRGB(i, j,
+                      new Color(Color.LIGHT_GRAY.getRed() - noise,
+                          Color.LIGHT_GRAY.getGreen() - noise,
+                          Color.LIGHT_GRAY.getBlue() - noise).getRGB());
+                  /*
+                   * bi.setRGB(i, j, Color.LIGHT_GRAY.getRGB()); if (noise == 1)
+                   * bi.setRGB(i, j, Color.LIGHT_GRAY.brighter().getRGB()); else
+                   * if (noise == 2) bi.setRGB(i, j,
+                   * Color.LIGHT_GRAY.darker().getRGB());
+                   */
+                }
+              }
+            }
+
+            File outputfile = new File(
+                "F://tensorflow//building_" + building.getId() + ".png");
+            try {
+              ImageIO.write(bi, "png", outputfile);
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+
+            // AgentGeneralisationScheduler.getInstance().activate();
+
+            // write the new geometry in an image file
+            BufferedImage biGen = new BufferedImage(imageSize, imageSize,
+                BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2dGen = biGen.createGraphics();
+            g2dGen.setBackground(Color.LIGHT_GRAY);
+            g2dGen.clearRect(0, 0, imageSize, imageSize);
+            IPolygon genGeom = building.getGeom();
+            Polygon genShape = (Polygon) toPolygonShape(
+                toImageCoordsAreaMin(genGeom, imageSize, areaMin));
+
+            if (genShape != null) {
+              g2dGen.setColor(Color.DARK_GRAY);
+              g2dGen.fill(genShape);
+            }
+
+            // introduce some noise in the background
+            for (int i = 0; i < imageSize; i++) {
+              for (int j = 0; j < imageSize; j++) {
+                // check if pixel is part of the background
+                if (biGen.getRGB(i, j) == Color.LIGHT_GRAY.getRGB()) {
+                  int noise = random.nextInt(3);
+                  bi.setRGB(i, j,
+                      new Color(Color.LIGHT_GRAY.getRed() - noise,
+                          Color.LIGHT_GRAY.getGreen() - noise,
+                          Color.LIGHT_GRAY.getBlue() - noise).getRGB());
+                  /*
+                   * if (noise == 1) biGen.setRGB(i, j,
+                   * Color.LIGHT_GRAY.brighter().getRGB()); else if (noise == 2)
+                   * biGen.setRGB(i, j, Color.LIGHT_GRAY.darker().getRGB());
+                   */
+                }
+              }
+            }
+
+            File outputfile2 = new File(
+                "F://tensorflow//building_" + building.getId() + "_output.png");
+            try {
+              ImageIO.write(biGen, "png", outputfile2);
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+          }
+        }
+      });
+      th.start();
+    }
+
+    public ImageWithEnlargementAction() {
+      super();
+      this.putValue(Action.NAME,
+          "Generate training images for buildings with enlargement");
     }
 
   }

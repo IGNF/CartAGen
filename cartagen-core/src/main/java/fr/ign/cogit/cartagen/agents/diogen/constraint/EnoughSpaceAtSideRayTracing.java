@@ -33,7 +33,7 @@ public abstract class EnoughSpaceAtSideRayTracing
   @Override
   public double getSatisfaction() {
     double buildingSize = Math
-        .sqrt(GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT)
+        .sqrt(GeneralisationSpecifications.BUILDING_MIN_AREA)
         * Legend.getSYMBOLISATI0N_SCALE() / 1000;
     double roadWidth = 2
         * ((IEmbeddedDeadEndArea) ((EmbeddedEnvironmentAgent) this.getAgent())

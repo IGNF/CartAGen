@@ -202,12 +202,12 @@ public class BlockBuildingsMeasures {
 
     // en deca de la valeur SpecCarto.aireSeuilSuppressionBatiment, le batiment
     // est supprime
-    if (area < GeneralisationSpecifications.AIRE_SEUIL_SUPPRESSION_BATIMENT) {
+    if (area < GeneralisationSpecifications.BUILDING_ELIMINATION_AREA_THRESHOLD) {
       return 0.0;
     }
 
     // au dela, le batiment est grossi ou bien conserve son aire
-    double aireMini = GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT
+    double aireMini = GeneralisationSpecifications.BUILDING_MIN_AREA
         * Legend.getSYMBOLISATI0N_SCALE() * Legend.getSYMBOLISATI0N_SCALE()
         / 1000000;
     if (area > aireMini) {

@@ -133,7 +133,7 @@ public class UrbanAlignment extends GeneObjSurfDefault
       return new GM_Polygon();
     }
     double distBuffer = Math
-        .sqrt(GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT)
+        .sqrt(GeneralisationSpecifications.BUILDING_MIN_AREA)
         * Legend.getSYMBOLISATI0N_SCALE() / 1000.0;
     return (IPolygon) this.shapeLine.buffer(distBuffer / 2.0, 2,
         BufferParameters.CAP_SQUARE, BufferParameters.CAP_SQUARE);
@@ -146,7 +146,7 @@ public class UrbanAlignment extends GeneObjSurfDefault
       return new GM_Polygon();
     }
     double distBuffer = Math
-        .sqrt(GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT)
+        .sqrt(GeneralisationSpecifications.BUILDING_MIN_AREA)
         * Legend.getSYMBOLISATI0N_SCALE() / 1000.0;
     return (IPolygon) this.initialShapeLine.buffer(distBuffer / 2.0, 2,
         BufferParameters.CAP_SQUARE, BufferParameters.CAP_SQUARE);

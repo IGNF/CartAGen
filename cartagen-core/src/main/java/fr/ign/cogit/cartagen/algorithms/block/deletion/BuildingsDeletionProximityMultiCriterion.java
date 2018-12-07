@@ -80,7 +80,7 @@ public class BuildingsDeletionProximityMultiCriterion {
       parameters.put(BuildElimCornerCriterion.PARAM_CORNER_BUILDINGS,
           cornerBuilding.getCornerBuildings());
       // simulated area
-      double minArea = GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT
+      double minArea = GeneralisationSpecifications.BUILDING_MIN_AREA
           * Legend.getSYMBOLISATI0N_SCALE() * Legend.getSYMBOLISATI0N_SCALE()
           / 1000000.0;
       double area = urbanElement.getGeom().area();
@@ -93,7 +93,7 @@ public class BuildingsDeletionProximityMultiCriterion {
       parameters.put(BuildElimCornerCriterion.PARAM_BUILDING, urbanElement);
       // sizeThreshold
       parameters.put(BuildElimSizeCriterion.PARAM_AREA_THRESH,
-          GeneralisationSpecifications.AIRE_SEUIL_SUPPRESSION_BATIMENT);
+          GeneralisationSpecifications.BUILDING_ELIMINATION_AREA_THRESHOLD);
       // create the action object
       ELECTREIIIAction action = new ELECTREIIIAction(urbanElement, parameters);
       actions.add(action);

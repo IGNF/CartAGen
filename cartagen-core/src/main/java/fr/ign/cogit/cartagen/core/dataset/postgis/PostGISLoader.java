@@ -66,10 +66,10 @@ public class PostGISLoader {
       this.where = "(";
       for (String value : filter.getValues())
         this.where += filter.getKey() + "='" + value + "' or ";
-    }
-    this.where = this.where.substring(0, this.where.length() - 4);
-    this.where += ")";
 
+      this.where = this.where.substring(0, this.where.length() - 4);
+      this.where += ")";
+    }
     String wherePart = "";
     if (this.where != null && !this.where.equals("")) {
       wherePart = " where " + where;

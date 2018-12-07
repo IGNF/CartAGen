@@ -52,7 +52,7 @@ public class RubberSheeting {
 
     // parameters for raytracing
     double buildingSize = Math
-        .sqrt(GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT)
+        .sqrt(GeneralisationSpecifications.BUILDING_MIN_AREA)
         * Legend.getSYMBOLISATI0N_SCALE() / 1000;
     double basicDistance = 2 * buildingSize;
 

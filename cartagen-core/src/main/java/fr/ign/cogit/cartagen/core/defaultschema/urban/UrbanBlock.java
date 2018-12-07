@@ -677,7 +677,7 @@ public class UrbanBlock extends GeneObjSurfDefault implements IUrbanBlock {
      * IBlockAgent blockAgent = (IBlockAgent) AgentUtil
      * .getAgentAgentFromGeneObj(this); return blockAgent.getSimulatedDensity();
      */
-    double buildMinSize = GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT
+    double buildMinSize = GeneralisationSpecifications.BUILDING_MIN_AREA
         * Math.pow(Legend.getSYMBOLISATI0N_SCALE(), 2.0) / 1000000.0;
     if (this.net != null) {
       buildMinSize = this.net.getBuildingMinSize();

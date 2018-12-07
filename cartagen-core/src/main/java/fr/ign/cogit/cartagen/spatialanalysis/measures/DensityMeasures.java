@@ -186,7 +186,7 @@ public class DensityMeasures {
    * account.
    */
   public static double getBlockBuildingsSimulatedDensity(IUrbanBlock block) {
-    double buildingMinSize = GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT
+    double buildingMinSize = GeneralisationSpecifications.BUILDING_MIN_AREA
         * Legend.getSYMBOLISATI0N_SCALE() * Legend.getSYMBOLISATI0N_SCALE()
         / 1000000;
     return DensityMeasures.getBlockBuildingsSimulatedDensity(block.getGeom(),
@@ -244,7 +244,7 @@ public class DensityMeasures {
    */
   public static double getBlockBuildingsInitialSimulatedDensity(
       IUrbanBlock block) {
-    double buildingMinSize = GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT
+    double buildingMinSize = GeneralisationSpecifications.BUILDING_MIN_AREA
         * Legend.getSYMBOLISATI0N_SCALE() * Legend.getSYMBOLISATI0N_SCALE()
         / 1000000;
     return DensityMeasures.getBlockBuildingsInitialSimulatedDensity(

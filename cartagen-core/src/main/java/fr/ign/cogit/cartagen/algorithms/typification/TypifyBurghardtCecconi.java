@@ -619,7 +619,7 @@ public class TypifyBurghardtCecconi {
     // orientation
     poly = CommonAlgorithms.rotation(poly, centroid, orientation);
     // vérifie que le bâtiment est assez gros
-    double aireMinTerrain = ((GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT)
+    double aireMinTerrain = ((GeneralisationSpecifications.BUILDING_MIN_AREA)
         * (targetScale / 1000) * (targetScale / 1000));
     if (poly.area() < aireMinTerrain) {
       // grossissement jusqu'à l'aire min
@@ -633,7 +633,7 @@ public class TypifyBurghardtCecconi {
   }
 
   public void generalize() {
-    double aireMinTerrain = ((GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT)
+    double aireMinTerrain = ((GeneralisationSpecifications.BUILDING_MIN_AREA)
         * (targetScale / 1000) * (targetScale / 1000));
     IPopulation<? extends IFeature> pop = this.getBuildingsIni();
     // suppression des bâtiments dont l'aire est inférieure au seuil
@@ -642,7 +642,7 @@ public class TypifyBurghardtCecconi {
       // vérifie que le batiment n'a pas été éliminé
       if (build.isDeleted() == false) {
         if (build.getGeom()
-            .area() < GeneralisationSpecifications.AIRE_SEUIL_SUPPRESSION_BATIMENT) {
+            .area() < GeneralisationSpecifications.BUILDING_ELIMINATION_AREA_THRESHOLD) {
           build.setDeleted(true);
         } else {
           if (build.getGeom().area() < aireMinTerrain) {
