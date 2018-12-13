@@ -1,1 +1,23 @@
 theme: jekyll-theme-cayman
+nav:
+- 'Home': 'README.md'
+- 'Getting Started':
+    - "How to load a geographical dataset into CartAGen?": 'docs/tuto_import_data.md'
+    - 'CartAGen GUI': 'docs/tuto_gui.md'
+    - "How to trigger generalization algorithms?": 'docs/tuto_generalization_algo.md'
+    - "How to use the agent-based generalization processes?": 'docs/tuto_agents.md'
+- 'Advanced Use of CartAGen':
+    - "Understanding CartAGen data schema for generalization": 'docs/tuto_schema.md'
+    - 'Style Edition': 'docs/tuto_sld.md'
+- 'Generalization models':
+    - 'AGENT model': 'doc/agents/AGENT_advanced.md'
+    - 'CartACom model': 'doc/agents/CartACom_advanced.md'
+    - 'GAEL model': 'doc/agents/GAEL_advanced.md'
+    - 'DIOGEN model': 'doc/agents/DIOGEN_advanced.md'
+    - 'CollaGen model': 'doc/agents/CollaGen_advanced.md'
+    - 'ScaleMaster2.0': 'doc/tuto_scalemaster.md'
+- 'List of algorithms': 'doc/algorithms.md'
+- 'List of Spatial Analysis Tools': 'doc/spatial_analysis.md'
+- 'Results': 'doc/results.md'
+- 'On-Going Projects': 'on-going_projects.md'
+- 'Project Steering Committe': 'PSC.md'
