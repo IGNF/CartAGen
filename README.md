@@ -59,6 +59,14 @@ Watch videos
 [![AGENT mountain road generalization](https://img.youtube.com/vi/Ns42t_hwAXw/0.jpg)](https://www.youtube.com/watch?v=Ns42t_hwAXw)
 Duchêne, C. (2001, April). Road generalisation using agents. In G. Higgs and D. B. Kidner (Eds.), Proceedings of the GIS Research UK 9th Annual Conference, Glamorgan, UK. Wales Debating Federation/University of Glamorgan.
 
+Results
+-------------
+[Examples of results obtained with CartAGen platform][19]
+
+On-Going Projects
+-------------
+[On-going research projects on CartAGen platform][20]
+
 Implemented generalization algorithms
 -------------
 
@@ -83,3 +91,5 @@ Implemented generalization algorithms
 [16]: http://dx.doi.org/10.1080/13658816.2011.639302
 [17]: docs/spatial_analysis.md
 [18]: docs/tuto_scalemaster.md
+[19]: docs/results.md
+[20]: docs/on-going_projects.md
