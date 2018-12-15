@@ -28,7 +28,7 @@
     <plugin>fr.ign.cogit.geoxygene.appli.plugin.density.TriangulationPlugin</plugin>
     <plugin>fr.ign.cogit.geoxygene.appli.plugin.density.VoronoiPlugin</plugin>
     <plugin>fr.ign.cogit.geoxygene.appli.plugin.density.GridPlugin</plugin>
-    <lastOpenedFile>D:\Donnees\MapMuxing\groupe_urbain_25_zone2.shp</lastOpenedFile>
+    <lastOpenedFile>D:\workspace\cartagen\cartagen-appli\src\main\resources\data\shapefiles\IGN_MAJOR_ROAD.shp</lastOpenedFile>
     <sld></sld>
     <ConnectionParam>
         <dbtype>postgis</dbtype>
@@ -42,9 +42,10 @@
     <DefaultVisualizationType>AWT</DefaultVisualizationType>
     <ProjectFrameLayout>floating</ProjectFrameLayout>
     <DefaultLookAndFeel></DefaultLookAndFeel>
-    <recent>D:\Users\gtouya\workspace\libcogit-cartagen\src\main\resources\sld\1000k</recent>
-    <recent>D:\Donnees</recent>
-    <recent>D:\Donnees\Workshop ENERGIC\OSM\derived</recent>
+    <recent>D:\workspace\cartagen\cartagen-appli\src\main\resources\data\shapefiles</recent>
     <recent>D:\Donnees\MapMuxing</recent>
+    <recent>D:\Donnees\Workshop ENERGIC\OSM\derived</recent>
+    <recent>D:\Donnees</recent>
+    <recent>D:\Users\gtouya\workspace\libcogit-cartagen\src\main\resources\sld\1000k</recent>
     <GeometryEngine>JTS</GeometryEngine>
 </GeOxygeneApplicationProperties>
