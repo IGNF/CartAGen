@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * This software is released under the licence CeCILL
+ * 
+ * see Licence_CeCILL-C_fr.html see Licence_CeCILL-C_en.html
+ * 
+ * see <a href="http://www.cecill.info/">http://www.cecill.info/a>
+ * 
+ * @copyright IGN
+ ******************************************************************************/
 package fr.ign.cogit.cartagen.osm.schema.urban;
 
 import fr.ign.cogit.cartagen.core.genericschema.urban.ISquareArea;
@@ -21,6 +30,10 @@ public class OsmParkArea extends OsmGeneObjSurf implements ISquareArea {
 
   public OsmParkArea(IPolygon geom) {
     super(geom);
+  }
+
+  public OsmParkArea() {
+    super();
   }
 
   @Override

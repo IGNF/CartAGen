@@ -67,9 +67,9 @@ public class AgentConfigurationFrame extends JFrame {
     public final static JTextField tBatiTailleImp = new JTextField(
             "" + AgentSpecifications.BUILDING_SIZE_CONSTRAINT_IMP, 5);
     public final static JTextField tBatiTailleAireMini = new JTextField(
-            "" + GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT, 5);
+            "" + GeneralisationSpecifications.BUILDING_MIN_AREA, 5);
     public final static JTextField tBatiTailleSeuilSuppression = new JTextField(
-            "" + GeneralisationSpecifications.AIRE_SEUIL_SUPPRESSION_BATIMENT, 5);
+            "" + GeneralisationSpecifications.BUILDING_ELIMINATION_AREA_THRESHOLD, 5);
 
     // granularite
     public final static JPanel pBatiGranularite = new JPanel(new GridBagLayout());
@@ -606,9 +606,9 @@ public class AgentConfigurationFrame extends JFrame {
         // taille
         AgentConfigurationFrame.cBatiTaille.setSelected(AgentSpecifications.BUILDING_SIZE_CONSTRAINT);
         AgentConfigurationFrame.tBatiTailleImp.setText("" + AgentSpecifications.BUILDING_SIZE_CONSTRAINT_IMP);
-        AgentConfigurationFrame.tBatiTailleAireMini.setText("" + GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT);
+        AgentConfigurationFrame.tBatiTailleAireMini.setText("" + GeneralisationSpecifications.BUILDING_MIN_AREA);
         AgentConfigurationFrame.tBatiTailleSeuilSuppression
-                .setText("" + GeneralisationSpecifications.AIRE_SEUIL_SUPPRESSION_BATIMENT);
+                .setText("" + GeneralisationSpecifications.BUILDING_ELIMINATION_AREA_THRESHOLD);
         // granularite
         AgentConfigurationFrame.cBatiGranularite.setSelected(AgentSpecifications.BUILDING_GRANULARITY);
         AgentConfigurationFrame.tBatiGranulariteImp.setText("" + AgentSpecifications.BULDING_GRANULARITY_IMP);
@@ -690,9 +690,9 @@ public class AgentConfigurationFrame extends JFrame {
         AgentSpecifications.BUILDING_SIZE_CONSTRAINT = AgentConfigurationFrame.cBatiTaille.isSelected();
         AgentSpecifications.BUILDING_SIZE_CONSTRAINT_IMP = Double
                 .parseDouble(AgentConfigurationFrame.tBatiTailleImp.getText());
-        GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT = Double
+        GeneralisationSpecifications.BUILDING_MIN_AREA = Double
                 .parseDouble(AgentConfigurationFrame.tBatiTailleAireMini.getText());
-        GeneralisationSpecifications.AIRE_SEUIL_SUPPRESSION_BATIMENT = Double
+        GeneralisationSpecifications.BUILDING_ELIMINATION_AREA_THRESHOLD = Double
                 .parseDouble(AgentConfigurationFrame.tBatiTailleSeuilSuppression.getText());
         // granularite
         AgentSpecifications.BUILDING_GRANULARITY = AgentConfigurationFrame.cBatiGranularite.isSelected();

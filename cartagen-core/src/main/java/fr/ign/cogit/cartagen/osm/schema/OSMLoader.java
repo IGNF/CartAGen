@@ -97,7 +97,7 @@ public class OSMLoader extends SwingWorker<Void, Void> {
   }
 
   public enum OSMLoaderType {
-    XML, POSTGIS
+    XML, POSTGIS, SHAPE
   }
 
   private OsmGeometryConversion convertor;

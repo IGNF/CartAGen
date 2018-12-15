@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * This software is released under the licence CeCILL
+ * 
+ * see Licence_CeCILL-C_fr.html see Licence_CeCILL-C_en.html
+ * 
+ * see <a href="http://www.cecill.info/">http://www.cecill.info/a>
+ * 
+ * @copyright IGN
+ ******************************************************************************/
 package fr.ign.cogit.cartagen.osm.schema.urban;
 
 import java.awt.Image;
@@ -24,6 +33,15 @@ public class OsmPointOfInterest extends OsmGeneObjPoint
 
   public OsmPointOfInterest(IPoint point) {
     super(point);
+    ExternalGraphic graphic = new ExternalGraphic();
+    URL url = OsmPointOfInterest.class.getResource(imageFileName);
+    graphic.setHref(url.toString());
+    this.symbol = graphic.getOnlineResource().getScaledInstance(20, 20,
+        Image.SCALE_SMOOTH);
+  }
+
+  public OsmPointOfInterest() {
+    super();
     ExternalGraphic graphic = new ExternalGraphic();
     URL url = OsmPointOfInterest.class.getResource(imageFileName);
     graphic.setHref(url.toString());

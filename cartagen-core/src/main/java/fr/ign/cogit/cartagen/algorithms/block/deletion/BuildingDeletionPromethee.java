@@ -78,7 +78,7 @@ public class BuildingDeletionPromethee {
     CornerBuildings cornerBuilding = new CornerBuildings(
         (Ilot) ai.getGeoxObj());
     cornerBuilding.compute();
-    double minArea = GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT
+    double minArea = GeneralisationSpecifications.BUILDING_MIN_AREA
         * Legend.getSYMBOLISATI0N_SCALE() * Legend.getSYMBOLISATI0N_SCALE()
         / 1000000.0;
 
@@ -109,7 +109,7 @@ public class BuildingDeletionPromethee {
       parameters.put(PARAM_BUILDING, urbanElement);
       // sizeThreshold
       parameters.put(PARAM_AREA_THRESH,
-          GeneralisationSpecifications.AIRE_SEUIL_SUPPRESSION_BATIMENT);
+          GeneralisationSpecifications.BUILDING_ELIMINATION_AREA_THRESHOLD);
 
       Map<PrometheeCriterion, Double> criteriaValues = new HashMap<PrometheeCriterion, Double>();
       for (PrometheeCriterion crit : this.criteria) {

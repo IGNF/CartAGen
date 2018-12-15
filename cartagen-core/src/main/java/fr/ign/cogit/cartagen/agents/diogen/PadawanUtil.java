@@ -1302,7 +1302,7 @@ public class PadawanUtil {
     IFeatureCollection<IRoadLine> roads = dataset.getRoads();
 
     double buildingSize = Math
-        .sqrt(GeneralisationSpecifications.AIRE_MINIMALE_BATIMENT)
+        .sqrt(GeneralisationSpecifications.BUILDING_MIN_AREA)
         * Legend.getSYMBOLISATI0N_SCALE() / 1000;
     double distance = 1.5 * buildingSize;
     // get the buildings

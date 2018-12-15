@@ -73,7 +73,8 @@ public class RoadNetworkTrafficBasedSelection {
       for (AttractionPoint finalPt : others) {
         // compute the node weight
         int nodeWeight = initialPt.getWeight() + finalPt.getWeight();
-
+        System.out.println(initialPt.getRoadNode());
+        System.out.println(finalPt.getRoadNode());
         DijkstraShortestPath<INetworkNode, DefaultWeightedEdge> shortestPathFinder = new DijkstraShortestPath<INetworkNode, DefaultWeightedEdge>(
             graph.getGraph(), initialPt.getRoadNode(), finalPt.getRoadNode());
         for (DefaultWeightedEdge edge : shortestPathFinder.getPathEdgeList()) {

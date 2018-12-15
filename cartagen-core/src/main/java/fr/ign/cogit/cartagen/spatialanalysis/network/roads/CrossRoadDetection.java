@@ -147,8 +147,8 @@ public class CrossRoadDetection {
     for (RondPoint round : this.rounds) {
       dataSet.getRoundabouts()
           .add(CartAGenDoc.getInstance().getCurrentDataset().getCartAGenDB()
-              .getGeneObjImpl().getCreationFactory().createRoundAbout(round,
-                  dataSet.getRoads(), nodes));
+              .getGeneObjImpl().getCreationFactory()
+              .createRoundAbout(round, dataSet.getRoads(), nodes));
     }
     // then the branching crossroads
     Map<PatteOie, IBranchingCrossroad> mapForRel = new HashMap<PatteOie, IBranchingCrossroad>();

@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import fr.ign.cogit.cartagen.common.triangulation.Triangulation;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
+import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkNode;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkSection;
 import fr.ign.cogit.cartagen.core.genericschema.partition.IMask;
@@ -423,6 +424,7 @@ public class CollapseDualCarriageways {
       // on marque les tronçons initiaux et les noeuds initiaux de chaque face
       // comme "supprimés"
       int localImportance = this.importance;
+      IGeneObj toCopy = null;
       List<Arc> arcs = new ArrayList<Arc>();
       arcs.addAll(face.getArcsDirects());
       arcs.addAll(face.getArcsIndirects());
@@ -430,6 +432,8 @@ public class CollapseDualCarriageways {
         IFeature obj = arc.getCorrespondant(0);
         if (obj instanceof IRoadLine) {
           IRoadLine sect = (IRoadLine) obj;
+          if (toCopy == null)
+            toCopy = sect;
           if (sect.getGeom().intersects(ligneGene.buffer(0.1)) == false) {
             localImportance = sect.getImportance();
             sect.eliminate();
@@ -446,6 +450,7 @@ public class CollapseDualCarriageways {
               .getInstance().getCurrentDataset().getRoadNetwork().getGeoxObj(),
               false, ligneGene), localImportance);
       tr.setBeenCreated(true);
+      tr.copyAttributes(toCopy);
       CartAGenDoc.getInstance().getCurrentDataset().getRoadNetwork()
           .addSection(tr);
       CartAGenDoc.getInstance().getCurrentDataset().getRoads().add(tr);
@@ -473,10 +478,12 @@ public class CollapseDualCarriageways {
         .getRoadNodes()) {
 
       // If the node is on the limit of the dataset => excluded
-      IMask mask = CartAGenDoc.getInstance().getCurrentDataset().getMasks()
-          .iterator().next();
-      if (node.getGeom().buffer(1.0).intersects(mask.getGeom())) {
-        continue;
+      if (!CartAGenDoc.getInstance().getCurrentDataset().getMasks().isEmpty()) {
+        IMask mask = CartAGenDoc.getInstance().getCurrentDataset().getMasks()
+            .iterator().next();
+        if (node.getGeom().buffer(1.0).intersects(mask.getGeom())) {
+          continue;
+        }
       }
 
       // If the degreee of the node is different than 1, it is not a dead end =>

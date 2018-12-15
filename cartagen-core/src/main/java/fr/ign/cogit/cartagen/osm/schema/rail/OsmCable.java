@@ -10,6 +10,10 @@ public class OsmCable extends OsmGeneObjLin implements ICable {
     super(line);
   }
 
+  public OsmCable() {
+    super();
+  }
+
   @Override
   public String getNature() {
     // TODO Auto-generated method stub

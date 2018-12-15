@@ -67,9 +67,11 @@ public final class GeneralisationSpecifications {
 
   // taille
   // aire minimale que doit avoir tout batiment (en mm²)
-  public static double AIRE_MINIMALE_BATIMENT = 0.2;
-  // aire en deca de laquelle le batiment est supprime (en m²)
-  public static double AIRE_SEUIL_SUPPRESSION_BATIMENT = 70.0;
+  // minimum area for buildings at the target scale (in map mm²)
+  public static double BUILDING_MIN_AREA = 0.2;
+  // aire en deça de laquelle le batiment est supprime (en m²)
+  // area threshold to eliminate very small buildings (in ground m²)
+  public static double BUILDING_ELIMINATION_AREA_THRESHOLD = 70.0;
 
   // granularite
   // longueur de cote de batiment a partir de laquelle la contrainte de

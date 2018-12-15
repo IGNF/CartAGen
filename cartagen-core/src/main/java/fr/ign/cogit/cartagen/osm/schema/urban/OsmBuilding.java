@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * This software is released under the licence CeCILL
+ * 
+ * see Licence_CeCILL-C_fr.html see Licence_CeCILL-C_en.html
+ * 
+ * see <a href="http://www.cecill.info/">http://www.cecill.info/a>
+ * 
+ * @copyright IGN
+ ******************************************************************************/
 package fr.ign.cogit.cartagen.osm.schema.urban;
 
 import java.util.Date;
@@ -21,6 +30,10 @@ public class OsmBuilding extends OsmGeneObjSurf implements IBuilding {
 
   public OsmBuilding(IPolygon geom) {
     super(geom);
+  }
+
+  public OsmBuilding() {
+    super();
   }
 
   @Override
@@ -55,6 +68,8 @@ public class OsmBuilding extends OsmGeneObjSurf implements IBuilding {
   private void computeNatureFromTags() {
     if (getTags().containsKey("aeroway"))
       nature = getTags().get("aeroway");
+    else if (!getTags().get("building").equals("yes"))
+      nature = getTags().get("building");
     else
       nature = "unknown";
   }

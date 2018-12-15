@@ -1,13 +1,11 @@
 package fr.ign.cogit.cartagen.appli.core.themes;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
@@ -28,7 +26,7 @@ public class RoadNetworkMenuCogitComplement extends JMenu {
   private Logger logger = Logger
       .getLogger(RoadNetworkMenuCogitComplement.class.getName());
 
-  private JLabel lblCogit = new JLabel("          COGIT");
+  // private JLabel lblCogit = new JLabel(" COGIT");
 
   private JMenuItem mRoutierDetectMotorways = new JMenuItem(
       new DualCarriageAction());
@@ -43,11 +41,11 @@ public class RoadNetworkMenuCogitComplement extends JMenu {
     menu.addSeparator();
     menu.addSeparator();
 
-    this.lblCogit.setForeground(Color.RED);
-    menu.add(this.lblCogit);
-
-    menu.addSeparator();
-    menu.addSeparator();
+    /*
+     * this.lblCogit.setForeground(Color.RED); menu.add(this.lblCogit);
+     * 
+     * menu.addSeparator(); menu.addSeparator();
+     */
 
     menu.add(this.mRoutierDetectMotorways);
     menu.add(this.mRoutierCollapseMotorways);
@@ -85,15 +83,17 @@ public class RoadNetworkMenuCogitComplement extends JMenu {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-      CollapseDualCarriageways algo = new CollapseDualCarriageways(4);
+      CollapseDualCarriageways algo = new CollapseDualCarriageways(-1);
       RoadStructureDetection detection = new RoadStructureDetection();
-      List<Face> separators = detection.detectDualCarriageways(4);
+      List<Face> separators = detection.detectDualCarriageways(-1);
       algo.simplifyDualCarriageways(separators);
       // TODO refresh visu panel
-      detection = new RoadStructureDetection();
-      algo = new CollapseDualCarriageways(3);
-      separators = detection.detectDualCarriageways(3);
-      algo.simplifyDualCarriageways(separators);
+      /*
+       * detection = new RoadStructureDetection(); algo = new
+       * CollapseDualCarriageways(3); separators =
+       * detection.detectDualCarriageways(3);
+       * algo.simplifyDualCarriageways(separators);
+       */
       // TODO refresh visu panel
     }
 

@@ -15,6 +15,7 @@ import java.util.Hashtable;
 import java.util.Set;
 
 import fr.ign.cogit.cartagen.core.dataset.GeneObjImplementation;
+import fr.ign.cogit.cartagen.core.dataset.postgis.MappingXMLParser.AttributeFilter;
 
 /**
  * Objects from this class are mappings between a PostGIS database data
@@ -42,19 +43,22 @@ public class PostGISToLayerMapping {
     private Method creationMethod;
     private String scale;
     private String theme;
+    private AttributeFilter filter;
     private Hashtable<String, String> listAttr = new Hashtable<String, String>();
 
     // ******************
     // Constructor (PostGISToLayerMatching)
     // ******************
     public PostGISToLayerMatching(String postGISLayer, Method creationMethod,
-        String scale, String theme, Hashtable<String, String> listAttr) {
+        String scale, String theme, Hashtable<String, String> listAttr,
+        AttributeFilter attrFilter) {
       super();
       this.setPostGISLayer(postGISLayer);
       this.setCreationMethod(creationMethod);
       this.setScale(scale);
       this.setTheme(theme);
       this.setListAttr(listAttr);
+      this.setFilter(attrFilter);
     }
 
     // ******************
@@ -104,6 +108,14 @@ public class PostGISToLayerMapping {
     public void setListAttr(Hashtable<String, String> listAttr) {
       this.listAttr = listAttr;
     }
+
+    public AttributeFilter getFilter() {
+      return filter;
+    }
+
+    public void setFilter(AttributeFilter filter) {
+      this.filter = filter;
+    }
   }
 
   // ******************
@@ -147,14 +159,29 @@ public class PostGISToLayerMapping {
     return listAttr;
   }
 
+  /**
+   * Get the {@link AttributeFilter} that corresponds to the given layer name.
+   * @param postGISLayer
+   * @return
+   */
+  public AttributeFilter getFilter(String postGISLayer) {
+    for (PostGISToLayerMatching matching : this.matchings) {
+      if (matching.postGISLayer.equals(postGISLayer)) {
+        return matching.getFilter();
+      }
+    }
+    return null;
+  }
+
   public Integer getSize() {
     return matchings.size();
   }
 
   public void addMatching(String postGISLayer, Method creationMethod,
-      String scale, String theme, Hashtable<String, String> listAttr) {
+      String scale, String theme, Hashtable<String, String> listAttr,
+      AttributeFilter attrFilter) {
     this.matchings.add(new PostGISToLayerMatching(postGISLayer, creationMethod,
-        scale, theme, listAttr));
+        scale, theme, listAttr, attrFilter));
   }
 
   public Set<PostGISToLayerMatching> getMatchings() {

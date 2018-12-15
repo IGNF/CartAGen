@@ -12,5 +12,10 @@
 			<artifactId>geoxygene-osm</artifactId>
 			<version>1.9-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+  			<groupId>org.tensorflow</groupId>
+  			<artifactId>tensorflow</artifactId>
+  			<version>1.8.0</version>
+		</dependency>
 	</dependencies>  
 </project>

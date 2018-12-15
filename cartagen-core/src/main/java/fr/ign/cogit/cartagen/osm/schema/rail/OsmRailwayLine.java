@@ -53,6 +53,11 @@ public class OsmRailwayLine extends OsmNetworkSection implements IRailwayLine {
     this.setEliminated(false);
   }
 
+  public OsmRailwayLine() {
+    super();
+    this.setEliminated(false);
+  }
+
   @Override
   @Transient
   public IFeature getGeoxObj() {

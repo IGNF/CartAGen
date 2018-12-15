@@ -95,9 +95,6 @@ public class OsmRoadNode extends OsmNetworkNode implements IRoadNode {
   @Override
   @Transient
   public double getWidth() {
-    if (this == null) {
-      return GeneralisationLegend.ROUTIER_LARGEUR_DESSOUS_0;
-    }
     int maxImportanceTroncons = this.getSectionsMaxImportance();
     if (maxImportanceTroncons == 0) {
       return GeneralisationLegend.ROUTIER_LARGEUR_DESSOUS_0;
