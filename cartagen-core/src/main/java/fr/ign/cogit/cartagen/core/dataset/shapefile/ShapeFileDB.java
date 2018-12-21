@@ -520,8 +520,10 @@ public class ShapeFileDB extends CartAGenDB {
       // loop on the classes to import them into the generalisation dataset
       int step = Math.round(100 / ShapeFileDB.this.getClasses().size());
       int value = 0;
+      System.out.println("loop on the geoclasses: " + getClasses().size());
       for (GeographicClass shapefile : getClasses()) {
         // test if the shapefile correspond to a persistent class
+        System.out.println(shapefile);
         boolean persistent = false;
         for (Class<?> classObj : ShapeFileDB.this.getPersistentClasses()) {
           if (!IGeneObj.class.isAssignableFrom(classObj)) {
@@ -536,6 +538,7 @@ public class ShapeFileDB extends CartAGenDB {
         if (persistent) {
           continue;
         }
+        System.out.println("load shapefile");
         ShapeFileDB.this.load(shapefile, this.scale);
         value += step;
         this.setProgress(value);

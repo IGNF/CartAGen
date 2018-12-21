@@ -368,8 +368,10 @@ public class UrbanEnrichment {
 
         // le batiment n'est pas totalement dans l'ilot. calcul de la part du
         // batiment dans l'ilot
-        double taux = ab.getGeom().intersection(polygone).area()
-            / (ab.getGeom().area());
+        IGeometry intersection = ab.getGeom().intersection(polygone);
+        if (intersection == null)
+          continue;
+        double taux = intersection.area() / (ab.getGeom().area());
 
         // si ce taux est suffisament grand, le batiment est considere comme
         // appartenant a l'ilot

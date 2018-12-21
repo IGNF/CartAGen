@@ -53,6 +53,8 @@ public class BuildingsDeletionCongestion {
       // tente de supprimer le batiment de l'ilot qui a le plus grand cout.
       IBuilding ab = BlockBuildingsMeasures.getNextBuildingToRemoveInBlock(ai,
           distanceMax);
+      if (ab == null)
+        break;
 
       // marque le batiment comme supprime provisoirement
       ab.setDeleted(true);

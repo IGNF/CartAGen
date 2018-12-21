@@ -36,7 +36,6 @@ import fr.ign.cogit.geoxygene.util.conversion.WktGeOxygene;
 
 public class PostGISLoader {
 
-  private String where = "";
   private String schema, user, password, host, port;
   private Connection conn;
   private PostGISToLayerMapping mapping;
@@ -63,18 +62,16 @@ public class PostGISLoader {
   public String getWherePart(String layer) {
     if (this.mapping.getFilter(layer) != null) {
       AttributeFilter filter = this.mapping.getFilter(layer);
-      this.where = "(";
+      String where = " where (";
       for (String value : filter.getValues())
-        this.where += filter.getKey() + "='" + value + "' or ";
+        where += filter.getKey() + "='" + value + "' or ";
 
-      this.where = this.where.substring(0, this.where.length() - 4);
-      this.where += ")";
+      where = where.substring(0, where.length() - 4);
+      where += ")";
+
+      return where;
     }
-    String wherePart = "";
-    if (this.where != null && !this.where.equals("")) {
-      wherePart = " where " + where;
-    }
-    return wherePart;
+    return "";
   }
 
   // *** getMapping ***
@@ -85,11 +82,6 @@ public class PostGISLoader {
   // ***************
   // SETTERS
   // ***************
-
-  // *** setWhere ***
-  public void setWhere(String where) {
-    this.where = where;
-  }
 
   // *** setMapping ***
   public void setMapping(PostGISToLayerMapping mapping) {
@@ -141,7 +133,7 @@ public class PostGISLoader {
     try {
       doTheActualLoading(conn, dataset, layer, schema, method, wherePart,
           factory, attrMapping, createGeoClass);
-      System.out.println("Chargement terminé.");
+      System.out.println("Loading finished.");
     } catch (NoSuchFieldException | SecurityException
         | InvocationTargetException e) {
       e.printStackTrace();
@@ -159,6 +151,7 @@ public class PostGISLoader {
     try {
       // Query the database
       Statement s = conn.createStatement();
+      System.out.println("select * from " + schema + "." + layer + query);
       ResultSet r = s
           .executeQuery("select * from " + schema + "." + layer + query);
       // Create the Calac population

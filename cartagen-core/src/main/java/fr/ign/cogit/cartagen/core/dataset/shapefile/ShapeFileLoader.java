@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,6 +109,8 @@ public class ShapeFileLoader {
         logger.debug("fichier " + filePath + " non trouve.");
       }
       return false;
+    } catch (MalformedURLException e) {
+      return false;
     }
 
     if (logger.isInfoEnabled()) {
@@ -117,6 +120,7 @@ public class ShapeFileLoader {
     IPopulation<IBuilding> buildPop = dataset.getBuildings();
 
     int j = 0;
+    System.out.println("loop on the shapefile records");
     while (shr.hasNext()) {
       Record objet = shr.nextRecord();
 
@@ -400,10 +404,11 @@ public class ShapeFileLoader {
       } else if (geom instanceof IMultiCurve<?>) {
         for (int i = 0; i < ((IMultiCurve<?>) geom).size(); i++) {
           IRoadLine tr = dataset.getCartAGenDB().getGeneObjImpl()
-              .getCreationFactory()
-              .createRoadLine(new TronconDeRouteImpl(
-                  (Reseau) dataset.getRoadNetwork().getGeoxObj(), false,
-                  (ILineString) ((IMultiCurve<?>) geom).get(i)), importance);
+              .getCreationFactory().createRoadLine(
+                  new TronconDeRouteImpl(
+                      (Reseau) dataset.getRoadNetwork().getGeoxObj(), false,
+                      (ILineString) ((IMultiCurve<?>) geom).get(i)),
+                  importance);
           if (fields.containsKey("CARTAGEN_ID")) {
             tr.setId((Integer) fields.get("CARTAGEN_ID"));
           } else {
@@ -627,11 +632,11 @@ public class ShapeFileLoader {
 
           else {
 
-            tr = new RoadLineWithAttributes(
-                new TronconDeRouteImpl((Reseau) dataset.getRoadNetwork()
+            tr = new RoadLineWithAttributes(new TronconDeRouteImpl(
+                (Reseau) dataset.getRoadNetwork()
 
-                    .getGeoxObj(), false,
-                    (ILineString) ((IMultiCurve<?>) geom).get(i)),
+                    .getGeoxObj(),
+                false, (ILineString) ((IMultiCurve<?>) geom).get(i)),
                 importance);
 
             tr.setFeatureType(ft);
@@ -2598,10 +2603,11 @@ public class ShapeFileLoader {
         } else if (geom instanceof IMultiCurve<?>) {
           for (int i = 0; i < ((IMultiCurve<?>) geom).size(); i++) {
             IRoadLine tr = dataset.getCartAGenDB().getGeneObjImpl()
-                .getCreationFactory()
-                .createRoadLine(new TronconDeRouteImpl(
-                    (Reseau) dataset.getRoadNetwork().getGeoxObj(), false,
-                    (ILineString) ((IMultiCurve<?>) geom).get(i)), 4, symbolID);
+                .getCreationFactory().createRoadLine(
+                    new TronconDeRouteImpl(
+                        (Reseau) dataset.getRoadNetwork().getGeoxObj(), false,
+                        (ILineString) ((IMultiCurve<?>) geom).get(i)),
+                    4, symbolID);
             tr.setId(id);
             dataset.getRoads().add(tr);
           }
@@ -2693,10 +2699,11 @@ public class ShapeFileLoader {
         } else if (geom instanceof IMultiCurve<?>) {
           for (int i = 0; i < ((IMultiCurve<?>) geom).size(); i++) {
             IRoadLine tr = dataset.getCartAGenDB().getGeneObjImpl()
-                .getCreationFactory()
-                .createRoadLine(new TronconDeRouteImpl(
-                    (Reseau) dataset.getRoadNetwork().getGeoxObj(), false,
-                    (ILineString) ((IMultiCurve<?>) geom).get(i)), 4, symbolID);
+                .getCreationFactory().createRoadLine(
+                    new TronconDeRouteImpl(
+                        (Reseau) dataset.getRoadNetwork().getGeoxObj(), false,
+                        (ILineString) ((IMultiCurve<?>) geom).get(i)),
+                    4, symbolID);
             // tr.setAttribute(new AttributeType("KEY","KEY"), key);
             dataset.getRoads().add(tr);
           }

@@ -1723,7 +1723,11 @@ public class StreetNetwork extends AbstractFeature {
 
       // the geometry is cut with the network polygon
       IGeometry cutGeom = block.getGeom().intersection(this.getGeom());
+      if (cutGeom == null)
+        cutGeom = block.getGeom().intersection(this.getGeom().buffer(0.5));
       block.setEdge(true);
+      if (cutGeom == null)
+        continue;
 
       if (cutGeom instanceof GM_Aggregate) {
         continue;
