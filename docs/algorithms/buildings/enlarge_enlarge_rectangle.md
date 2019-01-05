@@ -19,11 +19,18 @@ Both algorithms have the same parameter described in the table below.
 
 Examples of generalization
 -------------
+The images below show the same building (first image) enlarge for 1:50k with both methods.
 
+![initial buildings that needs to be enlarged for 1:50k](images/enlarge_ini.png)
+
+![building enlarged to 1:50k](images/enlarge_simple.png)
+
+![building enlarged to rectangle at 1:50k](images/enlarge_rectangle.png)
 
 When to use the algorithm?
 -------------
 With simple geometries, the enlarge to rectangle algorithm should be preferred as it also solves potential granularity issues and there is no need to trigger an additional simplification algorithm.
+For more complex geomtries that would not be simplified as rectangles, the enlarge algorithm should be preferred.
 
 
 
