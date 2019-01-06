@@ -16,15 +16,13 @@ import fr.ign.cogit.cartagen.algorithms.block.deletion.BuildingsDeletionCongesti
 import fr.ign.cogit.cartagen.algorithms.block.deletion.BuildingsDeletionSize;
 import fr.ign.cogit.cartagen.algorithms.block.displacement.BuildingDisplacementRandom;
 import fr.ign.cogit.cartagen.algorithms.block.displacement.BuildingDisplacementRuas;
+import fr.ign.cogit.cartagen.appli.core.geoxygene.CartAGenPlugin;
+import fr.ign.cogit.cartagen.appli.core.geoxygene.selection.SelectionUtil;
 import fr.ign.cogit.cartagen.core.GeneralisationSpecifications;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanBlock;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanElement;
 import fr.ign.cogit.cartagen.spatialanalysis.measures.BlockTriangulation;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
-import fr.ign.cogit.geoxygene.appli.plugin.cartagen.CartAGenPlugin;
-import fr.ign.cogit.geoxygene.appli.plugin.cartagen.selection.SelectionUtil;
-import fr.ign.cogit.geoxygene.appli.plugin.cartagen.themes.BlockMenu;
-import fr.ign.cogit.geoxygene.appli.plugin.cartagen.themes.DataThemesGUIComponent;
 
 public class BlockMenuCogitComplement extends JMenu {
 

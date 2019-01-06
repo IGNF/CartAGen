@@ -28,7 +28,17 @@
     <plugin>fr.ign.cogit.geoxygene.appli.plugin.density.TriangulationPlugin</plugin>
     <plugin>fr.ign.cogit.geoxygene.appli.plugin.density.VoronoiPlugin</plugin>
     <plugin>fr.ign.cogit.geoxygene.appli.plugin.density.GridPlugin</plugin>
+    <lastOpenedFile>D:\workspace\cartagen\cartagen-appli</lastOpenedFile>
     <sld></sld>
+    <ConnectionParam>
+        <dbtype>postgis</dbtype>
+        <host>localhost</host>
+        <port>5432</port>
+        <database>postgres</database>
+        <schema>public</schema>
+        <user>test</user>
+        <passwd>test</passwd>
+    </ConnectionParam>
     <DefaultVisualizationType>AWT</DefaultVisualizationType>
     <ProjectFrameLayout>floating</ProjectFrameLayout>
     <DefaultLookAndFeel></DefaultLookAndFeel>

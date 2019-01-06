@@ -29,12 +29,12 @@ import fr.ign.cogit.cartagen.appli.core.actions.CreateReliefGAELAgentAction;
 import fr.ign.cogit.cartagen.appli.core.actions.CreateReliefGAELFieldAction;
 import fr.ign.cogit.cartagen.appli.core.actions.GeneReliefGAELAgentAction;
 import fr.ign.cogit.cartagen.appli.core.actions.RunOnSelectionAction;
+import fr.ign.cogit.cartagen.appli.core.geoxygene.CartAGenPlugin;
+import fr.ign.cogit.cartagen.appli.core.geoxygene.GeneralisationMenus;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanBlock;
 import fr.ign.cogit.geoxygene.appli.MainFrameMenuBar;
-import fr.ign.cogit.geoxygene.appli.plugin.cartagen.CartAGenPlugin;
-import fr.ign.cogit.geoxygene.appli.plugin.cartagen.GeneralisationMenus;
 
 /**
  * @author julien Gaffuri 6 mars 2009

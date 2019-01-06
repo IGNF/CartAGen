@@ -6,8 +6,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import fr.ign.cogit.cartagen.appli.core.actions.BuildingAmalgamationAction;
-import fr.ign.cogit.geoxygene.appli.plugin.cartagen.themes.BuildingMenu;
-import fr.ign.cogit.geoxygene.appli.plugin.cartagen.themes.DataThemesGUIComponent;
 
 public class BuildingMenuCogitComplement extends JMenu {
 

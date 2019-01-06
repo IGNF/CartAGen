@@ -32,8 +32,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import fr.ign.cogit.cartagen.agents.cartacom.CartacomSpecifications;
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
+import fr.ign.cogit.cartagen.appli.core.geoxygene.CartAGenPlugin;
 import fr.ign.cogit.cartagen.core.GeneralisationSpecifications;
-import fr.ign.cogit.geoxygene.appli.plugin.cartagen.CartAGenPlugin;
 
 /**
  * @author JGaffuri

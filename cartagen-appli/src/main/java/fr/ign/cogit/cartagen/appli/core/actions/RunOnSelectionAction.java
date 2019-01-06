@@ -12,10 +12,10 @@ import org.apache.log4j.Logger;
 import fr.ign.cogit.cartagen.agents.core.AgentGeneralisationScheduler;
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
 import fr.ign.cogit.cartagen.agents.core.agent.GeographicAgentGeneralisation;
+import fr.ign.cogit.cartagen.appli.core.geoxygene.CartAGenPlugin;
+import fr.ign.cogit.cartagen.appli.core.geoxygene.selection.SelectionUtil;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
-import fr.ign.cogit.geoxygene.appli.plugin.cartagen.CartAGenPlugin;
-import fr.ign.cogit.geoxygene.appli.plugin.cartagen.selection.SelectionUtil;
 import fr.ign.cogit.geoxygene.contrib.agents.AgentObserver;
 import fr.ign.cogit.geoxygene.contrib.agents.lifecycle.TreeExplorationLifeCycle;
 
