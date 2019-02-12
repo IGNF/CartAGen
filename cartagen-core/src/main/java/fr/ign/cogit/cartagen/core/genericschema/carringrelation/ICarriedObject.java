@@ -27,4 +27,6 @@ public interface ICarriedObject extends IGeneObj {
 
   public IGeometry getCarrierGeom();
 
+  public String getName();
+
 }

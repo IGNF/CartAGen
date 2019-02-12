@@ -7,7 +7,7 @@
  * 
  * @copyright IGN
  ******************************************************************************/
-package fr.ign.cogit.cartagen.appli.utilities;
+package fr.ign.cogit.cartagen.appli.plugins;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -38,6 +38,8 @@ import fr.ign.cogit.cartagen.appli.core.geoxygene.selection.AttributeQueryAction
 import fr.ign.cogit.cartagen.appli.core.geoxygene.selection.LoadLastSelection;
 import fr.ign.cogit.cartagen.appli.core.geoxygene.selection.LoadObjectSelection;
 import fr.ign.cogit.cartagen.appli.core.geoxygene.selection.SaveObjectSelection;
+import fr.ign.cogit.cartagen.appli.utilities.ShowIniGeomAction;
+import fr.ign.cogit.cartagen.appli.utilities.ShowWKTFrame;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDB;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.geoxygene.appli.GeOxygeneApplication;

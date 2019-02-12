@@ -12,6 +12,11 @@ package fr.ign.cogit.cartagen.core.genericschema.carringrelation;
 
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkSection;
 
-public interface ICarrierNetworkSection extends INetworkSection, ICarrierObject {
+public interface ICarrierNetworkSection
+    extends INetworkSection, ICarrierObject {
 
+  public boolean switchSide(boolean leftToRight);
+
+  public void switchCarriedObject(ICarriedObject carriedLineObject,
+      int position);
 }

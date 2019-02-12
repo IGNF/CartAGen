@@ -7,7 +7,7 @@
  * 
  * @copyright IGN
  ******************************************************************************/
-package fr.ign.cogit.cartagen.appli.utilities;
+package fr.ign.cogit.cartagen.appli.plugins.process;
 
 import java.awt.Color;
 import java.awt.Dimension;

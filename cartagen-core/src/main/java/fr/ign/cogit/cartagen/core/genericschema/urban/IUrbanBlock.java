@@ -95,8 +95,6 @@ public interface IUrbanBlock extends IGeneObjSurf {
 
   public void updateGeom(IPolygon cutGeom);
 
-  public IPolygon getCityBlockGeom();
-
   /**
    * true if the block is a hole inside another block. It means that the block
    * is a part of a dead end group.

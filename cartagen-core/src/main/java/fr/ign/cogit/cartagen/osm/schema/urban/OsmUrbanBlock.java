@@ -115,11 +115,6 @@ public class OsmUrbanBlock extends OsmGeneObjSurf implements IUrbanBlock {
    * is a part of a dead end group.
    */
   private boolean holeBlock;
-  /**
-   * The City Blocks have their own geometry as several can share the same
-   * geoxygene object that is supposed to manage the geometry.
-   */
-  private IPolygon cityBlockGeom;
 
   // //////////////////////////////////////////
   // Static methods //
@@ -150,7 +145,6 @@ public class OsmUrbanBlock extends OsmGeneObjSurf implements IUrbanBlock {
     this.surroundingNetwork = new FT_FeatureCollection<INetworkSection>();
     this.isColored = false;
     this.setGeom(block.getGeom());
-    this.cityBlockGeom = (IPolygon) block.getGeom();
     this.partition = partition;
     this.net = net;
     this.aggregLevel = 0;
@@ -175,7 +169,6 @@ public class OsmUrbanBlock extends OsmGeneObjSurf implements IUrbanBlock {
     this.surroundingNetwork = new FT_FeatureCollection<INetworkSection>();
     this.isColored = false;
     this.setGeom(poly);
-    this.cityBlockGeom = poly;
     this.partition = partition;
     this.net = net;
     this.aggregLevel = 0;
@@ -202,7 +195,6 @@ public class OsmUrbanBlock extends OsmGeneObjSurf implements IUrbanBlock {
     this.setTown(town);
     this.surroundingNetwork = sections;
     this.setGeom(poly);
-    this.cityBlockGeom = poly;
     this.partition = partition;
     this.net = net;
     this.aggregLevel = 0;
@@ -225,7 +217,6 @@ public class OsmUrbanBlock extends OsmGeneObjSurf implements IUrbanBlock {
     this.isColored = false;
     this.surroundingNetwork = sections;
     this.setGeom(poly);
-    this.cityBlockGeom = poly;
     this.aggregLevel = 0;
     this.insideBlocks = new HashSet<IUrbanBlock>();
     this.axes = new HashSet<CityAxis>();
@@ -255,7 +246,6 @@ public class OsmUrbanBlock extends OsmGeneObjSurf implements IUrbanBlock {
     this.surroundingNetwork = new FT_FeatureCollection<INetworkSection>();
     this.isColored = false;
     this.setGeom(geom);
-    this.cityBlockGeom = geom;
     this.partition = partition;
     this.net = net;
     this.aggregLevel = 0;
@@ -458,7 +448,7 @@ public class OsmUrbanBlock extends OsmGeneObjSurf implements IUrbanBlock {
         return false;
       }
     }
-    if (!this.getCityBlockGeom().equals(cityBlock.getCityBlockGeom())) {
+    if (!this.getGeom().equals(cityBlock.getGeom())) {
       return false;
     }
     return super.equals(arg0);
@@ -527,14 +517,12 @@ public class OsmUrbanBlock extends OsmGeneObjSurf implements IUrbanBlock {
         .fine(this.toString() + " is aggregated to " + neighbour.toString());
 
     // create the new geometry of the block
-    IPolygon newGeom = (IPolygon) this.getCityBlockGeom()
-        .union(neighbour.getCityBlockGeom());
+    IPolygon newGeom = (IPolygon) this.getGeom().union(neighbour.getGeom());
 
     Set<IRoadLine> blockRoads = new HashSet<IRoadLine>();
 
     // mark the between roads as eliminated
-    IGeometry line = this.getCityBlockGeom()
-        .intersection(neighbour.getCityBlockGeom());
+    IGeometry line = this.getGeom().intersection(neighbour.getGeom());
     HashSet<IRoadLine> roads = new HashSet<IRoadLine>();
     // test if the intersection worked
     if (line instanceof IAggregate<?>) {
@@ -690,19 +678,9 @@ public class OsmUrbanBlock extends OsmGeneObjSurf implements IUrbanBlock {
   }
 
   @Override
-  @Transient
-  public IPolygon getGeom() {
-    return this.cityBlockGeom;
-  }
-
-  public void setCityBlockGeom(IPolygon cityBlockGeom) {
-    this.cityBlockGeom = cityBlockGeom;
-  }
-
-  @Override
   @Type(type = "fr.ign.cogit.cartagen.core.persistence.GeOxygeneGeometryUserType")
-  public IPolygon getCityBlockGeom() {
-    return this.cityBlockGeom;
+  public IPolygon getGeom() {
+    return super.getGeom();
   }
 
   // ////////////////////////////////////////

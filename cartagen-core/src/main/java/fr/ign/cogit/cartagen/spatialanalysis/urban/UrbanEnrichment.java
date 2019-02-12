@@ -294,6 +294,187 @@ public class UrbanEnrichment {
   }
 
   /**
+   * Construction of the towns of a dataset by enriching its buildings
+   * @param dataset the dataset
+   * @param quadrantSegments parameter for round parts of buffers
+   * @param buildUrbanAlignments a boolean to determine if urban alignments have
+   *          to be built
+   */
+  public static void buildTownsPartition(CartAGenDataSet dataset,
+      int quadrantSegments, boolean buildUrbanAlignments, int nbQuadTreeLevels,
+      AbstractCreationFactory factory) {
+
+    if (UrbanEnrichment.logger.isDebugEnabled()) {
+      UrbanEnrichment.logger.debug("construction des villes");
+    }
+
+    // suppression des villes existantes
+    dataset.eraseTowns();
+
+    if (dataset.getBuildings().size() == 0) {
+      return;
+    }
+
+    if (UrbanEnrichment.logger.isInfoEnabled()) {
+      UrbanEnrichment.logger.info("urban area computation");
+    }
+
+    // With union of buffers on buildings
+    IGeometry union = UrbanAreaComputationJTS.computeUrbanAreaPartition(
+        dataset.getBuildings(), nbQuadTreeLevels,
+        UrbanEnrichment.DISTANCE_BUFFER, UrbanEnrichment.DISTANCE_EROSION,
+        quadrantSegments, UrbanEnrichment.SEUIL_DP);
+
+    if (UrbanEnrichment.logger.isInfoEnabled()) {
+      UrbanEnrichment.logger.info("end of urban area computation");
+    }
+
+    if (UrbanEnrichment.logger.isInfoEnabled()) {
+      UrbanEnrichment.logger
+          .info("construction of the cities with agent hierarchy");
+    }
+
+    if (UrbanEnrichment.logger.isDebugEnabled()) {
+      UrbanEnrichment.logger.debug("construction des objets ville");
+    }
+    if (union instanceof IPolygon) {
+      dataset.getTowns().add(factory.createTown((IPolygon) union));
+    } else if (union instanceof IMultiSurface<?>) {
+      IMultiSurface<?> mp = (IMultiSurface<?>) union;
+      int nb = mp.size();
+      for (int i = 0; i < nb; i++) {
+        if (UrbanEnrichment.logger.isInfoEnabled()) {
+          UrbanEnrichment.logger.info("   construction ville: " + i + "/" + nb);
+        }
+        if (mp.get(i).area() < GeneralisationSpecifications.TOWN_MIN_AREA)
+          continue;
+        ITown town = factory.createTown((IPolygon) mp.get(i));
+        dataset.getTowns().add(town);
+      }
+    } else {
+      UrbanEnrichment.logger.error(
+          "Impossible de creer ville. Type de geometrie non traite: " + union);
+      return;
+    }
+
+    // remplit carte topo avec les troncons
+    CarteTopo carteTopo = new CarteTopo("cartetopo");
+    for (INetwork res : UrbanEnrichment.getStructuringNetworks(dataset)) {
+      if (res.getSections().size() > 0) {
+        carteTopo.importClasseGeo(res.getSections(), true);
+      }
+    }
+
+    // remplit carte topo avec limites de villes
+    IFeatureCollection<DefaultFeature> contours = new FT_FeatureCollection<DefaultFeature>();
+    for (ITown ville : dataset.getTowns()) {
+      DefaultFeature contour = new DefaultFeature();
+      contour.setGeom((ville.getGeom()).exteriorLineString());
+      contours.add(contour);
+    }
+    carteTopo.importClasseGeo(contours, true);
+    // Set infinite face to true for face creation, because of a bug if not set.
+    // Intended to be removed when the bug is corrected
+    carteTopo.setBuildInfiniteFace(true);
+
+    if (UrbanEnrichment.logger.isInfoEnabled()) {
+      UrbanEnrichment.logger.info("creating nodes");
+    }
+    carteTopo.creeNoeudsManquants(1.0);
+
+    if (UrbanEnrichment.logger.isInfoEnabled()) {
+      UrbanEnrichment.logger.info("merging nodes");
+    }
+    carteTopo.fusionNoeuds(1.0);
+
+    if (UrbanEnrichment.logger.isInfoEnabled()) {
+      UrbanEnrichment.logger.info("filtering duplicated edges");
+    }
+    carteTopo.filtreArcsDoublons();
+
+    if (UrbanEnrichment.logger.isInfoEnabled()) {
+      UrbanEnrichment.logger.info("making planar");
+    }
+    carteTopo.rendPlanaire(1.0);
+
+    if (UrbanEnrichment.logger.isInfoEnabled()) {
+      UrbanEnrichment.logger.info("merging duplicated nodes");
+    }
+    carteTopo.fusionNoeuds(1.0);
+
+    if (UrbanEnrichment.logger.isInfoEnabled()) {
+      UrbanEnrichment.logger.info("filtering duplicated edges");
+    }
+    carteTopo.filtreArcsDoublons();
+
+    if (UrbanEnrichment.logger.isInfoEnabled()) {
+      UrbanEnrichment.logger.info("creating topological faces");
+    }
+    carteTopo.creeTopologieFaces();
+
+    if (UrbanEnrichment.logger.isDebugEnabled()) {
+      UrbanEnrichment.logger
+          .debug(carteTopo.getListeFaces().size() + " faces trouvées");
+    }
+
+    if (UrbanEnrichment.logger.isDebugEnabled()) {
+      UrbanEnrichment.logger
+          .debug("construction de l'index spatial sur les faces");
+    }
+    carteTopo.getPopFaces().initSpatialIndex(Tiling.class, false);
+
+    // MAJ layerManager
+
+    if (UrbanEnrichment.logger.isDebugEnabled()) {
+      UrbanEnrichment.logger.debug("construction des ilots des "
+          + dataset.getTowns().size() + " villes");
+    }
+    for (ITown ville : dataset.getTowns()) {
+
+      // Lien de la ville avec ses tronçons de route
+      IFeatureCollection<IRoadLine> roads = new FT_FeatureCollection<IRoadLine>();
+      for (IRoadLine section : dataset.getRoads()) {
+        if (section.getGeom().intersects(ville.getGeom())) {
+          roads.add(section);
+        }
+      }
+      StreetNetwork net = new StreetNetwork(ville.getGeom(), roads,
+          new FT_FeatureCollection<IRoadStroke>(),
+          new FT_FeatureCollection<IRoundAbout>(),
+          new FT_FeatureCollection<IBranchingCrossroad>(),
+          new FT_FeatureCollection<IDualCarriageWay>(),
+          new FT_FeatureCollection<IUrbanBlock>());
+      ville.setStreetNetwork(net);
+
+      // Construction des ilots
+      if (UrbanEnrichment.logger.isInfoEnabled()) {
+        UrbanEnrichment.logger.info("construction des ilots de " + ville);
+      }
+      // ville.construireIlotsPolygonizerJTS();
+      // ville.construireIlotsCarteTopoGeoxygene();
+      UrbanEnrichment.buildBlocksInTown(ville, dataset, carteTopo,
+          buildUrbanAlignments, factory);
+
+      // Lien de la ville avec ses impasses
+      HashSet<DeadEndGroup> deadEnds = DeadEndGroup.buildFromRoads(roads,
+          ville.getGeom(), carteTopo);
+      IFeatureCollection<DeadEndGroup> deadEndColl = new FT_FeatureCollection<DeadEndGroup>();
+      for (DeadEndGroup deadEnd : deadEnds) {
+        deadEndColl.add(deadEnd);
+      }
+      ville.setDeadEnds(deadEndColl);
+
+    }
+
+    // nettoyage
+    carteTopo.nettoyer();
+
+    if (UrbanEnrichment.logger.isInfoEnabled()) {
+      UrbanEnrichment.logger.info("end of the construction of the cities");
+    }
+  }
+
+  /**
    * Builds the inner blocks of a town based on a topo map
    * @param town
    * @param carteTopo

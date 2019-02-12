@@ -13,7 +13,9 @@
 package fr.ign.cogit.cartagen.spatialanalysis.urban;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,13 +27,18 @@ import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.operation.buffer.BufferParameters;
 
+import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
 import fr.ign.cogit.cartagen.util.SpatialQuery;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.feature.IFeatureCollection;
+import fr.ign.cogit.geoxygene.api.feature.IPopulation;
+import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IEnvelope;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
 import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IAggregate;
 import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IMultiSurface;
 import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
+import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPosition;
+import fr.ign.cogit.geoxygene.spatial.geomengine.GeometryEngine;
 import fr.ign.cogit.geoxygene.util.algo.JtsAlgorithms;
 import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.CommonAlgorithmsFromCartAGen;
 import fr.ign.cogit.geoxygene.util.conversion.AdapterFactory;
@@ -41,8 +48,156 @@ import fr.ign.cogit.geoxygene.util.conversion.AdapterFactory;
  * 
  */
 public class UrbanAreaComputationJTS {
-  private static Logger logger = Logger.getLogger(UrbanAreaComputationJTS.class
-      .getName());
+  private static Logger logger = Logger
+      .getLogger(UrbanAreaComputationJTS.class.getName());
+
+  /**
+   * 
+   * @param buildings the population of buildings to work on
+   * @param nbQuadTreeLevels the number of quad tree levels in the partition, 1
+   *          means 4 cells, 2 means 16, 3 means 64 cells...
+   * @param distanceBuffer the buffer distance to extend buildings
+   * @param distanceErosion the erosion is performed afterwards, to reduce the
+   *          urban area growth due to the buffers
+   * @param quadrantSegments the quadrant segments used for all dilation and
+   *          erosion transformations.
+   * @param douglasDistance the Douglas&Peucker filter used on the urban area to
+   *          reduce the number of vertices.
+   * @return
+   */
+  public static IGeometry computeUrbanAreaPartition(
+      IPopulation<IBuilding> buildings, int nbQuadTreeLevels,
+      double distanceBuffer, double distanceErosion, int quadrantSegments,
+      double douglasDistance) {
+
+    // ------------------------------------------------
+    // first create a grid on top of the buildings
+    IEnvelope totalEnv = buildings.envelope();
+    List<IEnvelope> grid = new ArrayList<>();
+    // first add upper right cell
+    grid.add(GeometryEngine.getFactory()
+        .createEnvelope(totalEnv.getUpperCorner(), totalEnv.center()));
+    // then, add upper left cell
+    grid.add(GeometryEngine.getFactory().createEnvelope(
+        new DirectPosition(totalEnv.center().getX(),
+            totalEnv.getUpperCorner().getY()),
+        new DirectPosition(totalEnv.getLowerCorner().getX(),
+            totalEnv.center().getY())));
+    // then, add lower right cell
+    grid.add(GeometryEngine.getFactory().createEnvelope(
+        new DirectPosition(totalEnv.getUpperCorner().getX(),
+            totalEnv.center().getY()),
+        new DirectPosition(totalEnv.center().getX(),
+            totalEnv.getLowerCorner().getY())));
+    // finally add lower left cell
+    grid.add(GeometryEngine.getFactory().createEnvelope(totalEnv.center(),
+        totalEnv.getLowerCorner()));
+    if (nbQuadTreeLevels > 1) {
+      for (int i = 1; i < nbQuadTreeLevels; i++) {
+        List<IEnvelope> newGrid = new ArrayList<>();
+        for (IEnvelope cell : grid) {
+          // first add upper right cell
+          newGrid.add(GeometryEngine.getFactory()
+              .createEnvelope(cell.getUpperCorner(), cell.center()));
+          // then, add upper left cell
+          newGrid.add(GeometryEngine.getFactory().createEnvelope(
+              new DirectPosition(cell.center().getX(),
+                  cell.getUpperCorner().getY()),
+              new DirectPosition(cell.getLowerCorner().getX(),
+                  cell.center().getY())));
+          // then, add lower right cell
+          newGrid.add(GeometryEngine.getFactory().createEnvelope(
+              new DirectPosition(cell.getUpperCorner().getX(),
+                  cell.center().getY()),
+              new DirectPosition(cell.center().getX(),
+                  cell.getLowerCorner().getY())));
+          // finally add lower left cell
+          newGrid.add(GeometryEngine.getFactory().createEnvelope(cell.center(),
+              cell.getLowerCorner()));
+        }
+        // clear the current grid
+        grid.clear();
+        // put the new cells into the grid
+        grid.addAll(newGrid);
+      }
+    }
+
+    // loop on the grid to compute the urban area inside each (without the
+    // erosion step...)
+    Geometry[] gridBuffers = new Geometry[grid.size()];
+    int j = 0;
+    for (IEnvelope cell : grid) {
+      Collection<IBuilding> cellBuildings = buildings.select(cell);
+
+      // create the JTS geometry collection
+      Geometry[] bufferGeoms = new Geometry[cellBuildings.size()];
+      GeometryFactory gf = new GeometryFactory();
+      int i = 0;
+      if (UrbanAreaComputationJTS.logger.isDebugEnabled()) {
+        UrbanAreaComputationJTS.logger
+            .debug("construction des " + cellBuildings.size() + " buffers");
+      }
+      for (IBuilding build : cellBuildings) {
+        try {
+          bufferGeoms[i++] = AdapterFactory.toGeometry(gf, build.getGeom())
+              .buffer(distanceBuffer, quadrantSegments,
+                  BufferParameters.CAP_ROUND);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+      System.gc();
+
+      UrbanAreaComputationJTS.logger.debug("fusion des buffers");
+      Geometry union = JtsAlgorithms.union(bufferGeoms);
+      bufferGeoms = null;
+
+      UrbanAreaComputationJTS.logger.debug("filtre dp");
+      union = JtsAlgorithms.filtreDouglasPeucker(union, douglasDistance);
+
+      gridBuffers[j] = union;
+      j++;
+    }
+
+    // then, merge the geomtries from all cells
+    Geometry totalUnion = JtsAlgorithms.union(gridBuffers);
+    gridBuffers = null;
+
+    UrbanAreaComputationJTS.logger.debug("closing");
+    totalUnion = JtsAlgorithms.fermeture(totalUnion, distanceErosion,
+        quadrantSegments, BufferParameters.CAP_ROUND);
+
+    UrbanAreaComputationJTS.logger.debug("filtre dp");
+    totalUnion = JtsAlgorithms.filtreDouglasPeucker(totalUnion,
+        douglasDistance);
+
+    UrbanAreaComputationJTS.logger.debug("fusion");
+    totalUnion = totalUnion.buffer(0);
+
+    UrbanAreaComputationJTS.logger.debug("delete holes");
+    if (totalUnion instanceof Polygon) {
+      totalUnion = JtsAlgorithms.supprimeTrous((Polygon) totalUnion);
+    } else if (totalUnion instanceof MultiPolygon) {
+      totalUnion = JtsAlgorithms.supprimeTrous((MultiPolygon) totalUnion);
+    } else {
+      UrbanAreaComputationJTS.logger.error(
+          "Impossible de creer tache urbaine. Type de geometrie non traite: "
+              + totalUnion);
+      return null;
+    }
+
+    // pour supprimer les polygones qui sont dans des trous d'autres polygones
+    totalUnion = totalUnion.buffer(0);
+
+    try {
+      IGeometry union_ = AdapterFactory.toGM_Object(totalUnion);
+      return union_;
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
 
   public static IGeometry calculTacheUrbaine(ArrayList<IGeometry> geoms,
       double distanceBuffer, double distanceErosion, int quadrantSegments,
@@ -53,13 +208,13 @@ public class UrbanAreaComputationJTS {
     GeometryFactory gf = new GeometryFactory();
     int i = 0;
     if (UrbanAreaComputationJTS.logger.isDebugEnabled()) {
-      UrbanAreaComputationJTS.logger.debug("construction des " + geoms.size()
-          + " buffers");
+      UrbanAreaComputationJTS.logger
+          .debug("construction des " + geoms.size() + " buffers");
     }
     for (IGeometry geom : geoms) {
       if (UrbanAreaComputationJTS.logger.isInfoEnabled()) {
-        UrbanAreaComputationJTS.logger.info("   buffers des objets: " + i + "/"
-            + geoms.size());
+        UrbanAreaComputationJTS.logger
+            .info("   buffers des objets: " + i + "/" + geoms.size());
       }
       try {
         bufferGeoms[i++] = AdapterFactory.toGeometry(gf, geom).buffer(
@@ -93,8 +248,8 @@ public class UrbanAreaComputationJTS {
     } else if (union instanceof MultiPolygon) {
       union = JtsAlgorithms.supprimeTrous((MultiPolygon) union);
     } else {
-      UrbanAreaComputationJTS.logger
-          .error("Impossible de creer tache urbaine. Type de geometrie non traite: "
+      UrbanAreaComputationJTS.logger.error(
+          "Impossible de creer tache urbaine. Type de geometrie non traite: "
               + union);
       return null;
     }
@@ -121,13 +276,13 @@ public class UrbanAreaComputationJTS {
     GeometryFactory gf = new GeometryFactory();
     int i = 0;
     if (UrbanAreaComputationJTS.logger.isDebugEnabled()) {
-      UrbanAreaComputationJTS.logger.debug("construction des " + geoms.size()
-          + " buffers");
+      UrbanAreaComputationJTS.logger
+          .debug("construction des " + geoms.size() + " buffers");
     }
     for (IGeometry geom : geoms) {
       if (UrbanAreaComputationJTS.logger.isInfoEnabled()) {
-        UrbanAreaComputationJTS.logger.info("   buffers des objets: " + i + "/"
-            + geoms.size());
+        UrbanAreaComputationJTS.logger
+            .info("   buffers des objets: " + i + "/" + geoms.size());
       }
       try {
         bufferGeoms[i++] = AdapterFactory.toGeometry(gf, geom).buffer(
@@ -161,8 +316,8 @@ public class UrbanAreaComputationJTS {
     } else if (union instanceof MultiPolygon) {
       union = JtsAlgorithms.supprimeTrous((MultiPolygon) union, holeMinArea);
     } else {
-      UrbanAreaComputationJTS.logger
-          .error("Impossible de creer tache urbaine. Type de geometrie non traite: "
+      UrbanAreaComputationJTS.logger.error(
+          "Impossible de creer tache urbaine. Type de geometrie non traite: "
               + union);
       return null;
     }
@@ -223,13 +378,13 @@ public class UrbanAreaComputationJTS {
     GeometryFactory gf = new GeometryFactory();
     int i = 0;
     if (UrbanAreaComputationJTS.logger.isDebugEnabled()) {
-      UrbanAreaComputationJTS.logger.debug("construction des "
-          + citinessIndices.size() + " buffers");
+      UrbanAreaComputationJTS.logger
+          .debug("construction des " + citinessIndices.size() + " buffers");
     }
     for (IFeature feat : citinessIndices.keySet()) {
       if (UrbanAreaComputationJTS.logger.isInfoEnabled()) {
-        UrbanAreaComputationJTS.logger.info("   buffers des objets: " + i + "/"
-            + citinessIndices.size());
+        UrbanAreaComputationJTS.logger
+            .info("   buffers des objets: " + i + "/" + citinessIndices.size());
       }
       try {
         double citiness = citinessIndices.get(feat);
@@ -263,8 +418,8 @@ public class UrbanAreaComputationJTS {
     } else if (union instanceof MultiPolygon) {
       union = JtsAlgorithms.supprimeTrous((MultiPolygon) union, holeMinArea);
     } else {
-      UrbanAreaComputationJTS.logger
-          .error("Impossible de creer tache urbaine. Type de geometrie non traite: "
+      UrbanAreaComputationJTS.logger.error(
+          "Impossible de creer tache urbaine. Type de geometrie non traite: "
               + union);
       return null;
     }

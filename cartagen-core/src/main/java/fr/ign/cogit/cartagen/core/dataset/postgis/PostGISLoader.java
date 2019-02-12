@@ -18,8 +18,6 @@ import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
 import fr.ign.cogit.cartagen.core.dataset.postgis.MappingXMLParser.AttributeFilter;
 import fr.ign.cogit.cartagen.core.genericschema.AbstractCreationFactory;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
-import fr.ign.cogit.cartagen.core.genericschema.urban.ITown;
-import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanBlock;
 import fr.ign.cogit.cartagen.core.persistence.GeOxygeneGeometryUserType;
 import fr.ign.cogit.cartagen.mrdb.scalemaster.GeometryType;
 import fr.ign.cogit.geoxygene.api.feature.IPopulation;
@@ -120,7 +118,7 @@ public class PostGISLoader {
   }
 
   // *** loadData ***
-  // this fonction manages the mapping between PostGIS layer and Calac schema
+  // this fonction manages the mapping between PostGIS layer and CartAGen schema
   public void loadData(CartAGenDataSet dataset, String layer,
       boolean createGeoClass) {
     AbstractCreationFactory factory = this.mapping.getGeneObjImplementation()
@@ -189,6 +187,10 @@ public class PostGISLoader {
         // For each part, create a Java element
         for (Integer i = 0; i < listGeom.size(); i++) {
           IGeometry geomListPart = listGeom.get(i);
+          if (geomListPart == null)
+            continue;
+          if (geomListPart.isEmpty())
+            continue;
           // Create the Calac object
           IGeneObj element = (IGeneObj) method.invoke(factory);
           // affecte la géométrie
@@ -229,7 +231,6 @@ public class PostGISLoader {
             } catch (IllegalArgumentException e) {
               e.printStackTrace();
             }
-
           }
 
           // check if initialGeom is filled
@@ -237,12 +238,13 @@ public class PostGISLoader {
             element.setInitialGeom(geom);
 
           // if existing towns/blocks
-          if (element instanceof ITown)
-            ((ITown) element).initComponents();
-          else {
-            if (element instanceof IUrbanBlock)
-              ((IUrbanBlock) element).initComponents();
-          }
+          // if (element instanceof ITown)
+          // ((ITown) element).initComponents();
+          // else {
+          // if (element instanceof IUrbanBlock)
+          // ((IUrbanBlock) element).initComponents();
+          // }
+
           // Add this object to the population
           pop.add(element);
         }
@@ -271,8 +273,9 @@ public class PostGISLoader {
       }
 
       System.out.println("nb d'objets chargés = " + w);
-    } catch (SQLException | IllegalArgumentException
-        | IllegalAccessException ex) {
+    } catch (SQLException | IllegalArgumentException |
+
+        IllegalAccessException ex) {
       ex.printStackTrace();
     }
 

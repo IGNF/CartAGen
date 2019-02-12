@@ -353,12 +353,12 @@ public class CartAGenPlugin implements GeOxygeneApplicationPlugin, ActionListene
         this.currentGeneObjImpl = currentGeneObjImpl;
     }
 
-    public HashMap<String, ProjectFrame> getMapDbFrame() {
-        return mapDbFrame;
-    }
-
     public void setMapDbFrame(HashMap<String, ProjectFrame> mapDbFrame) {
         this.mapDbFrame = mapDbFrame;
+    }
+
+    public HashMap<String, ProjectFrame> getMapDbFrame() {
+        return mapDbFrame;
     }
 
     public GeneObjImplementation getCurrentGeneObjImpl() {

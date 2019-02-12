@@ -1909,10 +1909,9 @@ public class StreetNetwork extends AbstractFeature {
         continue;
       }
       // now test if geom is included in neighbour geom
-      IPolygon neighGeom = block.getNeighbours().iterator().next()
-          .getCityBlockGeom();
+      IPolygon neighGeom = block.getNeighbours().iterator().next().getGeom();
       IPolygon neighNoHole = new GM_Polygon(neighGeom.exteriorLineString());
-      if (block.getCityBlockGeom().within(neighNoHole)) {
+      if (block.getGeom().within(neighNoHole)) {
         block.setHoleBlock(true);
         continue;
       }
