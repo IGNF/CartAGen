@@ -28,7 +28,7 @@ CartACom generalization to 1:50k [(Duchêne et al. 2012)][16]:
 Getting Started
 -------------
 
-- Install CartAGen by cloning it in your Java IDE (no executable version yet)
+- [Install CartAGen by cloning it in your Java IDE (no executable version yet)][21]
 
 - Basic use of CartAGen:
 
@@ -93,3 +93,4 @@ Implemented generalization algorithms
 [18]: docs/tuto_scalemaster.md
 [19]: docs/results.md
 [20]: docs/on-going_projects.md
+[21]: https://github.com/IGNF/CartAGen/wiki/installation_guide
