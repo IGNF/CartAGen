@@ -20,9 +20,8 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
-
-import com.vividsolutions.jts.io.WKBReader;
-import com.vividsolutions.jts.io.WKBWriter;
+import org.geotools.data.postgis.WKBReader;
+import org.locationtech.jts.io.WKBWriter;
 
 /**
  * @author JGaffuri

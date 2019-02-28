@@ -31,8 +31,7 @@ import javax.swing.Action;
 import javax.swing.JMenu;
 
 import org.apache.log4j.Logger;
-
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 import fr.ign.cogit.cartagen.agents.core.AgentGeneralisationScheduler;
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;

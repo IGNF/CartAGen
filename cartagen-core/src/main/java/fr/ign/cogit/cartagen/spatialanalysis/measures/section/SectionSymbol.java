@@ -10,8 +10,7 @@
 package fr.ign.cogit.cartagen.spatialanalysis.measures.section;
 
 import org.apache.log4j.Logger;
-
-import com.vividsolutions.jts.operation.buffer.BufferParameters;
+import org.locationtech.jts.operation.buffer.BufferParameters;
 
 import fr.ign.cogit.cartagen.core.Legend;
 import fr.ign.cogit.cartagen.core.SLDUtilCartagen;

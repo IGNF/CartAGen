@@ -18,8 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-
-import com.vividsolutions.jts.operation.buffer.BufferParameters;
+import org.locationtech.jts.operation.buffer.BufferParameters;
 
 import fr.ign.cogit.cartagen.core.GeneralisationSpecifications;
 import fr.ign.cogit.cartagen.core.Legend;

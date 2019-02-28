@@ -29,10 +29,9 @@ import org.geotools.data.shapefile.shp.ShapefileReader;
 import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.SchemaException;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
-
-import com.vividsolutions.jts.geom.GeometryFactory;
 
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDB;
 import fr.ign.cogit.cartagen.core.dataset.GeographicClass;

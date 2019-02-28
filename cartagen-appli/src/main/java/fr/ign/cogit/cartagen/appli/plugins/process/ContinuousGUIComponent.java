@@ -50,10 +50,9 @@ import org.geotools.data.shapefile.dbf.DbaseFileReader;
 import org.geotools.data.shapefile.files.ShpFiles;
 import org.geotools.data.shapefile.shp.ShapefileReader;
 import org.geotools.data.shapefile.shp.ShapefileReader.Record;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.xml.sax.SAXException;
-
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
 
 import fr.ign.cogit.cartagen.algorithms.polygon.VisvalingamWhyatt;
 import fr.ign.cogit.cartagen.appli.core.geoxygene.selection.LoadSelectionFrame;
