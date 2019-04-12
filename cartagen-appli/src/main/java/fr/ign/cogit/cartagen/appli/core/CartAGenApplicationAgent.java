@@ -27,7 +27,7 @@ import fr.ign.cogit.geoxygene.spatial.geomengine.AbstractGeometryEngine;
 import fr.ign.cogit.geoxygene.spatial.geomengine.GeometryEngine;
 
 /**
- * Class for the Semiotics, Legend Conception and Legend improving Application.
+ * Class for the CartAGen GUI.
  * 
  * @author GTouya
  */
@@ -57,6 +57,8 @@ public class CartAGenApplicationAgent extends GeOxygeneApplication implements Ag
      */
     private void reorganizeMenus() {
         // System.out.println("im here");
+        CartAGenPlugin plugin = new CartAGenPlugin();
+        plugin.initialize(this);
         JMenu plugIns = new JMenu("PlugIns GeOx");
         plugIns.setFont(this.getMainFrame().getMenuBar().getFont());
         this.getMainFrame().getMenuBar().add(plugIns, 2);
