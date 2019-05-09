@@ -20,126 +20,131 @@ import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.CommonAlgorithmsFrom
 
 public class YCrossRoad extends SimpleCrossRoad {
 
-  private TronconDeRoute slipRoad;
-  private double orientation;
+	private TronconDeRoute slipRoad;
+	private double orientation;
 
-  public static boolean isYNode(NoeudRoutier node, double flatAngle,
-      double yAngle) {
+	public static boolean isYNode(NoeudRoutier node, double flatAngle, double yAngle) {
 
-    int degree = node.getArcsEntrants().size() + node.getArcsSortants().size();
-    // test the node degree
-    if (degree != 3) {
-      return false;
-    }
+		if (node == null)
+			return false;
 
-    // list the roads connected to the node
-    ArrayList<ArcReseau> roads = new ArrayList<ArcReseau>();
-    roads.addAll(node.getArcsEntrants());
-    roads.addAll(node.getArcsSortants());
-    // put all the roads one more time in the list
-    roads.addAll(roads);
+		int nbEdgesIn = 0;
+		if (node.getArcsEntrants() != null)
+			nbEdgesIn = node.getArcsEntrants().size();
 
-    // loop on the three roads to find out a flat angle
-    for (int i = 0; i < 3; i++) { // (i) = the supposed minor road
-      // get the three roads
-      ArcReseau minorRoad = roads.get(i);
-      ArcReseau majorRoad1 = roads.get(i + 1);
-      ArcReseau majorRoad2 = roads.get(i + 2);
+		int nbEdgesOut = 0;
+		if (node.getArcsSortants() != null)
+			nbEdgesOut = node.getArcsSortants().size();
 
-      // compute the possible flat angle
-      double angle = Math.abs(CommonAlgorithmsFromCartAGen.angleBetween2Lines(
-          (GM_LineString) majorRoad1.getGeom(),
-          (GM_LineString) majorRoad2.getGeom()));
-      double angleDiff = Math.PI - angle;
-      // test if the angle difference is greater than threshold
-      if (angleDiff > flatAngle) {
-        continue;
-      }
+		int degree = nbEdgesIn + nbEdgesOut;
+		// test the node degree
+		if (degree != 3) {
+			return false;
+		}
 
-      // compute the angle with the minor road
-      double angleY = Math.abs(CommonAlgorithmsFromCartAGen.angleBetween2Lines(
-          (GM_LineString) majorRoad1.getGeom(),
-          (GM_LineString) minorRoad.getGeom()));
-      // test if the angle is less than threshold
-      if (angleY > yAngle) {
-        continue;
-      }
+		// list the roads connected to the node
+		ArrayList<ArcReseau> roads = new ArrayList<ArcReseau>();
+		roads.addAll(node.getArcsEntrants());
+		roads.addAll(node.getArcsSortants());
+		// put all the roads one more time in the list
+		roads.addAll(roads);
 
-      // if arrived here, node is a Y-Node
-      return true;
-    }
-    // it is not a T-Node
-    return false;
-  }
+		// loop on the three roads to find out a flat angle
+		for (int i = 0; i < 3; i++) { // (i) = the supposed minor road
+			// get the three roads
+			ArcReseau minorRoad = roads.get(i);
+			ArcReseau majorRoad1 = roads.get(i + 1);
+			ArcReseau majorRoad2 = roads.get(i + 2);
 
-  public YCrossRoad(NoeudRoutier node, double flatAngle, double yAngle) {
-    super(node.getGeom());
-    this.setNode(node);
-    this.setDegree(node.getArcsEntrants().size()
-        + node.getArcsSortants().size());
-    this.setRoads(new HashSet<TronconDeRoute>());
-    // list the roads connected to the node
-    ArrayList<ArcReseau> roads = new ArrayList<ArcReseau>();
-    for (ArcReseau road : node.getArcsEntrants()) {
-      roads.add(road);
-      this.getRoads().add((TronconDeRoute) road);
-    }
-    for (ArcReseau road : node.getArcsSortants()) {
-      roads.add(road);
-      this.getRoads().add((TronconDeRoute) road);
-    }
-    // put all the roads one more time in the list
-    roads.addAll(roads);
+			// compute the possible flat angle
+			double angle = Math.abs(CommonAlgorithmsFromCartAGen
+					.angleBetween2Lines((GM_LineString) majorRoad1.getGeom(), (GM_LineString) majorRoad2.getGeom()));
+			double angleDiff = Math.PI - angle;
+			// test if the angle difference is greater than threshold
+			if (angleDiff > flatAngle) {
+				continue;
+			}
 
-    // loop on the three roads to find out a flat angle
-    for (int i = 0; i < 3; i++) { // (i) = the supposed minor road
-      // get the three roads
-      ArcReseau minorRoad = roads.get(i);
-      ArcReseau majorRoad1 = roads.get(i + 1);
-      ArcReseau majorRoad2 = roads.get(i + 2);
+			// compute the angle with the minor road
+			double angleY = Math.abs(CommonAlgorithmsFromCartAGen
+					.angleBetween2Lines((GM_LineString) majorRoad1.getGeom(), (GM_LineString) minorRoad.getGeom()));
+			// test if the angle is less than threshold
+			if (angleY > yAngle) {
+				continue;
+			}
 
-      // compute the possible flat angle
-      double angle = Math.abs(CommonAlgorithmsFromCartAGen.angleBetween2Lines(
-          (GM_LineString) majorRoad1.getGeom(),
-          (GM_LineString) majorRoad2.getGeom()));
-      double angleDiff = Math.PI - angle;
-      // test if the angle difference is greater than threshold
-      if (angleDiff > flatAngle) {
-        continue;
-      }
+			// if arrived here, node is a Y-Node
+			return true;
+		}
+		// it is not a T-Node
+		return false;
+	}
 
-      // compute the angle with the minor road
-      double angleY = Math.abs(CommonAlgorithmsFromCartAGen.angleBetween2Lines(
-          (GM_LineString) majorRoad1.getGeom(),
-          (GM_LineString) minorRoad.getGeom()));
-      // test if the angle is less than threshold
-      if (angleY > yAngle) {
-        continue;
-      }
+	public YCrossRoad(NoeudRoutier node, double flatAngle, double yAngle) {
+		super(node.getGeom());
+		this.setNode(node);
+		this.setDegree(node.getArcsEntrants().size() + node.getArcsSortants().size());
+		this.setRoads(new HashSet<TronconDeRoute>());
+		// list the roads connected to the node
+		ArrayList<ArcReseau> roads = new ArrayList<ArcReseau>();
+		for (ArcReseau road : node.getArcsEntrants()) {
+			roads.add(road);
+			this.getRoads().add((TronconDeRoute) road);
+		}
+		for (ArcReseau road : node.getArcsSortants()) {
+			roads.add(road);
+			this.getRoads().add((TronconDeRoute) road);
+		}
+		// put all the roads one more time in the list
+		roads.addAll(roads);
 
-      // if arrived here, node is a Y-Node
-      this.setSlipRoad((TronconDeRoute) minorRoad);
-      this.setOrientation(CommonAlgorithmsFromCartAGen.lineAbsoluteOrientation(
-          (GM_LineString) minorRoad.getGeom(), node.getGeom().getPosition())
-          .getValeur());
-      this.setCoord(node.getGeom().getPosition());
-      break;
-    }
-  }
+		// loop on the three roads to find out a flat angle
+		for (int i = 0; i < 3; i++) { // (i) = the supposed minor road
+			// get the three roads
+			ArcReseau minorRoad = roads.get(i);
+			ArcReseau majorRoad1 = roads.get(i + 1);
+			ArcReseau majorRoad2 = roads.get(i + 2);
 
-  public void setSlipRoad(TronconDeRoute slipRoad) {
-    this.slipRoad = slipRoad;
-  }
+			// compute the possible flat angle
+			double angle = Math.abs(CommonAlgorithmsFromCartAGen
+					.angleBetween2Lines((GM_LineString) majorRoad1.getGeom(), (GM_LineString) majorRoad2.getGeom()));
+			double angleDiff = Math.PI - angle;
+			// test if the angle difference is greater than threshold
+			if (angleDiff > flatAngle) {
+				continue;
+			}
 
-  public TronconDeRoute getSlipRoad() {
-    return this.slipRoad;
-  }
+			// compute the angle with the minor road
+			double angleY = Math.abs(CommonAlgorithmsFromCartAGen
+					.angleBetween2Lines((GM_LineString) majorRoad1.getGeom(), (GM_LineString) minorRoad.getGeom()));
+			// test if the angle is less than threshold
+			if (angleY > yAngle) {
+				continue;
+			}
 
-  public void setOrientation(double orientation) {
-    this.orientation = orientation;
-  }
+			// if arrived here, node is a Y-Node
+			this.setSlipRoad((TronconDeRoute) minorRoad);
+			this.setOrientation(CommonAlgorithmsFromCartAGen
+					.lineAbsoluteOrientation((GM_LineString) minorRoad.getGeom(), node.getGeom().getPosition())
+					.getValeur());
+			this.setCoord(node.getGeom().getPosition());
+			break;
+		}
+	}
 
-  public double getOrientation() {
-    return this.orientation;
-  }
+	public void setSlipRoad(TronconDeRoute slipRoad) {
+		this.slipRoad = slipRoad;
+	}
+
+	public TronconDeRoute getSlipRoad() {
+		return this.slipRoad;
+	}
+
+	public void setOrientation(double orientation) {
+		this.orientation = orientation;
+	}
+
+	public double getOrientation() {
+		return this.orientation;
+	}
 }

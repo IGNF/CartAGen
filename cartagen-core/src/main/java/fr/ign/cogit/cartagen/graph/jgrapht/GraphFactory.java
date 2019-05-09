@@ -22,74 +22,78 @@ import fr.ign.cogit.geoxygene.api.feature.IFeature;
 
 /**
  * A factory to build JGraphT graphs out of GeOxygene/CartAGen features.
+ * 
  * @author GTouya
  * 
  */
 public class GraphFactory {
 
-  /**
-   * Build a pseudo gaph, i.e. undirected weighted graph, with possible loops
-   * and multiple edges, from a CartAGen {@link INetwork} instance, and a
-   * {@link GraphWeighter} instance.
-   * @param network
-   * @param graphWeighter
-   * @return
-   */
-  public static WeightedPseudograph<INetworkNode, DefaultWeightedEdge> buildGraphFromNetwork(
-      INetwork network, GraphWeighter graphWeighter) {
-    WeightedPseudograph<INetworkNode, DefaultWeightedEdge> graph = new WeightedPseudograph<INetworkNode, DefaultWeightedEdge>(
-        DefaultWeightedEdge.class);
+	/**
+	 * Build a pseudo gaph, i.e. undirected weighted graph, with possible loops and
+	 * multiple edges, from a CartAGen {@link INetwork} instance, and a
+	 * {@link GraphWeighter} instance.
+	 * 
+	 * @param network
+	 * @param graphWeighter
+	 * @return
+	 */
+	public static WeightedPseudograph<INetworkNode, DefaultWeightedEdge> buildGraphFromNetwork(INetwork network,
+			GraphWeighter graphWeighter) {
+		WeightedPseudograph<INetworkNode, DefaultWeightedEdge> graph = new WeightedPseudograph<INetworkNode, DefaultWeightedEdge>(
+				DefaultWeightedEdge.class);
 
-    // first create nodes
-    for (INetworkNode node : network.getNodes()) {
-      graph.addVertex(node);
-    }
+		// first create nodes
+		for (INetworkNode node : network.getNodes()) {
+			graph.addVertex(node);
+		}
 
-    // then, create edges
-    for (INetworkSection section : network.getSections()) {
-      double weight = graphWeighter.getEdgeWeight(section);
-      DefaultWeightedEdge edge = graph.addEdge(section.getInitialNode(),
-          section.getFinalNode());
-      graph.setEdgeWeight(edge, weight);
-    }
+		// then, create edges
+		for (INetworkSection section : network.getSections()) {
+			double weight = graphWeighter.getEdgeWeight(section);
+			if (!network.getNodes().contains(section.getInitialNode()))
+				continue;
+			if (!network.getNodes().contains(section.getFinalNode()))
+				continue;
+			DefaultWeightedEdge edge = graph.addEdge(section.getInitialNode(), section.getFinalNode());
+			graph.setEdgeWeight(edge, weight);
+		}
 
-    return graph;
-  }
+		return graph;
+	}
 
-  /**
-   * Same as buildGraphFromNetwork but returns a {@link GeographicNetworkGraph}
-   * instead of just the graph, which can be helpful to get the {@link IFeature}
-   * instances related to a graph edge.
-   * @param network
-   * @param graphWeighter
-   * @return
-   */
-  public static GeographicNetworkGraph<INetworkNode, DefaultWeightedEdge, INetworkSection> buildGeoGraphFromNetwork(
-      INetwork network, GraphWeighter graphWeighter) {
-    WeightedPseudograph<INetworkNode, DefaultWeightedEdge> graph = new WeightedPseudograph<INetworkNode, DefaultWeightedEdge>(
-        DefaultWeightedEdge.class);
-    Map<DefaultWeightedEdge, INetworkSection> map = new HashMap<DefaultWeightedEdge, INetworkSection>();
-    // first create nodes
-    for (INetworkNode node : network.getNodes()) {
-      graph.addVertex(node);
-    }
+	/**
+	 * Same as buildGraphFromNetwork but returns a {@link GeographicNetworkGraph}
+	 * instead of just the graph, which can be helpful to get the {@link IFeature}
+	 * instances related to a graph edge.
+	 * 
+	 * @param network
+	 * @param graphWeighter
+	 * @return
+	 */
+	public static GeographicNetworkGraph<INetworkNode, DefaultWeightedEdge, INetworkSection> buildGeoGraphFromNetwork(
+			INetwork network, GraphWeighter graphWeighter) {
+		WeightedPseudograph<INetworkNode, DefaultWeightedEdge> graph = new WeightedPseudograph<INetworkNode, DefaultWeightedEdge>(
+				DefaultWeightedEdge.class);
+		Map<DefaultWeightedEdge, INetworkSection> map = new HashMap<DefaultWeightedEdge, INetworkSection>();
+		// first create nodes
+		for (INetworkNode node : network.getNodes()) {
+			graph.addVertex(node);
+		}
 
-    // then, create edges
-    for (INetworkSection section : network.getSections()) {
-      if (section.getInitialNode() == null)
-        continue;
-      if (section.getFinalNode() == null)
-        continue;
-      if (section.isEliminated())
-        continue;
-      double weight = graphWeighter.getEdgeWeight(section);
-      DefaultWeightedEdge edge = graph.addEdge(section.getInitialNode(),
-          section.getFinalNode());
-      graph.setEdgeWeight(edge, weight);
-      map.put(edge, section);
-    }
+		// then, create edges
+		for (INetworkSection section : network.getSections()) {
+			if (section.getInitialNode() == null)
+				continue;
+			if (section.getFinalNode() == null)
+				continue;
+			if (section.isEliminated())
+				continue;
+			double weight = graphWeighter.getEdgeWeight(section);
+			DefaultWeightedEdge edge = graph.addEdge(section.getInitialNode(), section.getFinalNode());
+			graph.setEdgeWeight(edge, weight);
+			map.put(edge, section);
+		}
 
-    return new GeographicNetworkGraph<INetworkNode, DefaultWeightedEdge, INetworkSection>(
-        graph, map);
-  }
+		return new GeographicNetworkGraph<INetworkNode, DefaultWeightedEdge, INetworkSection>(graph, map);
+	}
 }

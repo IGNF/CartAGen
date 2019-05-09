@@ -143,16 +143,20 @@ public class SpatialAnalysisComponent extends JMenu {
         @SuppressWarnings("unchecked")
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            final GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            final GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                    .getApplication();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
             // enrich the network if necessary
-            Set<IFeature> selectedObjs = SelectionUtil.getSelectedObjects(appli);
+            Set<IFeature> selectedObjs = SelectionUtil
+                    .getSelectedObjects(appli);
             if (selectedObjs.size() == 0)
                 return;
             IFeature feature = selectedObjs.iterator().next();
             if (!(feature instanceof IGeneObj))
                 return;
-            INetwork net = dataset.getNetworkFromClass((Class<? extends IGeneObj>) feature.getClass());
+            INetwork net = dataset.getNetworkFromClass(
+                    (Class<? extends IGeneObj>) feature.getClass());
             if (net.getNodes().size() == 0) {
                 if (net.getSections().size() == 0) {
                     for (IFeature section : selectedObjs)
@@ -166,8 +170,10 @@ public class SpatialAnalysisComponent extends JMenu {
             for (IFeature feat : selectedObjs) {
                 if (feat instanceof IGeneObj) {
                     arcs.add((ArcReseau) ((IGeneObj) feat).getGeoxObj());
-                    NoeudReseau noeudIni = ((ArcReseau) ((IGeneObj) feat).getGeoxObj()).getNoeudInitial();
-                    NoeudReseau noeudFin = ((ArcReseau) ((IGeneObj) feat).getGeoxObj()).getNoeudFinal();
+                    NoeudReseau noeudIni = ((ArcReseau) ((IGeneObj) feat)
+                            .getGeoxObj()).getNoeudInitial();
+                    NoeudReseau noeudFin = ((ArcReseau) ((IGeneObj) feat)
+                            .getGeoxObj()).getNoeudFinal();
                     noeuds.add(noeudIni);
                     noeuds.add(noeudFin);
                 }
@@ -178,8 +184,10 @@ public class SpatialAnalysisComponent extends JMenu {
             // attributeNames.add("nom");
             network.buildStrokes(attributeNames, 112.5, 45.0, true);
 
-            GeometryPool pool = CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool();
-            pool.setSld(appli.getMainFrame().getSelectedProjectFrame().getSld());
+            GeometryPool pool = CartAGenDoc.getInstance().getCurrentDataset()
+                    .getGeometryPool();
+            pool.setSld(
+                    appli.getMainFrame().getSelectedProjectFrame().getSld());
             Random red = new Random();
             Random green = new Random();
             Random blue = new Random();
@@ -189,13 +197,15 @@ public class SpatialAnalysisComponent extends JMenu {
                 }
                 if (stroke.getGeom().coord().size() == 1)
                     continue;
-                Color color = new Color(red.nextInt(254), green.nextInt(254), blue.nextInt(254));
+                Color color = new Color(red.nextInt(254), green.nextInt(254),
+                        blue.nextInt(254));
                 pool.addFeatureToGeometryPool(stroke.getGeomStroke(), color, 4);
             }
         }
 
         public ShowStrokesAction() {
-            this.putValue(Action.SHORT_DESCRIPTION, "Show Strokes in the geometry pool from the selected objects");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Show Strokes in the geometry pool from the selected objects");
             this.putValue(Action.NAME, "Show Strokes from selection");
         }
     }
@@ -214,12 +224,15 @@ public class SpatialAnalysisComponent extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
             // create the road feature collection from the selected features
             IFeatureCollection<TronconDeRoute> roads = new FT_FeatureCollection<>();
             Reseau res = new ReseauImpl();
-            for (IFeature feat : SelectionUtil.getSelectedObjects(application)) {
-                TronconDeRoute road = (TronconDeRoute) ((IRoadLine) feat).getGeoxObj();
+            for (IFeature feat : SelectionUtil
+                    .getSelectedObjects(application)) {
+                TronconDeRoute road = (TronconDeRoute) ((IRoadLine) feat)
+                        .getGeoxObj();
                 roads.add(road);
                 roadsMap.put(road, (IRoadLine) feat);
             }
@@ -233,14 +246,19 @@ public class SpatialAnalysisComponent extends JMenu {
             carteTopo.fusionNoeuds(1.0);
             // create the node objects
             for (Noeud n : carteTopo.getPopNoeuds()) {
-                NoeudRoutier noeud = new NoeudRoutierImpl(res, n.getGeometrie());
+                NoeudRoutier noeud = new NoeudRoutierImpl(res,
+                        n.getGeometrie());
                 for (Arc a : n.getEntrants()) {
-                    ((TronconDeRoute) a.getCorrespondant(0)).setNoeudFinal(noeud);
-                    noeud.getArcsEntrants().add((TronconDeRoute) a.getCorrespondant(0));
+                    ((TronconDeRoute) a.getCorrespondant(0))
+                            .setNoeudFinal(noeud);
+                    noeud.getArcsEntrants()
+                            .add((TronconDeRoute) a.getCorrespondant(0));
                 }
                 for (Arc a : n.getSortants()) {
-                    ((TronconDeRoute) a.getCorrespondant(0)).setNoeudInitial(noeud);
-                    noeud.getArcsSortants().add((TronconDeRoute) a.getCorrespondant(0));
+                    ((TronconDeRoute) a.getCorrespondant(0))
+                            .setNoeudInitial(noeud);
+                    noeud.getArcsSortants()
+                            .add((TronconDeRoute) a.getCorrespondant(0));
                 }
             }
 
@@ -260,15 +278,20 @@ public class SpatialAnalysisComponent extends JMenu {
             detect.detectRoundaboutsAndBranching(roads, blocks, false);
 
             // cartagen objects creations
-            IFeatureCollection<IRoadNode> nodes = detect.getNodesFromRoadsCartAGen(dataset.getRoads());
+            IFeatureCollection<IRoadNode> nodes = detect
+                    .getNodesFromRoadsCartAGen(dataset.getRoads());
             // first the roundabouts
             for (RondPoint round : detect.getRoundabouts()) {
-                dataset.getRoundabouts().add(CartAGenDoc.getInstance().getCurrentDataset().getCartAGenDB()
-                        .getGeneObjImpl().getCreationFactory().createRoundAbout(round, dataset.getRoads(), nodes));
+                dataset.getRoundabouts()
+                        .add(CartAGenDoc.getInstance().getCurrentDataset()
+                                .getCartAGenDB().getGeneObjImpl()
+                                .getCreationFactory().createRoundAbout(round,
+                                        dataset.getRoads(), nodes));
             }
 
             // put the roundabouts in a new layer
-            ProjectFrame frame = application.getMainFrame().getSelectedProjectFrame();
+            ProjectFrame frame = application.getMainFrame()
+                    .getSelectedProjectFrame();
 
             NamedLayerFactory factory = new NamedLayerFactory();
             factory.setModel(frame.getSld());
@@ -301,7 +324,8 @@ public class SpatialAnalysisComponent extends JMenu {
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
             IFeatureCollection<TronconDeRoute> roads = new FT_FeatureCollection<>();
             Reseau res = new ReseauImpl();
             for (IRoadLine feat : dataset.getRoads()) {
@@ -319,14 +343,19 @@ public class SpatialAnalysisComponent extends JMenu {
             carteTopo.fusionNoeuds(1.0);
             // create the node objects
             for (Noeud n : carteTopo.getPopNoeuds()) {
-                NoeudRoutier noeud = new NoeudRoutierImpl(res, n.getGeometrie());
+                NoeudRoutier noeud = new NoeudRoutierImpl(res,
+                        n.getGeometrie());
                 for (Arc a : n.getEntrants()) {
-                    ((TronconDeRoute) a.getCorrespondant(0)).setNoeudFinal(noeud);
-                    noeud.getArcsEntrants().add((TronconDeRoute) a.getCorrespondant(0));
+                    ((TronconDeRoute) a.getCorrespondant(0))
+                            .setNoeudFinal(noeud);
+                    noeud.getArcsEntrants()
+                            .add((TronconDeRoute) a.getCorrespondant(0));
                 }
                 for (Arc a : n.getSortants()) {
-                    ((TronconDeRoute) a.getCorrespondant(0)).setNoeudInitial(noeud);
-                    noeud.getArcsSortants().add((TronconDeRoute) a.getCorrespondant(0));
+                    ((TronconDeRoute) a.getCorrespondant(0))
+                            .setNoeudInitial(noeud);
+                    noeud.getArcsSortants()
+                            .add((TronconDeRoute) a.getCorrespondant(0));
                 }
             }
 
@@ -346,7 +375,8 @@ public class SpatialAnalysisComponent extends JMenu {
             detect.detectRoundaboutsAndBranchingCartagen(dataset);
 
             // put the roundabouts in a new layer
-            ProjectFrame frame = application.getMainFrame().getSelectedProjectFrame();
+            ProjectFrame frame = application.getMainFrame()
+                    .getSelectedProjectFrame();
 
             NamedLayerFactory factory = new NamedLayerFactory();
             factory.setModel(frame.getSld());
@@ -360,7 +390,8 @@ public class SpatialAnalysisComponent extends JMenu {
         public RoundaboutAllAction() {
             this.putValue(Action.SHORT_DESCRIPTION,
                     "Create roundabouts in all dataset roads and add them as a new layer");
-            this.putValue(Action.NAME, "Create roundabouts in all dataset roads");
+            this.putValue(Action.NAME,
+                    "Create roundabouts in all dataset roads");
         }
     }
 
@@ -379,7 +410,8 @@ public class SpatialAnalysisComponent extends JMenu {
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
             IFeatureCollection<TronconDeRoute> roads = new FT_FeatureCollection<>();
             Reseau res = new ReseauImpl();
             for (IRoadLine feat : dataset.getRoads()) {
@@ -397,14 +429,19 @@ public class SpatialAnalysisComponent extends JMenu {
             carteTopo.fusionNoeuds(1.0);
             // create the node objects
             for (Noeud n : carteTopo.getPopNoeuds()) {
-                NoeudRoutier noeud = new NoeudRoutierImpl(res, n.getGeometrie());
+                NoeudRoutier noeud = new NoeudRoutierImpl(res,
+                        n.getGeometrie());
                 for (Arc a : n.getEntrants()) {
-                    ((TronconDeRoute) a.getCorrespondant(0)).setNoeudFinal(noeud);
-                    noeud.getArcsEntrants().add((TronconDeRoute) a.getCorrespondant(0));
+                    ((TronconDeRoute) a.getCorrespondant(0))
+                            .setNoeudFinal(noeud);
+                    noeud.getArcsEntrants()
+                            .add((TronconDeRoute) a.getCorrespondant(0));
                 }
                 for (Arc a : n.getSortants()) {
-                    ((TronconDeRoute) a.getCorrespondant(0)).setNoeudInitial(noeud);
-                    noeud.getArcsSortants().add((TronconDeRoute) a.getCorrespondant(0));
+                    ((TronconDeRoute) a.getCorrespondant(0))
+                            .setNoeudInitial(noeud);
+                    noeud.getArcsSortants()
+                            .add((TronconDeRoute) a.getCorrespondant(0));
                 }
             }
 
@@ -424,7 +461,8 @@ public class SpatialAnalysisComponent extends JMenu {
             detect.detectRoundaboutsAndBranchingCartagen(dataset);
 
             // put the roundabouts in a new layer
-            ProjectFrame frame = application.getMainFrame().getSelectedProjectFrame();
+            ProjectFrame frame = application.getMainFrame()
+                    .getSelectedProjectFrame();
 
             NamedLayerFactory factory = new NamedLayerFactory();
             factory.setModel(frame.getSld());
@@ -445,7 +483,8 @@ public class SpatialAnalysisComponent extends JMenu {
         public RoundaboutBranchingAllAction() {
             this.putValue(Action.SHORT_DESCRIPTION,
                     "Create roundaboutsand branching crossroads in all dataset roads and add them as new layesr");
-            this.putValue(Action.NAME, "Create roundabouts and branching crossroads");
+            this.putValue(Action.NAME,
+                    "Create roundabouts and branching crossroads");
         }
     }
 
@@ -464,13 +503,16 @@ public class SpatialAnalysisComponent extends JMenu {
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
 
             RoadStructureDetection algo = new RoadStructureDetection();
-            IPopulation<IDualCarriageWay> duals = algo.detectAndBuildDualCarriageways("Dual Carriageways", -1);
+            IPopulation<IDualCarriageWay> duals = algo
+                    .detectAndBuildDualCarriageways("Dual Carriageways", -1);
 
             // put the roundabouts in a new layer
-            ProjectFrame frame = application.getMainFrame().getSelectedProjectFrame();
+            ProjectFrame frame = application.getMainFrame()
+                    .getSelectedProjectFrame();
 
             NamedLayerFactory factory = new NamedLayerFactory();
             factory.setModel(frame.getSld());
@@ -503,7 +545,8 @@ public class SpatialAnalysisComponent extends JMenu {
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
             DualCarriageWaysFrame frame = new DualCarriageWaysFrame(dataset);
             frame.setVisible(true);
         }
@@ -511,7 +554,8 @@ public class SpatialAnalysisComponent extends JMenu {
         public DualCarriagewaysAllAction() {
             this.putValue(Action.SHORT_DESCRIPTION,
                     "Create dual carriageways in all dataset roads and add them as a new layer");
-            this.putValue(Action.NAME, "Identify dual carriageways with custom parameters");
+            this.putValue(Action.NAME,
+                    "Identify dual carriageways with custom parameters");
         }
 
         class DualCarriageWaysFrame extends JFrame implements ActionListener {
@@ -520,7 +564,8 @@ public class SpatialAnalysisComponent extends JMenu {
             private static final long serialVersionUID = 1L;
             private CartAGenDataSet dataset;
             private JSlider impSlider;
-            private JSpinner elongSpinner, compSpinner, concSpinner, areaSpinner, widthSpinner;
+            private JSpinner elongSpinner, compSpinner, concSpinner,
+                    areaSpinner, widthSpinner;
             private JCheckBox checkDebug;
 
             @Override
@@ -533,14 +578,17 @@ public class SpatialAnalysisComponent extends JMenu {
                     algo.setConcLimit((Double) concSpinner.getValue());
                     if (checkDebug.isSelected())
                         algo.setDebugMode(true);
-                    IPopulation<IDualCarriageWay> duals = algo.detectAndBuildDualCarriageways("Dual Carriageways",
-                            impSlider.getValue());
+                    IPopulation<IDualCarriageWay> duals = algo
+                            .detectAndBuildDualCarriageways("Dual Carriageways",
+                                    impSlider.getValue());
 
                     // put the roundabouts in a new layer
-                    ProjectFrame frame = application.getMainFrame().getSelectedProjectFrame();
+                    ProjectFrame frame = application.getMainFrame()
+                            .getSelectedProjectFrame();
 
                     if (checkDebug.isSelected()) {
-                        ProjectFrame project = application.getMainFrame().getSelectedProjectFrame();
+                        ProjectFrame project = application.getMainFrame()
+                                .getSelectedProjectFrame();
                         project.addUserLayer(algo.getFaces(), "faces", null);
                     }
 
@@ -557,14 +605,16 @@ public class SpatialAnalysisComponent extends JMenu {
                 }
             }
 
-            public DualCarriageWaysFrame(CartAGenDataSet dataset) throws HeadlessException {
+            public DualCarriageWaysFrame(CartAGenDataSet dataset)
+                    throws HeadlessException {
                 super("Detect dual carriageways");
                 this.dataset = dataset;
                 this.setSize(550, 150);
                 this.setPreferredSize(new Dimension(550, 150));
 
                 JPanel panel1 = new JPanel();
-                SpinnerModel areaModel = new SpinnerNumberModel(80000.0, 5000.0, 500000.0, 5000.0);
+                SpinnerModel areaModel = new SpinnerNumberModel(80000.0, 5000.0,
+                        500000.0, 5000.0);
                 areaSpinner = new JSpinner(areaModel);
                 areaSpinner.setMinimumSize(new Dimension(80, 20));
                 areaSpinner.setMaximumSize(new Dimension(80, 20));
@@ -578,7 +628,8 @@ public class SpatialAnalysisComponent extends JMenu {
                 impSlider.setMaximumSize(new Dimension(90, 40));
                 impSlider.setToolTipText("-1 means motorways are not searched");
                 checkDebug = new JCheckBox("Debug mode");
-                checkDebug.setToolTipText("Debug mode creates a layer with the road graph faces");
+                checkDebug.setToolTipText(
+                        "Debug mode creates a layer with the road graph faces");
                 panel1.add(new JLabel("motorway importance"));
                 panel1.add(impSlider);
                 panel1.add(Box.createHorizontalGlue());
@@ -589,22 +640,26 @@ public class SpatialAnalysisComponent extends JMenu {
                 panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
 
                 JPanel panel2 = new JPanel();
-                SpinnerModel elongModel = new SpinnerNumberModel(5.0, 0.0, 50.0, 0.2);
+                SpinnerModel elongModel = new SpinnerNumberModel(5.0, 0.0, 50.0,
+                        0.2);
                 elongSpinner = new JSpinner(elongModel);
                 elongSpinner.setMinimumSize(new Dimension(50, 20));
                 elongSpinner.setMaximumSize(new Dimension(50, 20));
                 elongSpinner.setPreferredSize(new Dimension(50, 20));
-                SpinnerModel compModel = new SpinnerNumberModel(0.1, 0.0, 1.0, 0.02);
+                SpinnerModel compModel = new SpinnerNumberModel(0.1, 0.0, 1.0,
+                        0.02);
                 compSpinner = new JSpinner(compModel);
                 compSpinner.setMinimumSize(new Dimension(50, 20));
                 compSpinner.setMaximumSize(new Dimension(50, 20));
                 compSpinner.setPreferredSize(new Dimension(50, 20));
-                SpinnerModel concModel = new SpinnerNumberModel(0.8, 0.0, 1.0, 0.02);
+                SpinnerModel concModel = new SpinnerNumberModel(0.8, 0.0, 1.0,
+                        0.02);
                 concSpinner = new JSpinner(concModel);
                 concSpinner.setMinimumSize(new Dimension(50, 20));
                 concSpinner.setMaximumSize(new Dimension(50, 20));
                 concSpinner.setPreferredSize(new Dimension(50, 20));
-                SpinnerModel widthModel = new SpinnerNumberModel(20.0, 0.0, 100.0, 1.0);
+                SpinnerModel widthModel = new SpinnerNumberModel(20.0, 0.0,
+                        100.0, 1.0);
                 widthSpinner = new JSpinner(widthModel);
                 widthSpinner.setMinimumSize(new Dimension(50, 20));
                 widthSpinner.setMaximumSize(new Dimension(50, 20));
@@ -638,7 +693,8 @@ public class SpatialAnalysisComponent extends JMenu {
                 this.getContentPane().add(panel2);
                 this.getContentPane().add(Box.createVerticalGlue());
                 this.getContentPane().add(panelBtn);
-                this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+                this.getContentPane().setLayout(
+                        new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
                 this.pack();
             }
 
@@ -660,13 +716,16 @@ public class SpatialAnalysisComponent extends JMenu {
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
             IFeatureCollection<IGeneObj> roads = new FT_FeatureCollection<>();
-            for (IGeneObj feat : SelectionUtil.getWindowObjects(application, CartAGenDataSet.ROADS_POP)) {
+            for (IGeneObj feat : SelectionUtil.getWindowObjects(application,
+                    CartAGenDataSet.ROADS_POP)) {
                 roads.add(feat);
             }
             // enrich the roads collection by building its topology
-            NetworkEnrichment.buildTopology(dataset, dataset.getRoadNetwork(), false);
+            NetworkEnrichment.buildTopology(dataset, dataset.getRoadNetwork(),
+                    false);
 
             // construction of the topological map based on roads
             CarteTopo carteTopo = new CarteTopo("cartetopo");
@@ -686,16 +745,20 @@ public class SpatialAnalysisComponent extends JMenu {
             for (Face face : carteTopo.getListeFaces()) {
                 blocks.add(new IlotImpl(face.getGeom()));
             }
-            IPolygon windowGeom = application.getMainFrame().getSelectedProjectFrame().getLayerViewPanel().getViewport()
+            IPolygon windowGeom = application.getMainFrame()
+                    .getSelectedProjectFrame().getLayerViewPanel().getViewport()
                     .getEnvelopeInModelCoordinates().getGeom();
-            HashSet<DeadEndGroup> deadEnds = DeadEndGroup.buildFromRoads(dataset.getRoads(), windowGeom, carteTopo);
-            IPopulation<DeadEndGroup> deadEndColl = new Population<DeadEndGroup>("Dead End Groups");
+            HashSet<DeadEndGroup> deadEnds = DeadEndGroup
+                    .buildFromRoads(dataset.getRoads(), windowGeom, carteTopo);
+            IPopulation<DeadEndGroup> deadEndColl = new Population<DeadEndGroup>(
+                    "Dead End Groups");
             for (DeadEndGroup deadEnd : deadEnds) {
                 deadEndColl.add(deadEnd);
             }
 
             // put the roundabouts in a new layer
-            ProjectFrame frame = application.getMainFrame().getSelectedProjectFrame();
+            ProjectFrame frame = application.getMainFrame()
+                    .getSelectedProjectFrame();
 
             NamedLayerFactory factory = new NamedLayerFactory();
             factory.setModel(frame.getSld());
@@ -728,7 +791,8 @@ public class SpatialAnalysisComponent extends JMenu {
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
             // enrich the roads collection by building its topology
 
             // construction of the topological map based on roads
@@ -747,8 +811,10 @@ public class SpatialAnalysisComponent extends JMenu {
             Collection<Face> escapes = detect.detectEscapeCrossroads(carteTopo);
 
             // put the roundabouts in a new layer
-            ProjectFrame frame = application.getMainFrame().getSelectedProjectFrame();
-            GeometryPool pool = CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool();
+            ProjectFrame frame = application.getMainFrame()
+                    .getSelectedProjectFrame();
+            GeometryPool pool = CartAGenDoc.getInstance().getCurrentDataset()
+                    .getGeometryPool();
             pool.setSld(frame.getSld());
             for (Face face : escapes)
                 pool.addFeatureToGeometryPool(face.getGeom(), Color.RED, 4);
@@ -756,7 +822,8 @@ public class SpatialAnalysisComponent extends JMenu {
         }
 
         public ShowEscapeAction() {
-            this.putValue(Action.SHORT_DESCRIPTION, "Show escape crossroads in the geometry pool");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Show escape crossroads in the geometry pool");
             this.putValue(Action.NAME, "Show escape crossroads");
         }
     }
@@ -777,32 +844,42 @@ public class SpatialAnalysisComponent extends JMenu {
         public void actionPerformed(ActionEvent arg0) {
 
             RoadStructureDetection detect = new RoadStructureDetection();
-            Collection<IPolygon> interchanges = detect.detectInterchanges(4);
-            System.out.println(interchanges.size() + " interchanges detected in the dataset");
+            Collection<IPolygon> interchanges = detect.detectInterchanges(2,
+                    true);
+            System.out.println(interchanges.size()
+                    + " interchanges detected in the dataset");
             // put the roundabouts in a new layer
-            ProjectFrame frame = application.getMainFrame().getSelectedProjectFrame();
-            GeometryPool pool = CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool();
+            ProjectFrame frame = application.getMainFrame()
+                    .getSelectedProjectFrame();
+            GeometryPool pool = CartAGenDoc.getInstance().getCurrentDataset()
+                    .getGeometryPool();
             pool.setSld(frame.getSld());
             for (IPolygon face : interchanges)
                 pool.addFeatureToGeometryPool(face, Color.RED, 4);
 
             for (SimpleCrossRoad simple : detect.getSimples()) {
                 if (simple instanceof ForkCrossRoad)
-                    pool.addPointFeatureToGeometryPool(simple.getGeom(), Color.RED, 4, "triangle");
+                    pool.addPointFeatureToGeometryPool(simple.getGeom(),
+                            Color.RED, 4, "triangle");
                 if (simple instanceof YCrossRoad)
-                    pool.addPointFeatureToGeometryPool(simple.getGeom(), Color.PINK, 4, "circle");
+                    pool.addPointFeatureToGeometryPool(simple.getGeom(),
+                            Color.PINK, 4, "circle");
                 if (simple instanceof TCrossRoad)
-                    pool.addPointFeatureToGeometryPool(simple.getGeom(), Color.ORANGE, 4, "square");
+                    pool.addPointFeatureToGeometryPool(simple.getGeom(),
+                            Color.ORANGE, 4, "square");
                 if (simple instanceof PlusCrossRoad)
-                    pool.addPointFeatureToGeometryPool(simple.getGeom(), Color.MAGENTA, 4, "cross");
+                    pool.addPointFeatureToGeometryPool(simple.getGeom(),
+                            Color.MAGENTA, 4, "cross");
                 if (simple instanceof StarCrossRoad)
-                    pool.addPointFeatureToGeometryPool(simple.getGeom(), Color.DARK_GRAY, 4, "star");
+                    pool.addPointFeatureToGeometryPool(simple.getGeom(),
+                            Color.DARK_GRAY, 4, "star");
             }
 
         }
 
         public ShowInterchangesAction() {
-            this.putValue(Action.SHORT_DESCRIPTION, "Show interchanges in the geometry pool");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Show interchanges in the geometry pool");
             this.putValue(Action.NAME, "Show interchanges");
         }
     }
@@ -822,39 +899,49 @@ public class SpatialAnalysisComponent extends JMenu {
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
 
             // enrich the network if necessary
-            NetworkEnrichment.buildTopology(dataset, dataset.getRoadNetwork(), false);
+            NetworkEnrichment.buildTopology(dataset, dataset.getRoadNetwork(),
+                    false);
             Set<TronconDeRoute> roads = new HashSet<TronconDeRoute>();
             for (IRoadLine feat : dataset.getRoads()) {
                 roads.add((TronconDeRoute) feat.getGeoxObj());
             }
 
             // put the roundabouts in a new layer
-            ProjectFrame frame = application.getMainFrame().getSelectedProjectFrame();
-            GeometryPool pool = CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool();
+            ProjectFrame frame = application.getMainFrame()
+                    .getSelectedProjectFrame();
+            GeometryPool pool = CartAGenDoc.getInstance().getCurrentDataset()
+                    .getGeometryPool();
             pool.setSld(frame.getSld());
 
             CrossRoadDetection algo = new CrossRoadDetection();
             Set<SimpleCrossRoad> simples = algo.classifyCrossRoads(roads);
             for (SimpleCrossRoad simple : simples) {
                 if (simple instanceof ForkCrossRoad)
-                    pool.addPointFeatureToGeometryPool(simple.getGeom(), Color.RED, 4, "triangle");
+                    pool.addPointFeatureToGeometryPool(simple.getGeom(),
+                            Color.RED, 4, "triangle");
                 if (simple instanceof YCrossRoad)
-                    pool.addPointFeatureToGeometryPool(simple.getGeom(), Color.PINK, 4, "circle");
+                    pool.addPointFeatureToGeometryPool(simple.getGeom(),
+                            Color.PINK, 4, "circle");
                 if (simple instanceof TCrossRoad)
-                    pool.addPointFeatureToGeometryPool(simple.getGeom(), Color.ORANGE, 4, "square");
+                    pool.addPointFeatureToGeometryPool(simple.getGeom(),
+                            Color.ORANGE, 4, "square");
                 if (simple instanceof PlusCrossRoad)
-                    pool.addPointFeatureToGeometryPool(simple.getGeom(), Color.MAGENTA, 4, "cross");
+                    pool.addPointFeatureToGeometryPool(simple.getGeom(),
+                            Color.MAGENTA, 4, "cross");
                 if (simple instanceof StarCrossRoad)
-                    pool.addPointFeatureToGeometryPool(simple.getGeom(), Color.DARK_GRAY, 4, "star");
+                    pool.addPointFeatureToGeometryPool(simple.getGeom(),
+                            Color.DARK_GRAY, 4, "star");
             }
 
         }
 
         public ShowSimpleCrossroadsAction() {
-            this.putValue(Action.SHORT_DESCRIPTION, "Show simple crossroads classification in the geometry pool");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Show simple crossroads classification in the geometry pool");
             this.putValue(Action.NAME, "Show simple crossroads classification");
         }
     }

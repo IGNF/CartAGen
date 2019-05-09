@@ -63,873 +63,940 @@ import fr.ign.cogit.geoxygene.util.algo.SmallestSurroundingRectangleComputation;
 /**
  * A class that compiles algorithm for the detection of road structures bigger
  * than complex crossroads, like interchanges, rest areas, or dual carriageways.
+ * 
  * @author GTouya
  * 
  */
 public class RoadStructureDetection {
 
-  private static Logger logger = Logger.getLogger(RoadStructureDetection.class);
+    private static Logger logger = Logger
+            .getLogger(RoadStructureDetection.class);
 
-  private CarteTopo topoMap;
-  private boolean debugMode = false;
-  private Population<DefaultFeature> faces;
-  private Set<SimpleCrossRoad> simples;
+    private CarteTopo topoMap;
+    private boolean debugMode = false;
+    private Population<DefaultFeature> faces;
+    private Set<SimpleCrossRoad> simples;
 
-  // Parameters on geometric properties for dual carriageways
-  private double concLimit;
-  private double elongLimit;
-  private double compLimit;
-  private double areaLimit;
-  private double widthLimit;
-  private boolean badFacesMax = false;
-  private boolean badFacesMin = true;
-  // parameters for interchanges
-  private double distMaxClustering;
-  private double euclMaxDist;
-  private int clusterMinSize;
+    // Parameters on geometric properties for dual carriageways
+    private double concLimit;
+    private double elongLimit;
+    private double compLimit;
+    private double areaLimit;
+    private double widthLimit;
+    private boolean badFacesMax = false;
+    private boolean badFacesMin = true;
+    // parameters for interchanges
+    private double distMaxClustering;
+    private double euclMaxDist;
+    private int clusterMinSize;
 
-  public RoadStructureDetection() {
-    this.concLimit = 0.85;
-    this.elongLimit = 6.0;
-    this.compLimit = 0.12;
-    this.areaLimit = 60000.0;
-    this.widthLimit = 20.0;
-    this.distMaxClustering = 600.0;
-    this.euclMaxDist = 50.0;
-    this.clusterMinSize = 6;
-  }
-
-  // ///////////////////////////////////
-  // DETECTION OF THE DUAL CARRIAGEWAYS
-  // ///////////////////////////////////
-
-  /**
-   * Main detection method, which fills the collection of motorway separators
-   * @param importance the importance of the roads to use (-1 to use all roads)
-   */
-  public List<Face> detectDualCarriageways(int importance) {
-
-    // builds the topological map based on motorway sections
-    List<Face> allFaces = this.buildMajorRoadsTopoMap(importance);
-
-    // detects the primary separators based on geometry
-    List<Face> separators = this.detectLongFaces(allFaces);
-    separators.removeAll(this.detectSharpAngleFaces(separators));
-    separators.removeAll(this.detectBadFaces(separators));
-
-    // detects the remaining little separators based on continuity
-    separators
-        .addAll(this.detectNeighbourLittleSeparators(separators, allFaces));
-
-    return separators;
-
-  }
-
-  /**
-   * Main detection method, which fills the collection of motorway separators.
-   * @param popName the name of the population (and layer) of dual carriageways
-   * @param importance the importance of the roads to use (-1 to use all roads)
-   * @return
-   */
-  @SuppressWarnings("unchecked")
-  public IPopulation<IDualCarriageWay> detectAndBuildDualCarriageways(
-      String popName, int importance) {
-
-    // builds the topological map based on motorway sections
-    List<Face> allFaces = this.buildMajorRoadsTopoMap(importance);
-
-    // detects the primary separators based on geometry
-    List<Face> separators = this.detectLongFaces(allFaces);
-    // separators.removeAll(this.detectSharpAngleFaces(separators));
-    // separators.removeAll(this.detectBadFaces(separators));
-
-    // detects the remaining little separators based on continuity
-    separators
-        .addAll(this.detectNeighbourLittleSeparators(separators, allFaces));
-
-    // build the dual carriageways from the separators
-    IPopulation<IDualCarriageWay> duals = new Population<>(popName);
-    AbstractCreationFactory factory = CartAGenDoc.getInstance()
-        .getCurrentDataset().getCartAGenDB().getGeneObjImpl()
-        .getCreationFactory();
-    for (Face separator : separators) {
-      // get inner roads from the topology map
-      Set<IRoadLine> innerRoads = new HashSet<>();
-      for (Arc arc : separator.getArcsDirects()) {
-        for (IFeature feat : arc.getCorrespondants())
-          innerRoads.add((IRoadLine) feat);
-      }
-      for (Arc arc : separator.getArcsIndirects()) {
-        for (IFeature feat : arc.getCorrespondants())
-          innerRoads.add((IRoadLine) feat);
-      }
-      Set<IRoadLine> outerRoads = new HashSet<>();
-      if (!separator.arcsExterieursClasses().isEmpty()) {
-        for (Arc arc : (List<Arc>) separator.arcsExterieursClasses().get(0)) {
-          for (IFeature feat : arc.getCorrespondants())
-            outerRoads.add((IRoadLine) feat);
-        }
-      }
-      if (innerRoads.isEmpty())
-        continue;
-      int mainImportance = innerRoads.iterator().next().getImportance();
-      duals.add(factory.createDualCarriageways(separator.getGeometrie(),
-          mainImportance, innerRoads, outerRoads));
+    public RoadStructureDetection() {
+        this.concLimit = 0.85;
+        this.elongLimit = 6.0;
+        this.compLimit = 0.12;
+        this.areaLimit = 60000.0;
+        this.widthLimit = 20.0;
+        this.distMaxClustering = 600.0;
+        this.euclMaxDist = 50.0;
+        this.clusterMinSize = 6;
     }
 
-    return duals;
+    // ///////////////////////////////////
+    // DETECTION OF THE DUAL CARRIAGEWAYS
+    // ///////////////////////////////////
 
-  }
+    /**
+     * Main detection method, which fills the collection of motorway separators
+     * 
+     * @param importance
+     *            the importance of the roads to use (-1 to use all roads)
+     */
+    public List<Face> detectDualCarriageways(int importance) {
 
-  /**
-   * Method that builds a topological map from motorway sections - the faces
-   * will be used to detect separators
-   * @return
-   */
+        // builds the topological map based on motorway sections
+        List<Face> allFaces = this.buildMajorRoadsTopoMap(importance);
 
-  private List<Face> buildMajorRoadsTopoMap(int importance) {
-    if (importance == -1) {
-      return this.buildTopoMap(
-          CartAGenDoc.getInstance().getCurrentDataset().getRoads());
-    }
-    IPopulation<IRoadLine> roadSections = new Population<IRoadLine>();
-    for (IRoadLine road : CartAGenDoc.getInstance().getCurrentDataset()
-        .getRoads()) {
-      if (road.getImportance() == importance) {
-        roadSections.add(road);
-      }
-    }
-    return this.buildTopoMap(roadSections);
-  }
+        // detects the primary separators based on geometry
+        List<Face> separators = this.detectLongFaces(allFaces);
+        separators.removeAll(this.detectSharpAngleFaces(separators));
+        separators.removeAll(this.detectBadFaces(separators));
 
-  /**
-   * Method that builds a topological map from determined road sections - the
-   * faces will be used to detect separators
-   * @return
-   */
+        // detects the remaining little separators based on continuity
+        separators.addAll(
+                this.detectNeighbourLittleSeparators(separators, allFaces));
 
-  private List<Face> buildTopoMap(IPopulation<IRoadLine> roadSections) {
-    return this.buildTopoMap(roadSections, true);
-  }
-
-  /**
-   * Method that builds a topological map from determined road sections - the
-   * faces will be used to detect separators
-   * @return
-   */
-
-  private List<Face> buildTopoMap(IPopulation<IRoadLine> roadSections,
-      boolean useMask) {
-
-    // fills the topological map with motorway sections
-    topoMap = new CarteTopo("cartetopo");
-    topoMap.setBuildInfiniteFace(false);
-    topoMap.importClasseGeo(roadSections, true);
-
-    // adds the mask to the topological map if needed
-    if (useMask) {
-      IPopulation<IMask> contours = new Population<IMask>();
-      for (IMask mask : CartAGenDoc.getInstance().getCurrentDataset()
-          .getMasks()) {
-        contours.add(mask);
-      }
-      topoMap.importClasseGeo(contours, true);
-    }
-    // computes the topology
-    topoMap.creeNoeudsManquants(1.0);
-    topoMap.fusionNoeuds(1.0);
-    topoMap.filtreDoublons(1.0);
-    topoMap.rendPlanaire(1.0);
-    topoMap.fusionNoeuds(1.0);
-    topoMap.filtreArcsDoublons();
-
-    if (!useMask) {
-
-      // close future faces abstract features on the limits of the topo map
-      IPopulation<Noeud> lonelyNodes = new Population<Noeud>();
-      // Initial node
-      for (Arc arc : topoMap.getListeArcs()) {
-        if (arc.getNoeudIni().getEntrants().size()
-            + arc.getNoeudIni().getSortants().size() == 1) {
-          lonelyNodes.add(arc.getNoeudIni());
-        }
-        // Final node
-        if (arc.getNoeudFin().getEntrants().size()
-            + arc.getNoeudFin().getSortants().size() == 1) {
-          lonelyNodes.add(arc.getNoeudFin());
-        }
-      }
-      // Addition of the abstract limits to the topo map
-      IPopulation<IFeature> abstractLimits = new Population<IFeature>();
-      for (Noeud node : lonelyNodes) {
-        IPoint geom = (IPoint) node.getGeom();
-        Noeud closestNode = node;
-        double closestDistance = Double.MAX_VALUE;
-        for (Noeud node2 : lonelyNodes) {
-          if (node2.equals(node)) {
-            continue;
-          }
-          double distance = geom.distance(node2.getGeom());
-          if (distance < closestDistance) {
-            closestNode = node2;
-            closestDistance = distance;
-          }
-        }
-        if (closestDistance < 100.0) {
-          ILineSegment segment = new GM_LineSegment(geom.getPosition(),
-              ((IPoint) closestNode.getGeom()).getPosition());
-          IFeature abstractLimit = new DefaultFeature(segment);
-          abstractLimits.add(abstractLimit);
-        }
-      }
-      topoMap.importClasseGeo(abstractLimits, true);
-
-      // re-computes the topology with additional arcs
-      topoMap.creeNoeudsManquants(1.0);
-      topoMap.fusionNoeuds(1.0);
-      topoMap.filtreDoublons(1.0);
-      topoMap.rendPlanaire(1.0);
-      topoMap.fusionNoeuds(1.0);
-      topoMap.filtreArcsDoublons();
+        return separators;
 
     }
 
-    // computes the faces topology
-    try {
-      topoMap.creeTopologieFaces();
-    } catch (Exception e) {
-      e.printStackTrace();
-      logger.error("Impossible to compute faces topology on defined roads");
-    }
+    /**
+     * Main detection method, which fills the collection of motorway separators.
+     * 
+     * @param popName
+     *            the name of the population (and layer) of dual carriageways
+     * @param importance
+     *            the importance of the roads to use (-1 to use all roads)
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public IPopulation<IDualCarriageWay> detectAndBuildDualCarriageways(
+            String popName, int importance) {
 
-    return topoMap.getListeFaces();
+        // builds the topological map based on motorway sections
+        List<Face> allFaces = this.buildMajorRoadsTopoMap(importance);
 
-  }
+        // detects the primary separators based on geometry
+        List<Face> separators = this.detectLongFaces(allFaces);
+        // separators.removeAll(this.detectSharpAngleFaces(separators));
+        // separators.removeAll(this.detectBadFaces(separators));
 
-  /**
-   * Method that calculates the geometric properties of the potential
-   * separators, in order to know if the can be separators or not
-   * @return a table of 4 doubles: area, compactness, concavity and elongation
-   *         of the face
-   */
+        // detects the remaining little separators based on continuity
+        separators.addAll(
+                this.detectNeighbourLittleSeparators(separators, allFaces));
 
-  private double[] calculeFaceGeomProperties(Face face) {
-
-    double[] geomProp = new double[6];
-
-    // Area and perimeter
-    double area = face.getGeom().area();
-    double perim = ((IPolygon) face.getGeom()).perimeter();
-    geomProp[0] = area;
-
-    // Compactness
-    double compactness = 4 * Math.PI * area / (perim * perim);
-    geomProp[1] = compactness;
-
-    // Concavity
-    IGeometry convexHull = face.getGeom().convexHull();
-    double surfaceHull = convexHull.area();
-    double concavity = area / surfaceHull;
-    geomProp[2] = concavity;
-
-    // Elongation
-    IPolygon rectEngl = SmallestSurroundingRectangleComputation
-        .getSSR(face.getGeom());
-    if (rectEngl == null)
-      rectEngl = SmallestSurroundingRectangleComputation
-          .getSSR(face.getGeom().buffer(0.1));
-    double X0 = rectEngl.coord().get(0).getX();
-    double X1 = rectEngl.coord().get(1).getX();
-    double X2 = rectEngl.coord().get(2).getX();
-    double Y0 = rectEngl.coord().get(0).getY();
-    double Y1 = rectEngl.coord().get(1).getY();
-    double Y2 = rectEngl.coord().get(2).getY();
-    double length = Math.sqrt((X1 - X0) * (X1 - X0) + (Y1 - Y0) * (Y1 - Y0));
-    double width = Math.sqrt((X2 - X1) * (X2 - X1) + (Y2 - Y1) * (Y2 - Y1));
-    if (length < width) {
-      double temp = width;
-      width = length;
-      length = temp;
-    }
-    double elongation = length / width;
-    geomProp[3] = elongation;
-    geomProp[4] = width;
-    geomProp[5] = (perim - Math.sqrt(perim * perim - 16.0 * area)) / 4;
-
-    return geomProp;
-
-  }
-
-  /**
-   * Method that detects the separators based on their geometric properties
-   * @return the faces whose geometric properties fit those needed to be a
-   *         separator
-   */
-
-  private List<Face> detectLongFaces(List<Face> allFaces) {
-
-    List<Face> longFaces = new ArrayList<Face>();
-
-    FeatureType featureType = new FeatureType();
-    SchemaDefaultFeature schema = new SchemaDefaultFeature();
-    faces = new Population<DefaultFeature>(false, "faces", DefaultFeature.class,
-        true);
-    if (debugMode) {
-      featureType.setTypeName("Face");
-      featureType.setGeometryType(IPolygon.class);
-
-      AttributeType areaAttribute = new AttributeType("area", "area", "double");
-      featureType.addFeatureAttribute(areaAttribute);
-      AttributeType compactnessAttribute = new AttributeType("compactness",
-          "compactness", "double");
-      featureType.addFeatureAttribute(compactnessAttribute);
-      AttributeType concavityAttribute = new AttributeType("concavity",
-          "concavity", "double");
-      featureType.addFeatureAttribute(concavityAttribute);
-      AttributeType elongationAttribute = new AttributeType("elongation",
-          "elongation", "double");
-      featureType.addFeatureAttribute(elongationAttribute);
-      AttributeType widthAttribute = new AttributeType("width", "width",
-          "double");
-      featureType.addFeatureAttribute(widthAttribute);
-      AttributeType huberAttribute = new AttributeType("Huber_width",
-          "Huber_width", "double");
-      featureType.addFeatureAttribute(huberAttribute);
-
-      schema.setFeatureType(featureType);
-      featureType.setSchema(schema);
-      Map<Integer, String[]> attLookup = new HashMap<Integer, String[]>(0);
-      attLookup.put(new Integer(0), new String[] { areaAttribute.getNomField(),
-          areaAttribute.getMemberName() });
-      attLookup.put(new Integer(1),
-          new String[] { compactnessAttribute.getNomField(),
-              compactnessAttribute.getMemberName() });
-      attLookup.put(new Integer(2),
-          new String[] { concavityAttribute.getNomField(),
-              concavityAttribute.getMemberName() });
-      attLookup.put(new Integer(3),
-          new String[] { elongationAttribute.getNomField(),
-              elongationAttribute.getMemberName() });
-      attLookup.put(new Integer(4), new String[] { widthAttribute.getNomField(),
-          widthAttribute.getMemberName() });
-      attLookup.put(new Integer(5), new String[] { huberAttribute.getNomField(),
-          huberAttribute.getMemberName() });
-      schema.setAttLookup(attLookup);
-      faces.setFeatureType(featureType);
-    }
-
-    for (Face face : allFaces) {
-
-      // Geometric properties of the face
-      double[] geomProp = this.calculeFaceGeomProperties(face);
-      double area = geomProp[0];
-      double compactness = geomProp[1];
-      double concavity = geomProp[2];
-      double elongation = geomProp[3];
-      double width = geomProp[4];
-      double huberWidth = geomProp[5];
-
-      if (debugMode) {
-        DefaultFeature feat = faces.nouvelElement(face.getGeom());
-        feat.setFeatureType(featureType);
-        feat.setSchema(schema);
-        Object[] attributes = new Object[] { "area", "compactness", "concavity",
-            "elongation", "width", "Huber_width" };
-        feat.setAttributes(attributes);
-        feat.setAttribute("area", area);
-        feat.setAttribute("compactness", compactness);
-        feat.setAttribute("concavity", concavity);
-        feat.setAttribute("elongation", elongation);
-        feat.setAttribute("width", width);
-        feat.setAttribute("Huber_width", huberWidth);
-      }
-
-      // if the face is convex, we consider the elongation
-      if (concavity > this.concLimit) {
-        if (width > this.widthLimit)
-          continue;
-        if ((elongation > this.elongLimit) || ((compactness < this.compLimit)
-            && (elongation > this.elongLimit / 2))) {
-          longFaces.add(face);
-          continue;
-        }
-      }
-
-      // if the face is not convex, we consider the compactness
-      else {
-        if (compactness < this.compLimit && (area < this.areaLimit)) {
-          if (compactness > this.compLimit / 2) {
-            /*
-             * IGeometry eroded = face.getGeom().buffer(-this.widthLimit); if
-             * (eroded != null) continue;
-             */
-            if (huberWidth > 16)
-              continue;
-          }
-          longFaces.add(face);
-          continue;
-        }
-      }
-
-      // special case : long motorways
-      if ((compactness < this.compLimit / 4) && (area < 10 * this.areaLimit)) {
-        longFaces.add(face);
-      }
-
-    }
-
-    return longFaces;
-
-  }
-
-  /**
-   * Method that detects the faces that have sharp angles (supposed to concern
-   * slip roads so not needed)
-   * @param faces : the faces on which the detection is performed
-   * @return the detected faces
-   */
-
-  private List<Face> detectSharpAngleFaces(List<Face> faces) {
-
-    List<Face> sharpAngleFaces = new ArrayList<Face>();
-    Angle alpha = new Angle();
-
-    for (Face face : faces) {
-
-      List<Arc> arcs = new ArrayList<Arc>();
-      arcs.addAll(face.getArcsDirects());
-      arcs.addAll(face.getArcsIndirects());
-
-      // loop on each section
-      for (Arc arc : arcs) {
-        IFeature obj = arc.getCorrespondant(0);
-        if (obj instanceof IRoadLine) {
-          IRoadLine sect = (IRoadLine) obj;
-
-          // calculation of points
-          int i = sect.getGeom().numPoints();
-          IDirectPosition p1 = sect.getGeom().coord().get(0);
-          IDirectPosition p2 = sect.getGeom().coord().get(1);
-          IDirectPosition p3 = sect.getGeom().coord().get(i - 2);
-          IDirectPosition p4 = sect.getGeom().coord().get(i - 1);
-
-          // second loop on each section
-          for (Arc arc2 : arcs) {
-            IFeature obj2 = arc2.getCorrespondant(0);
-            if (obj2 instanceof IRoadLine) {
-              IRoadLine sect2 = (IRoadLine) obj2;
-
-              // comparison of the section
-              // do not continue if the two sections are the same object
-              if (sect.equals(sect2) == false) {
-
-                // calculation of the points of the second section
-                if (sect.getGeom().buffer(0.1)
-                    .intersection(sect2.getGeom().buffer(0.1))
-                    .isEmpty() == false) {
-                  IDirectPosition pDebut = sect2.getGeom().startPoint();
-                  IDirectPosition pFin = sect2.getGeom().endPoint();
-                  IDirectPosition pDebutSuite = sect2.getGeom().coord().get(1);
-                  IDirectPosition pFinSuite = sect2.getGeom().coord()
-                      .get(sect2.getGeom().numPoints() - 2);
-                  IDirectPosition centroid = sect.getGeom().buffer(0.1)
-                      .intersection(sect2.getGeom().buffer(0.1)).centroid();
-
-                  // 4 cases
-                  if (((pDebut.distance(centroid)) < (pFin.distance(centroid)))
-                      && (pDebut.distance(centroid) < 2)) {
-                    if ((p1.distance(centroid)) < (p4.distance(centroid))) {
-                      alpha = Angle.angleTroisPoints(p2, centroid, pDebutSuite);
-                    } else {
-                      alpha = Angle.angleTroisPoints(p3, centroid, pDebutSuite);
-                    }
-                    if (Math.abs(alpha.getValeur()) < Math.PI / 9) {
-                      sharpAngleFaces.add(face);
-                      break;
-                    }
-                  }
-
-                  if (((pFin.distance(centroid)) < (pDebut.distance(centroid)))
-                      && (pFin.distance(centroid) < 2)) {
-                    if ((p1.distance(centroid)) < (p4.distance(centroid))) {
-                      alpha = Angle.angleTroisPoints(p2, centroid, pFinSuite);
-                    } else {
-                      alpha = Angle.angleTroisPoints(p3, centroid, pFinSuite);
-                    }
-                    if (Math.abs(alpha.getValeur()) < Math.PI / 9) {
-                      sharpAngleFaces.add(face);
-                      break;
-                    }
-                  }
-                }
-              }
+        // build the dual carriageways from the separators
+        IPopulation<IDualCarriageWay> duals = new Population<>(popName);
+        AbstractCreationFactory factory = CartAGenDoc.getInstance()
+                .getCurrentDataset().getCartAGenDB().getGeneObjImpl()
+                .getCreationFactory();
+        for (Face separator : separators) {
+            // get inner roads from the topology map
+            Set<IRoadLine> innerRoads = new HashSet<>();
+            for (Arc arc : separator.getArcsDirects()) {
+                for (IFeature feat : arc.getCorrespondants())
+                    innerRoads.add((IRoadLine) feat);
             }
-          }
+            for (Arc arc : separator.getArcsIndirects()) {
+                for (IFeature feat : arc.getCorrespondants())
+                    innerRoads.add((IRoadLine) feat);
+            }
+            Set<IRoadLine> outerRoads = new HashSet<>();
+            if (!separator.arcsExterieursClasses().isEmpty()) {
+                for (Arc arc : (List<Arc>) separator.arcsExterieursClasses()
+                        .get(0)) {
+                    for (IFeature feat : arc.getCorrespondants())
+                        outerRoads.add((IRoadLine) feat);
+                }
+            }
+            if (innerRoads.isEmpty())
+                continue;
+            int mainImportance = innerRoads.iterator().next().getImportance();
+            duals.add(factory.createDualCarriageways(separator.getGeometrie(),
+                    mainImportance, innerRoads, outerRoads));
         }
-      }
-    }
 
-    return sharpAngleFaces;
-
-  }
-
-  /**
-   * Detection of faces that cannot be separators
-   * @param faces : the faces on which the detection is performed
-   * @return the detected faces
-   */
-
-  private List<Face> detectBadFaces(List<Face> faces) {
-
-    List<Face> badFaces = new ArrayList<Face>();
-
-    for (Face face : faces) {
-
-      // a separator should have at least 4 delineating sections
-      List<Arc> arcs = new ArrayList<Arc>();
-      arcs.addAll(face.getArcsDirects());
-      arcs.addAll(face.getArcsIndirects());
-      if (badFacesMin && arcs.size() < 4) {
-        badFaces.add(face);
-        continue;
-      }
-      if (badFacesMax && arcs.size() > 8) {
-        badFaces.add(face);
-        continue;
-      }
-
-      // a separator shoud not contain a pending road
-      if (face.getArcsPendants().size() != 0) {
-        badFaces.add(face);
-        continue;
-      }
-
-      // a separator shouldn't have buildings inside its geometry
-      for (IBuilding building : CartAGenDoc.getInstance().getCurrentDataset()
-          .getBuildings()) {
-        if (face.getGeom().contains(building.getGeom())) {
-          badFaces.add(face);
-          break;
-        }
-      }
+        return duals;
 
     }
 
-    return badFaces;
+    /**
+     * Method that builds a topological map from motorway sections - the faces
+     * will be used to detect separators
+     * 
+     * @return
+     */
 
-  }
+    private List<Face> buildMajorRoadsTopoMap(int importance) {
+        if (importance == -1) {
+            return this.buildTopoMap(
+                    CartAGenDoc.getInstance().getCurrentDataset().getRoads());
+        }
+        IPopulation<IRoadLine> roadSections = new Population<IRoadLine>();
+        for (IRoadLine road : CartAGenDoc.getInstance().getCurrentDataset()
+                .getRoads()) {
+            if (road.getImportance() == importance) {
+                roadSections.add(road);
+            }
+        }
+        return this.buildTopoMap(roadSections);
+    }
 
-  /**
-   * Method that detects the remaining little separators based on continuity
-   * with already detected separators
-   */
+    /**
+     * Method that builds a topological map from determined road sections - the
+     * faces will be used to detect separators
+     * 
+     * @return
+     */
 
-  private List<Face> detectNeighbourLittleSeparators(List<Face> separators,
-      List<Face> allFaces) {
+    private List<Face> buildTopoMap(IPopulation<IRoadLine> roadSections) {
+        return this.buildTopoMap(roadSections, true);
+    }
 
-    List<Face> neigbourLittleFaces = new ArrayList<Face>();
-    int i = 0;
-    int nbSect;
-    List<Face> sep = new ArrayList<Face>();
-    ArrayList<IRoadLine> sectCommunes = new ArrayList<IRoadLine>();
+    /**
+     * Method that builds a topological map from determined road sections - the
+     * faces will be used to detect separators
+     * 
+     * @return
+     */
 
-    for (i = 0; i < 2; i++) {
-      // boucle sur les faces des separateurs
-      for (Face face : separators) {
+    private List<Face> buildTopoMap(IPopulation<IRoadLine> roadSections,
+            boolean useMask) {
 
-        List<Arc> arcsSep = new ArrayList<Arc>();
-        arcsSep.addAll(face.getArcsDirects());
-        arcsSep.addAll(face.getArcsIndirects());
+        // fills the topological map with motorway sections
+        topoMap = new CarteTopo("cartetopo");
+        topoMap.setBuildInfiniteFace(false);
+        topoMap.importClasseGeo(roadSections, true);
 
-        // boucle sur les faces non selectionnees
-        for (Face myFace : allFaces) {
-          nbSect = 0;
-          // s'il s'agit d'une petite face qui intersecte une face déjà détectée
-          if (myFace.getGeom().area() < 2500
-              && separators.contains(myFace) == false
-              && sep.contains(myFace) == false && face.getGeom().buffer(0.1)
-                  .intersects(myFace.getGeom().buffer(0.1)) == true) {
+        // adds the mask to the topological map if needed
+        if (useMask) {
+            IPopulation<IMask> contours = new Population<IMask>();
+            for (IMask mask : CartAGenDoc.getInstance().getCurrentDataset()
+                    .getMasks()) {
+                contours.add(mask);
+            }
+            topoMap.importClasseGeo(contours, true);
+        }
+        // computes the topology
+        topoMap.creeNoeudsManquants(1.0);
+        topoMap.fusionNoeuds(1.0);
+        topoMap.filtreDoublons(1.0);
+        topoMap.rendPlanaire(1.0);
+        topoMap.fusionNoeuds(1.0);
+        topoMap.filtreArcsDoublons();
+
+        if (!useMask) {
+
+            // close future faces abstract features on the limits of the topo
+            // map
+            IPopulation<Noeud> lonelyNodes = new Population<Noeud>();
+            // Initial node
+            for (Arc arc : topoMap.getListeArcs()) {
+                if (arc.getNoeudIni().getEntrants().size()
+                        + arc.getNoeudIni().getSortants().size() == 1) {
+                    lonelyNodes.add(arc.getNoeudIni());
+                }
+                // Final node
+                if (arc.getNoeudFin().getEntrants().size()
+                        + arc.getNoeudFin().getSortants().size() == 1) {
+                    lonelyNodes.add(arc.getNoeudFin());
+                }
+            }
+            // Addition of the abstract limits to the topo map
+            IPopulation<IFeature> abstractLimits = new Population<IFeature>();
+            for (Noeud node : lonelyNodes) {
+                IPoint geom = (IPoint) node.getGeom();
+                Noeud closestNode = node;
+                double closestDistance = Double.MAX_VALUE;
+                for (Noeud node2 : lonelyNodes) {
+                    if (node2.equals(node)) {
+                        continue;
+                    }
+                    double distance = geom.distance(node2.getGeom());
+                    if (distance < closestDistance) {
+                        closestNode = node2;
+                        closestDistance = distance;
+                    }
+                }
+                if (closestDistance < 100.0) {
+                    ILineSegment segment = new GM_LineSegment(
+                            geom.getPosition(),
+                            ((IPoint) closestNode.getGeom()).getPosition());
+                    IFeature abstractLimit = new DefaultFeature(segment);
+                    abstractLimits.add(abstractLimit);
+                }
+            }
+            topoMap.importClasseGeo(abstractLimits, true);
+
+            // re-computes the topology with additional arcs
+            topoMap.creeNoeudsManquants(1.0);
+            topoMap.fusionNoeuds(1.0);
+            topoMap.filtreDoublons(1.0);
+            topoMap.rendPlanaire(1.0);
+            topoMap.fusionNoeuds(1.0);
+            topoMap.filtreArcsDoublons();
+
+        }
+
+        // computes the faces topology
+        try {
+            topoMap.creeTopologieFaces();
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(
+                    "Impossible to compute faces topology on defined roads");
+        }
+
+        return topoMap.getListeFaces();
+
+    }
+
+    /**
+     * Method that calculates the geometric properties of the potential
+     * separators, in order to know if the can be separators or not
+     * 
+     * @return a table of 4 doubles: area, compactness, concavity and elongation
+     *         of the face
+     */
+
+    private double[] calculeFaceGeomProperties(Face face) {
+
+        double[] geomProp = new double[6];
+
+        // Area and perimeter
+        double area = face.getGeom().area();
+        double perim = ((IPolygon) face.getGeom()).perimeter();
+        geomProp[0] = area;
+
+        // Compactness
+        double compactness = 4 * Math.PI * area / (perim * perim);
+        geomProp[1] = compactness;
+
+        // Concavity
+        IGeometry convexHull = face.getGeom().convexHull();
+        double surfaceHull = convexHull.area();
+        double concavity = area / surfaceHull;
+        geomProp[2] = concavity;
+
+        // Elongation
+        IPolygon rectEngl = SmallestSurroundingRectangleComputation
+                .getSSR(face.getGeom());
+        if (rectEngl == null)
+            rectEngl = SmallestSurroundingRectangleComputation
+                    .getSSR(face.getGeom().buffer(0.1));
+        double X0 = rectEngl.coord().get(0).getX();
+        double X1 = rectEngl.coord().get(1).getX();
+        double X2 = rectEngl.coord().get(2).getX();
+        double Y0 = rectEngl.coord().get(0).getY();
+        double Y1 = rectEngl.coord().get(1).getY();
+        double Y2 = rectEngl.coord().get(2).getY();
+        double length = Math
+                .sqrt((X1 - X0) * (X1 - X0) + (Y1 - Y0) * (Y1 - Y0));
+        double width = Math.sqrt((X2 - X1) * (X2 - X1) + (Y2 - Y1) * (Y2 - Y1));
+        if (length < width) {
+            double temp = width;
+            width = length;
+            length = temp;
+        }
+        double elongation = length / width;
+        geomProp[3] = elongation;
+        geomProp[4] = width;
+        geomProp[5] = (perim - Math.sqrt(perim * perim - 16.0 * area)) / 4;
+
+        return geomProp;
+
+    }
+
+    /**
+     * Method that detects the separators based on their geometric properties
+     * 
+     * @return the faces whose geometric properties fit those needed to be a
+     *         separator
+     */
+
+    private List<Face> detectLongFaces(List<Face> allFaces) {
+
+        List<Face> longFaces = new ArrayList<Face>();
+
+        FeatureType featureType = new FeatureType();
+        SchemaDefaultFeature schema = new SchemaDefaultFeature();
+        faces = new Population<DefaultFeature>(false, "faces",
+                DefaultFeature.class, true);
+        if (debugMode) {
+            featureType.setTypeName("Face");
+            featureType.setGeometryType(IPolygon.class);
+
+            AttributeType areaAttribute = new AttributeType("area", "area",
+                    "double");
+            featureType.addFeatureAttribute(areaAttribute);
+            AttributeType compactnessAttribute = new AttributeType(
+                    "compactness", "compactness", "double");
+            featureType.addFeatureAttribute(compactnessAttribute);
+            AttributeType concavityAttribute = new AttributeType("concavity",
+                    "concavity", "double");
+            featureType.addFeatureAttribute(concavityAttribute);
+            AttributeType elongationAttribute = new AttributeType("elongation",
+                    "elongation", "double");
+            featureType.addFeatureAttribute(elongationAttribute);
+            AttributeType widthAttribute = new AttributeType("width", "width",
+                    "double");
+            featureType.addFeatureAttribute(widthAttribute);
+            AttributeType huberAttribute = new AttributeType("Huber_width",
+                    "Huber_width", "double");
+            featureType.addFeatureAttribute(huberAttribute);
+
+            schema.setFeatureType(featureType);
+            featureType.setSchema(schema);
+            Map<Integer, String[]> attLookup = new HashMap<Integer, String[]>(
+                    0);
+            attLookup.put(new Integer(0),
+                    new String[] { areaAttribute.getNomField(),
+                            areaAttribute.getMemberName() });
+            attLookup.put(new Integer(1),
+                    new String[] { compactnessAttribute.getNomField(),
+                            compactnessAttribute.getMemberName() });
+            attLookup.put(new Integer(2),
+                    new String[] { concavityAttribute.getNomField(),
+                            concavityAttribute.getMemberName() });
+            attLookup.put(new Integer(3),
+                    new String[] { elongationAttribute.getNomField(),
+                            elongationAttribute.getMemberName() });
+            attLookup.put(new Integer(4),
+                    new String[] { widthAttribute.getNomField(),
+                            widthAttribute.getMemberName() });
+            attLookup.put(new Integer(5),
+                    new String[] { huberAttribute.getNomField(),
+                            huberAttribute.getMemberName() });
+            schema.setAttLookup(attLookup);
+            faces.setFeatureType(featureType);
+        }
+
+        for (Face face : allFaces) {
+
+            // Geometric properties of the face
+            double[] geomProp = this.calculeFaceGeomProperties(face);
+            double area = geomProp[0];
+            double compactness = geomProp[1];
+            double concavity = geomProp[2];
+            double elongation = geomProp[3];
+            double width = geomProp[4];
+            double huberWidth = geomProp[5];
+
+            if (debugMode) {
+                DefaultFeature feat = faces.nouvelElement(face.getGeom());
+                feat.setFeatureType(featureType);
+                feat.setSchema(schema);
+                Object[] attributes = new Object[] { "area", "compactness",
+                        "concavity", "elongation", "width", "Huber_width" };
+                feat.setAttributes(attributes);
+                feat.setAttribute("area", area);
+                feat.setAttribute("compactness", compactness);
+                feat.setAttribute("concavity", concavity);
+                feat.setAttribute("elongation", elongation);
+                feat.setAttribute("width", width);
+                feat.setAttribute("Huber_width", huberWidth);
+            }
+
+            // if the face is convex, we consider the elongation
+            if (concavity > this.concLimit) {
+                if (width > this.widthLimit)
+                    continue;
+                if ((elongation > this.elongLimit)
+                        || ((compactness < this.compLimit)
+                                && (elongation > this.elongLimit / 2))) {
+                    longFaces.add(face);
+                    continue;
+                }
+            }
+
+            // if the face is not convex, we consider the compactness
+            else {
+                if (compactness < this.compLimit && (area < this.areaLimit)) {
+                    if (compactness > this.compLimit / 2) {
+                        /*
+                         * IGeometry eroded =
+                         * face.getGeom().buffer(-this.widthLimit); if (eroded
+                         * != null) continue;
+                         */
+                        if (huberWidth > 16)
+                            continue;
+                    }
+                    longFaces.add(face);
+                    continue;
+                }
+            }
+
+            // special case : long motorways
+            if ((compactness < this.compLimit / 4)
+                    && (area < 10 * this.areaLimit)) {
+                longFaces.add(face);
+            }
+
+        }
+
+        return longFaces;
+
+    }
+
+    /**
+     * Method that detects the faces that have sharp angles (supposed to concern
+     * slip roads so not needed)
+     * 
+     * @param faces
+     *            : the faces on which the detection is performed
+     * @return the detected faces
+     */
+
+    private List<Face> detectSharpAngleFaces(List<Face> faces) {
+
+        List<Face> sharpAngleFaces = new ArrayList<Face>();
+        Angle alpha = new Angle();
+
+        for (Face face : faces) {
+
             List<Arc> arcs = new ArrayList<Arc>();
-            arcs.addAll(myFace.getArcsDirects());
-            arcs.addAll(myFace.getArcsIndirects());
-            sectCommunes.clear();
+            arcs.addAll(face.getArcsDirects());
+            arcs.addAll(face.getArcsIndirects());
 
-            // on parcourt les sections de ces petites faces
+            // loop on each section
             for (Arc arc : arcs) {
+                IFeature obj = arc.getCorrespondant(0);
+                if (obj instanceof IRoadLine) {
+                    IRoadLine sect = (IRoadLine) obj;
 
-              IFeature obj = arc.getCorrespondant(0);
-              if (obj instanceof IRoadLine) {
-                IRoadLine sect = (IRoadLine) obj;
+                    // calculation of points
+                    int i = sect.getGeom().numPoints();
+                    IDirectPosition p1 = sect.getGeom().coord().get(0);
+                    IDirectPosition p2 = sect.getGeom().coord().get(1);
+                    IDirectPosition p3 = sect.getGeom().coord().get(i - 2);
+                    IDirectPosition p4 = sect.getGeom().coord().get(i - 1);
 
-                // s'il s'agit d'un troncon d'autoroute qui intersecte le
-                // separateur(Face)
-                if (sect.getImportance() == 4 && sect.getGeom().buffer(0.1)
-                    .intersects(face.getGeom().buffer(0.1))) {
-                  for (Arc arcSep : arcsSep) {
-                    IFeature objSep = arcSep.getCorrespondant(0);
-                    if (objSep instanceof IRoadLine) {
-                      IRoadLine sectSep = (IRoadLine) objSep;
-                      if (sectSep.getGeom().equals(sect.getGeom()) == true) {
-                        sectCommunes.add(sect);
-                        nbSect++;
-                      }
+                    // second loop on each section
+                    for (Arc arc2 : arcs) {
+                        IFeature obj2 = arc2.getCorrespondant(0);
+                        if (obj2 instanceof IRoadLine) {
+                            IRoadLine sect2 = (IRoadLine) obj2;
+
+                            // comparison of the section
+                            // do not continue if the two sections are the same
+                            // object
+                            if (sect.equals(sect2) == false) {
+
+                                // calculation of the points of the second
+                                // section
+                                if (sect.getGeom().buffer(0.1)
+                                        .intersection(
+                                                sect2.getGeom().buffer(0.1))
+                                        .isEmpty() == false) {
+                                    IDirectPosition pDebut = sect2.getGeom()
+                                            .startPoint();
+                                    IDirectPosition pFin = sect2.getGeom()
+                                            .endPoint();
+                                    IDirectPosition pDebutSuite = sect2
+                                            .getGeom().coord().get(1);
+                                    IDirectPosition pFinSuite = sect2.getGeom()
+                                            .coord()
+                                            .get(sect2.getGeom().numPoints()
+                                                    - 2);
+                                    IDirectPosition centroid = sect.getGeom()
+                                            .buffer(0.1)
+                                            .intersection(
+                                                    sect2.getGeom().buffer(0.1))
+                                            .centroid();
+
+                                    // 4 cases
+                                    if (((pDebut.distance(centroid)) < (pFin
+                                            .distance(centroid)))
+                                            && (pDebut
+                                                    .distance(centroid) < 2)) {
+                                        if ((p1.distance(centroid)) < (p4
+                                                .distance(centroid))) {
+                                            alpha = Angle.angleTroisPoints(p2,
+                                                    centroid, pDebutSuite);
+                                        } else {
+                                            alpha = Angle.angleTroisPoints(p3,
+                                                    centroid, pDebutSuite);
+                                        }
+                                        if (Math.abs(alpha
+                                                .getValeur()) < Math.PI / 9) {
+                                            sharpAngleFaces.add(face);
+                                            break;
+                                        }
+                                    }
+
+                                    if (((pFin.distance(centroid)) < (pDebut
+                                            .distance(centroid)))
+                                            && (pFin.distance(centroid) < 2)) {
+                                        if ((p1.distance(centroid)) < (p4
+                                                .distance(centroid))) {
+                                            alpha = Angle.angleTroisPoints(p2,
+                                                    centroid, pFinSuite);
+                                        } else {
+                                            alpha = Angle.angleTroisPoints(p3,
+                                                    centroid, pFinSuite);
+                                        }
+                                        if (Math.abs(alpha
+                                                .getValeur()) < Math.PI / 9) {
+                                            sharpAngleFaces.add(face);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              }
             }
-            // si les deux tronçons en commun ne s'intersectent pas
-            if (nbSect == 2
-                && sectCommunes.get(0).getGeom().buffer(0.1).intersects(
-                    sectCommunes.get(1).getGeom().buffer(0.1)) == false) {
-              sep.add(myFace);
+        }
+
+        return sharpAngleFaces;
+
+    }
+
+    /**
+     * Detection of faces that cannot be separators
+     * 
+     * @param faces
+     *            : the faces on which the detection is performed
+     * @return the detected faces
+     */
+
+    private List<Face> detectBadFaces(List<Face> faces) {
+
+        List<Face> badFaces = new ArrayList<Face>();
+
+        for (Face face : faces) {
+
+            // a separator should have at least 4 delineating sections
+            List<Arc> arcs = new ArrayList<Arc>();
+            arcs.addAll(face.getArcsDirects());
+            arcs.addAll(face.getArcsIndirects());
+            if (badFacesMin && arcs.size() < 4) {
+                badFaces.add(face);
+                continue;
             }
-          }
+            if (badFacesMax && arcs.size() > 8) {
+                badFaces.add(face);
+                continue;
+            }
+
+            // a separator shoud not contain a pending road
+            if (face.getArcsPendants().size() != 0) {
+                badFaces.add(face);
+                continue;
+            }
+
+            // a separator shouldn't have buildings inside its geometry
+            for (IBuilding building : CartAGenDoc.getInstance()
+                    .getCurrentDataset().getBuildings()) {
+                if (face.getGeom().contains(building.getGeom())) {
+                    badFaces.add(face);
+                    break;
+                }
+            }
+
         }
-      }
 
-      neigbourLittleFaces.addAll(sep);
-      sep.clear();
+        return badFaces;
+
     }
 
-    return neigbourLittleFaces;
+    /**
+     * Method that detects the remaining little separators based on continuity
+     * with already detected separators
+     */
 
-  }
+    private List<Face> detectNeighbourLittleSeparators(List<Face> separators,
+            List<Face> allFaces) {
 
-  // ///////////////////////////////////
-  // DETECTION OF THE INTERCHANGES
-  // ///////////////////////////////////
-  /**
-   * Main detection method, which creates polygon geometries for the detected
-   * interchange instances.
-   * @param importance the importance of the roads to use (-1 to use all roads)
-   */
-  public Collection<IPolygon> detectInterchanges(int importance) {
-    // initialisation
-    Collection<IPolygon> interchangeExtents = new HashSet<>();
-    CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+        List<Face> neigbourLittleFaces = new ArrayList<Face>();
+        int i = 0;
+        int nbSect;
+        List<Face> sep = new ArrayList<Face>();
+        ArrayList<IRoadLine> sectCommunes = new ArrayList<IRoadLine>();
 
-    // enrich the network if necessary
-    NetworkEnrichment.buildTopology(dataset, dataset.getRoadNetwork(), false);
-    Set<TronconDeRoute> roads = new HashSet<TronconDeRoute>();
-    for (IRoadLine feat : dataset.getRoads()) {
-      // filter roads by importance
-      if (feat.getImportance() >= importance)
-        roads.add((TronconDeRoute) feat.getGeoxObj());
-    }
+        for (i = 0; i < 2; i++) {
+            // boucle sur les faces des separateurs
+            for (Face face : separators) {
 
-    // map the NoeudReseau instances to the IRoadNode instances of the network
-    Map<NoeudReseau, INetworkNode> nodesMap = new HashMap<>();
-    for (INetworkNode node : dataset.getRoadNetwork().getNodes()) {
-      nodesMap.put((NoeudReseau) node.getGeoxObj(), node);
-    }
+                List<Arc> arcsSep = new ArrayList<Arc>();
+                arcsSep.addAll(face.getArcsDirects());
+                arcsSep.addAll(face.getArcsIndirects());
 
-    // classify the simple crossroads
-    logger.trace("simple crossroad classification");
-    CrossRoadDetection algo = new CrossRoadDetection();
-    simples = algo.classifyCrossRoads(roads);
-    // filter to keep only Y and Fork nodes
-    IFeatureCollection<SimpleCrossRoad> crossroads = new FT_FeatureCollection<>();
-    for (SimpleCrossRoad simple : simples) {
-      if (simple instanceof ForkCrossRoad)
-        crossroads.add(simple);
-      if (simple instanceof YCrossRoad)
-        crossroads.add(simple);
-    }
+                // boucle sur les faces non selectionnees
+                for (Face myFace : allFaces) {
+                    nbSect = 0;
+                    // s'il s'agit d'une petite face qui intersecte une face
+                    // déjà détectée
+                    if (myFace.getGeom().area() < 2500
+                            && separators.contains(myFace) == false
+                            && sep.contains(myFace) == false
+                            && face.getGeom().buffer(0.1).intersects(
+                                    myFace.getGeom().buffer(0.1)) == true) {
+                        List<Arc> arcs = new ArrayList<Arc>();
+                        arcs.addAll(myFace.getArcsDirects());
+                        arcs.addAll(myFace.getArcsIndirects());
+                        sectCommunes.clear();
 
-    // build a graph from the network
-    WeightedPseudograph<INetworkNode, DefaultWeightedEdge> graph = GraphFactory
-        .buildGraphFromNetwork(dataset.getRoadNetwork(),
-            new MetricalGraphWeighter());
+                        // on parcourt les sections de ces petites faces
+                        for (Arc arc : arcs) {
 
-    // cluster the simple crossroads based on network distance
-    logger.trace("cluster the simple crossroads");
-    Set<Set<SimpleCrossRoad>> clusters = new HashSet<Set<SimpleCrossRoad>>();
-    Stack<SimpleCrossRoad> stack = new Stack<>();
-    stack.addAll(crossroads);
-    while (!stack.empty()) {
-      Set<SimpleCrossRoad> cluster = new HashSet<>();
-      SimpleCrossRoad feature = stack.pop();
-      Stack<SimpleCrossRoad> stack2 = new Stack<>();
-      stack2.add(feature);
-      while (!stack2.empty()) {
-        SimpleCrossRoad feat = stack2.pop();
-        cluster.add(feat);
-        // get the features closer than a distance
-        Collection<SimpleCrossRoad> closeColn = crossroads
-            .select(feat.getGeom().centroid(), distMaxClustering);
+                            IFeature obj = arc.getCorrespondant(0);
+                            if (obj instanceof IRoadLine) {
+                                IRoadLine sect = (IRoadLine) obj;
 
-        // now filter closeColn by network distance
-        // the shortest path should also be less than distMaxClustering
-        Collection<SimpleCrossRoad> toAdd = new HashSet<>();
-        for (SimpleCrossRoad simple : closeColn) {
-          if (cluster.contains(simple))
-            continue;
-          if (simple.getCoord().distance2D(feature.getCoord()) < euclMaxDist) {
-            toAdd.add(simple);
-            continue;
-          }
-          // compute the shortest path between feature and simple
-          DijkstraShortestPath<INetworkNode, DefaultWeightedEdge> shortest = new DijkstraShortestPath<>(
-              graph, nodesMap.get(feature.getNode()),
-              nodesMap.get(simple.getNode()));
+                                // s'il s'agit d'un troncon d'autoroute qui
+                                // intersecte le
+                                // separateur(Face)
+                                if (sect.getImportance() == 4 && sect.getGeom()
+                                        .buffer(0.1).intersects(
+                                                face.getGeom().buffer(0.1))) {
+                                    for (Arc arcSep : arcsSep) {
+                                        IFeature objSep = arcSep
+                                                .getCorrespondant(0);
+                                        if (objSep instanceof IRoadLine) {
+                                            IRoadLine sectSep = (IRoadLine) objSep;
+                                            if (sectSep.getGeom().equals(
+                                                    sect.getGeom()) == true) {
+                                                sectCommunes.add(sect);
+                                                nbSect++;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        // si les deux tronçons en commun ne s'intersectent pas
+                        if (nbSect == 2 && sectCommunes.get(0).getGeom()
+                                .buffer(0.1).intersects(sectCommunes.get(1)
+                                        .getGeom().buffer(0.1)) == false) {
+                            sep.add(myFace);
+                        }
+                    }
+                }
+            }
 
-          if (shortest.getPathLength() < distMaxClustering)
-            toAdd.add(simple);
+            neigbourLittleFaces.addAll(sep);
+            sep.clear();
         }
-        closeColn.removeAll(stack2);
-        closeColn.removeAll(cluster);
-        stack2.addAll(toAdd);
-      }
-      if (cluster.size() >= this.clusterMinSize)
-        clusters.add(cluster);
-      stack.removeAll(cluster);
-    }
-    logger.trace(clusters.size() + " clusters found in the dataset");
 
-    // filter the clusters to only keep the interchanges
-    clusters = filterInterchangeClusters(clusters);
-    logger.trace(clusters.size() + " clusters left after filtering");
+        return neigbourLittleFaces;
 
-    // reshape the clusters to exclude the crossroads that do not belong to the
-    // interchange
-    clusters = reshapeInterchangeClusters(clusters);
-
-    // compute the extent of each cluster
-    for (Set<SimpleCrossRoad> cluster : clusters) {
-      IMultiPoint multi = GeometryEngine.getFactory().createMultiPoint();
-      for (SimpleCrossRoad simple : cluster)
-        multi.add((IPoint) simple.getGeom());
-      interchangeExtents.add((IPolygon) multi.convexHull().buffer(5.0));
     }
 
-    return interchangeExtents;
-  }
+    // ///////////////////////////////////
+    // DETECTION OF THE INTERCHANGES
+    // ///////////////////////////////////
+    /**
+     * Main detection method, which creates polygon geometries for the detected
+     * interchange instances.
+     * 
+     * @param importance
+     *            the importance of the roads to use (-1 to use all roads)
+     */
+    public Collection<IPolygon> detectInterchanges(int importance,
+            boolean inferior) {
+        // initialisation
+        Collection<IPolygon> interchangeExtents = new HashSet<>();
+        CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
 
-  private Set<Set<SimpleCrossRoad>> filterInterchangeClusters(
-      Set<Set<SimpleCrossRoad>> clusters) {
-    Set<Set<SimpleCrossRoad>> realClusters = new HashSet<>();
-    // TODO
-    return clusters;
-  }
+        // enrich the network if necessary
+        NetworkEnrichment.buildTopology(dataset, dataset.getRoadNetwork(),
+                false);
+        Set<TronconDeRoute> roads = new HashSet<TronconDeRoute>();
+        for (IRoadLine feat : dataset.getRoads()) {
+            // filter roads by importance
+            if (inferior) {
+                if (feat.getImportance() <= importance)
+                    roads.add((TronconDeRoute) feat.getGeoxObj());
+            } else if (feat.getImportance() >= importance)
+                roads.add((TronconDeRoute) feat.getGeoxObj());
+        }
 
-  private Set<Set<SimpleCrossRoad>> reshapeInterchangeClusters(
-      Set<Set<SimpleCrossRoad>> clusters) {
-    Set<Set<SimpleCrossRoad>> reshapedClusters = new HashSet<>();
-    // TODO
-    return clusters;
-  }
+        // map the NoeudReseau instances to the IRoadNode instances of the
+        // network
+        Map<NoeudReseau, INetworkNode> nodesMap = new HashMap<>();
+        for (INetworkNode node : dataset.getRoadNetwork().getNodes()) {
+            nodesMap.put((NoeudReseau) node.getGeoxObj(), node);
+        }
 
-  // ///////////////////////////////////
-  // DETECTION OF THE REST AREAS
-  // ///////////////////////////////////
+        // classify the simple crossroads
+        logger.trace("simple crossroad classification");
+        CrossRoadDetection algo = new CrossRoadDetection();
+        simples = algo.classifyCrossRoads(roads);
+        // filter to keep only Y and Fork nodes
+        IFeatureCollection<SimpleCrossRoad> crossroads = new FT_FeatureCollection<>();
+        for (SimpleCrossRoad simple : simples) {
+            if (simple instanceof ForkCrossRoad)
+                crossroads.add(simple);
+            if (simple instanceof YCrossRoad)
+                crossroads.add(simple);
+        }
 
-  // ///////////////////////////////////
-  // getters and setters
-  // ///////////////////////////////////
+        // build a graph from the network
+        WeightedPseudograph<INetworkNode, DefaultWeightedEdge> graph = GraphFactory
+                .buildGraphFromNetwork(dataset.getRoadNetwork(),
+                        new MetricalGraphWeighter());
 
-  public double getConcLimit() {
-    return concLimit;
-  }
+        // cluster the simple crossroads based on network distance
+        logger.trace("cluster the simple crossroads");
+        Set<Set<SimpleCrossRoad>> clusters = new HashSet<Set<SimpleCrossRoad>>();
+        Stack<SimpleCrossRoad> stack = new Stack<>();
+        stack.addAll(crossroads);
+        while (!stack.empty()) {
+            Set<SimpleCrossRoad> cluster = new HashSet<>();
+            SimpleCrossRoad feature = stack.pop();
+            Stack<SimpleCrossRoad> stack2 = new Stack<>();
+            stack2.add(feature);
+            while (!stack2.empty()) {
+                SimpleCrossRoad feat = stack2.pop();
+                cluster.add(feat);
+                // get the features closer than a distance
+                Collection<SimpleCrossRoad> closeColn = crossroads
+                        .select(feat.getGeom().centroid(), distMaxClustering);
 
-  public double getElongLimit() {
-    return elongLimit;
-  }
+                // now filter closeColn by network distance
+                // the shortest path should also be less than distMaxClustering
+                Collection<SimpleCrossRoad> toAdd = new HashSet<>();
+                for (SimpleCrossRoad simple : closeColn) {
+                    if (cluster.contains(simple))
+                        continue;
+                    if (simple.getCoord()
+                            .distance2D(feature.getCoord()) < euclMaxDist) {
+                        toAdd.add(simple);
+                        continue;
+                    }
+                    // compute the shortest path between feature and simple
+                    DijkstraShortestPath<INetworkNode, DefaultWeightedEdge> shortest = new DijkstraShortestPath<>(
+                            graph, nodesMap.get(feature.getNode()),
+                            nodesMap.get(simple.getNode()));
 
-  public double getCompLimit() {
-    return compLimit;
-  }
+                    if (shortest.getPathLength() < distMaxClustering)
+                        toAdd.add(simple);
+                }
+                closeColn.removeAll(stack2);
+                closeColn.removeAll(cluster);
+                stack2.addAll(toAdd);
+            }
+            if (cluster.size() >= this.clusterMinSize)
+                clusters.add(cluster);
+            stack.removeAll(cluster);
+        }
+        logger.trace(clusters.size() + " clusters found in the dataset");
 
-  public double getAreaLimit() {
-    return areaLimit;
-  }
+        // filter the clusters to only keep the interchanges
+        clusters = filterInterchangeClusters(clusters);
+        logger.trace(clusters.size() + " clusters left after filtering");
 
-  public double getDistMaxClustering() {
-    return distMaxClustering;
-  }
+        // reshape the clusters to exclude the crossroads that do not belong to
+        // the
+        // interchange
+        clusters = reshapeInterchangeClusters(clusters);
 
-  public double getEuclMaxDist() {
-    return euclMaxDist;
-  }
+        // compute the extent of each cluster
+        for (Set<SimpleCrossRoad> cluster : clusters) {
+            IMultiPoint multi = GeometryEngine.getFactory().createMultiPoint();
+            for (SimpleCrossRoad simple : cluster)
+                multi.add((IPoint) simple.getGeom());
+            interchangeExtents.add((IPolygon) multi.convexHull().buffer(5.0));
+        }
 
-  public int getClusterMinSize() {
-    return clusterMinSize;
-  }
+        return interchangeExtents;
+    }
 
-  public void setConcLimit(double concLimit) {
-    this.concLimit = concLimit;
-  }
+    private Set<Set<SimpleCrossRoad>> filterInterchangeClusters(
+            Set<Set<SimpleCrossRoad>> clusters) {
+        Set<Set<SimpleCrossRoad>> realClusters = new HashSet<>();
+        // TODO
+        return clusters;
+    }
 
-  public void setElongLimit(double elongLimit) {
-    this.elongLimit = elongLimit;
-  }
+    private Set<Set<SimpleCrossRoad>> reshapeInterchangeClusters(
+            Set<Set<SimpleCrossRoad>> clusters) {
+        Set<Set<SimpleCrossRoad>> reshapedClusters = new HashSet<>();
+        // TODO
+        return clusters;
+    }
 
-  public void setCompLimit(double compLimit) {
-    this.compLimit = compLimit;
-  }
+    // ///////////////////////////////////
+    // DETECTION OF THE REST AREAS
+    // ///////////////////////////////////
 
-  public void setAreaLimit(double areaLimit) {
-    this.areaLimit = areaLimit;
-  }
+    // ///////////////////////////////////
+    // getters and setters
+    // ///////////////////////////////////
 
-  public void setDistMaxClustering(double distMaxClustering) {
-    this.distMaxClustering = distMaxClustering;
-  }
+    public double getConcLimit() {
+        return concLimit;
+    }
 
-  public void setEuclMaxDist(double euclMaxDist) {
-    this.euclMaxDist = euclMaxDist;
-  }
+    public double getElongLimit() {
+        return elongLimit;
+    }
 
-  public void setClusterMinSize(int clusterMinSize) {
-    this.clusterMinSize = clusterMinSize;
-  }
+    public double getCompLimit() {
+        return compLimit;
+    }
 
-  public double getWidthLimit() {
-    return widthLimit;
-  }
+    public double getAreaLimit() {
+        return areaLimit;
+    }
 
-  public void setWidthLimit(double widthLimit) {
-    this.widthLimit = widthLimit;
-  }
+    public double getDistMaxClustering() {
+        return distMaxClustering;
+    }
 
-  public boolean isDebugMode() {
-    return debugMode;
-  }
+    public double getEuclMaxDist() {
+        return euclMaxDist;
+    }
 
-  public void setDebugMode(boolean debugMode) {
-    this.debugMode = debugMode;
-  }
+    public int getClusterMinSize() {
+        return clusterMinSize;
+    }
 
-  public Population<DefaultFeature> getFaces() {
-    return faces;
-  }
+    public void setConcLimit(double concLimit) {
+        this.concLimit = concLimit;
+    }
 
-  public void setFaces(Population<DefaultFeature> faces) {
-    this.faces = faces;
-  }
+    public void setElongLimit(double elongLimit) {
+        this.elongLimit = elongLimit;
+    }
 
-  public boolean isBadFacesMax() {
-    return badFacesMax;
-  }
+    public void setCompLimit(double compLimit) {
+        this.compLimit = compLimit;
+    }
 
-  public void setBadFacesMax(boolean badFacesMax) {
-    this.badFacesMax = badFacesMax;
-  }
+    public void setAreaLimit(double areaLimit) {
+        this.areaLimit = areaLimit;
+    }
 
-  public boolean isBadFacesMin() {
-    return badFacesMin;
-  }
+    public void setDistMaxClustering(double distMaxClustering) {
+        this.distMaxClustering = distMaxClustering;
+    }
 
-  public void setBadFacesMin(boolean badFacesMin) {
-    this.badFacesMin = badFacesMin;
-  }
+    public void setEuclMaxDist(double euclMaxDist) {
+        this.euclMaxDist = euclMaxDist;
+    }
 
-  public Set<SimpleCrossRoad> getSimples() {
-    return simples;
-  }
+    public void setClusterMinSize(int clusterMinSize) {
+        this.clusterMinSize = clusterMinSize;
+    }
 
-  public void setSimples(Set<SimpleCrossRoad> simples) {
-    this.simples = simples;
-  }
+    public double getWidthLimit() {
+        return widthLimit;
+    }
+
+    public void setWidthLimit(double widthLimit) {
+        this.widthLimit = widthLimit;
+    }
+
+    public boolean isDebugMode() {
+        return debugMode;
+    }
+
+    public void setDebugMode(boolean debugMode) {
+        this.debugMode = debugMode;
+    }
+
+    public Population<DefaultFeature> getFaces() {
+        return faces;
+    }
+
+    public void setFaces(Population<DefaultFeature> faces) {
+        this.faces = faces;
+    }
+
+    public boolean isBadFacesMax() {
+        return badFacesMax;
+    }
+
+    public void setBadFacesMax(boolean badFacesMax) {
+        this.badFacesMax = badFacesMax;
+    }
+
+    public boolean isBadFacesMin() {
+        return badFacesMin;
+    }
+
+    public void setBadFacesMin(boolean badFacesMin) {
+        this.badFacesMin = badFacesMin;
+    }
+
+    public Set<SimpleCrossRoad> getSimples() {
+        return simples;
+    }
+
+    public void setSimples(Set<SimpleCrossRoad> simples) {
+        this.simples = simples;
+    }
 
 }
