@@ -8,7 +8,7 @@
 
 Description of the algorithm
 -------------
-Cet algorithme réalise une simplification de ligne qui permet d'obtenir des résultats moins anguleux que l'algorithme de filtrage de [Douglas and Peucker][2].
+This algorithm performs a line simplification that produces less angular results than the filtering algorithm of [Douglas and Peucker][2].
 The algorithm was proposed by [Visvalingam & Whyatt 1993][5].
 
 The principle of the algorithm is to select the vertices to delete (the less characteristic ones) rather than choosing the vertices to keep (in the Douglas and Peucker algorithm). 
