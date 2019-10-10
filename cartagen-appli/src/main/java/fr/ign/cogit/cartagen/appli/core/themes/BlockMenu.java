@@ -28,6 +28,7 @@ import fr.ign.cogit.cartagen.appli.core.geoxygene.selection.SelectionUtil;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.dataset.geompool.GeometryPool;
+import fr.ign.cogit.cartagen.core.genericschema.IPersistentObject;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetwork;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkSection;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
@@ -59,20 +60,27 @@ public class BlockMenu extends JMenu {
     @SuppressWarnings("unused")
     private Logger logger = Logger.getLogger(BlockMenu.class.getName());
 
-    private JMenuItem mCreateBlocksArea = new JMenuItem(new CreateBlocksInAreaAction());
+    private JMenuItem mCreateBlocksArea = new JMenuItem(
+            new CreateBlocksInAreaAction());
     private JMenuItem mIlotSelectionnerTous = new JMenuItem(new SelectAction());
-    private JMenuItem mBlockLinks = new JMenuItem(new RestoreBlockLinksAction());
+    private JMenuItem mBlockLinks = new JMenuItem(
+            new RestoreBlockLinksAction());
 
     public JCheckBoxMenuItem mIdIlotVoir = new JCheckBoxMenuItem("Display id");
 
-    public JCheckBoxMenuItem mVoirCoutSuppressionBatiments = new JCheckBoxMenuItem("Voir cout suppression batiments");
+    public JCheckBoxMenuItem mVoirCoutSuppressionBatiments = new JCheckBoxMenuItem(
+            "Voir cout suppression batiments");
 
-    public JCheckBoxMenuItem mVoirDensiteInitiale = new JCheckBoxMenuItem("Voir densite initiale");
-    public JCheckBoxMenuItem mVoirDensiteSimulee = new JCheckBoxMenuItem("Voir densite simulee");
-    public JCheckBoxMenuItem mVoirSatisfactionDensite = new JCheckBoxMenuItem("Voir satisfaction densite");
+    public JCheckBoxMenuItem mVoirDensiteInitiale = new JCheckBoxMenuItem(
+            "Voir densite initiale");
+    public JCheckBoxMenuItem mVoirDensiteSimulee = new JCheckBoxMenuItem(
+            "Voir densite simulee");
+    public JCheckBoxMenuItem mVoirSatisfactionDensite = new JCheckBoxMenuItem(
+            "Voir satisfaction densite");
     public JCheckBoxMenuItem mVoirTauxSuperpositionBatiments = new JCheckBoxMenuItem(
             "Voir moyenne taux superposition batiments");
-    public JCheckBoxMenuItem mVoirSatisfactionProximite = new JCheckBoxMenuItem("Voir satisfaction proximite");
+    public JCheckBoxMenuItem mVoirSatisfactionProximite = new JCheckBoxMenuItem(
+            "Voir satisfaction proximite");
 
     public BlockMenu(String title) {
         super(title);
@@ -109,8 +117,10 @@ public class BlockMenu extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            for (IUrbanBlock ai : CartAGenDoc.getInstance().getCurrentDataset().getBlocks()) {
-                SelectionUtil.addFeatureToSelection(CartAGenPlugin.getInstance().getApplication(), ai);
+            for (IUrbanBlock ai : CartAGenDoc.getInstance().getCurrentDataset()
+                    .getBlocks()) {
+                SelectionUtil.addFeatureToSelection(
+                        CartAGenPlugin.getInstance().getApplication(), ai);
             }
         }
 
@@ -125,8 +135,10 @@ public class BlockMenu extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                    .getApplication();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
             for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
 
                 if (feat.getGeom() instanceof IPolygon) {
@@ -135,10 +147,12 @@ public class BlockMenu extends JMenu {
                     // create the topological map
                     // remplit carte topo avec les troncons
                     CarteTopo carteTopo = new CarteTopo("cartetopo");
-                    for (INetwork res : UrbanEnrichment.getStructuringNetworks(dataset)) {
+                    for (INetwork res : UrbanEnrichment
+                            .getStructuringNetworks(dataset)) {
                         if (res.getSections().size() > 0) {
                             IFeatureCollection<IFeature> sections = new FT_FeatureCollection<>();
-                            sections.addAll(res.getSections().select(area.getEnvelope()));
+                            sections.addAll(res.getSections()
+                                    .select(area.getEnvelope()));
                             carteTopo.importClasseGeo(sections, true);
                         }
                     }
@@ -162,9 +176,11 @@ public class BlockMenu extends JMenu {
                     carteTopo.fusionNoeuds(1.0);
                     carteTopo.filtreArcsDoublons();
                     carteTopo.creeTopologieFaces();
-                    carteTopo.getPopFaces().initSpatialIndex(Tiling.class, false);
+                    carteTopo.getPopFaces().initSpatialIndex(Tiling.class,
+                            false);
 
-                    UrbanEnrichment.buildBlocksInArea(area, dataset, carteTopo, false);
+                    UrbanEnrichment.buildBlocksInArea(area, dataset, carteTopo,
+                            false);
 
                 }
             }
@@ -194,9 +210,11 @@ public class BlockMenu extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            for (IFeature obj : SelectionUtil.getSelectedObjects(CartAGenPlugin.getInstance().getApplication(),
+            for (IFeature obj : SelectionUtil.getSelectedObjects(
+                    CartAGenPlugin.getInstance().getApplication(),
                     CartAGenDataSet.BLOCKS_POP)) {
-                List<IUrbanElement> rank = BuildingsDeletionProximityMultiCriterion.compute((IUrbanBlock) obj);
+                List<IUrbanElement> rank = BuildingsDeletionProximityMultiCriterion
+                        .compute((IUrbanBlock) obj);
                 for (int j = 1; j <= rank.size(); j++)
                     System.out.println(j + ". " + rank.get(j));
             }
@@ -213,22 +231,30 @@ public class BlockMenu extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            final GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
-            GeometryPool pool = CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool();
-            pool.setSld(appli.getMainFrame().getSelectedProjectFrame().getSld());
+            final GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                    .getApplication();
+            GeometryPool pool = CartAGenDoc.getInstance().getCurrentDataset()
+                    .getGeometryPool();
+            pool.setSld(
+                    appli.getMainFrame().getSelectedProjectFrame().getSld());
 
-            for (IFeature obj : SelectionUtil.getSelectedObjects(CartAGenPlugin.getInstance().getApplication(),
+            for (IFeature obj : SelectionUtil.getSelectedObjects(
+                    CartAGenPlugin.getInstance().getApplication(),
                     CartAGenDataSet.BLOCKS_POP)) {
-                for (IUrbanElement ue : ((IUrbanBlock) obj).getUrbanElements()) {
-                    for (IEdge edge : ((IGraphLinkableFeature) ue).getProximitySegments()) {
-                        pool.addFeatureToGeometryPool(edge.getGeom(), Color.PINK, 2);
+                for (IUrbanElement ue : ((IUrbanBlock) obj)
+                        .getUrbanElements()) {
+                    for (IEdge edge : ((IGraphLinkableFeature) ue)
+                            .getProximitySegments()) {
+                        pool.addFeatureToGeometryPool(edge.getGeom(),
+                                Color.PINK, 2);
                     }
                 }
             }
         }
 
         public ShowProximityInPoolAction() {
-            this.putValue(Action.NAME, "Show proximity triangulation in geometry pool");
+            this.putValue(Action.NAME,
+                    "Show proximity triangulation in geometry pool");
         }
     }
 
@@ -238,10 +264,13 @@ public class BlockMenu extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            for (IFeature obj : SelectionUtil.getSelectedObjects(CartAGenPlugin.getInstance().getApplication(),
+            for (IFeature obj : SelectionUtil.getSelectedObjects(
+                    CartAGenPlugin.getInstance().getApplication(),
                     CartAGenDataSet.BLOCKS_POP)) {
+                ((IPersistentObject) obj).restoreGeoxObjects();
                 // first, the link to urban elements components
-                Collection<IBuilding> components = CartAGenDoc.getInstance().getCurrentDataset().getBuildings()
+                Collection<IBuilding> components = CartAGenDoc.getInstance()
+                        .getCurrentDataset().getBuildings()
                         .select(obj.getGeom());
                 for (IBuilding urbanElement : components) {
                     // batiment totallement inclu dans ilot
@@ -253,7 +282,8 @@ public class BlockMenu extends JMenu {
                     // le batiment n'est pas totalement dans l'ilot. calcul de
                     // la part du
                     // batiment dans l'ilot
-                    double taux = urbanElement.getGeom().intersection(obj.getGeom()).area()
+                    double taux = urbanElement.getGeom()
+                            .intersection(obj.getGeom()).area()
                             / (urbanElement.getGeom().area());
                     System.out.println(taux);
                     // si ce taux est suffisament grand, le batiment est
@@ -267,20 +297,27 @@ public class BlockMenu extends JMenu {
 
                 // then, the link with surrounding roads
                 Collection<INetworkSection> surrounding = new HashSet<>();
-                surrounding.addAll(CartAGenDoc.getInstance().getCurrentDataset().getRoads().select(obj.getGeom()));
-                surrounding.addAll(CartAGenDoc.getInstance().getCurrentDataset().getWaterLines().select(obj.getGeom()));
-                surrounding
-                        .addAll(CartAGenDoc.getInstance().getCurrentDataset().getRailwayLines().select(obj.getGeom()));
+                surrounding.addAll(CartAGenDoc.getInstance().getCurrentDataset()
+                        .getRoads().select(obj.getGeom()));
+                surrounding.addAll(CartAGenDoc.getInstance().getCurrentDataset()
+                        .getWaterLines().select(obj.getGeom()));
+                surrounding.addAll(CartAGenDoc.getInstance().getCurrentDataset()
+                        .getRailwayLines().select(obj.getGeom()));
                 for (INetworkSection section : surrounding) {
                     // c'est un troncon
                     if (obj.getGeom().contains(section.getGeom())) {
-                        ((IUrbanBlock) obj).getSurroundingNetwork().add(section);
-                        ((Ilot) ((IUrbanBlock) obj).getGeoxObj()).getArcsReseaux()
+                        ((IUrbanBlock) obj).getSurroundingNetwork()
+                                .add(section);
+                        ((Ilot) ((IUrbanBlock) obj).getGeoxObj())
+                                .getArcsReseaux()
                                 .add((ArcReseau) section.getGeoxObj());
                     }
-                    if (JTSAlgorithms.coversPredicate(obj.getGeom(), section.getGeom())) {
-                        ((IUrbanBlock) obj).getSurroundingNetwork().add(section);
-                        ((Ilot) ((IUrbanBlock) obj).getGeoxObj()).getArcsReseaux()
+                    if (JTSAlgorithms.coversPredicate(obj.getGeom(),
+                            section.getGeom())) {
+                        ((IUrbanBlock) obj).getSurroundingNetwork()
+                                .add(section);
+                        ((Ilot) ((IUrbanBlock) obj).getGeoxObj())
+                                .getArcsReseaux()
                                 .add((ArcReseau) section.getGeoxObj());
                     }
                 }
@@ -288,7 +325,8 @@ public class BlockMenu extends JMenu {
         }
 
         public RestoreBlockLinksAction() {
-            this.putValue(Action.NAME, "Restore link between blocks and components");
+            this.putValue(Action.NAME,
+                    "Restore link between blocks and components");
         }
     }
 }

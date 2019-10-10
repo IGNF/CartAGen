@@ -55,6 +55,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.TableModel;
+import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
@@ -68,9 +69,16 @@ import fr.ign.cogit.cartagen.core.dataset.CartAGenDB;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.dataset.DatabaseView;
+import fr.ign.cogit.cartagen.core.dataset.DefaultCartAGenDB;
+import fr.ign.cogit.cartagen.core.dataset.DigitalLandscapeModel;
+import fr.ign.cogit.cartagen.core.dataset.GeneObjImplementation;
 import fr.ign.cogit.cartagen.core.dataset.GeographicClass;
+import fr.ign.cogit.cartagen.core.dataset.json.JSONLoader;
+import fr.ign.cogit.cartagen.core.dataset.json.JSONToLayerMapping;
+import fr.ign.cogit.cartagen.core.dataset.postgis.MappingXMLParser;
 import fr.ign.cogit.cartagen.core.dataset.postgis.PostgisDB;
 import fr.ign.cogit.cartagen.core.dataset.shapefile.ShapeFileDB;
+import fr.ign.cogit.cartagen.core.genericschema.AbstractCreationFactory;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.cartagen.core.genericschema.IPersistentObject;
 import fr.ign.cogit.cartagen.util.LastSessionParameters;
@@ -117,7 +125,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
         this.add(new JMenuItem(new SaveDocumentAction()));
         JMenu recentDocsMenu = new JMenu(lblRecentDocs);
         for (File recentDoc : recentDocs) {
-            recentDocsMenu.add(new JMenuItem(new OpenDocumentAction(recentDoc)));
+            recentDocsMenu
+                    .add(new JMenuItem(new OpenDocumentAction(recentDoc)));
         }
         this.add(recentDocsMenu);
         this.addSeparator();
@@ -125,6 +134,7 @@ public class DatasetGeoxGUIComponent extends JMenu {
         importDataMenu.add(new JMenuItem(new ImportDataShape1Action()));
         importDataMenu.add(new JMenuItem(new ImportDataXMLAction()));
         importDataMenu.add(new JMenuItem(new ImportDataPostGISAction()));
+        importDataMenu.add(new JMenuItem(new ImportDataJSONAction()));
         JMenu exportDataMenu = new JMenu("Export Data");
         exportDataMenu.add(new JMenuItem(new ExportDataToShapeAction()));
         exportDataMenu.add(new JMenuItem(new ExportDataToPostGisAction()));
@@ -172,23 +182,28 @@ public class DatasetGeoxGUIComponent extends JMenu {
         this.recentDocs = new ArrayList<File>();
         LastSessionParameters params = LastSessionParameters.getInstance();
         if (params.hasParameter("Recent CartAGenDoc 1")) {
-            String path = (String) params.getParameterValue("Recent CartAGenDoc 1");
+            String path = (String) params
+                    .getParameterValue("Recent CartAGenDoc 1");
             this.recentDocs.add(new File(path));
         }
         if (params.hasParameter("Recent CartAGenDoc 2")) {
-            String path = (String) params.getParameterValue("Recent CartAGenDoc 2");
+            String path = (String) params
+                    .getParameterValue("Recent CartAGenDoc 2");
             this.recentDocs.add(new File(path));
         }
         if (params.hasParameter("Recent CartAGenDoc 3")) {
-            String path = (String) params.getParameterValue("Recent CartAGenDoc 3");
+            String path = (String) params
+                    .getParameterValue("Recent CartAGenDoc 3");
             this.recentDocs.add(new File(path));
         }
         if (params.hasParameter("Recent CartAGenDoc 4")) {
-            String path = (String) params.getParameterValue("Recent CartAGenDoc 4");
+            String path = (String) params
+                    .getParameterValue("Recent CartAGenDoc 4");
             this.recentDocs.add(new File(path));
         }
         if (params.hasParameter("Recent CartAGenDoc 5")) {
-            String path = (String) params.getParameterValue("Recent CartAGenDoc 5");
+            String path = (String) params
+                    .getParameterValue("Recent CartAGenDoc 5");
             this.recentDocs.add(new File(path));
         }
     }
@@ -196,7 +211,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
     private void saveRecentDocs() throws TransformerException, IOException {
         LastSessionParameters params = LastSessionParameters.getInstance();
         for (int i = 1; i <= recentDocs.size(); i++) {
-            params.setParameter("Recent CartAGenDoc " + i, recentDocs.get(i - 1).getPath(),
+            params.setParameter("Recent CartAGenDoc " + i,
+                    recentDocs.get(i - 1).getPath(),
                     new HashMap<String, String>());
         }
     }
@@ -217,7 +233,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            String name = JOptionPane.showInputDialog("Enter a name for the new CartAGen Document");
+            String name = JOptionPane.showInputDialog(
+                    "Enter a name for the new CartAGen Document");
 
             CartAGenDoc doc = CartAGenDoc.getInstance();
             doc.setName(name);
@@ -225,7 +242,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
         }
 
         public NewDocumentAction() {
-            this.putValue(Action.SHORT_DESCRIPTION, "Create a new empty CartAGen document");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Create a new empty CartAGen document");
             this.putValue(Action.NAME, "New CartAGen Document");
         }
     }
@@ -250,8 +268,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
                 JFileChooser fc = new JFileChooser();
                 fc.setCurrentDirectory(new File("src/main/resources/xml/"));
                 fc.setFileFilter(new XMLFileFilter());
-                int returnVal = fc
-                        .showOpenDialog(CartAGenPlugin.getInstance().getApplication().getMainFrame().getGui());
+                int returnVal = fc.showOpenDialog(CartAGenPlugin.getInstance()
+                        .getApplication().getMainFrame().getGui());
                 if (returnVal != JFileChooser.APPROVE_OPTION) {
                     return;
                 }
@@ -263,13 +281,15 @@ public class DatasetGeoxGUIComponent extends JMenu {
                 CartAGenDoc doc = CartAGenDoc.loadDocFromXml(file);
                 for (String dbName : doc.getDatabases().keySet()) {
                     DatabaseView view = doc.getDatabaseViews().get(dbName);
-                    ProjectFrame frame = CartAGenPlugin.getInstance().addDatabaseToFrame(doc.getDatabases().get(dbName),
-                            view.getLocalSld());
+                    ProjectFrame frame = CartAGenPlugin.getInstance()
+                            .addDatabaseToFrame(doc.getDatabases().get(dbName),
+                                    view.getLocalSld());
                     JTable table = frame.getLayerLegendPanel().getLayersTable();
                     TableModel model = table.getModel();
                     for (int i = 0; i < frame.getLayers().size(); i++) {
                         Layer layer = frame.getLayers().get(i);
-                        if (view.getDisplayedLayers().contains(layer.getName())) {
+                        if (view.getDisplayedLayers()
+                                .contains(layer.getName())) {
                             layer.setVisible(true);// TODO
                         } else {
                             model.setValueAt(0, i, 1);
@@ -277,7 +297,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
                         }
 
                     }
-                    frame.getLayerViewPanel().getViewport().zoom(view.getDisplayEnvelope());
+                    frame.getLayerViewPanel().getViewport()
+                            .zoom(view.getDisplayEnvelope());
                 }
             } catch (SecurityException e) {
                 e.printStackTrace();
@@ -305,7 +326,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
         }
 
         public OpenDocumentAction() {
-            this.putValue(Action.SHORT_DESCRIPTION, "Open a saved CartAGen document");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Open a saved CartAGen document");
             this.putValue(Action.NAME, "Open CartAGen Document");
         }
 
@@ -336,10 +358,12 @@ public class DatasetGeoxGUIComponent extends JMenu {
         public void actionPerformed(ActionEvent arg0) {
             this.appl = CartAGenPlugin.getInstance().getApplication();
             JFileChooser fc = new JFileChooser();
-            fc.setCurrentDirectory(new File(DatasetGeoxGUIComponent.class.getResource("/src/main/resources/xml/")
-                    .getPath().replaceAll("%20", " ")));
+            fc.setCurrentDirectory(new File(DatasetGeoxGUIComponent.class
+                    .getResource("/src/main/resources/xml/").getPath()
+                    .replaceAll("%20", " ")));
             fc.setFileFilter(new XMLFileFilter());
-            int returnVal = fc.showOpenDialog(this.appl.getMainFrame().getGui());
+            int returnVal = fc
+                    .showOpenDialog(this.appl.getMainFrame().getGui());
             if (returnVal != JFileChooser.APPROVE_OPTION) {
                 return;
             }
@@ -347,8 +371,10 @@ public class DatasetGeoxGUIComponent extends JMenu {
             this.database = null;
             this.scale = 25000;
             try {
-                Class<? extends CartAGenDB> classObj = CartAGenDB.readType(file);
-                this.database = classObj.getConstructor(File.class).newInstance(file);
+                Class<? extends CartAGenDB> classObj = CartAGenDB
+                        .readType(file);
+                this.database = classObj.getConstructor(File.class)
+                        .newInstance(file);
                 this.scale = CartAGenDB.readScale(file);
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
@@ -389,7 +415,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
             // and apply the new CartAGenDataSet
             dataset.setCartAGenDB(this.database);
             // add the database to the document
-            CartAGenDoc.getInstance().addDatabase(this.database.getName(), this.database);
+            CartAGenDoc.getInstance().addDatabase(this.database.getName(),
+                    this.database);
             CartAGenDoc.getInstance().setCurrentDataset(dataset);
             // put the new dataset as the current one
             CartAGenDoc.getInstance().setCurrentDataset(dataset);
@@ -403,7 +430,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
         }
 
         public ImportDataXMLAction() {
-            this.putValue(Action.SHORT_DESCRIPTION, "Open a CartAGen dataset stored in XML");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Open a CartAGen dataset stored in XML");
             this.putValue(Action.NAME, "From XML");
         }
 
@@ -445,8 +473,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
             if (file == null) {
                 JFileChooser fc = new JFileChooser();
                 fc.setCurrentDirectory(new File("src/main/resources/xml/"));
-                int returnVal = fc
-                        .showSaveDialog(CartAGenPlugin.getInstance().getApplication().getMainFrame().getGui());
+                int returnVal = fc.showSaveDialog(CartAGenPlugin.getInstance()
+                        .getApplication().getMainFrame().getGui());
                 if (returnVal != JFileChooser.APPROVE_OPTION) {
                     return;
                 }
@@ -474,7 +502,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
         }
 
         public SaveDocumentAction() {
-            this.putValue(Action.SHORT_DESCRIPTION, "Save the CartAGen dataset to XML");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Save the CartAGen dataset to XML");
             this.putValue(Action.NAME, "Save Document");
         }
     }
@@ -501,16 +530,21 @@ public class DatasetGeoxGUIComponent extends JMenu {
         public void actionPerformed(ActionEvent arg0) {
 
             if (CartAGenDoc.getInstance().getName() == null) {
-                JOptionPane.showMessageDialog(CartAGenPlugin.getInstance().getApplication().getMainFrame().getGui(),
-                        "No CartAGen document open, create or load one first", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(
+                        CartAGenPlugin.getInstance().getApplication()
+                                .getMainFrame().getGui(),
+                        "No CartAGen document open, create or load one first",
+                        "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            ImportDataFrame2 frame = ImportDataFrame2.getInstance(true, CartAGenPlugin.getInstance());
+            ImportDataFrame2 frame = ImportDataFrame2.getInstance(true,
+                    CartAGenPlugin.getInstance());
             frame.setVisible(true);
         }
 
         public ImportDataShape1Action() {
-            this.putValue(Action.SHORT_DESCRIPTION, "Import from Shapefile using the plug-in from M. Vieira");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Import from Shapefile using the plug-in from M. Vieira");
             this.putValue(Action.NAME, "From Shapefile");
         }
 
@@ -561,13 +595,14 @@ public class DatasetGeoxGUIComponent extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            ExportFrame frame = new ExportFrame(
-                    CartAGenPlugin.getInstance().getApplication().getMainFrame().getSelectedProjectFrame());
+            ExportFrame frame = new ExportFrame(CartAGenPlugin.getInstance()
+                    .getApplication().getMainFrame().getSelectedProjectFrame());
             frame.setVisible(true);
         }
 
         public ExportDataToShapeAction() {
-            this.putValue(Action.SHORT_DESCRIPTION, "Export from CartAGen classes to Shapefiles");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Export from CartAGen classes to Shapefiles");
             this.putValue(Action.NAME, "Export To Shapefile");
         }
     }
@@ -589,12 +624,14 @@ public class DatasetGeoxGUIComponent extends JMenu {
         @Override
         public void actionPerformed(ActionEvent arg0) {
             ExportPostGISFrame frame = new ExportPostGISFrame(
-                    CartAGenPlugin.getInstance().getApplication().getMainFrame().getSelectedProjectFrame());
+                    CartAGenPlugin.getInstance().getApplication().getMainFrame()
+                            .getSelectedProjectFrame());
             frame.setVisible(true);
         }
 
         public ExportDataToPostGisAction() {
-            this.putValue(Action.SHORT_DESCRIPTION, "Export from CartAGen classes to PostGIS tables");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Export from CartAGen classes to PostGIS tables");
             this.putValue(Action.NAME, "Export To PostGIS");
         }
     }
@@ -620,7 +657,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
         }
 
         public OverwriteFromShapeAction() {
-            this.putValue(Action.SHORT_DESCRIPTION, "Overwrite some CartAGen classes from initial Shapefiles");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Overwrite some CartAGen classes from initial Shapefiles");
             this.putValue(Action.NAME, "Overwrite from Shapefile");
         }
 
@@ -635,7 +673,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
                 if (e.getActionCommand().equals("cancel")) {
                     this.setVisible(false);
                 } else if (e.getActionCommand().equals("ok")) {
-                    CartAGenDB db = CartAGenDoc.getInstance().getCurrentDataset().getCartAGenDB();
+                    CartAGenDB db = CartAGenDoc.getInstance()
+                            .getCurrentDataset().getCartAGenDB();
                     for (JCheckBox check : this.checks.keySet()) {
                         if (check.isSelected()) {
                             GeographicClass geoClass = this.checks.get(check);
@@ -654,8 +693,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
                 // .getCartAGenDB());
                 // System.out.println(CartAGenDoc.getInstance().getCurrentDataset()
                 // .getCartAGenDB().getClasses());
-                for (GeographicClass geoClass : CartAGenDoc.getInstance().getCurrentDataset().getCartAGenDB()
-                        .getClasses()) {
+                for (GeographicClass geoClass : CartAGenDoc.getInstance()
+                        .getCurrentDataset().getCartAGenDB().getClasses()) {
                     JCheckBox check = new JCheckBox(geoClass.getName());
                     this.checks.put(check, geoClass);
                     this.getContentPane().add(check);
@@ -671,7 +710,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
                 pButtons.add(cancelBtn);
                 pButtons.setLayout(new BoxLayout(pButtons, BoxLayout.X_AXIS));
                 this.getContentPane().add(pButtons);
-                this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+                this.getContentPane().setLayout(
+                        new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
                 this.pack();
             }
         }
@@ -718,8 +758,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
             // a panel to choose the current database among the databases of the
             // document
             JPanel p1 = new JPanel();
-            this.databases = new JComboBox<String>(
-                    (String[]) CartAGenDoc.getInstance().getDatabases().keySet().toArray());
+            this.databases = new JComboBox<String>((String[]) CartAGenDoc
+                    .getInstance().getDatabases().keySet().toArray());
             this.databases.setPreferredSize(new Dimension(150, 20));
             this.databases.setMaximumSize(new Dimension(150, 20));
             this.databases.setMinimumSize(new Dimension(150, 20));
@@ -745,7 +785,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
             // final layout
             this.getContentPane().add(p1);
             this.getContentPane().add(p2);
-            this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+            this.getContentPane().setLayout(
+                    new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         }
 
         @Override
@@ -753,8 +794,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
             if (e.getActionCommand().equals("cancel")) {
                 this.setVisible(false);
             } else if (e.getActionCommand().equals("ok")) {
-                this.current = CartAGenDoc.getInstance().getDatabases().get(this.databases.getSelectedItem())
-                        .getDataSet();
+                this.current = CartAGenDoc.getInstance().getDatabases()
+                        .get(this.databases.getSelectedItem()).getDataSet();
                 CartAGenDoc.getInstance().setCurrentDataset(this.current);
                 this.setVisible(false);
             }
@@ -781,23 +822,28 @@ public class DatasetGeoxGUIComponent extends JMenu {
             if (CartAGenDoc.getInstance().getPostGisSession() == null) {
                 // open a connection with the current PostGISDB
                 Configuration hibConfig = new Configuration();
-                hibConfig = hibConfig.configure(PostgisDB.class.getResource(PostgisDB.getDefaultConfigPath()));
-                hibConfig.setProperty("hibernate.connection.url", PostgisDB.getUrl());
+                hibConfig = hibConfig.configure(PostgisDB.class
+                        .getResource(PostgisDB.getDefaultConfigPath()));
+                hibConfig.setProperty("hibernate.connection.url",
+                        PostgisDB.getUrl());
 
                 // get the persistent classes
-                for (Class<?> classObj : CartAGenDoc.getInstance().getCurrentDataset().getCartAGenDB()
+                for (Class<?> classObj : CartAGenDoc.getInstance()
+                        .getCurrentDataset().getCartAGenDB()
                         .getPersistentClasses()) {
                     // add the persistent class to the hibernate configuration
                     hibConfig.addAnnotatedClass(classObj);
                     // get the annotated interfaces or superclasses of the
                     // persistent
                     // class
-                    Set<Class<?>> superclasses = ReflectionUtil.getSuperClassesAndInterfaces(classObj);
+                    Set<Class<?>> superclasses = ReflectionUtil
+                            .getSuperClassesAndInterfaces(classObj);
 
                     // add the annotated interfaces to the hibernate
                     // configuration
                     for (Class<?> c : superclasses) {
-                        if (c.isAnnotationPresent(Entity.class) || c.isAnnotationPresent(MappedSuperclass.class)) {
+                        if (c.isAnnotationPresent(Entity.class) || c
+                                .isAnnotationPresent(MappedSuperclass.class)) {
                             hibConfig.addAnnotatedClass(c);
                         }
                     }
@@ -812,7 +858,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
                 CartAGenDoc.getInstance().setPostGisSession(session);
                 session.beginTransaction();
             } else {
-                CartAGenDoc.getInstance().getPostGisSession().beginTransaction();
+                CartAGenDoc.getInstance().getPostGisSession()
+                        .beginTransaction();
             }
 
         }
@@ -841,22 +888,26 @@ public class DatasetGeoxGUIComponent extends JMenu {
         @Override
         public void actionPerformed(ActionEvent arg0) {
             int result = JOptionPane.showConfirmDialog(
-                    CartAGenPlugin.getInstance().getApplication().getMainFrame().getGui(),
+                    CartAGenPlugin.getInstance().getApplication().getMainFrame()
+                            .getGui(),
                     "Are you sure you want to Commit Edits ?");
             if (result != JOptionPane.OK_OPTION) {
                 return;
             }
 
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
             // loop on the persistent classes to save their features in the
             // current DB
-            for (Class<?> classObj : CartAGenDoc.getInstance().getCurrentDataset().getCartAGenDB()
+            for (Class<?> classObj : CartAGenDoc.getInstance()
+                    .getCurrentDataset().getCartAGenDB()
                     .getPersistentClasses()) {
                 if (!classObj.isAnnotationPresent(Entity.class)) {
                     continue;
                 }
                 // get all the features of classObj in the current dataset
-                IPopulation<? extends IGeneObj> pop = dataset.getCartagenPop(dataset.getPopNameFromClass(classObj), "");
+                IPopulation<? extends IGeneObj> pop = dataset.getCartagenPop(
+                        dataset.getPopNameFromClass(classObj), "");
                 for (IPersistentObject obj : pop) {
                     try {
                         obj.updateRelationIds();
@@ -873,15 +924,18 @@ public class DatasetGeoxGUIComponent extends JMenu {
                     } catch (NoSuchFieldException e) {
                         e.printStackTrace();
                     }
-                    CartAGenDoc.getInstance().getPostGisSession().saveOrUpdate(obj);
+                    CartAGenDoc.getInstance().getPostGisSession()
+                            .saveOrUpdate(obj);
                 }
             }
             // commit the transaction than close the session
-            CartAGenDoc.getInstance().getPostGisSession().getTransaction().commit();
+            CartAGenDoc.getInstance().getPostGisSession().getTransaction()
+                    .commit();
         }
 
         public CommitAction() {
-            this.putValue(Action.SHORT_DESCRIPTION, "Commit the modifications on persistent objects in the PostGIS DB");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Commit the modifications on persistent objects in the PostGIS DB");
             this.putValue(Action.NAME, "Commit Persistent Edits");
         }
     }
@@ -903,14 +957,16 @@ public class DatasetGeoxGUIComponent extends JMenu {
         @Override
         public void actionPerformed(ActionEvent arg0) {
             int result = JOptionPane.showConfirmDialog(
-                    CartAGenPlugin.getInstance().getApplication().getMainFrame().getGui(),
+                    CartAGenPlugin.getInstance().getApplication().getMainFrame()
+                            .getGui(),
                     "Are you sure you want to Backtrack Edits (edits will be lost) ?");
             if (result != JOptionPane.OK_OPTION) {
                 return;
             }
 
             // rollback the transaction than close the session
-            CartAGenDoc.getInstance().getPostGisSession().getTransaction().rollback();
+            CartAGenDoc.getInstance().getPostGisSession().getTransaction()
+                    .rollback();
         }
 
         public BackTrackAction() {
@@ -934,17 +990,20 @@ public class DatasetGeoxGUIComponent extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            AddLayerFrame frame = new AddLayerFrame(CartAGenPlugin.getInstance().getApplication());
+            AddLayerFrame frame = new AddLayerFrame(
+                    CartAGenPlugin.getInstance().getApplication());
             frame.setVisible(true);
         }
 
         public AddLayerAction() {
-            this.putValue(Action.SHORT_DESCRIPTION, "Add a layer from the dataset to the view");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Add a layer from the dataset to the view");
             this.putValue(Action.NAME, "Add layer");
         }
     }
 
-    class AddLayerFrame extends JFrame implements ActionListener, ChangeListener {
+    class AddLayerFrame extends JFrame
+            implements ActionListener, ChangeListener {
 
         /****/
         private static final long serialVersionUID = 1L;
@@ -1003,21 +1062,25 @@ public class DatasetGeoxGUIComponent extends JMenu {
 
             this.getContentPane().add(p1);
             this.getContentPane().add(p2);
-            this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+            this.getContentPane().setLayout(
+                    new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
             this.pack();
         }
 
         private void getFilledButNotDisplayedPops() {
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
             sld = dataset.getSld();
             // check that sld is the current frame SLD
-            StyledLayerDescriptor frameSld = CartAGenPlugin.getInstance().getApplication().getMainFrame()
-                    .getSelectedProjectFrame().getSld();
+            StyledLayerDescriptor frameSld = CartAGenPlugin.getInstance()
+                    .getApplication().getMainFrame().getSelectedProjectFrame()
+                    .getSld();
             if (!sld.equals(frameSld)) {
                 dataset.setSld(frameSld);
                 this.sld = frameSld;
             }
-            for (IPopulation<? extends IFeature> pop : dataset.getPopulations()) {
+            for (IPopulation<? extends IFeature> pop : dataset
+                    .getPopulations()) {
                 // check if pop is empty
                 if (pop.size() == 0)
                     continue;
@@ -1027,7 +1090,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
 
                 // arrived here, add the population name to popsToSelect
                 popsToSelect.add(pop.getNom());
-                geometryTypes.put(pop.getNom(), dataset.getGeometryTypeFromName(pop.getNom()));
+                geometryTypes.put(pop.getNom(),
+                        dataset.getGeometryTypeFromName(pop.getNom()));
             }
         }
 
@@ -1037,12 +1101,14 @@ public class DatasetGeoxGUIComponent extends JMenu {
                 float opacity = 0.8f;
                 float strokeWidth = 1.0f;
                 for (String popName : selectedPops) {
-                    Color fillColor = new Color((float) Math.random(), (float) Math.random(), (float) Math.random());
+                    Color fillColor = new Color((float) Math.random(),
+                            (float) Math.random(), (float) Math.random());
                     Layer layer = new NamedLayer(sld, popName);
                     UserStyle style = new UserStyle();
                     style.setName("Style créé pour le layer " + popName);//$NON-NLS-1$
                     FeatureTypeStyle fts = new FeatureTypeStyle();
-                    fts.getRules().add(LayerFactory.createRule(geometryTypes.get(popName), fillColor.darker(),
+                    fts.getRules().add(LayerFactory.createRule(
+                            geometryTypes.get(popName), fillColor.darker(),
                             fillColor, opacity, opacity, strokeWidth));
                     style.getFeatureTypeStyles().add(fts);
                     layer.getStyles().add(style);
@@ -1105,7 +1171,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
      * @author gtouya
      * 
      */
-    class EditPersistentClassesFrame extends JFrame implements ActionListener, ItemListener, ChangeListener {
+    class EditPersistentClassesFrame extends JFrame
+            implements ActionListener, ItemListener, ChangeListener {
 
         private static final long serialVersionUID = 1L;
         private JComboBox<String> cbDatabases, cbClasses;
@@ -1130,10 +1197,11 @@ public class DatasetGeoxGUIComponent extends JMenu {
             this.persistList.setPreferredSize(new Dimension(150, 400));
             this.persistList.setMaximumSize(new Dimension(150, 400));
             this.persistList.setMinimumSize(new Dimension(150, 400));
-            this.persistList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            this.persistList.setSelectionMode(
+                    ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             // the combo box with the databases
-            this.cbDatabases = new JComboBox<String>(
-                    (String[]) CartAGenDoc.getInstance().getDatabases().values().toArray());
+            this.cbDatabases = new JComboBox<String>((String[]) CartAGenDoc
+                    .getInstance().getDatabases().values().toArray());
             this.cbDatabases.setPreferredSize(new Dimension(150, 20));
             this.cbDatabases.setMaximumSize(new Dimension(150, 20));
             this.cbDatabases.setMinimumSize(new Dimension(150, 20));
@@ -1152,7 +1220,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
 
             // button panel
             JPanel p2 = new JPanel();
-            this.cbClasses = new JComboBox<String>(new DefaultComboBoxModel<String>());
+            this.cbClasses = new JComboBox<String>(
+                    new DefaultComboBoxModel<String>());
             this.cbClasses.setPreferredSize(new Dimension(150, 20));
             this.cbClasses.setMaximumSize(new Dimension(150, 20));
             this.cbClasses.setMinimumSize(new Dimension(150, 20));
@@ -1181,7 +1250,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
             // final layout
             this.getContentPane().add(p1);
             this.getContentPane().add(p2);
-            this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+            this.getContentPane().setLayout(
+                    new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
             this.updatePersistentClasses();
             this.pack();
         }
@@ -1190,23 +1260,28 @@ public class DatasetGeoxGUIComponent extends JMenu {
         public void actionPerformed(ActionEvent e) {
             if (e.getActionCommand().equals("remove")) {
                 // loop on the selected classes in the JList
-                for (String className : this.persistList.getSelectedValuesList()) {
+                for (String className : this.persistList
+                        .getSelectedValuesList()) {
                     // get the Class object from its simple name
-                    Class<? extends IFeature> classObj = this.mapNameClass.get(className);
+                    Class<? extends IFeature> classObj = this.mapNameClass
+                            .get(className);
                     // remove it from the DB storage set
                     this.currentDb.getPersistentClasses().remove(classObj);
                 }
                 this.updatePersistentClasses();
             } else if (e.getActionCommand().equals("add")) {
                 Object className = this.cbClasses.getSelectedItem();
-                Class<? extends IFeature> classObj = this.mapNameClass.get(className);
+                Class<? extends IFeature> classObj = this.mapNameClass
+                        .get(className);
                 this.currentDb.getPersistentClasses().add(classObj);
                 this.updatePersistentClasses();
             } else if (e.getActionCommand().equals("add all")) {
                 // loop on all the classes in the DB that aren't persistent
                 for (int i = 0; i < this.cbClasses.getModel().getSize(); i++) {
-                    String className = this.cbClasses.getModel().getElementAt(i);
-                    Class<? extends IFeature> classObj = this.mapNameClass.get(className);
+                    String className = this.cbClasses.getModel()
+                            .getElementAt(i);
+                    Class<? extends IFeature> classObj = this.mapNameClass
+                            .get(className);
                     this.currentDb.getPersistentClasses().add(classObj);
                 }
                 this.updatePersistentClasses();
@@ -1222,8 +1297,10 @@ public class DatasetGeoxGUIComponent extends JMenu {
 
         private void updatePersistentClasses() {
             DefaultListModel<String> model1 = new DefaultListModel<String>();
-            DefaultComboBoxModel<String> cbModel = this.buildComboModelFromProject();
-            for (Class<?> persistClass : this.currentDb.getPersistentClasses()) {
+            DefaultComboBoxModel<String> cbModel = this
+                    .buildComboModelFromProject();
+            for (Class<?> persistClass : this.currentDb
+                    .getPersistentClasses()) {
                 if (this.existingClasses.contains(persistClass)) {
                     continue;
                 }
@@ -1253,9 +1330,11 @@ public class DatasetGeoxGUIComponent extends JMenu {
             this.existingClasses = new HashSet<Class<?>>();
             this.additionalClasses = new HashSet<Class<?>>();
             this.mapNameClass = new HashMap<String, Class<? extends IFeature>>();
-            CartAGenDoc.getInstance().getCurrentDataset().setSld(
-                    CartAGenPlugin.getInstance().getApplication().getMainFrame().getSelectedProjectFrame().getSld());
-            StyledLayerDescriptor sld = CartAGenDoc.getInstance().getCurrentDataset().getSld();
+            CartAGenDoc.getInstance().getCurrentDataset()
+                    .setSld(CartAGenPlugin.getInstance().getApplication()
+                            .getMainFrame().getSelectedProjectFrame().getSld());
+            StyledLayerDescriptor sld = CartAGenDoc.getInstance()
+                    .getCurrentDataset().getSld();
             sld.setDataSet(CartAGenDoc.getInstance().getCurrentDataset());
             for (Layer layer : sld.getLayers()) {
                 if (layer == null || layer.getFeatureCollection() == null) {
@@ -1266,7 +1345,8 @@ public class DatasetGeoxGUIComponent extends JMenu {
                     Class<? extends IFeature> classObj = feat.getClass();
                     if (!this.existingClasses.contains(classObj)) {
                         this.existingClasses.add(classObj);
-                        this.mapNameClass.put(classObj.getSimpleName(), classObj);
+                        this.mapNameClass.put(classObj.getSimpleName(),
+                                classObj);
                     }
                 }
             }
@@ -1283,15 +1363,17 @@ public class DatasetGeoxGUIComponent extends JMenu {
                 // classes
                 this.currentDb.getPersistentClasses().clear();
                 System.out.println(this.existingClasses);
-                this.currentDb.getPersistentClasses()
-                        .addAll(this.currentDb.getGeneObjImpl().filterClasses(this.existingClasses));
+                this.currentDb.getPersistentClasses().addAll(this.currentDb
+                        .getGeneObjImpl().filterClasses(this.existingClasses));
 
-                System.out.println(this.currentDb.getGeneObjImpl().filterClasses(this.existingClasses));
+                System.out.println(this.currentDb.getGeneObjImpl()
+                        .filterClasses(this.existingClasses));
 
             } else {
                 // remove the existing IGeneObj classes from the persistent
                 // classes
-                this.currentDb.getPersistentClasses().removeAll(this.existingClasses);
+                this.currentDb.getPersistentClasses()
+                        .removeAll(this.existingClasses);
             }
         }
 
@@ -1358,8 +1440,110 @@ public class DatasetGeoxGUIComponent extends JMenu {
         }
 
         public ImportDataPostGISAction() {
-            this.putValue(Action.SHORT_DESCRIPTION, "import tables from a PostGIS database");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "import tables from a PostGIS database");
             this.putValue(Action.NAME, "import from PostGIS");
+        }
+    }
+
+    /**
+     * Import data from a JSON file.
+     * 
+     * @author GTouya
+     * 
+     */
+    class ImportDataJSONAction extends AbstractAction {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+
+            // Initialise a runnable which launches the initialisation
+            Runnable runnable = new Runnable() {
+                // Method run() of the runnable
+                @Override
+                public void run() {
+                    // first select the JSON file to import
+                    JFileChooser fcJSON = new JFileChooser(
+                            "Select the JSON file");
+                    fcJSON.setCurrentDirectory(
+                            new File("src/main/resources/xml/"));
+                    int returnVal = fcJSON
+                            .showSaveDialog(CartAGenPlugin.getInstance()
+                                    .getApplication().getMainFrame().getGui());
+                    if (returnVal != JFileChooser.APPROVE_OPTION) {
+                        return;
+                    }
+                    File jsonFile = fcJSON.getSelectedFile();
+
+                    // then select the XML mapping file between JSON schema and
+                    // CartAGen schema
+                    JFileChooser fcMap = new JFileChooser(
+                            "Select the schema mapping file");
+                    fcMap.setCurrentDirectory(
+                            new File("src/main/resources/xml/"));
+                    returnVal = fcMap
+                            .showSaveDialog(CartAGenPlugin.getInstance()
+                                    .getApplication().getMainFrame().getGui());
+                    if (returnVal != JFileChooser.APPROVE_OPTION) {
+                        return;
+                    }
+                    File mappingFile = fcMap.getSelectedFile();
+
+                    // first create a new document if there is none
+                    CartAGenDoc doc = CartAGenDoc.getInstance();
+                    if (doc.getName() == null) {
+                        doc.setName("default");
+                        // then, create a default empty database
+                        DefaultCartAGenDB database = new DefaultCartAGenDB(
+                                "default");
+                        database.setSymboScale(15000);
+                        database.setGeneObjImpl(GeneObjImplementation
+                                .getDefaultImplementation());
+                        CartAGenDataSet dataset = new CartAGenDataSet();
+                        doc.addDatabase("default", database);
+                        database.setDataSet(dataset);
+                        database.setType(new DigitalLandscapeModel());
+
+                        try {
+                            JSONToLayerMapping mapping = new MappingXMLParser(
+                                    mappingFile).parseJSONMapping();
+                            AbstractCreationFactory factory = mapping
+                                    .getGeneObjImplementation()
+                                    .getCreationFactory();
+                            JSONLoader loader = new JSONLoader();
+                            loader.genericJSONLoader(jsonFile.getPath(),
+                                    doc.getCurrentDataset(), factory, mapping,
+                                    true);
+                            System.out.println(
+                                    database.getDataSet().getRoads().size()
+                                            + " loaded roads");
+
+                            CartAGenPlugin.getInstance()
+                                    .addDatabaseToFrame(database);
+                        } catch (ParserConfigurationException | SAXException
+                                | IOException | NoSuchFieldException
+                                | SecurityException | InvocationTargetException
+                                | JAXBException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            };
+            // Initialise a thread which provides the runnable execution
+            Thread th = new Thread(runnable);
+            // Run the thread
+            th.start();
+        }
+
+        public ImportDataJSONAction() {
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "import layers from a JSON file");
+            this.putValue(Action.NAME, "import from JSON");
         }
     }
 

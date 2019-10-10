@@ -114,7 +114,7 @@ public class Town extends GeneObjSurfDefault implements ITown {
     this.setInitialGeom(geoxObj.getGeom());
     this.setEliminated(false);
     this.townBlocks = new FT_FeatureCollection<IUrbanBlock>();
-    this.centre = geoxObj.getGeom().centroid();
+    this.setCentre(geoxObj.getGeom().centroid());
     this.outline = ((IPolygon) geoxObj.getGeom()).exteriorLineString();
   }
 
@@ -124,7 +124,7 @@ public class Town extends GeneObjSurfDefault implements ITown {
     this.setInitialGeom(poly);
     this.setEliminated(false);
     this.townBlocks = new FT_FeatureCollection<IUrbanBlock>();
-    this.centre = this.geoxObj.getGeom().centroid();
+    this.setCentre(this.geoxObj.getGeom().centroid());
     this.outline = ((IPolygon) this.geoxObj.getGeom()).exteriorLineString();
   }
 
@@ -224,7 +224,7 @@ public class Town extends GeneObjSurfDefault implements ITown {
       return true;
     }
     // compute the statistics on the town blocks
-    if (this.meanBlockArea == null) {
+    if (this.getMeanBlockArea() == null) {
       this.computeTownStats();
     }
 
@@ -266,7 +266,7 @@ public class Town extends GeneObjSurfDefault implements ITown {
   public void computeTownStats() {
     DescriptiveStatistics blockAreas = new DescriptiveStatistics();
     DescriptiveStatistics buildingAreas = new DescriptiveStatistics();
-    this.buildAreaStats = new DescriptiveStatistics();
+    this.setBuildAreaStats(new DescriptiveStatistics());
     for (IUrbanBlock b : this.townBlocks) {
       // exclude the non standard and too small blocks from the computation of
       // stats on block and building size
@@ -287,14 +287,14 @@ public class Town extends GeneObjSurfDefault implements ITown {
       }
       if (b.getUrbanElements().size() != 0) {
         buildingAreas.addValue(blockStats.getPercentile(50));
-        buildAreaStats.addValue(blockStats.getMean());
+        getBuildAreaStats().addValue(blockStats.getMean());
       }
     }
-    this.meanBlockArea = new Double(blockAreas.getPercentile(50));
+    this.setMeanBlockArea(new Double(blockAreas.getPercentile(50)));
     if (buildingAreas.getMean() == Double.NaN)
-      this.meanBuildArea = 0.0;
+      this.setMeanBuildArea(0.0);
     else
-      this.meanBuildArea = new Double(buildingAreas.getPercentile(50));
+      this.setMeanBuildArea(new Double(buildingAreas.getPercentile(50)));
   }
 
   /**
@@ -311,11 +311,11 @@ public class Town extends GeneObjSurfDefault implements ITown {
       Criterion crit) {
     Map<String, Object> param = new HashMap<String, Object>();
     param.put("block", block);
-    param.put("buildingAreaStats", this.buildAreaStats);
+    param.put("buildingAreaStats", this.getBuildAreaStats());
     if (crit.getName().equals("BuildingArea")) {
-      param.put("meanBuildingArea", this.meanBuildArea);
+      param.put("meanBuildingArea", this.getMeanBuildArea());
     } else if (crit.getName().equals("Centroid")) {
-      IDirectPosition centrePos = this.centre;
+      IDirectPosition centrePos = this.getCentre();
       if (centrePos == null)
         centrePos = this.getGeom().centroid();
       param.put("centroid", centrePos);
@@ -332,7 +332,7 @@ public class Town extends GeneObjSurfDefault implements ITown {
         e.printStackTrace();
       }
     } else if (crit.getName().equals("Area")) {
-      param.put("meanBlockArea", this.meanBlockArea);
+      param.put("meanBlockArea", this.getMeanBlockArea());
     } else if (crit.getName().equals("Limit")) {
       param.put("outline", this.outline);
     }
@@ -403,7 +403,7 @@ public class Town extends GeneObjSurfDefault implements ITown {
     this.geoxObj = new VilleImpl(this.getGeom());
     this.setInitialGeom(this.getGeom());
     this.townBlocks = new FT_FeatureCollection<IUrbanBlock>();
-    this.centre = this.geoxObj.getGeom().centroid();
+    this.setCentre(this.geoxObj.getGeom().centroid());
     this.outline = ((IPolygon) this.geoxObj.getGeom()).exteriorLineString();
 
     CartAGenDoc doc = CartAGenDoc.getInstance();
@@ -415,5 +415,37 @@ public class Town extends GeneObjSurfDefault implements ITown {
         dataset.getBranchings(), new FT_FeatureCollection<IDualCarriageWay>(),
         dataset.getBlocks());
   }
+
+public Double getMeanBlockArea() {
+    return meanBlockArea;
+}
+
+public void setMeanBlockArea(Double meanBlockArea) {
+    this.meanBlockArea = meanBlockArea;
+}
+
+public IDirectPosition getCentre() {
+    return centre;
+}
+
+public void setCentre(IDirectPosition centre) {
+    this.centre = centre;
+}
+
+public Double getMeanBuildArea() {
+    return meanBuildArea;
+}
+
+public void setMeanBuildArea(Double meanBuildArea) {
+    this.meanBuildArea = meanBuildArea;
+}
+
+public DescriptiveStatistics getBuildAreaStats() {
+    return buildAreaStats;
+}
+
+public void setBuildAreaStats(DescriptiveStatistics buildAreaStats) {
+    this.buildAreaStats = buildAreaStats;
+}
 
 }
