@@ -76,7 +76,45 @@ The generalization might be quite longer in this case as a town might contain ma
 
 Generalizing data with CartACom
 -------------
-To be done...
+The steps to run a CartACom generalization are pretty similar to the steps for AGENT generalization. When data has been imported, please follow the steps:
+
+#### [](#header-4)Set the target scale
+
+We need to set the target scale of generalization. In this tutorial, we will set it to 1:50000 to have a significant simplification of the map.
+To change the target scale, you need to open the generalization configuration frame by selecting it in the "Generalisation" menu (see image below).
+In the frame, just change the scale and click on the validate button. The symbol sizes of roads, rivers, etc. should adjust to this target scale change, and you should see a clear need for generalization at this scale (symbols overlap).
+
+![configuration menu](assets/images/cartagen_config_scale.png)  ![set the target scale](assets/images/cartagen_set_scale_50k.png)
+
+
+#### [](#header-4)Set the CartACom parameters
+...
+
+#### [](#header-4)Enrich the dataset
+As usual in map generalization, the first step here is to enrich the dataset by creating the topology of the road networks, and by creating network faces that are used delimit the radius of proximity constraints.
+To enrich the road network and build its topology (i.e. create road network nodes and the link between each road and its start and end node), in the "Themes" menu, click on "Enrichment" in the "Road network" submenu (see image below).
+
+![enrich the road network with a topology](assets/images/agent_road_enrichment.png)
+
+To create create the network faces...
+
+#### [](#header-4)Create the agents
+
+For now, we only have geographic features in the CartAGen system, we need to create agents for each building, road, etc.
+To create these agents, simply click on the "Create all agents" item in the "Agents/CartACom" menu (see image below).
+
+...
+
+Nothing should change in the GUI, but the agents do exist.
+To verify that they exist, you can select any building with one of the selection buttons of the toolbar, and click on the "Load selection" button in the right panel.
+This should add the agent to the list of the scheduler.
+
+#### [](#header-4)Generalize a selection of buildings
+Select any subset of the buildings of the dataset. You have two possibilities to generalize it with the CartAGen GUI:
+- click on the "Load selection" button in the right panel, and then click on the "run" button to start generalization.
+- click on "Run generalization on selected agents" in the "Agents" menu (see image below).
+
+![menu entry to run generalization on selected agents](assets/images/agents_run_menu.png)
 
 > To go further in the use of CartACom, see [this advanced tutorial][11].
 
