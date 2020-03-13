@@ -88,7 +88,63 @@ In the frame, just change the scale and click on the validate button. The symbol
 
 
 #### [](#header-4)Set the CartACom parameters
-...
+
+For now, there is no graphical user interface to set the CartACom parameters, but there are two xml files:
+* src/main/resources/xml/cartacom/CartAComSpecifications.xml, which contains the parameters of the constraints to use in CartACom.
+* src/main/resources/xml/cartacom/AllCartAComRelationalConstraintsDescriptors.xml, which contains the mapping between the relational constraints and the Java code of the constraints.
+
+Regarding the first file, CartAComSpecifications.xml, you can find the default code below. It describes the relational constraints to be used, with their name, and their importance (value between 0 and 10). The "to-consider" tag is used to define if the constraint is used in the CartACom process.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The relational constraints to consider (among those defined as constraints descriptors) -->
+<cartacom-relational-constraints-to-consider>
+  <relational-constraint name = "BuildingNetFaceTopology">
+    <importance>10.0</importance>
+    <to-consider>true</to-consider>
+  </relational-constraint>
+  <relational-constraint name = "RoadBuildingProximity">
+    <importance>9.0</importance>
+    <to-consider>true</to-consider>
+  </relational-constraint>
+  <relational-constraint name = "SmallCompactsProximity">
+    <importance>8.0</importance>
+    <to-consider>true</to-consider>
+  </relational-constraint>
+  <relational-constraint name = "RoadBuildingParallelism">
+    <importance>8.0</importance>
+    <to-consider>true</to-consider>
+  </relational-constraint>
+</cartacom-relational-constraints-to-consider>
+```
+
+TODO
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<cartacom-relational-constraints>
+  <relational-constraint name = "BuildingNetFaceTopology">
+    <relation-java-class>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.relation.buildingnetface.Topology</relation-java-class>
+    <agent-type-1>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.SmallCompactAgent</agent-type-1>
+    <agent-type-2>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.NetworkFaceAgent</agent-type-2>
+  </relational-constraint>
+  <relational-constraint name = "RoadBuildingProximity">
+    <relation-java-class>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.relation.buildingRoad.Proximity</relation-java-class>
+    <agent-type-1>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.SmallCompactAgent</agent-type-1>
+    <agent-type-2>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.NetworkSectionAgent</agent-type-2>
+  </relational-constraint>
+  <relational-constraint name = "SmallCompactsProximity">
+    <relation-java-class>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.relation.buildingBuilding.Proximity</relation-java-class>
+    <agent-type-1>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.SmallCompactAgent</agent-type-1>
+    <agent-type-2>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.SmallCompactAgent</agent-type-2>
+  </relational-constraint>  
+  <relational-constraint name = "RoadBuildingParallelism">
+    <relation-java-class>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.relation.buildingRoad.Parallelism</relation-java-class>
+    <agent-type-1>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.SmallCompactAgent</agent-type-1>
+    <agent-type-2>fr.ign.cogit.cartagen.agentGeneralisation.cartacom.agent.NetworkSectionAgent</agent-type-2>
+  </relational-constraint>  
+</cartacom-relational-constraints>
+```
 
 #### [](#header-4)Enrich the dataset
 As usual in map generalization, the first step here is to enrich the dataset by creating the topology of the road networks, and by creating network faces that are used delimit the radius of proximity constraints.
@@ -96,14 +152,20 @@ To enrich the road network and build its topology (i.e. create road network node
 
 ![enrich the road network with a topology](assets/images/agent_road_enrichment.png)
 
-To create create the network faces...
+Then, the next step is to create network faces features that are used to preserve the topological inclusion of buildings in one network face. In the "Themes" menu, click on "Create network faces" in the "Road network" submenu (just below "Enrichment" in the image above). Nothing should change in the display view but the network faces (and the topology of the roads) are created, and can be added as explicit objects in the map.
+
+![add a layer to the map](assets/images/add_layer_to_map.png)
+
+To add the network faces in the map, in the "Dataset" menu, click on "Add layer" in the "Add Layer to current dataset" submenu (see image above). Then, a dialog pops in which you can select one of the hidden layers (the road nodes and the network faces in this case, see image below). You just have to select the hidden layers you want to add and click on "Add" to make them visible in the map.
+
+![add network faces](assets/images/add_layer_to_map_2.png)
 
 #### [](#header-4)Create the agents
 
 For now, we only have geographic features in the CartAGen system, we need to create agents for each building, road, etc.
 To create these agents, simply click on the "Create all agents" item in the "Agents/CartACom" menu (see image below).
 
-...
+![create CartACom agents](assets/images/cartacom_create_agents.png)
 
 Nothing should change in the GUI, but the agents do exist.
 To verify that they exist, you can select any building with one of the selection buttons of the toolbar, and click on the "Load selection" button in the right panel.
