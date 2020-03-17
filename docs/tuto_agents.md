@@ -1,5 +1,5 @@
 # Tutorial on agent-based generalization with CartAGen
-This tutorial explains how to use the agent-based generalization model implemented in CartAGen: [AGENT][2], [CartACom][3], [GAEL][4], and [DIOGEN][5]. Be aware that each of these implementations are for now mainly based on research code that has not been consolidated. Many bugs still remain and some functionalities described in the papers describing the models are not implemented in CartAGen.
+This tutorial explains how to use the agent-based generalization model implemented in CartAGen: [AGENT][2], [CartACom][3], [GAEL][4], and [DIOGEN][5]. Be aware that each of these implementations are for now mainly based on research code that has not been consolidated. Many bugs still remain and some functionalities described in the papers describing the models are not implemented in CartAGen. Feel free to add issues in the Github platform, or to implement yourself the missing functionalities.
 
 > - Date 20/07/2017.
 > - Author: [Guillaume Touya][1]
@@ -9,7 +9,30 @@ This tutorial explains how to use the agent-based generalization model implement
 
 The Basic Concepts of Agent-Based Generalization
 -------------
-To be done...
+
+#### [](#header-4)Step by step, knowledge-based local approach
+
+Agent-based generalization follows a step by step, knowledge based approach, which arises from the seminal model from Ruas & Plazanet (96), illustrated in the schema below. The aim is not find a global solution to generalize the whole map at once, but to identify local situations that require generalization, and try generalization algorithms to improve the legibility of this situation.
+
+![Ruas-Plazanet model](assets/images/ruas_plazanet.png)
+
+#### [](#header-4)Geo-Agents
+
+To achieve this step by step knowledge-based local approach, agent-based generalization uses the multi-agent paradigm, which is a [field of computer science research][17]. Agents are computer objects that have a goal and act autonomously in order to reach this goal thanks to capacities of perception, deliberation,
+action, and possibly communication with other agents (Weiss, 1999). A geo-agent is an object from a topographic database (a road, a building, a contour line) that is given the capacities of an agent, and its goal is to be correctly generalized for a given map scale. The image below synthesizes how geo-agents are modelled in agent-based generalization.
+
+![a geo-agent](assets/images/geo_agent.png)
+
+The seminal work of Anne Ruas introduced several level of agents for the topographic maps with *meso* agents that are composed of *micro* agents or of other *meso* agents. For instance, a town agent (meso) is composed of block agents (meso) and road agents (micro), and a block agent is composed of building agents (micro).
+
+#### [](#header-4)Constraints to monitor the agents
+
+Since the proposition of Kate Beard in 1991, map generalization rules and specifications are mostly modelled with constraints. It is the case in the agent-based generalization as constraints monitor the whole process. Agents are *happy* if their constraints are completely satisfied, but they act and generalize themselves if these constraints are not satisfied. The image below shows how constraints are modelled in CartAGen, with a current value (the area of the building at the current point of the generalization process in this case), a goal value (the area the building should have to be legible at target scale), a satisfaction derived from the difference between current and goal values, an importance that assesses the relative importance of this constraint compared to the others, and a priority that assesses if this constraint should be addressed first, or can be addressed later in the step by step generalization (in this case, the size constraint has a high priority).
+
+![the constraint model](assets/images/constraint_model.png)
+
+
+> To go further with the principles of agent-based generalization, reading [this chapter][15] by Ruas & Duchêne, or [this paper][16] by Duchêne et al. is highly recommended.
 
 Generalizing data with AGENT
 -------------
@@ -93,7 +116,7 @@ For now, there is no graphical user interface to set the CartACom parameters, bu
 * src/main/resources/xml/cartacom/CartAComSpecifications.xml, which contains the parameters of the constraints to use in CartACom.
 * src/main/resources/xml/cartacom/AllCartAComRelationalConstraintsDescriptors.xml, which contains the mapping between the relational constraints and the Java code of the constraints.
 
-Regarding the first file, CartAComSpecifications.xml, you can find the default code below. It describes the relational constraints to be used, with their name, and their importance (value between 0 and 10). The "to-consider" tag is used to define if the constraint is used in the CartACom process.
+In the first file, CartAComSpecifications.xml, you can find the default code below. It describes the relational constraints to be used, with their name, and their importance (value between 0 and 10). The "to-consider" tag is used to define if the constraint is used in the CartACom process.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -118,7 +141,9 @@ Regarding the first file, CartAComSpecifications.xml, you can find the default c
 </cartacom-relational-constraints-to-consider>
 ```
 
-TODO
+In the second file, you can find the mapping between the relational constraints, and the Java classes and methods that contain the code to compute the constraints current, goal values, etc. In the default file displayed below, for each constraint (described by its name, the same as the one in the previous file), there is first a reference to the Java class that describes the 'Relation' that is constrained. For instance, in the "RoadBuildingProximity" relational constraint, the Relation class is "fr.ign.cogit.cartagen.agentGeneralisation.cartacom.relation.buildingRoad.Proximity". Then, the classes that describe the types of agents involved in the constraint are listed in the following XML tags <agent-type-1> and <agent-type-2>.
+
+> While the first file can easily be tuned to improve default results, this second file monitors an advanced use of CartACom, and most users should keep the default values.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -222,3 +247,6 @@ See Also
 [12]: /agents/GAEL_advanced.md
 [13]: /agents/DIOGEN_advanced.md
 [14]: /agents/CollaGen_advanced.md
+[15]: http://dx.doi.org/10.1016/b978-008045374-3/50016-8
+[16]: https://hal.inria.fr/IFSTTAR/hal-01682131v1
+[17]: https://en.wikipedia.org/wiki/Multi-agent_system
