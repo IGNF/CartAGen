@@ -37,7 +37,7 @@ See Also
 - [overlapping deletion][4]
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: /algorithms/buildings/electre_deletion.md
 [3]: /algorithms/buildings/congestion_deletion.md
 [4]: /algorithms/buildings/overlaping_deletion.md

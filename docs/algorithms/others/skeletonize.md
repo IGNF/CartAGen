@@ -8,7 +8,7 @@
 
 Description of the algorithm
 -------------
-The skeletonize algorithm collapses a polygon into a line based on the straight skeleton of the polygon. 
+The skeletonize algorithm collapses a polygon into a line based on the straight skeleton of the polygon.
 If several polygons, or lines, are initially connected (i.e. they touch each other) the skeleton is also connected by the algorithm.
 
 The algorithm was first proposed by [Haunert & Sester 2008][3] and the implementation is inspired from [Felkel & Obdrzalek][4].
@@ -38,7 +38,7 @@ See Also
 
 - [Return to home page][5]
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: /spinalize.md
 [3]: https://link.springer.com/article/10.1007%2Fs10707-007-0028-x
 [4]: http://www.dma.fi.upm.es/mabellanas/tfcs/skeleton/html/documentacion/Straight%20Skeletons%20Implementation.pdf

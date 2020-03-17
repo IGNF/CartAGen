@@ -72,7 +72,7 @@ See Also
 - [skeletonize algorithm][2]
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: /algorithms/line/skeletonize.md
 [3]: http://recherche.ign.fr/labos/util_basilic/publicDownload.php?id=3082
 [4]: https://kartographie.geo.tu-dresden.de/downloads/ica-gen/workshop2003/duchene_et_al_v1.pdf

@@ -19,12 +19,12 @@ Restoring the sample dataset into PostGIS
 -------------
 alpe_huez_test_data.backup is a postGreSQL backup, the file has be restored in a postGreSQL database with the postGIS extension. Once restoration is carried, the database contains the following tables:
 > -  ign_administrative_limit: contains the administrative city boundaries.
-> -  ign_building: contains polygon representing the dwelling buildings or buildings of unknown nature. 
+> -  ign_building: contains polygon representing the dwelling buildings or buildings of unknown nature.
 > -  ign_contour_line: contains contour lines representing the terrain with an altitude attribute.
 > -  ign_embankment: disconnected lines that represent the ridges of embankments.
 > -  ign_footpath: lines that represent footpaths and unpaved paths.
 > -  ign_hydrography_label: point labels for hydrography features (sources, lakes, ponds, etc.), river names are not included in this table.
-> -  ign_industrial_building: the polygons of industrial or commercial buildings such as factories or supermarkets. 
+> -  ign_industrial_building: the polygons of industrial or commercial buildings such as factories or supermarkets.
 > -  ign_major_road: contains the most important roads (e.g. highways) represented as centrelines, but with two parallel lines for dual carriageways.
 > -  ign_minor_road: contains road lines from the third category (out of 4) of the road classification.
 > -  ign_orography_label: point labels for orography features (peaks, valleys, passes, etc.).
@@ -40,7 +40,7 @@ alpe_huez_test_data.backup is a postGreSQL backup, the file has be restored in a
 
 Filling the mapping XML file
 -------------
-The CartAGen librairies use a [centralized data schema][8] in order to avoid dependencies to specific data schemas in algorithms. 
+The CartAGen librairies use a [centralized data schema][8] in order to avoid dependencies to specific data schemas in algorithms.
 So the first step load some new dataset in CartAGen is to map the data schema to this centralized schema: that's what the XML mapping file is for.
 You can see in the [tutorial on the centralized schema][8] that the schema can have several implementations, and the first part of the mapping file describes the implementation you want to use. Here, the default implementation is chosen (and should be in most cases).
 
@@ -110,7 +110,7 @@ The dataset can also be imported by code, using the same code as the loading win
 
 Importing shapefiles
 -------------
-The tutorial above only allows the import of geographical datasets stored in a PostGIS database. But shapefiles can also be imported in CartAGen, in a slightly different way. 
+The tutorial above only allows the import of geographical datasets stored in a PostGIS database. But shapefiles can also be imported in CartAGen, in a slightly different way.
 When loading shapefiles as a new CartAGen dataset, the first step is to create a new CartAGen Document (see at the end of the tutorial for more details).
 This step is done automatically when loading a PostGIS database. To create a new Document, click on 'New CartAGen Document' in the 'Dataset' menu (see image below).
 
@@ -121,7 +121,7 @@ Then, go into the "Dataset" menu, then the "Import dataset" submenu, and then cl
 ![Menu to load shapefiles](assets/images/import_shapefile_menu.png)
 
 The name of the zone is just metadata on the dataset (see image below).
-Then, the text field and the button help choosing the mapping file between the shapefiles structure and the CartAGen data schema. The XML structure is exactly the same as the PostGIS mapping file. 
+Then, the text field and the button help choosing the mapping file between the shapefiles structure and the CartAGen data schema. The XML structure is exactly the same as the PostGIS mapping file.
 In the running example of the tutorial, as the shapefiles are named similarly to the PostGIS tables, the "mapping_test_data.xml" file can also be used to map the shapefiles, no need to create a new one.
 
 ![Menu to load shapefiles](assets/images/import_shapefile_window.png)
@@ -130,7 +130,7 @@ Then, choose a name for the loaded dataset. The name of a dataset is useful when
 The scale to give is the symbolisation scale of the loaded data, i.e. the target scale of generalization. This scale value can be changed later in the CartAGen GUI.
 Finally, the last text field of the window (at the bottom) is for the path of the folder that contains all shapefiles to load (the shapefiles have to be located in the same folder).
 
-If necessary, extra shapefiles can be loaded as new layers afterwards, using the menu "Dataset" menu, then the "Add layer to current dataset" submenu, and then click on "Add Shapefile as new layer". 
+If necessary, extra shapefiles can be loaded as new layers afterwards, using the menu "Dataset" menu, then the "Add layer to current dataset" submenu, and then click on "Add Shapefile as new layer".
 
 
 Importing .osm files
@@ -142,11 +142,11 @@ To load OSM files, you have to use the 'OpenStreetMap' menu (see image below)
 
 ![Menu to load an OSM file](assets/images/load_osm_menu.png)
 
-Clicking on the menu item opens a window (see image below) where the .osm file to load can be specified, as well as the map projection to use. 
+Clicking on the menu item opens a window (see image below) where the .osm file to load can be specified, as well as the map projection to use.
 As CartAGen uses parameters in map millimeters, it does not work properly if the data is loaded with geographic coordinates: the dataset has to be projected into a given map projection.
-Only a very small extract of the existing map projections is available in this window, so additional map projections will have to be added in the code of the window to be able to use them. 
+Only a very small extract of the existing map projections is available in this window, so additional map projections will have to be added in the code of the window to be able to use them.
 CartAGen uses Geotools library for projections, which gives a large variety of map projection that can be used.
-It is also possible to filter the loaded features by specifying a tag filter: the loader will only consider the features that have the specific tag (with no regard to the value of the tag). 
+It is also possible to filter the loaded features by specifying a tag filter: the loader will only consider the features that have the specific tag (with no regard to the value of the tag).
 To only load roads, you have to put "highway" in the text field.
 
 ![Loading Frame for OSM data](assets/images/import_osm_window.png)
@@ -166,7 +166,7 @@ See Also
 - [tutorial to generalize loaded data with agent-based processes][7]
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: https://github.com/IGNF/CartAGen/tree/master/cartagen-appli/src/main/resources/data
 [3]: http://www.sciencedirect.com/science/article/pii/S0198971509000465
 [4]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/core/genericschema/AbstractCreationFactory.java

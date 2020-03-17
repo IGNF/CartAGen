@@ -25,7 +25,7 @@ The code related to this project can be found in the [OSM package of CartAGen][4
 
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: http://mapmuxing.ign.fr/
 [3]: https://github.com/IGNF/CartAGen/blob/master/cartagen-appli/src/main/java/fr/ign/cogit/cartagen/appli/plugins/machinelearning/TrainingDatasetGenerator.java
 [4]: https://github.com/IGNF/CartAGen/tree/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/osm

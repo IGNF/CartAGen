@@ -40,7 +40,7 @@ See Also
 - [Return to home page][6]
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: /visvalingam.md
 [3]: /raposo.md
 [4]: /li_openshaw.md

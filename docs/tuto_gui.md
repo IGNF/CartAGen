@@ -24,10 +24,10 @@ CartAGen plugins: how it works and how to add new ones
 |:----------------------|:----------------------------------|:------------------------------|
 | [Least squares][10]   | [LeastSquaresComponent.java][16]  	| triggers least squares based generalisation processes	|
 | [Evaluation][11]	 | [EvaluationComponent.java][17] | contains methods to evaluate the results of generalisation |
-| [CollaGen][12]   | [CollaGenComponent.java][18] | an incomplete implementation of the [CollaGen model][22]| 
+| [CollaGen][12]   | [CollaGenComponent.java][18] | an incomplete implementation of the [CollaGen model][22]|
 | [Spatial Analysis][13]   | [SpatialAnalysisComponent.java][19] |   contains spatial analysis tools to characterise data prior to generalisation	|
-| [Continuous][14]   | [ContinuousGUIComponent.java][20] | contains tools for continuous generalisation and morphing	| 
-| [OpenStreetMap][15]   | [OSMCartAGenPlugin.java][21] | contains specific processes such as the LoD harmonisation for OpenStreetMap data	| 
+| [Continuous][14]   | [ContinuousGUIComponent.java][20] | contains tools for continuous generalisation and morphing	|
+| [OpenStreetMap][15]   | [OSMCartAGenPlugin.java][21] | contains specific processes such as the LoD harmonisation for OpenStreetMap data	|
 
 
 #### [](#header-4)How to add new plugins
@@ -41,12 +41,12 @@ public class NewPlugin extends JMenu {
     super(title);
 	...// add menu items and actions to this new menu
     }
-	
+
 	...
 }
 ```
 
-Then, if you want to add the new plugin in the CartAGen GUI, you have to modify the CartAGenGUIComponents.xml file that can be found in the cartagen-appli/src/main/resources/xml/ folder. 
+Then, if you want to add the new plugin in the CartAGen GUI, you have to modify the CartAGenGUIComponents.xml file that can be found in the cartagen-appli/src/main/resources/xml/ folder.
 The example code below shows how to add the "NewPlugin" plugin into the file. When CartAGen is launched once again, the NewPlugin should appear on the right of the existing menus.
 
 ```xml
@@ -97,7 +97,7 @@ The File menu is the standard File menu of the GeOxygene application that CartAG
 - Open File: add a new layer from a shapefile.
 - Load SLD: load a previously stored SLD format file, and apply the style on the current layers.
 - New PostGIS Layer: add a new layer from a PostGIS table (a window opens to fill the database connection information).
-- Save Layer as ...: save the selected layer as a shapefile. 
+- Save Layer as ...: save the selected layer as a shapefile.
 - Save As Image: save the content of the view panel as an image (that can be geolocated).
 - Save As SLD: save the current style information in a SLD format file that can be reused later.
 - Print: to print the content of the view panel.
@@ -116,7 +116,7 @@ There is also a toggle to display mouse coordinates.
 #### [](#header-4)Dataset Menu
 
 #### [](#header-4)Themes Menu
-The themes menu contains sub-menus for the main data themes that can be found in a topographic map. These sub-menus contain enrichment or generalisation algorithms specific for this theme. 
+The themes menu contains sub-menus for the main data themes that can be found in a topographic map. These sub-menus contain enrichment or generalisation algorithms specific for this theme.
 For instance, the building sub-menu contains the algorithms for building generalisation that are available in CartAGen.
 The sub-menus are the following:
 - Relief
@@ -155,7 +155,7 @@ The Agent menu goes along with a toolbar on the right side of the view panel tha
 
 GeOxygene Plugins
 -------------
-The CartAGen application is just an extension of the GeOxygene application, with new interface components. 
+The CartAGen application is just an extension of the GeOxygene application, with new interface components.
 So, the application can also access to GeOxygene plugins, that work similarly to CartAGen plugins: they usually add a menu with items to access to the geoprocessing algorithms of the GeOxygene platform (data matching, conflation, topological processing, styling, etc.).
 
 The choice of the GeOxygene plugins that are loaded in the CartAGen application is made by filling the geoxygene-configuration.xml file in the cartagen-appli project. The plugins appear in the "Plugins GeOx" menu of the GUI (see image below).
@@ -166,7 +166,7 @@ You can find more information on GeOxygene capabilities on [this website][5]. Be
 
 The geometry pool
 -------------
-The rendering of geographic features works with layers of geographic features, following the OGC standards. But sometimes, it is useful to draw additional geometries, such as final or intermediate geometries of a generalisation algorithm. 
+The rendering of geographic features works with layers of geographic features, following the OGC standards. But sometimes, it is useful to draw additional geometries, such as final or intermediate geometries of a generalisation algorithm.
 To allow this, CartAGen uses a specific layer, called the Geometry Pool, where any geometry can be rendered with a specific style, on top of the other layers (see image below).
 
 ![The centroid of each building is displayed in the geometry pool](assets/images/geom_pool.png)
@@ -175,7 +175,7 @@ The geometry pool can be made visible, or can be hidden, by using the "visible" 
 
 ![Making the geometry pool visible](assets/images/geom_pool_visible.png)
 
-The CartAGen-Config>Geometry Pool menu also allows the manipulation of the geometry pool (adding the selected features' geometry, clearing the pool, etc.). 
+The CartAGen-Config>Geometry Pool menu also allows the manipulation of the geometry pool (adding the selected features' geometry, clearing the pool, etc.).
 The geometry pool can also be handled in the code. The example code below shows how to retrieve the geometry pool associated with a CartAGen database:
 
 ```java
@@ -193,7 +193,7 @@ See Also
 
 - [Return to main page][23]
 
-[1]: http://recherche.ign.fr/labos/cogit/english/accueilCOGIT.php
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: https://www.eclipse.org/
 [3]: https://github.com/IGNF/CartAGen/blob/master/cartagen-appli/src/main/java/fr/ign/cogit/cartagen/appli/core/CartAGenApplicationAgent.java
 [4]: https://github.com/IGNF/CartAGen/blob/master/cartagen-appli/src/main/java/fr/ign/cogit/cartagen/appli/core/CartAGenApplicationNoAgent.java

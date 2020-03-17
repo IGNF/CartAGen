@@ -60,7 +60,7 @@ It also enables the enrichment of the dataset with geographic features that were
 - [Return to main page][6]
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/accueilCOGIT.php
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: https://github.com/IGNF/geoxygene
 [3]: /spatial_analysis/road_enrichment.md
 [4]: /spatial_analysis/building_measures.md

@@ -1,7 +1,7 @@
 # Tutorial on how to generalize data loaded in CartAGen
 The building blocks of map generalization are the algorithms that are triggered on one map object or on group of map objects. Before orchestrating their application on a complete map, it is necessary to learn of to test them on a sample dataset, and that's the aim of this tutorial.
 The tutorial:
-- first explains how to trigger the available from the GUI menu buttons; 
+- first explains how to trigger the available from the GUI menu buttons;
 - then, the tutorial describes how these algorithms can be located in the CartAGen library;
 - then, for developers (CartAGen is mainly dedicated to developers for now), the following section of the tutorial shows an example where an algorithm is encapsulated in a piece of code to enlarge and displace of the buildings of a dataset;
 - finally the tutorial explains how to add one of the any algorithms of the research literature taht are not implemented in CartAGen yet.
@@ -15,7 +15,7 @@ The tutorial:
 Where are the algorithms in the Java library?
 -------------
 
-Generalization operations are atomic transformations of map objects that improve the legibility of the objects at target scale. 
+Generalization operations are atomic transformations of map objects that improve the legibility of the objects at target scale.
 There are many different taxonomies of generalization operations (or operators), but the one illustrated in the images below derives from Sébastien Mustière's PhD thesis.
 
 ![Simplification operations](assets/images/simplification_operations.png)  ![Caricature operations](assets/images/caricature_operations.png)  ![Harmonisation operations](assets/images/harmonisation_operations.png)
@@ -35,7 +35,7 @@ Triggering algorithms with the menu buttons
 -------------
 #### [](#header-4)Generic algorithms
 
-Some of the [available algorithms][2] are generic, which means they can be used on different types of geographic features, and even sometimes different types of geometry. 
+Some of the [available algorithms][2] are generic, which means they can be used on different types of geographic features, and even sometimes different types of geometry.
 For instance, the simplification algorithms provided in CartAGen can be used on any type of line or polygon feature (even if they are not always effective on every type of feature, see the detailed description of the algorithms).
 Some of these algorithms can be manually triggered on the selected geographic features in the GUI: click on the menu items in the Generalisation->Algorithms menu (see image below).
 
@@ -43,14 +43,14 @@ Some of these algorithms can be manually triggered on the selected geographic fe
 
 #### [](#header-4)Theme specific algorithms
 
-Some other algorithms are clearly dedicated to specific types of features, and cannot be triggered on different features. 
-The 'Themes' menu (see image below) contains sub-menus and menu items to use theme-specific algorithms. 
+Some other algorithms are clearly dedicated to specific types of features, and cannot be triggered on different features.
+The 'Themes' menu (see image below) contains sub-menus and menu items to use theme-specific algorithms.
 For instance, the 'Road Network' sub-menu contains menu items to 'Detect Roundabouts' and 'Collapse Roundabouts'
 
 ![theme menus](assets/images/theme_menu.png)
 
-CartAGen is not supposed to be an interactive platform to carry out generalization on loaded data for production issues. 
-It is intended as a research platform, at least its GUI, and these menus are mostly helpful to design new algorithms and to design new generalization processes that orchestrate different algorithms. 
+CartAGen is not supposed to be an interactive platform to carry out generalization on loaded data for production issues.
+It is intended as a research platform, at least its GUI, and these menus are mostly helpful to design new algorithms and to design new generalization processes that orchestrate different algorithms.
 For instance, it is useful to test the algorithms on its own data before choosing which ones can be included in an [agent-based generalization process][4].
 
 
@@ -119,7 +119,7 @@ All these steps can be achieved by an interactive use of the GUI menus, but this
           IGeometry simplified = SimplificationAlgorithm.simplification(geom,
               GeneralisationSpecifications.LONGUEUR_MINI_GRANULARITE
                   * Legend.getSYMBOLISATI0N_SCALE() / 1000.0);
-          
+
           // apply the new geometry to the building
           building.setGeom(simplified);
 ```
@@ -199,7 +199,7 @@ Of course, comments should be added in the code, as much as possible, to documen
    * an implementation of the paper from Damen et al. (2008, ICA Workshop in
    * Montpellier). Here, the sequence of operators is closure, then opening,
    * then edge removal.
-   * 
+   *
    * @param buildings
    * @param bufferSize the size of the buffer for the dilation/erosion
    *          operations.
@@ -219,7 +219,7 @@ See Also
 
 - [Return to main page][12]
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: /algorithms.md
 [3]: /tuto_import_data.md
 [4]: /tuto_agents.md

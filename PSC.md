@@ -164,4 +164,4 @@ This document has been inspired by and adapted from :
 - GeoServer PSC document : http://docs.geoserver.org/2.5.x/en/developer/policies/psc.html
 
 
-  [1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/

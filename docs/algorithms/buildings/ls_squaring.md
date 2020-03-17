@@ -24,8 +24,8 @@ Examples of generalization
 
 When to use the algorithm?
 -------------
-The algorithm is dedicated to buildings and other orthogonal man-made map features (such as some sports fields). 
-[(Lokhat & Touya 2016)][3] shows that this algorithm is particularly effective on datasets with complex buildings where more simple algorithms fail. 
+The algorithm is dedicated to buildings and other orthogonal man-made map features (such as some sports fields).
+[(Lokhat & Touya 2016)][3] shows that this algorithm is particularly effective on datasets with complex buildings where more simple algorithms fail.
 Usually, in an agent-based system, it can be coupled with a [simple squaring algorithm][3] that is very quick for buildings with few vertices.
 
 
@@ -36,7 +36,7 @@ See Also
 - [Return to home page][6]
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: /simplification.md
 [3]: http://dx.doi.org/10.5311/JOSIS.2016.13.276
 [4]: https://github.com/IGNF/CartAGen/blob/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/algorithms/polygon/PolygonSquaring.java

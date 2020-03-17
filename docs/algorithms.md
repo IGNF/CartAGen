@@ -62,7 +62,7 @@ A list, not exhaustive yet, of the generalization algorithms available in CartAG
 - [Return to main page][78]
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/accueilCOGIT.php
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: https://github.com/IGNF/geoxygene
 [3]: docs/tuto_import_data.md
 [4]: docs/tuto_generalization_algo.md

@@ -88,7 +88,7 @@ See also
 - [Road network selection algorithms][5]
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: /spatial_analysis/building_measures.md
 [3]: /spatial_analysis/geographic_spaces.md
 [4]: /spatial_analysis/other_measures.md

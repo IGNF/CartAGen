@@ -32,6 +32,6 @@ See Also
 - [Morphological amalgamation algorithm][2]
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: /algorithms/line/morpho_amalgamation.md
 [3]: http://recherche.ign.fr/labos/cogit/pdf/THESES/REGNAULD/These_Regnauld_1998.pdf

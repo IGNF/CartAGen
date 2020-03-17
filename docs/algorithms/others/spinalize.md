@@ -8,7 +8,7 @@
 
 Description of the algorithm
 -------------
-The spinalize algorithm collapses a polygon into a line based on a voronoï diagram of the polygon, keeping only the "spine" of the skeleton (the algorithm gets rid of the small edges of the skeleton). 
+The spinalize algorithm collapses a polygon into a line based on a voronoï diagram of the polygon, keeping only the "spine" of the skeleton (the algorithm gets rid of the small edges of the skeleton).
 If several polygons are initially connected (i.e. they touch each other) their spine is also connected by the algorithm.
 
 ![A river area that is densified in vertices, and decomposed into a Voronoï diagram](/images/proc_spinalize_voronoi.png)
@@ -37,7 +37,7 @@ See Also
 
 - [Return to home page][5]
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: /skeletonize.md
 [3]: http://www.tandfonline.com/doi/abs/10.1080/15230406.2013.809233
 [4]: https://kartographie.geo.tu-dresden.de/downloads/ica-gen/workshop2014/genemr2014_submission_6.pdf

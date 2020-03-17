@@ -11,7 +11,7 @@ Description of the algorithm
 This algorithm performs a line simplification that produces less angular results than the filtering algorithm of [Douglas and Peucker][2].
 The algorithm was proposed by [Visvalingam & Whyatt 1993][5].
 
-The principle of the algorithm is to select the vertices to delete (the less characteristic ones) rather than choosing the vertices to keep (in the Douglas and Peucker algorithm). 
+The principle of the algorithm is to select the vertices to delete (the less characteristic ones) rather than choosing the vertices to keep (in the Douglas and Peucker algorithm).
 To select the vertices to delete, there is an iterative process, and at each iteration, the triangles formed by three consecutive vertices are computed. If the area of the smallest triangle is smaller than a threshold ("area_tolerance" parameter), the middle vertex is deleted, and another iteration starts.
 
 | Parameter name        | Description         				| Type 							| Default value			|
@@ -41,7 +41,7 @@ See Also
 - [Return to home page][6]
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: /douglas_peucker.md
 [3]: /raposo.md
 [4]: /li_openshaw.md

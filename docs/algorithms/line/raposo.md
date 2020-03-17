@@ -8,7 +8,7 @@
 
 Description of the algorithm
 -------------
-This algorithm simplifies lines based on a hexagonal tessallation, and is described in [(Raposo 2013)][5]. 
+This algorithm simplifies lines based on a hexagonal tessallation, and is described in [(Raposo 2013)][5].
 The algorithm also works for the simplification of the border of a polygon object.
 
 The idea of the algorithm is to put a hexagonal tessallation on top of the line to simplify, the size of the cells depending on the targeted granularity of the line.
@@ -45,7 +45,7 @@ See Also
 - [Return to home page][6]
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: /visvalingam.md
 [3]: /douglas_peucker.md
 [4]: /li_openshaw.md

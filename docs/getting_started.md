@@ -29,7 +29,7 @@ Getting Started
 
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: docs/tuto_gui.md
 [3]: docs/tuto_import_data.md
 [4]: docs/tuto_generalization_algo.md

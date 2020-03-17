@@ -27,7 +27,7 @@ The ScaleMaster2.0 model requires several input files to work, and these files a
 
 ## ScaleMasterThemes.xml file
 
-The ScaleMasterThemes file describe all the themes that can be used in a ScaleMaster2 model, a theme being a line in the model. With this file, the process can interpret lines of the model as feature classes of CartAGen. For instance, the theme 'roadl' corresponds to the linear road features of the class RoadLine in CartAGen. This file is supposed to be filled for once, and then the map designer that parameterizes the ScaleMaster only needs to know the theme names, and not the name of the classes in CartAGen. The name of the theme is given in the tag <name> of the file (see the extract below). 
+The ScaleMasterThemes file describe all the themes that can be used in a ScaleMaster2 model, a theme being a line in the model. With this file, the process can interpret lines of the model as feature classes of CartAGen. For instance, the theme 'roadl' corresponds to the linear road features of the class RoadLine in CartAGen. This file is supposed to be filled for once, and then the map designer that parameterizes the ScaleMaster only needs to know the theme names, and not the name of the classes in CartAGen. The name of the theme is given in the tag <name> of the file (see the extract below).
 
 The tag <concept> describes a reference to a concept in an ontology for map generalization, such as the one promoted by the [ICA commission on map generalization][15]. This tag is just a formal description for now, it is not used in the automatic processing of the file.
 The tag <description> contains a textual description of the theme.
@@ -73,8 +73,7 @@ See Also
 - [Return to main page][6]
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
-[2]: http://dx.doi.org/10.1080/15230406.2013.809233
+[1]: https://umrlastig.github.io/guillaume-touya/[2]: http://dx.doi.org/10.1080/15230406.2013.809233
 [3]: http://dx.doi.org/10.1559/152304007780279078
 [4]: http://dx.doi.org/10.1007/s10707-009-0083-6
 [5]: http://www.tandfonline.com/doi/full/10.1080/23729333.2017.1300997

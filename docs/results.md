@@ -36,5 +36,5 @@ Multi-scale map obtained with a progressive block graying.
 ![AGENT-CartACom multi-scale map around Saint-Pée-sur-Nivelle](assets/images/stPee_AnimationAgregation.gif)
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: http://recherche.ign.fr/labos/util_basilic/publicDownload.php?id=4130

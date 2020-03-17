@@ -2,7 +2,7 @@
 CartAGen uses a centralized data schema to load and generalize geographic information, following the principles of multiple-representation databases (see [Balley et al. 2004][1] for instance). This page explains how it works, describes the content of the centralized schema, and shows how to extend it if necessary.
 
 > - Date 22/06/2017.
-> - Author: [Guillaume Touya][1]
+> - Author: [Guillaume Touya][10]
 > - Contact {firstname.lastname}@ign.fr.
 
 
@@ -355,10 +355,11 @@ See Also
 
 [1]: http://www.tandfonline.com/doi/abs/10.1080/13658810410001672881
 [2]: https://github.com/IGNF/geoxygene
-[3]: /tuto_sld.md https://github.com/IGNF/CartAGen/tree/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/core/defaultschema
+[3]: /tuto_sld.md
 [4]: https://en.wikipedia.org/wiki/Factory_method_pattern
-[5 http://www.opengeospatial.org/standards/sld https://github.com/IGNF/CartAGen/tree/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/osm/schema
+[5]: http://www.opengeospatial.org/standards/sld https://github.com/IGNF/CartAGen/tree/master/cartagen-core/src/main/java/fr/ign/cogit/cartagen/osm/schema
 [6]: http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.202.4737
 [7]: /tuto_agents.md
 [8]: /tuto_import_data.md
 [9]: /tuto_generalization_algo.md
+[10]: https://umrlastig.github.io/guillaume-touya/

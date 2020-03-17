@@ -10,12 +10,12 @@ Description of the algorithm
 -------------
 
 The Point Cover algorithm replace a point cloud by polygons that cover the region occupied by clusters of the points.
-First clusters have to be computed, using any of the available techniques. 
-Then, a Delaunay Triangulation of the geographic object is created, and the longest segments (and their associated triangles) on the boundary of the hull are eliminated one by one, in order to reduce its spatial shape to the very structure of the points of the object. 
-The algorithm stops in 4 cases: 
-- a point is put outside of the hull 
-- the hull is not regular anymore (ie. contains bridging edges) 
-- the hull doesn't satisfy Jordan criteria anymore (ie. contains bridging points) 
+First clusters have to be computed, using any of the available techniques.
+Then, a Delaunay Triangulation of the geographic object is created, and the longest segments (and their associated triangles) on the boundary of the hull are eliminated one by one, in order to reduce its spatial shape to the very structure of the points of the object.
+The algorithm stops in 4 cases:
+- a point is put outside of the hull
+- the hull is not regular anymore (ie. contains bridging edges)
+- the hull doesn't satisfy Jordan criteria anymore (ie. contains bridging points)
 - minimal edge length removal is reached
 
 
@@ -49,7 +49,7 @@ See Also
 - [Return to home page][4]
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: /algorithms/line/point_reduction.md
 [3]: https://link.springer.com/chapter/10.1007%2F11863939_6
 [4]: https://ignf.github.io/CartAGen

@@ -30,7 +30,7 @@ See also
 - [Other measures][4]
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: /spatial_analysis/road_enrichment.md
 [3]: /spatial_analysis/geographic_spaces.md
 [4]: /spatial_analysis/other_measures.md

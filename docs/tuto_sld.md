@@ -78,7 +78,7 @@ If we want to use on our map layers a style that was previously stored in a SLD 
 ![Loading a new SLD](assets/images/sld_loading.png)
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
 [2]: http://www.opengeospatial.org/standards/sld
 [3]: http://www.opengeospatial.org/standards/se
 [4]: https://github.com/IGNF/CartAGen/tree/master/cartagen-appli/src/main/resources/sld

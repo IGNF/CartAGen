@@ -34,4 +34,4 @@ For more complex geomtries that would not be simplified as rectangles, the enlar
 
 
 
-[1]: http://recherche.ign.fr/labos/cogit/english/cv.php?prenom=&nom=Touya
+[1]: https://umrlastig.github.io/guillaume-touya/
