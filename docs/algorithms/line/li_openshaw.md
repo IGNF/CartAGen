@@ -14,9 +14,17 @@ Then, all the consecutive vertices of the line that are included in a same cell 
 
 ![The principles of our implementation of the Li-Openshaw algorithm in raster mode](images/li_openshaw_principles.svg)
 
+| Parameter name        | Description         				| Type 							| Default value			|
+|:----------------------|:----------------------------------|:------------------------------|:--------------------------------------------------|
+| cell size    | the size of the cell used to simplify the line (only one vertex is retained per cell) | double (meters) 			| 								|
+
+
+
 Examples of generalization
 -------------
-To do...
+The image below shows the simplification of rivers with cell of 20 m.
+
+![li_openshaw example](images/li_openshaw.png)
 
 
 When to use the algorithm?
