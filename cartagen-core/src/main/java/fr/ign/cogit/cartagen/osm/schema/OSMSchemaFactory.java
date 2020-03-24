@@ -103,607 +103,616 @@ import fr.ign.cogit.geoxygene.schemageo.api.support.reseau.Reseau;
 
 public class OSMSchemaFactory extends AbstractCreationFactory {
 
-  public OsmGeneObj createGeneObj(Class<?> classObj, OSMResource resource,
-      Collection<OSMResource> nodes, OsmGeometryConversion convertor)
-      throws Exception {
-    if (IRoadLine.class.isAssignableFrom(classObj)) {
-      ILineString line = convertor.convertOSMLine((OSMWay) resource.getGeom(),
-          nodes);
-      if (line.coord().size() == 1)
+    public OsmGeneObj createGeneObj(Class<?> classObj, OSMResource resource,
+            Collection<OSMResource> nodes, OsmGeometryConversion convertor)
+            throws Exception {
+        if (IRoadLine.class.isAssignableFrom(classObj)) {
+            ILineString line = convertor
+                    .convertOSMLine((OSMWay) resource.getGeom(), nodes, true);
+            if (line.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createRoadLine(line, 0);
+        }
+        if (ICable.class.isAssignableFrom(classObj)) {
+            ILineString line = convertor
+                    .convertOSMLine((OSMWay) resource.getGeom(), nodes, true);
+            if (line.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createCable(line);
+        }
+        if (IBuilding.class.isAssignableFrom(classObj)) {
+            IPolygon poly = convertor.convertOSMPolygon(
+                    (OSMWay) resource.getGeom(), nodes, true);
+            if (poly == null)
+                return null;
+            if (poly.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createBuilding(poly);
+        }
+        if (ISportsField.class.isAssignableFrom(classObj)) {
+            IPolygon poly = convertor.convertOSMPolygon(
+                    (OSMWay) resource.getGeom(), nodes, true);
+            if (poly.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createSportsField(poly);
+        }
+        if (IWaterLine.class.isAssignableFrom(classObj)) {
+            ILineString line = convertor
+                    .convertOSMLine((OSMWay) resource.getGeom(), nodes, true);
+            if (line.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createWaterLine(line, 0);
+        }
+        if (IWaterArea.class.isAssignableFrom(classObj)) {
+            IPolygon poly = convertor.convertOSMPolygon(
+                    (OSMWay) resource.getGeom(), nodes, true);
+            if (poly.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createWaterArea(poly);
+        }
+        if (IBuildPoint.class.isAssignableFrom(classObj)) {
+            IPoint pt = convertor.convertOsmPoint((OSMNode) resource.getGeom(),
+                    true);
+            return (OsmGeneObj) this.createBuildPoint(pt);
+        }
+        if (IWaterArea.class.isAssignableFrom(classObj)) {
+            IPolygon poly = convertor.convertOSMPolygon(
+                    (OSMWay) resource.getGeom(), nodes, true);
+            if (poly.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createWaterArea(poly);
+        }
+        if (IAirportArea.class.isAssignableFrom(classObj)) {
+            IPolygon poly = convertor.convertOSMPolygon(
+                    (OSMWay) resource.getGeom(), nodes, true);
+            if (poly.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createAirportArea(poly);
+        }
+        if (IRunwayArea.class.isAssignableFrom(classObj)) {
+            IPolygon poly = convertor.convertOSMPolygon(
+                    (OSMWay) resource.getGeom(), nodes, true);
+            if (poly.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createRunwayArea(poly);
+        }
+        if (IRunwayLine.class.isAssignableFrom(classObj)) {
+            ILineString line = convertor
+                    .convertOSMLine((OSMWay) resource.getGeom(), nodes, true);
+            if (line.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createRunwayLine(line);
+        }
+        if (ITaxiwayArea.class.isAssignableFrom(classObj)) {
+            IPolygon poly = convertor.convertOSMPolygon(
+                    (OSMWay) resource.getGeom(), nodes, true);
+            if (poly.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createTaxiwayArea(poly);
+        }
+        if (ITaxiwayLine.class.isAssignableFrom(classObj)) {
+            ILineString line = convertor
+                    .convertOSMLine((OSMWay) resource.getGeom(), nodes, true);
+            if (line.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createTaxiwayLine(line, null);
+        }
+        if (ISimpleLandUseArea.class.isAssignableFrom(classObj)) {
+            IPolygon poly = convertor.convertOSMPolygon(
+                    (OSMWay) resource.getGeom(), nodes, true);
+            if (poly == null || poly.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createSimpleLandUseArea(poly, 0);
+        }
+        if (IPointOfInterest.class.isAssignableFrom(classObj)) {
+            IPoint pt = convertor.convertOsmPoint((OSMNode) resource.getGeom(),
+                    true);
+            return new OsmPointOfInterest(pt);
+        }
+        if (ITreePoint.class.isAssignableFrom(classObj)) {
+            IPoint pt = convertor.convertOsmPoint((OSMNode) resource.getGeom(),
+                    true);
+            return (OsmGeneObj) this.createTreePoint(pt);
+        }
+        if (ICycleWay.class.isAssignableFrom(classObj)) {
+            ILineString line = convertor
+                    .convertOSMLine((OSMWay) resource.getGeom(), nodes, true);
+            return (OsmGeneObj) this.createCycleWay(line);
+        }
+        if (IRailwayLine.class.isAssignableFrom(classObj)) {
+            ILineString line = convertor
+                    .convertOSMLine((OSMWay) resource.getGeom(), nodes, true);
+            if (line.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createRailwayLine(line, 0);
+        }
+        if (IPathLine.class.isAssignableFrom(classObj)) {
+            ILineString line = convertor
+                    .convertOSMLine((OSMWay) resource.getGeom(), nodes, true);
+            if (line.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createPath(line, 0);
+        }
+        if (IReliefElementPoint.class.isAssignableFrom(classObj)) {
+            IPoint pt = convertor.convertOsmPoint((OSMNode) resource.getGeom(),
+                    true);
+            return (OsmGeneObj) this.createReliefElementPoint(pt);
+        }
+        if (ICoastLine.class.isAssignableFrom(classObj)) {
+            ILineString line = convertor
+                    .convertOSMLine((OSMWay) resource.getGeom(), nodes, true);
+            if (line.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createCoastLine(line);
+        }
+        if (ISquareArea.class.isAssignableFrom(classObj)) {
+            IPolygon poly = convertor.convertOSMPolygon(
+                    (OSMWay) resource.getGeom(), nodes, true);
+            if (poly.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createSquareArea(poly);
+        }
+        if (OsmCemetery.class.isAssignableFrom(classObj)) {
+            IPolygon poly = convertor.convertOSMPolygon(
+                    (OSMWay) resource.getGeom(), nodes, true);
+            if (poly.coord().size() < 4)
+                return null;
+            return new OsmCemetery(poly);
+        }
+        if (OsmSchool.class.isAssignableFrom(classObj)) {
+            IPolygon poly = convertor.convertOSMPolygon(
+                    (OSMWay) resource.getGeom(), nodes, true);
+            if (poly.coord().size() < 4)
+                return null;
+            return new OsmSchool(poly);
+        }
+        if (OsmHospital.class.isAssignableFrom(classObj)) {
+            IPolygon poly = convertor.convertOSMPolygon(
+                    (OSMWay) resource.getGeom(), nodes, true);
+            if (poly.coord().size() < 4)
+                return null;
+            return new OsmHospital(poly);
+        }
+        // TODO
         return null;
-      return (OsmGeneObj) this.createRoadLine(line, 0);
     }
-    if (ICable.class.isAssignableFrom(classObj)) {
-      ILineString line = convertor.convertOSMLine((OSMWay) resource.getGeom(),
-          nodes);
-      if (line.coord().size() == 1)
+
+    public OsmGeneObj createGeneObj(Class<?> classObj, OSMResource resource,
+            IGeometry geom) throws Exception {
+        if (IRoadLine.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createRoadLine((ILineString) geom, 0);
+        }
+        if (ICable.class.isAssignableFrom(classObj)) {
+
+            if (geom.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createCable((ILineString) geom);
+        }
+        if (IBuilding.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createBuilding((IPolygon) geom);
+        }
+        if (ISportsField.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createSportsField((IPolygon) geom);
+        }
+        if (IWaterLine.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createWaterLine((ILineString) geom, 0);
+        }
+        if (IWaterArea.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createWaterArea((IPolygon) geom);
+        }
+        if (IBuildPoint.class.isAssignableFrom(classObj)) {
+            return (OsmGeneObj) this.createBuildPoint((IPoint) geom);
+        }
+        if (IWaterArea.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createWaterArea((IPolygon) geom);
+        }
+        if (IAirportArea.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createAirportArea((IPolygon) geom);
+        }
+        if (IRunwayArea.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createRunwayArea((IPolygon) geom);
+        }
+        if (IRunwayLine.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createRunwayLine((ILineString) geom);
+        }
+        if (ITaxiwayArea.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createTaxiwayArea((IPolygon) geom);
+        }
+        if (ITaxiwayLine.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createTaxiwayLine((ILineString) geom,
+                    null);
+        }
+        if (ISimpleLandUseArea.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createSimpleLandUseArea((IPolygon) geom,
+                    0);
+        }
+        if (IPointOfInterest.class.isAssignableFrom(classObj)) {
+            return new OsmPointOfInterest((IPoint) geom);
+        }
+        if (ITreePoint.class.isAssignableFrom(classObj)) {
+            return (OsmGeneObj) this.createTreePoint((IPoint) geom);
+        }
+        if (ICycleWay.class.isAssignableFrom(classObj)) {
+            return (OsmGeneObj) this.createCycleWay((ILineString) geom);
+        }
+        if (IRailwayLine.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createRailwayLine((ILineString) geom, 0);
+        }
+        if (IPathLine.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createPath((ILineString) geom, 0);
+        }
+        if (IReliefElementPoint.class.isAssignableFrom(classObj)) {
+            return (OsmGeneObj) this.createReliefElementPoint((IPoint) geom);
+        }
+        if (ICoastLine.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() == 1)
+                return null;
+            return (OsmGeneObj) this.createCoastLine((ILineString) geom);
+        }
+        if (ISquareArea.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() < 4)
+                return null;
+            return (OsmGeneObj) this.createSquareArea((IPolygon) geom);
+        }
+        if (OsmCemetery.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() < 4)
+                return null;
+            return new OsmCemetery((IPolygon) geom);
+        }
+        if (OsmSchool.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() < 4)
+                return null;
+            return new OsmSchool((IPolygon) geom);
+        }
+        if (OsmHospital.class.isAssignableFrom(classObj)) {
+            if (geom.coord().size() < 4)
+                return null;
+            return new OsmHospital((IPolygon) geom);
+        }
+        // TODO
         return null;
-      return (OsmGeneObj) this.createCable(line);
     }
-    if (IBuilding.class.isAssignableFrom(classObj)) {
-      IPolygon poly = convertor.convertOSMPolygon((OSMWay) resource.getGeom(),
-          nodes);
-      if (poly == null)
-        return null;
-      if (poly.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createBuilding(poly);
+
+    @Override
+    public IBuilding createBuilding(IPolygon poly) {
+        return new OsmBuilding(poly);
     }
-    if (ISportsField.class.isAssignableFrom(classObj)) {
-      IPolygon poly = convertor.convertOSMPolygon((OSMWay) resource.getGeom(),
-          nodes);
-      if (poly.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createSportsField(poly);
+
+    @Override
+    public IBuilding createBuilding(IPolygon poly, String nature) {
+        OsmBuilding build = new OsmBuilding(poly);
+        build.setNature(nature);
+        return build;
     }
-    if (IWaterLine.class.isAssignableFrom(classObj)) {
-      ILineString line = convertor.convertOSMLine((OSMWay) resource.getGeom(),
-          nodes);
-      if (line.coord().size() == 1)
-        return null;
-      return (OsmGeneObj) this.createWaterLine(line, 0);
+
+    @Override
+    public IBuildPoint createBuildPoint(IPoint point) {
+        return new OsmBuildPoint(point);
     }
-    if (IWaterArea.class.isAssignableFrom(classObj)) {
-      IPolygon poly = convertor.convertOSMPolygon((OSMWay) resource.getGeom(),
-          nodes);
-      if (poly.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createWaterArea(poly);
+
+    @Override
+    public ISportsField createSportsField(IPolygon poly) {
+        return new OsmSportsField(poly);
     }
-    if (IBuildPoint.class.isAssignableFrom(classObj)) {
-      IPoint pt = convertor.convertOsmPoint((OSMNode) resource.getGeom());
-      return (OsmGeneObj) this.createBuildPoint(pt);
+
+    @Override
+    public IRoadLine createRoadLine(ILineString line, int importance) {
+        return new OsmRoadLine(line, -1);
     }
-    if (IWaterArea.class.isAssignableFrom(classObj)) {
-      IPolygon poly = convertor.convertOSMPolygon((OSMWay) resource.getGeom(),
-          nodes);
-      if (poly.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createWaterArea(poly);
+
+    @Override
+    public IRoadLine createRoadLine(TronconDeRoute geoxObj, int importance) {
+        return new OsmRoadLine(geoxObj, importance);
     }
-    if (IAirportArea.class.isAssignableFrom(classObj)) {
-      IPolygon poly = convertor.convertOSMPolygon((OSMWay) resource.getGeom(),
-          nodes);
-      if (poly.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createAirportArea(poly);
+
+    // /////////////////
+    // RAILWAY
+    // /////////////////
+
+    // RailwayLine
+    @Override
+    public IRailwayLine createRailwayLine(ILineString line, int importance) {
+        return new OsmRailwayLine(line);
     }
-    if (IRunwayArea.class.isAssignableFrom(classObj)) {
-      IPolygon poly = convertor.convertOSMPolygon((OSMWay) resource.getGeom(),
-          nodes);
-      if (poly.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createRunwayArea(poly);
+
+    @Override
+    public ICable createCable(ILineString line) {
+        return new OsmCable(line);
     }
-    if (IRunwayLine.class.isAssignableFrom(classObj)) {
-      ILineString line = convertor.convertOSMLine((OSMWay) resource.getGeom(),
-          nodes);
-      if (line.coord().size() == 1)
-        return null;
-      return (OsmGeneObj) this.createRunwayLine(line);
+
+    @Override
+    public IWaterLine createWaterLine(ILineString line, int importance) {
+        return new OsmWaterLine(line);
     }
-    if (ITaxiwayArea.class.isAssignableFrom(classObj)) {
-      IPolygon poly = convertor.convertOSMPolygon((OSMWay) resource.getGeom(),
-          nodes);
-      if (poly.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createTaxiwayArea(poly);
+
+    @Override
+    public IWaterArea createWaterArea(IPolygon poly) {
+        return new OsmWaterArea(poly);
     }
-    if (ITaxiwayLine.class.isAssignableFrom(classObj)) {
-      ILineString line = convertor.convertOSMLine((OSMWay) resource.getGeom(),
-          nodes);
-      if (line.coord().size() == 1)
-        return null;
-      return (OsmGeneObj) this.createTaxiwayLine(line, null);
+
+    @Override
+    public ISimpleLandUseArea createSimpleLandUseArea(IPolygon poly, int type) {
+        return new OsmSimpleLandUseArea(poly);
     }
-    if (ISimpleLandUseArea.class.isAssignableFrom(classObj)) {
-      IPolygon poly = convertor.convertOSMPolygon((OSMWay) resource.getGeom(),
-          nodes);
-      if (poly == null || poly.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createSimpleLandUseArea(poly, 0);
+
+    @Override
+    public IAirportArea createAirportArea(IPolygon geom) {
+        return new OsmAirportArea(geom);
     }
-    if (IPointOfInterest.class.isAssignableFrom(classObj)) {
-      IPoint pt = convertor.convertOsmPoint((OSMNode) resource.getGeom());
-      return new OsmPointOfInterest(pt);
+
+    @Override
+    public IRunwayArea createRunwayArea(IPolygon geom) {
+        return new OsmRunwayArea(geom);
     }
-    if (ITreePoint.class.isAssignableFrom(classObj)) {
-      IPoint pt = convertor.convertOsmPoint((OSMNode) resource.getGeom());
-      return (OsmGeneObj) this.createTreePoint(pt);
+
+    @Override
+    public IRunwayLine createRunwayLine(ILineString geom) {
+        return new OsmRunwayLine(geom);
     }
-    if (ICycleWay.class.isAssignableFrom(classObj)) {
-      ILineString line = convertor.convertOSMLine((OSMWay) resource.getGeom(),
-          nodes);
-      return (OsmGeneObj) this.createCycleWay(line);
+
+    @Override
+    public IReliefField createReliefField(ChampContinu champ) {
+        return new ReliefField(champ);
     }
-    if (IRailwayLine.class.isAssignableFrom(classObj)) {
-      ILineString line = convertor.convertOSMLine((OSMWay) resource.getGeom(),
-          nodes);
-      if (line.coord().size() == 1)
-        return null;
-      return (OsmGeneObj) this.createRailwayLine(line, 0);
+
+    @Override
+    public INetwork createNetwork() {
+        return new Network();
     }
-    if (IPathLine.class.isAssignableFrom(classObj)) {
-      ILineString line = convertor.convertOSMLine((OSMWay) resource.getGeom(),
-          nodes);
-      if (line.coord().size() == 1)
-        return null;
-      return (OsmGeneObj) this.createPath(line, 0);
+
+    @Override
+    public INetwork createNetwork(Reseau res) {
+        return new Network(res);
     }
-    if (IReliefElementPoint.class.isAssignableFrom(classObj)) {
-      IPoint pt = convertor.convertOsmPoint((OSMNode) resource.getGeom());
-      return (OsmGeneObj) this.createReliefElementPoint(pt);
+
+    @Override
+    public IRoadNode createRoadNode() {
+        return new OsmRoadNode();
     }
-    if (ICoastLine.class.isAssignableFrom(classObj)) {
-      ILineString line = convertor.convertOSMLine((OSMWay) resource.getGeom(),
-          nodes);
-      if (line.coord().size() == 1)
-        return null;
-      return (OsmGeneObj) this.createCoastLine(line);
+
+    @Override
+    public IRoadNode createRoadNode(IPoint point) {
+        return new OsmRoadNode(point);
     }
-    if (ISquareArea.class.isAssignableFrom(classObj)) {
-      IPolygon poly = convertor.convertOSMPolygon((OSMWay) resource.getGeom(),
-          nodes);
-      if (poly.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createSquareArea(poly);
+
+    @Override
+    public IRoadNode createRoadNode(Noeud noeud) {
+        return new OsmRoadNode(noeud);
     }
-    if (OsmCemetery.class.isAssignableFrom(classObj)) {
-      IPolygon poly = convertor.convertOSMPolygon((OSMWay) resource.getGeom(),
-          nodes);
-      if (poly.coord().size() < 4)
-        return null;
-      return new OsmCemetery(poly);
+
+    @Override
+    public IRoadNode createRoadNode(NoeudRoutier geoxObj) {
+        return new OsmRoadNode(geoxObj);
     }
-    if (OsmSchool.class.isAssignableFrom(classObj)) {
-      IPolygon poly = convertor.convertOSMPolygon((OSMWay) resource.getGeom(),
-          nodes);
-      if (poly.coord().size() < 4)
-        return null;
-      return new OsmSchool(poly);
+
+    @Override
+    public INetworkFace createNetworkFace(IPolygon poly) {
+        return new OsmNetworkFace(poly);
     }
-    if (OsmHospital.class.isAssignableFrom(classObj)) {
-      IPolygon poly = convertor.convertOSMPolygon((OSMWay) resource.getGeom(),
-          nodes);
-      if (poly.coord().size() < 4)
-        return null;
-      return new OsmHospital(poly);
+
+    @Override
+    public INetworkFace createNetworkFace(Face geoxObj) {
+        return new OsmNetworkFace(geoxObj);
     }
-    // TODO
-    return null;
-  }
 
-  public OsmGeneObj createGeneObj(Class<?> classObj, OSMResource resource,
-      IGeometry geom) throws Exception {
-    if (IRoadLine.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() == 1)
-        return null;
-      return (OsmGeneObj) this.createRoadLine((ILineString) geom, 0);
+    public ITreePoint createTreePoint(IPoint geom) {
+        return new OsmTreePoint(geom);
     }
-    if (ICable.class.isAssignableFrom(classObj)) {
 
-      if (geom.coord().size() == 1)
-        return null;
-      return (OsmGeneObj) this.createCable((ILineString) geom);
+    @Override
+    public ICycleWay createCycleWay(ILineString line) {
+        return new OsmCycleWay(line);
     }
-    if (IBuilding.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createBuilding((IPolygon) geom);
+
+    @Override
+    public IPathLine createPath(ILineString line, int importance) {
+        return new OsmPathLine(line, importance);
     }
-    if (ISportsField.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createSportsField((IPolygon) geom);
+
+    @Override
+    public IReliefElementPoint createReliefElementPoint(IPoint point) {
+        return new OsmReliefElementPoint(point);
     }
-    if (IWaterLine.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() == 1)
-        return null;
-      return (OsmGeneObj) this.createWaterLine((ILineString) geom, 0);
+
+    @Override
+    public ICoastLine createCoastLine(ILineString line) {
+        return new OsmCoastline(line);
     }
-    if (IWaterArea.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createWaterArea((IPolygon) geom);
+
+    @Override
+    public ISquareArea createSquareArea(IPolygon poly) {
+        return new OsmParkArea(poly);
     }
-    if (IBuildPoint.class.isAssignableFrom(classObj)) {
-      return (OsmGeneObj) this.createBuildPoint((IPoint) geom);
+
+    @Override
+    public ITaxiwayArea createTaxiwayArea(IPolygon simple, TaxiwayType type) {
+        return new OsmTaxiwayArea(simple, type);
     }
-    if (IWaterArea.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createWaterArea((IPolygon) geom);
+
+    public ITaxiwayArea createTaxiwayArea(IPolygon simple) {
+        return new OsmTaxiwayArea(simple);
     }
-    if (IAirportArea.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createAirportArea((IPolygon) geom);
+
+    @Override
+    public ITaxiwayLine createTaxiwayLine(ILineString geom, TaxiwayType type) {
+        return new OsmTaxiwayLine(geom);
     }
-    if (IRunwayArea.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createRunwayArea((IPolygon) geom);
+
+    @Override
+    public IRailwayNode createRailwayNode() {
+        return new OsmRailwayNode();
     }
-    if (IRunwayLine.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() == 1)
-        return null;
-      return (OsmGeneObj) this.createRunwayLine((ILineString) geom);
+
+    @Override
+    public IRailwayNode createRailwayNode(IPoint point) {
+        return new OsmRailwayNode(point);
     }
-    if (ITaxiwayArea.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createTaxiwayArea((IPolygon) geom);
+
+    @Override
+    public IRailwayNode createRailwayNode(Noeud noeud) {
+        return new OsmRailwayNode(noeud);
     }
-    if (ITaxiwayLine.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() == 1)
-        return null;
-      return (OsmGeneObj) this.createTaxiwayLine((ILineString) geom, null);
+
+    @Override
+    public IBuilding createBuilding() {
+        return new OsmBuilding();
     }
-    if (ISimpleLandUseArea.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createSimpleLandUseArea((IPolygon) geom, 0);
+
+    @Override
+    public IUrbanBlock createUrbanBlock() {
+        return new OsmUrbanBlock();
     }
-    if (IPointOfInterest.class.isAssignableFrom(classObj)) {
-      return new OsmPointOfInterest((IPoint) geom);
+
+    @Override
+    public ITown createTown() {
+        return new OsmTown();
     }
-    if (ITreePoint.class.isAssignableFrom(classObj)) {
-      return (OsmGeneObj) this.createTreePoint((IPoint) geom);
+
+    @Override
+    public ISportsField createSportsField() {
+        return new OsmSportsField();
     }
-    if (ICycleWay.class.isAssignableFrom(classObj)) {
-      return (OsmGeneObj) this.createCycleWay((ILineString) geom);
+
+    @Override
+    public ICemetery createCemetery() {
+        return new OsmCemetery();
     }
-    if (IRailwayLine.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() == 1)
-        return null;
-      return (OsmGeneObj) this.createRailwayLine((ILineString) geom, 0);
+
+    @Override
+    public IRoadLine createRoadLine() {
+        return new OsmRoadLine();
     }
-    if (IPathLine.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() == 1)
-        return null;
-      return (OsmGeneObj) this.createPath((ILineString) geom, 0);
+
+    @Override
+    public IPathLine createPath() {
+        return new OsmPathLine();
     }
-    if (IReliefElementPoint.class.isAssignableFrom(classObj)) {
-      return (OsmGeneObj) this.createReliefElementPoint((IPoint) geom);
+
+    @Override
+    public IRailwayLine createRailwayLine() {
+        return new OsmRailwayLine();
     }
-    if (ICoastLine.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() == 1)
-        return null;
-      return (OsmGeneObj) this.createCoastLine((ILineString) geom);
+
+    @Override
+    public ICable createCable() {
+        return new OsmCable();
     }
-    if (ISquareArea.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() < 4)
-        return null;
-      return (OsmGeneObj) this.createSquareArea((IPolygon) geom);
+
+    @Override
+    public IWaterLine createWaterLine() {
+        return new OsmWaterLine();
     }
-    if (OsmCemetery.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() < 4)
-        return null;
-      return new OsmCemetery((IPolygon) geom);
+
+    @Override
+    public IWaterArea createWaterArea() {
+        return new OsmWaterArea();
     }
-    if (OsmSchool.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() < 4)
-        return null;
-      return new OsmSchool((IPolygon) geom);
+
+    @Override
+    public ISimpleLandUseArea createSimpleLandUseArea() {
+        return new OsmSimpleLandUseArea();
     }
-    if (OsmHospital.class.isAssignableFrom(classObj)) {
-      if (geom.coord().size() < 4)
-        return null;
-      return new OsmHospital((IPolygon) geom);
+
+    @Override
+    public ILabelPoint createLabelPoint() {
+        // TODO Auto-generated method stub
+        return super.createLabelPoint();
     }
-    // TODO
-    return null;
-  }
 
-  @Override
-  public IBuilding createBuilding(IPolygon poly) {
-    return new OsmBuilding(poly);
-  }
+    @Override
+    public IMiscPoint createMiscPoint() {
+        // TODO Auto-generated method stub
+        return super.createMiscPoint();
+    }
 
-  @Override
-  public IBuilding createBuilding(IPolygon poly, String nature) {
-    OsmBuilding build = new OsmBuilding(poly);
-    build.setNature(nature);
-    return build;
-  }
+    @Override
+    public IMiscLine createMiscLine() {
+        // TODO Auto-generated method stub
+        return super.createMiscLine();
+    }
 
-  @Override
-  public IBuildPoint createBuildPoint(IPoint point) {
-    return new OsmBuildPoint(point);
-  }
+    @Override
+    public IMiscArea createMiscArea() {
+        // TODO Auto-generated method stub
+        return super.createMiscArea();
+    }
 
-  @Override
-  public ISportsField createSportsField(IPolygon poly) {
-    return new OsmSportsField(poly);
-  }
+    @Override
+    public IDualCarriageWay createDualCarriageways(IPolygon poly,
+            int importance) {
+        return new OsmDualCarriageway(poly, importance);
+    }
 
-  @Override
-  public IRoadLine createRoadLine(ILineString line, int importance) {
-    return new OsmRoadLine(line, -1);
-  }
+    @Override
+    public IDualCarriageWay createDualCarriageways(IPolygon poly,
+            int importance, Collection<IRoadLine> innerRoads) {
+        return new OsmDualCarriageway(poly, importance, innerRoads);
+    }
 
-  @Override
-  public IRoadLine createRoadLine(TronconDeRoute geoxObj, int importance) {
-    return new OsmRoadLine(geoxObj, importance);
-  }
+    @Override
+    public IDualCarriageWay createDualCarriageways(IPolygon poly,
+            int importance, Collection<IRoadLine> innerRoads,
+            Collection<IRoadLine> outerRoads) {
+        return new OsmDualCarriageway(poly, importance, innerRoads, outerRoads);
+    }
 
-  // /////////////////
-  // RAILWAY
-  // /////////////////
+    @Override
+    public IBranchingCrossroad createBranchingCrossroad() {
+        return new OsmBranchingCrossroad();
+    }
 
-  // RailwayLine
-  @Override
-  public IRailwayLine createRailwayLine(ILineString line, int importance) {
-    return new OsmRailwayLine(line);
-  }
+    @Override
+    public IBranchingCrossroad createBranchingCrossroad(PatteOie geoxObj,
+            Collection<IRoadLine> roads, Collection<IRoadNode> nodes) {
+        return new OsmBranchingCrossroad(geoxObj, roads, nodes);
+    }
 
-  @Override
-  public ICable createCable(ILineString line) {
-    return new OsmCable(line);
-  }
+    @Override
+    public IRoundAbout createRoundAbout() {
+        return new OsmRoundabout();
+    }
 
-  @Override
-  public IWaterLine createWaterLine(ILineString line, int importance) {
-    return new OsmWaterLine(line);
-  }
+    @Override
+    public IRoundAbout createRoundAbout(RondPoint geoxObj,
+            Collection<IRoadLine> roads, Collection<IRoadNode> nodes) {
+        return new OsmRoundabout(geoxObj, roads, nodes);
+    }
 
-  @Override
-  public IWaterArea createWaterArea(IPolygon poly) {
-    return new OsmWaterArea(poly);
-  }
-
-  @Override
-  public ISimpleLandUseArea createSimpleLandUseArea(IPolygon poly, int type) {
-    return new OsmSimpleLandUseArea(poly);
-  }
-
-  @Override
-  public IAirportArea createAirportArea(IPolygon geom) {
-    return new OsmAirportArea(geom);
-  }
-
-  @Override
-  public IRunwayArea createRunwayArea(IPolygon geom) {
-    return new OsmRunwayArea(geom);
-  }
-
-  @Override
-  public IRunwayLine createRunwayLine(ILineString geom) {
-    return new OsmRunwayLine(geom);
-  }
-
-  @Override
-  public IReliefField createReliefField(ChampContinu champ) {
-    return new ReliefField(champ);
-  }
-
-  @Override
-  public INetwork createNetwork() {
-    return new Network();
-  }
-
-  @Override
-  public INetwork createNetwork(Reseau res) {
-    return new Network(res);
-  }
-
-  @Override
-  public IRoadNode createRoadNode() {
-    return new OsmRoadNode();
-  }
-
-  @Override
-  public IRoadNode createRoadNode(IPoint point) {
-    return new OsmRoadNode(point);
-  }
-
-  @Override
-  public IRoadNode createRoadNode(Noeud noeud) {
-    return new OsmRoadNode(noeud);
-  }
-
-  @Override
-  public IRoadNode createRoadNode(NoeudRoutier geoxObj) {
-    return new OsmRoadNode(geoxObj);
-  }
-
-  @Override
-  public INetworkFace createNetworkFace(IPolygon poly) {
-    return new OsmNetworkFace(poly);
-  }
-
-  @Override
-  public INetworkFace createNetworkFace(Face geoxObj) {
-    return new OsmNetworkFace(geoxObj);
-  }
-
-  public ITreePoint createTreePoint(IPoint geom) {
-    return new OsmTreePoint(geom);
-  }
-
-  @Override
-  public ICycleWay createCycleWay(ILineString line) {
-    return new OsmCycleWay(line);
-  }
-
-  @Override
-  public IPathLine createPath(ILineString line, int importance) {
-    return new OsmPathLine(line, importance);
-  }
-
-  @Override
-  public IReliefElementPoint createReliefElementPoint(IPoint point) {
-    return new OsmReliefElementPoint(point);
-  }
-
-  @Override
-  public ICoastLine createCoastLine(ILineString line) {
-    return new OsmCoastline(line);
-  }
-
-  @Override
-  public ISquareArea createSquareArea(IPolygon poly) {
-    return new OsmParkArea(poly);
-  }
-
-  @Override
-  public ITaxiwayArea createTaxiwayArea(IPolygon simple, TaxiwayType type) {
-    return new OsmTaxiwayArea(simple, type);
-  }
-
-  public ITaxiwayArea createTaxiwayArea(IPolygon simple) {
-    return new OsmTaxiwayArea(simple);
-  }
-
-  @Override
-  public ITaxiwayLine createTaxiwayLine(ILineString geom, TaxiwayType type) {
-    return new OsmTaxiwayLine(geom);
-  }
-
-  @Override
-  public IRailwayNode createRailwayNode() {
-    return new OsmRailwayNode();
-  }
-
-  @Override
-  public IRailwayNode createRailwayNode(IPoint point) {
-    return new OsmRailwayNode(point);
-  }
-
-  @Override
-  public IRailwayNode createRailwayNode(Noeud noeud) {
-    return new OsmRailwayNode(noeud);
-  }
-
-  @Override
-  public IBuilding createBuilding() {
-    return new OsmBuilding();
-  }
-
-  @Override
-  public IUrbanBlock createUrbanBlock() {
-    return new OsmUrbanBlock();
-  }
-
-  @Override
-  public ITown createTown() {
-    return new OsmTown();
-  }
-
-  @Override
-  public ISportsField createSportsField() {
-    return new OsmSportsField();
-  }
-
-  @Override
-  public ICemetery createCemetery() {
-    return new OsmCemetery();
-  }
-
-  @Override
-  public IRoadLine createRoadLine() {
-    return new OsmRoadLine();
-  }
-
-  @Override
-  public IPathLine createPath() {
-    return new OsmPathLine();
-  }
-
-  @Override
-  public IRailwayLine createRailwayLine() {
-    return new OsmRailwayLine();
-  }
-
-  @Override
-  public ICable createCable() {
-    return new OsmCable();
-  }
-
-  @Override
-  public IWaterLine createWaterLine() {
-    return new OsmWaterLine();
-  }
-
-  @Override
-  public IWaterArea createWaterArea() {
-    return new OsmWaterArea();
-  }
-
-  @Override
-  public ISimpleLandUseArea createSimpleLandUseArea() {
-    return new OsmSimpleLandUseArea();
-  }
-
-  @Override
-  public ILabelPoint createLabelPoint() {
-    // TODO Auto-generated method stub
-    return super.createLabelPoint();
-  }
-
-  @Override
-  public IMiscPoint createMiscPoint() {
-    // TODO Auto-generated method stub
-    return super.createMiscPoint();
-  }
-
-  @Override
-  public IMiscLine createMiscLine() {
-    // TODO Auto-generated method stub
-    return super.createMiscLine();
-  }
-
-  @Override
-  public IMiscArea createMiscArea() {
-    // TODO Auto-generated method stub
-    return super.createMiscArea();
-  }
-
-  @Override
-  public IDualCarriageWay createDualCarriageways(IPolygon poly,
-      int importance) {
-    return new OsmDualCarriageway(poly, importance);
-  }
-
-  @Override
-  public IDualCarriageWay createDualCarriageways(IPolygon poly, int importance,
-      Collection<IRoadLine> innerRoads) {
-    return new OsmDualCarriageway(poly, importance, innerRoads);
-  }
-
-  @Override
-  public IDualCarriageWay createDualCarriageways(IPolygon poly, int importance,
-      Collection<IRoadLine> innerRoads, Collection<IRoadLine> outerRoads) {
-    return new OsmDualCarriageway(poly, importance, innerRoads, outerRoads);
-  }
-
-  @Override
-  public IBranchingCrossroad createBranchingCrossroad() {
-    return new OsmBranchingCrossroad();
-  }
-
-  @Override
-  public IBranchingCrossroad createBranchingCrossroad(PatteOie geoxObj,
-      Collection<IRoadLine> roads, Collection<IRoadNode> nodes) {
-    return new OsmBranchingCrossroad(geoxObj, roads, nodes);
-  }
-
-  @Override
-  public IRoundAbout createRoundAbout() {
-    return new OsmRoundabout();
-  }
-
-  @Override
-  public IRoundAbout createRoundAbout(RondPoint geoxObj,
-      Collection<IRoadLine> roads, Collection<IRoadNode> nodes) {
-    return new OsmRoundabout(geoxObj, roads, nodes);
-  }
-
-  @Override
-  public IRoundAbout createRoundAbout(IPolygon geom,
-      Collection<IRoadLine> externalRoads, Collection<IRoadLine> internalRoads,
-      Collection<INetworkNode> initialNodes) {
-    return new OsmRoundabout(geom, externalRoads, internalRoads, initialNodes);
-  }
+    @Override
+    public IRoundAbout createRoundAbout(IPolygon geom,
+            Collection<IRoadLine> externalRoads,
+            Collection<IRoadLine> internalRoads,
+            Collection<INetworkNode> initialNodes) {
+        return new OsmRoundabout(geom, externalRoads, internalRoads,
+                initialNodes);
+    }
 
 }
