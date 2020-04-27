@@ -38,162 +38,164 @@ import fr.ign.cogit.geoxygene.schemageo.impl.support.reseau.ReseauImpl;
 @Access(AccessType.PROPERTY)
 public class WaterLine extends NetworkSection implements IWaterLine {
 
-  public static final Class<?> associatedNodeClass = WaterNode.class;
+    public static final Class<?> associatedNodeClass = WaterNode.class;
 
-  /**
-   * Associated Geoxygene schema object
-   */
-  @Transient
-  private TronconHydrographique geoxObj;
-  @Transient
-  private INetworkNode initialNode;
-  @Transient
-  private INetworkNode finalNode;
-  private Direction direction;
-  private boolean deadEnd = false;
-  private String name = ""; //$NON-NLS-1$
+    /**
+     * Associated Geoxygene schema object
+     */
+    @Transient
+    private TronconHydrographique geoxObj;
+    @Transient
+    private INetworkNode initialNode;
+    @Transient
+    private INetworkNode finalNode;
+    private Direction direction;
+    private boolean deadEnd = false;
+    private String name = ""; //$NON-NLS-1$
 
-  /**
-   * Empty constructor used by EJB to load features from PostGIS
-   */
-  public WaterLine() {
-    super();
-  }
-
-  /**
-   * Constructor
-   */
-  public WaterLine(TronconHydrographique geoxObj, int importance) {
-    super();
-    this.geoxObj = geoxObj;
-    this.name = geoxObj.getNom();
-    this.setInitialGeom(geoxObj.getGeom());
-    this.setEliminated(false);
-    this.setImportance(importance);
-  }
-
-  public WaterLine(ILineString line, int importance) {
-    super();
-    this.geoxObj = new TronconHydrographiqueImpl();
-    this.geoxObj.setGeom(line);
-    this.setInitialGeom(line);
-    this.setEliminated(false);
-    this.setImportance(importance);
-  }
-
-  @Override
-  @Transient
-  public IFeature getGeoxObj() {
-    return this.geoxObj;
-  }
-
-  @Override
-  @Transient
-  public double getWidth() {
-    if (this.getSymbolId() == -2) {// SLD width
-      return SLDUtilCartagen.getSymbolMaxWidthMapMm(this);
+    /**
+     * Empty constructor used by EJB to load features from PostGIS
+     */
+    public WaterLine() {
+        super();
+        this.geoxObj = new TronconHydrographiqueImpl(new ReseauImpl(), false,
+                null, 0);
     }
-    return GeneralisationLegend.RES_EAU_LARGEUR;
-  }
 
-  @Override
-  @Transient
-  public double getInternWidth() {
-    if (this.getSymbolId() == -2) {// SLD width
-      return SLDUtilCartagen.getSymbolInnerWidthMapMm(this);
+    /**
+     * Constructor
+     */
+    public WaterLine(TronconHydrographique geoxObj, int importance) {
+        super();
+        this.geoxObj = geoxObj;
+        this.name = geoxObj.getNom();
+        this.setInitialGeom(geoxObj.getGeom());
+        this.setEliminated(false);
+        this.setImportance(importance);
     }
-    return GeneralisationLegend.RES_EAU_LARGEUR;
-  }
 
-  @Override
-  public Direction getDirection() {
-    return this.direction;
-  }
+    public WaterLine(ILineString line, int importance) {
+        super();
+        this.geoxObj = new TronconHydrographiqueImpl();
+        this.geoxObj.setGeom(line);
+        this.setInitialGeom(line);
+        this.setEliminated(false);
+        this.setImportance(importance);
+    }
 
-  @Override
-  @Transient
-  public INetworkNode getFinalNode() {
-    return this.finalNode;
-  }
+    @Override
+    @Transient
+    public IFeature getGeoxObj() {
+        return this.geoxObj;
+    }
 
-  @Override
-  @Transient
-  public INetworkNode getInitialNode() {
-    return this.initialNode;
-  }
+    @Override
+    @Transient
+    public double getWidth() {
+        if (this.getSymbolId() == -2) {// SLD width
+            return SLDUtilCartagen.getSymbolMaxWidthMapMm(this);
+        }
+        return GeneralisationLegend.RES_EAU_LARGEUR;
+    }
 
-  @Override
-  public void setDirection(Direction direction) {
-    this.direction = direction;
-  }
+    @Override
+    @Transient
+    public double getInternWidth() {
+        if (this.getSymbolId() == -2) {// SLD width
+            return SLDUtilCartagen.getSymbolInnerWidthMapMm(this);
+        }
+        return GeneralisationLegend.RES_EAU_LARGEUR;
+    }
 
-  @Override
-  public void setFinalNode(INetworkNode node) {
-    this.finalNode = node;
-  }
+    @Override
+    public Direction getDirection() {
+        return this.direction;
+    }
 
-  @Override
-  public void setInitialNode(INetworkNode node) {
-    this.initialNode = node;
-  }
+    @Override
+    @Transient
+    public INetworkNode getFinalNode() {
+        return this.finalNode;
+    }
 
-  @Override
-  public boolean isDeadEnd() {
-    return this.deadEnd;
-  }
+    @Override
+    @Transient
+    public INetworkNode getInitialNode() {
+        return this.initialNode;
+    }
 
-  @Override
-  public void setDeadEnd(boolean deadEnd) {
-    this.deadEnd = deadEnd;
-  }
+    @Override
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
 
-  @Override
-  @Type(type = "fr.ign.cogit.cartagen.core.persistence.GeOxygeneGeometryUserType")
-  public ILineString getGeom() {
-    return super.getGeom();
-  }
+    @Override
+    public void setFinalNode(INetworkNode node) {
+        this.finalNode = node;
+    }
 
-  /**
-   * 
-   * {@inheritDoc}
-   * <p>
-   * 
-   */
-  @Override
-  @Column(name = "CartAGenDB_name")
-  public String getDbName() {
-    return super.getDbName();
-  }
+    @Override
+    public void setInitialNode(INetworkNode node) {
+        this.initialNode = node;
+    }
 
-  @Override
-  @Id
-  public int getId() {
-    return super.getId();
-  }
+    @Override
+    public boolean isDeadEnd() {
+        return this.deadEnd;
+    }
 
-  @Override
-  public int getSymbolId() {
-    return super.getSymbolId();
-  }
+    @Override
+    public void setDeadEnd(boolean deadEnd) {
+        this.deadEnd = deadEnd;
+    }
 
-  @Override
-  public boolean isEliminated() {
-    return super.isEliminated();
-  }
+    @Override
+    @Type(type = "fr.ign.cogit.cartagen.core.persistence.GeOxygeneGeometryUserType")
+    public ILineString getGeom() {
+        return super.getGeom();
+    }
 
-  public String getName() {
-    return this.name;
-  }
+    /**
+     * 
+     * {@inheritDoc}
+     * <p>
+     * 
+     */
+    @Override
+    @Column(name = "CartAGenDB_name")
+    public String getDbName() {
+        return super.getDbName();
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    @Override
+    @Id
+    public int getId() {
+        return super.getId();
+    }
 
-  @Override
-  public void restoreGeoxObjects() {
-    this.geoxObj = new TronconHydrographiqueImpl(new ReseauImpl(), false,
-        this.getGeom());
-    this.geoxObj.setNom(this.name);
-  }
+    @Override
+    public int getSymbolId() {
+        return super.getSymbolId();
+    }
+
+    @Override
+    public boolean isEliminated() {
+        return super.isEliminated();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void restoreGeoxObjects() {
+        this.geoxObj = new TronconHydrographiqueImpl(new ReseauImpl(), false,
+                this.getGeom(), this.getImportance());
+        this.geoxObj.setNom(this.name);
+    }
 
 }

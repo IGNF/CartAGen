@@ -1,0 +1,23 @@
+<scale-master-theme>
+    <theme>
+        <name>roadl</name>
+        <concept>road_segment</concept>
+        <description>sections of road lines</description>
+        <geometry-type>LINE</geometry-type>
+        <cartagen-feature-type>RoadLine</cartagen-feature-type>
+    </theme>
+    <theme>
+        <name>building</name>
+        <concept>building</concept>
+        <description>Building polygon</description>
+        <geometry-type>POLYGON</geometry-type>
+        <cartagen-feature-type>Building</cartagen-feature-type>
+    </theme>
+    <theme>
+        <name>waterl</name>
+        <concept>stream_segment</concept>
+        <description>Sections of rivers</description>
+        <geometry-type>LINE</geometry-type>
+        <cartagen-feature-type>WaterLine</cartagen-feature-type>
+    </theme>
+</scale-master-theme>

@@ -13,7 +13,6 @@ import java.util.Set;
 
 import fr.ign.cogit.cartagen.collagen.agents.CollaGenEnvironment;
 import fr.ign.cogit.cartagen.collagen.enrichment.ConstraintMonitor;
-import fr.ign.cogit.cartagen.collagen.enrichment.IMesoObject;
 import fr.ign.cogit.cartagen.collagen.enrichment.SpecElementMonitor;
 import fr.ign.cogit.cartagen.collagen.enrichment.relations.CollaGenRelation;
 import fr.ign.cogit.cartagen.collagen.geospaces.model.ArealSpace;
@@ -21,6 +20,7 @@ import fr.ign.cogit.cartagen.collagen.processes.model.GeneralisationProcess;
 import fr.ign.cogit.cartagen.collagen.resources.ontology.GeoSpaceConcept;
 import fr.ign.cogit.cartagen.collagen.resources.ontology.GeographicConcept;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
+import fr.ign.cogit.cartagen.core.genericschema.IMesoObject;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
 
 /**

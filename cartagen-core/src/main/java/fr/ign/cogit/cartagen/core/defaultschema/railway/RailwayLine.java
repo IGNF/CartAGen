@@ -38,152 +38,153 @@ import fr.ign.cogit.geoxygene.schemageo.impl.support.reseau.ReseauImpl;
 @Access(AccessType.PROPERTY)
 public class RailwayLine extends NetworkSection implements IRailwayLine {
 
-  public static final Class<?> associatedNodeClass = RailwayNode.class;
+    public static final Class<?> associatedNodeClass = RailwayNode.class;
 
-  /**
-   * Associated Geoxygene schema object
-   */
-  private TronconFerre geoxObj;
-  private RailwayNode initialNode, finalNode;
-  private Direction direction;
-  private boolean deadEnd = false;
-  private boolean sidetrack = false;
+    /**
+     * Associated Geoxygene schema object
+     */
+    private TronconFerre geoxObj;
+    private RailwayNode initialNode, finalNode;
+    private Direction direction;
+    private boolean deadEnd = false;
+    private boolean sidetrack = false;
 
-  /**
-   * Constructor
-   */
-  public RailwayLine(TronconFerre geoxObj, int importance) {
-    super();
-    this.geoxObj = geoxObj;
-    this.setInitialGeom(geoxObj.getGeom());
-    this.setEliminated(false);
-    this.setImportance(importance);
-  }
-
-  public RailwayLine(ILineString line, int importance) {
-    super();
-    this.geoxObj = new TronconFerreImpl(new ReseauImpl(), false, line);
-    this.setInitialGeom(line);
-    this.setEliminated(false);
-    this.setImportance(importance);
-  }
-
-  /**
-   * Default constructor, used by Hibernate.
-   */
-  public RailwayLine() {
-    super();
-  }
-
-  @Override
-  @Transient
-  public IFeature getGeoxObj() {
-    return this.geoxObj;
-  }
-
-  @Override
-  @Transient
-  public double getWidth() {
-    if (this.getSymbolId() == -2) {// SLD width
-      return SLDUtilCartagen.getSymbolMaxWidthMapMm(this);
+    /**
+     * Constructor
+     */
+    public RailwayLine(TronconFerre geoxObj, int importance) {
+        super();
+        this.geoxObj = geoxObj;
+        this.setInitialGeom(geoxObj.getGeom());
+        this.setEliminated(false);
+        this.setImportance(importance);
     }
-    return GeneralisationLegend.RES_FER_LARGEUR;
-  }
 
-  @Override
-  @Transient
-  public double getInternWidth() {
-    if (this.getSymbolId() == -2) {// SLD width
-      return SLDUtilCartagen.getSymbolInnerWidthMapMm(this);
+    public RailwayLine(ILineString line, int importance) {
+        super();
+        this.geoxObj = new TronconFerreImpl(new ReseauImpl(), false, line,
+                importance);
+        this.setInitialGeom(line);
+        this.setEliminated(false);
+        this.setImportance(importance);
     }
-    return GeneralisationLegend.RES_FER_LARGEUR;
-  }
 
-  @Override
-  public Direction getDirection() {
-    return this.direction;
-  }
+    /**
+     * Default constructor, used by Hibernate.
+     */
+    public RailwayLine() {
+        super();
+    }
 
-  @Override
-  @Transient
-  public INetworkNode getFinalNode() {
-    return this.finalNode;
-  }
+    @Override
+    @Transient
+    public IFeature getGeoxObj() {
+        return this.geoxObj;
+    }
 
-  @Override
-  @Transient
-  public INetworkNode getInitialNode() {
-    return this.initialNode;
-  }
+    @Override
+    @Transient
+    public double getWidth() {
+        if (this.getSymbolId() == -2) {// SLD width
+            return SLDUtilCartagen.getSymbolMaxWidthMapMm(this);
+        }
+        return GeneralisationLegend.RES_FER_LARGEUR;
+    }
 
-  @Override
-  public void setDirection(Direction direction) {
-    this.direction = direction;
-  }
+    @Override
+    @Transient
+    public double getInternWidth() {
+        if (this.getSymbolId() == -2) {// SLD width
+            return SLDUtilCartagen.getSymbolInnerWidthMapMm(this);
+        }
+        return GeneralisationLegend.RES_FER_LARGEUR;
+    }
 
-  @Override
-  public void setFinalNode(INetworkNode node) {
-    this.finalNode = (RailwayNode) node;
-  }
+    @Override
+    public Direction getDirection() {
+        return this.direction;
+    }
 
-  @Override
-  public void setInitialNode(INetworkNode node) {
-    this.initialNode = (RailwayNode) node;
-  }
+    @Override
+    @Transient
+    public INetworkNode getFinalNode() {
+        return this.finalNode;
+    }
 
-  @Override
-  public boolean isDeadEnd() {
-    return this.deadEnd;
-  }
+    @Override
+    @Transient
+    public INetworkNode getInitialNode() {
+        return this.initialNode;
+    }
 
-  @Override
-  public void setDeadEnd(boolean deadEnd) {
-    this.deadEnd = deadEnd;
-  }
+    @Override
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
 
-  @Override
-  @Type(type = "fr.ign.cogit.cartagen.core.persistence.GeOxygeneGeometryUserType")
-  public ILineString getGeom() {
-    return super.getGeom();
-  }
+    @Override
+    public void setFinalNode(INetworkNode node) {
+        this.finalNode = (RailwayNode) node;
+    }
 
-  /**
-   * 
-   * {@inheritDoc}
-   * <p>
-   * 
-   */
-  @Override
-  @Column(name = "CartAGenDB_name")
-  public String getDbName() {
-    return super.getDbName();
-  }
+    @Override
+    public void setInitialNode(INetworkNode node) {
+        this.initialNode = (RailwayNode) node;
+    }
 
-  @Override
-  @Id
-  public int getId() {
-    return super.getId();
-  }
+    @Override
+    public boolean isDeadEnd() {
+        return this.deadEnd;
+    }
 
-  @Override
-  public int getSymbolId() {
-    return super.getSymbolId();
-  }
+    @Override
+    public void setDeadEnd(boolean deadEnd) {
+        this.deadEnd = deadEnd;
+    }
 
-  @Override
-  public boolean isEliminated() {
-    return super.isEliminated();
-  }
+    @Override
+    @Type(type = "fr.ign.cogit.cartagen.core.persistence.GeOxygeneGeometryUserType")
+    public ILineString getGeom() {
+        return super.getGeom();
+    }
 
-  @Override
-  @Transient
-  public void setSidetrack(Boolean sidetrack) {
-    this.sidetrack = sidetrack;
-  }
+    /**
+     * 
+     * {@inheritDoc}
+     * <p>
+     * 
+     */
+    @Override
+    @Column(name = "CartAGenDB_name")
+    public String getDbName() {
+        return super.getDbName();
+    }
 
-  @Override
-  @Transient
-  public boolean isSidetrack() {
-    return this.sidetrack;
-  }
+    @Override
+    @Id
+    public int getId() {
+        return super.getId();
+    }
+
+    @Override
+    public int getSymbolId() {
+        return super.getSymbolId();
+    }
+
+    @Override
+    public boolean isEliminated() {
+        return super.isEliminated();
+    }
+
+    @Override
+    @Transient
+    public void setSidetrack(Boolean sidetrack) {
+        this.sidetrack = sidetrack;
+    }
+
+    @Override
+    @Transient
+    public boolean isSidetrack() {
+        return this.sidetrack;
+    }
 }

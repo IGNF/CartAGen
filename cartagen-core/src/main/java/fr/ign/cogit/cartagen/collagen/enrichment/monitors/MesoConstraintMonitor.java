@@ -1,11 +1,11 @@
 package fr.ign.cogit.cartagen.collagen.enrichment.monitors;
 
 import fr.ign.cogit.cartagen.collagen.enrichment.ConstraintMonitor;
-import fr.ign.cogit.cartagen.collagen.enrichment.IMesoObject;
 import fr.ign.cogit.cartagen.collagen.resources.specs.SpecificationElement;
 import fr.ign.cogit.cartagen.collagen.resources.specs.constraints.FormalGenConstraint;
 import fr.ign.cogit.cartagen.collagen.resources.specs.constraints.FormalMesoConstraint;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
+import fr.ign.cogit.cartagen.core.genericschema.IMesoObject;
 
 public abstract class MesoConstraintMonitor extends ConstraintMonitor {
 
@@ -42,17 +42,17 @@ public abstract class MesoConstraintMonitor extends ConstraintMonitor {
   @Override
   public String toString() {
     return this.constraint.toString() + " monitored on "
-        + this.getSujet().toString();
+        + this.getSubject().toString();
   }
 
   @Override
   public int getImportance() {
     // TODO be careful the IMesoObject interface has not been added to core
     // schema yet
-    if (!(this.getSujet() instanceof IMesoObject<?>)) {
+    if (!(this.getSubject() instanceof IMesoObject<?>)) {
       return 1;
     }
-    int nb = ((IMesoObject<?>) this.getSujet()).getComponents().size();
+    int nb = ((IMesoObject<?>) this.getSubject()).getComponents().size();
     if (nb == 0) {
       return 1;
     }

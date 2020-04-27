@@ -31,14 +31,14 @@ public class PreserveGeneralShapeMonitor extends MicroConstraintMonitor {
   @Override
   public void computeSatisfaction() {
     // on teste si l'objet a été éliminé
-    if (getSujet().isEliminated()) {
+    if (getSubject().isEliminated()) {
       setSatisfaction(ConstraintSatisfaction.valueOfFrench("PARFAIT"));
       return;
     }
     // on récupère la valeur initiale
-    IPolygon geomIni = (IPolygon) getValeurIni();
+    IPolygon geomIni = (IPolygon) getInitialValue();
     // on récupère la valeur courante
-    IGeometry geomCourante = getSujet().getGeom();
+    IGeometry geomCourante = getSubject().getGeom();
     if (geomIni.equals(geomCourante)) {
       setSatisfaction(ConstraintSatisfaction.valueOfFrench("PARFAIT"));
       return;
@@ -77,7 +77,7 @@ public class PreserveGeneralShapeMonitor extends MicroConstraintMonitor {
   @Override
   public void calculerValeurCourante() {
     // il s'agit ici de la géométrie courante
-    setValeurCourante(sujet.getGeom());
+    setCurrentValue(subject.getGeom());
   }
 
   @Override

@@ -851,4 +851,9 @@ public class UrbanBlock extends GeneObjSurfDefault implements IUrbanBlock {
         this.initialGeoxBlocks.add(this);
     }
 
+    @Override
+    public Collection<IUrbanElement> getComponents() {
+        return urbanElements;
+    }
+
 }

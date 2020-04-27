@@ -166,31 +166,43 @@ public class ContinuousGUIComponent extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
             GeometryPool pool = dataset.getGeometryPool();
-            pool.setSld(appli.getMainFrame().getSelectedProjectFrame().getSld());
+            pool.setSld(
+                    appli.getMainFrame().getSelectedProjectFrame().getSld());
 
             IFeature feat = SelectionUtil.getFirstSelectedObject(appli);
             VisvalingamWhyatt algo = new VisvalingamWhyatt(1000.0);
             if (feat.getGeom() instanceof IPolygon) {
                 IPolygon simplified = algo.simplify((IPolygon) feat.getGeom());
-                pool.addFeatureToGeometryPool(simplified.exteriorLineString(), Color.BLUE, 3);
-                BasicMorphing morphing = new BasicMorphing(((IPolygon) feat.getGeom()).exteriorLineString(),
+                pool.addFeatureToGeometryPool(simplified.exteriorLineString(),
+                        Color.BLUE, 3);
+                BasicMorphing morphing = new BasicMorphing(
+                        ((IPolygon) feat.getGeom()).exteriorLineString(),
                         simplified.exteriorLineString());
-                ILineString morph1 = (ILineString) morphing.continuousGeneralisation(0.25);
-                ILineString morph2 = (ILineString) morphing.continuousGeneralisation(0.5);
-                ILineString morph3 = (ILineString) morphing.continuousGeneralisation(0.75);
+                ILineString morph1 = (ILineString) morphing
+                        .continuousGeneralisation(0.25);
+                ILineString morph2 = (ILineString) morphing
+                        .continuousGeneralisation(0.5);
+                ILineString morph3 = (ILineString) morphing
+                        .continuousGeneralisation(0.75);
                 pool.addFeatureToGeometryPool(morph1, Color.YELLOW, 3);
                 pool.addFeatureToGeometryPool(morph2, Color.ORANGE, 3);
                 pool.addFeatureToGeometryPool(morph3, Color.RED, 3);
             } else if (feat.getGeom() instanceof ILineString) {
-                ILineString simplified = algo.simplify((ILineString) feat.getGeom());
+                ILineString simplified = algo
+                        .simplify((ILineString) feat.getGeom());
                 pool.addFeatureToGeometryPool(simplified, Color.BLUE, 3);
-                BasicMorphing morphing = new BasicMorphing(((ILineString) feat.getGeom()), simplified);
-                ILineString morph1 = (ILineString) morphing.continuousGeneralisation(0.25);
+                BasicMorphing morphing = new BasicMorphing(
+                        ((ILineString) feat.getGeom()), simplified);
+                ILineString morph1 = (ILineString) morphing
+                        .continuousGeneralisation(0.25);
 
-                ILineString morph2 = (ILineString) morphing.continuousGeneralisation(0.5);
-                ILineString morph3 = (ILineString) morphing.continuousGeneralisation(0.75);
+                ILineString morph2 = (ILineString) morphing
+                        .continuousGeneralisation(0.5);
+                ILineString morph3 = (ILineString) morphing
+                        .continuousGeneralisation(0.75);
 
                 pool.addFeatureToGeometryPool(morph1, Color.YELLOW, 3);
                 pool.addFeatureToGeometryPool(morph2, Color.ORANGE, 3);
@@ -220,31 +232,43 @@ public class ContinuousGUIComponent extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
             GeometryPool pool = dataset.getGeometryPool();
-            pool.setSld(appli.getMainFrame().getSelectedProjectFrame().getSld());
+            pool.setSld(
+                    appli.getMainFrame().getSelectedProjectFrame().getSld());
 
             IFeature feat = SelectionUtil.getFirstSelectedObject(appli);
             VisvalingamWhyatt algo = new VisvalingamWhyatt(500.0);
             if (feat.getGeom() instanceof IPolygon) {
                 IPolygon simplified = algo.simplify((IPolygon) feat.getGeom());
-                pool.addFeatureToGeometryPool(simplified.exteriorLineString(), Color.BLUE, 3);
-                OptCorMorphing morphing = new OptCorMorphing(((IPolygon) feat.getGeom()).exteriorLineString(),
+                pool.addFeatureToGeometryPool(simplified.exteriorLineString(),
+                        Color.BLUE, 3);
+                OptCorMorphing morphing = new OptCorMorphing(
+                        ((IPolygon) feat.getGeom()).exteriorLineString(),
                         simplified.exteriorLineString());
-                ILineString morph1 = (ILineString) morphing.continuousGeneralisation(0.25);
-                ILineString morph2 = (ILineString) morphing.continuousGeneralisation(0.5);
-                ILineString morph3 = (ILineString) morphing.continuousGeneralisation(0.75);
+                ILineString morph1 = (ILineString) morphing
+                        .continuousGeneralisation(0.25);
+                ILineString morph2 = (ILineString) morphing
+                        .continuousGeneralisation(0.5);
+                ILineString morph3 = (ILineString) morphing
+                        .continuousGeneralisation(0.75);
                 pool.addFeatureToGeometryPool(morph1, Color.YELLOW, 3);
                 pool.addFeatureToGeometryPool(morph2, Color.ORANGE, 3);
                 pool.addFeatureToGeometryPool(morph3, Color.RED, 3);
             } else if (feat.getGeom() instanceof ILineString) {
-                ILineString simplified = algo.simplify((ILineString) feat.getGeom());
+                ILineString simplified = algo
+                        .simplify((ILineString) feat.getGeom());
                 pool.addFeatureToGeometryPool(simplified, Color.BLUE, 3);
-                OptCorMorphing morphing = new OptCorMorphing(((ILineString) feat.getGeom()), simplified);
-                ILineString morph1 = (ILineString) morphing.continuousGeneralisation(0.25);
+                OptCorMorphing morphing = new OptCorMorphing(
+                        ((ILineString) feat.getGeom()), simplified);
+                ILineString morph1 = (ILineString) morphing
+                        .continuousGeneralisation(0.25);
 
-                ILineString morph2 = (ILineString) morphing.continuousGeneralisation(0.5);
-                ILineString morph3 = (ILineString) morphing.continuousGeneralisation(0.75);
+                ILineString morph2 = (ILineString) morphing
+                        .continuousGeneralisation(0.5);
+                ILineString morph3 = (ILineString) morphing
+                        .continuousGeneralisation(0.75);
 
                 pool.addFeatureToGeometryPool(morph1, Color.YELLOW, 3);
                 pool.addFeatureToGeometryPool(morph2, Color.ORANGE, 3);
@@ -274,31 +298,38 @@ public class ContinuousGUIComponent extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
             GeometryPool pool = dataset.getGeometryPool();
-            pool.setSld(appli.getMainFrame().getSelectedProjectFrame().getSld());
+            pool.setSld(
+                    appli.getMainFrame().getSelectedProjectFrame().getSld());
 
             IFeature feat = SelectionUtil.getFirstSelectedObject(appli);
             VisvalingamWhyatt algo = new VisvalingamWhyatt(500.0);
             if (feat.getGeom() instanceof ILineString) {
-                ILineString simplified = algo.simplify((ILineString) feat.getGeom());
+                ILineString simplified = algo
+                        .simplify((ILineString) feat.getGeom());
                 pool.addFeatureToGeometryPool(simplified, Color.BLUE, 3);
-                OptCorMorphing morphing = new OptCorMorphing(((ILineString) feat.getGeom()), simplified);
+                OptCorMorphing morphing = new OptCorMorphing(
+                        ((ILineString) feat.getGeom()), simplified);
                 MorphingVertexMapping mapping = morphing.matchLinesVertices();
 
                 double[][] distanceTable = morphing.getDistanceTable();
-                Object[][] tableContent = new Object[morphing.getSubLinesIni().size()
-                        + 1][morphing.getSubLinesFin().size() + 1];
+                Object[][] tableContent = new Object[morphing.getSubLinesIni()
+                        .size() + 1][morphing.getSubLinesFin().size() + 1];
                 for (int i = 0; i <= morphing.getSubLinesIni().size(); i++) {
-                    for (int j = 0; j <= morphing.getSubLinesFin().size(); j++) {
+                    for (int j = 0; j <= morphing.getSubLinesFin()
+                            .size(); j++) {
                         tableContent[i][j] = distanceTable[i][j];
                     }
                 }
 
-                Object[] headers = new String[morphing.getSubLinesFin().size() + 1];
+                Object[] headers = new String[morphing.getSubLinesFin().size()
+                        + 1];
                 for (int i = 0; i < headers.length; i++)
                     headers[i] = String.valueOf(i);
-                TableModel tableModel = new DefaultTableModel(tableContent, headers);
+                TableModel tableModel = new DefaultTableModel(tableContent,
+                        headers);
                 JTable table = new JTable(tableModel);
                 JDialog dialog = new JDialog();
                 dialog.add(table);
@@ -307,8 +338,8 @@ public class ContinuousGUIComponent extends JMenu {
 
                 for (IDirectPosition pt : mapping.getInitialCoords()) {
                     IDirectPosition other = mapping.getMapping(pt);
-                    pool.addFeatureToGeometryPool(GeometryEngine.getFactory().createLineSegment(pt, other), Color.RED,
-                            3);
+                    pool.addFeatureToGeometryPool(GeometryEngine.getFactory()
+                            .createLineSegment(pt, other), Color.RED, 3);
                 }
             }
         }
@@ -335,17 +366,21 @@ public class ContinuousGUIComponent extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
             GeometryPool pool = dataset.getGeometryPool();
-            pool.setSld(appli.getMainFrame().getSelectedProjectFrame().getSld());
+            pool.setSld(
+                    appli.getMainFrame().getSelectedProjectFrame().getSld());
 
             IFeature feat = SelectionUtil.getFirstSelectedObject(appli);
             VisvalingamWhyatt algo = new VisvalingamWhyatt(500.0);
             if (feat.getGeom() instanceof ILineString) {
-                ILineString simplified = algo.simplify((ILineString) feat.getGeom());
+                ILineString simplified = algo
+                        .simplify((ILineString) feat.getGeom());
                 pool.addFeatureToGeometryPool(simplified, Color.BLUE, 3);
 
-                LeastSquaresMorphing LsMorphing = new LeastSquaresMorphing((ILineString) feat.getGeom(), simplified);
+                LeastSquaresMorphing LsMorphing = new LeastSquaresMorphing(
+                        (ILineString) feat.getGeom(), simplified);
                 LsMorphing.setK(10);
                 IGeometry morphed = LsMorphing.continuousGeneralisation(0.6);
                 pool.addFeatureToGeometryPool(morphed, Color.RED, 3);
@@ -379,8 +414,10 @@ public class ContinuousGUIComponent extends JMenu {
         @SuppressWarnings("unchecked")
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
-            StyledLayerDescriptor sld = appli.getMainFrame().getSelectedProjectFrame().getSld();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
+            StyledLayerDescriptor sld = appli.getMainFrame()
+                    .getSelectedProjectFrame().getSld();
             IDataSet<?> dataset2 = sld.getDataSet();
             GeometryPool pool = null;
             if (dataset == null) {
@@ -394,20 +431,24 @@ public class ContinuousGUIComponent extends JMenu {
             Set<ILineString> layer2Feats = new HashSet<>();
             String layer1 = sld.getLayers().get(0).getName();
             String layer2 = sld.getLayers().get(1).getName();
-            for (IFeature feat : SelectionUtil.getSelectedObjects(appli, layer1)) {
+            for (IFeature feat : SelectionUtil.getSelectedObjects(appli,
+                    layer1)) {
                 if (feat.getGeom() instanceof ILineString)
                     layer1Feats.add((ILineString) feat.getGeom());
                 else {
-                    IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat.getGeom();
+                    IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat
+                            .getGeom();
                     ILineString line = (ILineString) complex.get(0);
                     layer1Feats.add(line);
                 }
             }
-            for (IFeature feat : SelectionUtil.getSelectedObjects(appli, layer2)) {
+            for (IFeature feat : SelectionUtil.getSelectedObjects(appli,
+                    layer2)) {
                 if (feat.getGeom() instanceof ILineString)
                     layer2Feats.add((ILineString) feat.getGeom());
                 else {
-                    IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat.getGeom();
+                    IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat
+                            .getGeom();
                     ILineString line = (ILineString) complex.get(0);
                     layer2Feats.add(line);
                 }
@@ -420,17 +461,24 @@ public class ContinuousGUIComponent extends JMenu {
             pool.addFeatureToGeometryPool(merged1, Color.BLUE, 3);
             pool.addFeatureToGeometryPool(merged2, Color.GREEN, 3);
 
-            LeastSquaresMorphing lsMorphing = new LeastSquaresMorphing(merged1, merged2);
+            LeastSquaresMorphing lsMorphing = new LeastSquaresMorphing(merged1,
+                    merged2);
             lsMorphing.setK(10);
-            LeastSquaresMorphing lsMorphing2 = new LeastSquaresMorphing(merged2, merged1);
+            LeastSquaresMorphing lsMorphing2 = new LeastSquaresMorphing(merged2,
+                    merged1);
             lsMorphing2.setK(10);
             IGeometry morphed = lsMorphing.continuousGeneralisation(0.6);
             // IGeometry morphed2 = lsMorphing2.continuousGeneralisation(0.6);
 
-            for (int i = 0; i < lsMorphing.getMapping().getInitialCoords().size(); i++) {
-                IDirectPosition startPoint = lsMorphing.getMapping().getInitialCoords().get(i);
-                IDirectPosition endPoint = lsMorphing.getMapping().getFinalCoords().get(i);
-                pool.addFeatureToGeometryPool(new GM_LineSegment(startPoint, endPoint), Color.GRAY, 1);
+            for (int i = 0; i < lsMorphing.getMapping().getInitialCoords()
+                    .size(); i++) {
+                IDirectPosition startPoint = lsMorphing.getMapping()
+                        .getInitialCoords().get(i);
+                IDirectPosition endPoint = lsMorphing.getMapping()
+                        .getFinalCoords().get(i);
+                pool.addFeatureToGeometryPool(
+                        new GM_LineSegment(startPoint, endPoint), Color.GRAY,
+                        1);
             }
 
             pool.addFeatureToGeometryPool(morphed, Color.RED, 3);
@@ -443,7 +491,8 @@ public class ContinuousGUIComponent extends JMenu {
         }
 
         public LSMorph2FeatsAction() {
-            putValue(Action.NAME, "Least squares morphing on two selected features");
+            putValue(Action.NAME,
+                    "Least squares morphing on two selected features");
         }
     }
 
@@ -465,8 +514,10 @@ public class ContinuousGUIComponent extends JMenu {
         @SuppressWarnings("unchecked")
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
-            StyledLayerDescriptor sld = appli.getMainFrame().getSelectedProjectFrame().getSld();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
+            StyledLayerDescriptor sld = appli.getMainFrame()
+                    .getSelectedProjectFrame().getSld();
             IDataSet<?> dataset2 = sld.getDataSet();
             GeometryPool pool = null;
             if (dataset == null) {
@@ -480,20 +531,24 @@ public class ContinuousGUIComponent extends JMenu {
             Set<ILineString> layer2Feats = new HashSet<>();
             String layer1 = sld.getLayers().get(0).getName();
             String layer2 = sld.getLayers().get(1).getName();
-            for (IFeature feat : SelectionUtil.getSelectedObjects(appli, layer1)) {
+            for (IFeature feat : SelectionUtil.getSelectedObjects(appli,
+                    layer1)) {
                 if (feat.getGeom() instanceof ILineString)
                     layer1Feats.add((ILineString) feat.getGeom());
                 else {
-                    IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat.getGeom();
+                    IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat
+                            .getGeom();
                     ILineString line = (ILineString) complex.get(0);
                     layer1Feats.add(line);
                 }
             }
-            for (IFeature feat : SelectionUtil.getSelectedObjects(appli, layer2)) {
+            for (IFeature feat : SelectionUtil.getSelectedObjects(appli,
+                    layer2)) {
                 if (feat.getGeom() instanceof ILineString)
                     layer2Feats.add((ILineString) feat.getGeom());
                 else {
-                    IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat.getGeom();
+                    IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat
+                            .getGeom();
                     ILineString line = (ILineString) complex.get(0);
                     layer2Feats.add(line);
                 }
@@ -507,10 +562,13 @@ public class ContinuousGUIComponent extends JMenu {
             pool.addFeatureToGeometryPool(merged2, Color.GREEN, 3);
 
             OptCorMorphing morphing = new OptCorMorphing(merged1, merged2);
-            ILineString morph1 = (ILineString) morphing.continuousGeneralisation(0.25);
+            ILineString morph1 = (ILineString) morphing
+                    .continuousGeneralisation(0.25);
 
-            ILineString morph2 = (ILineString) morphing.continuousGeneralisation(0.5);
-            ILineString morph3 = (ILineString) morphing.continuousGeneralisation(0.75);
+            ILineString morph2 = (ILineString) morphing
+                    .continuousGeneralisation(0.5);
+            ILineString morph3 = (ILineString) morphing
+                    .continuousGeneralisation(0.75);
 
             pool.addFeatureToGeometryPool(morph1, Color.YELLOW, 3);
             pool.addFeatureToGeometryPool(morph2, Color.ORANGE, 3);
@@ -541,9 +599,12 @@ public class ContinuousGUIComponent extends JMenu {
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
-            double iniScale = new Double(JOptionPane.showInputDialog("Enter initial scale", 25000.0));
-            double finScale = new Double(JOptionPane.showInputDialog("Enter final scale", 250000.0));
-            int nbScales = new Integer(JOptionPane.showInputDialog("Enter the number of intermediate scales", 100));
+            double iniScale = new Double(JOptionPane
+                    .showInputDialog("Enter initial scale", 25000.0));
+            double finScale = new Double(
+                    JOptionPane.showInputDialog("Enter final scale", 250000.0));
+            int nbScales = new Integer(JOptionPane.showInputDialog(
+                    "Enter the number of intermediate scales", 100));
 
             JFileChooser fc = new JFileChooser("Save the measures to CSV file");
             int returnVal = fc.showSaveDialog(appli.getMainFrame().getGui());
@@ -552,26 +613,31 @@ public class ContinuousGUIComponent extends JMenu {
             }
             File file = fc.getSelectedFile();
 
-            StyledLayerDescriptor sld = appli.getMainFrame().getSelectedProjectFrame().getSld();
+            StyledLayerDescriptor sld = appli.getMainFrame()
+                    .getSelectedProjectFrame().getSld();
 
             Set<ILineString> layer1Feats = new HashSet<>();
             Set<ILineString> layer2Feats = new HashSet<>();
             String layer1 = sld.getLayers().get(0).getName();
             String layer2 = sld.getLayers().get(1).getName();
-            for (IFeature feat : SelectionUtil.getSelectedObjects(appli, layer1)) {
+            for (IFeature feat : SelectionUtil.getSelectedObjects(appli,
+                    layer1)) {
                 if (feat.getGeom() instanceof ILineString)
                     layer1Feats.add((ILineString) feat.getGeom());
                 else {
-                    IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat.getGeom();
+                    IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat
+                            .getGeom();
                     ILineString line = (ILineString) complex.get(0);
                     layer1Feats.add(line);
                 }
             }
-            for (IFeature feat : SelectionUtil.getSelectedObjects(appli, layer2)) {
+            for (IFeature feat : SelectionUtil.getSelectedObjects(appli,
+                    layer2)) {
                 if (feat.getGeom() instanceof ILineString)
                     layer2Feats.add((ILineString) feat.getGeom());
                 else {
-                    IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat.getGeom();
+                    IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat
+                            .getGeom();
                     ILineString line = (ILineString) complex.get(0);
                     layer2Feats.add(line);
                 }
@@ -586,20 +652,23 @@ public class ContinuousGUIComponent extends JMenu {
             IFeatureCollection<IFeature> featureCollection = new FT_FeatureCollection<>();
             FeatureType featureType = new FeatureType();
             featureType.setNomClasse("continuous");
-            GF_AttributeType attr = new AttributeType("scale", "scale", "Integer");
+            GF_AttributeType attr = new AttributeType("scale", "scale",
+                    "Integer");
             featureType.addFeatureAttribute(attr);
             featureType.setGeometryType(ILineString.class);
             featureCollection.setFeatureType(featureType);
             SchemaDefaultFeature schema = new SchemaDefaultFeature();
             schema.addFeatureType(featureType);
-            schema.getAttLookup().put(0, new String[] { "scale", "continuous" });
+            schema.getAttLookup().put(0,
+                    new String[] { "scale", "continuous" });
             double t = 0.0;
             double step = 1.0 / nbScales;
             t += step;
             double scaleDiff = finScale - iniScale;
             while (t < 1.0) {
                 double scale = scaleDiff * t + iniScale;
-                ILineString morph = (ILineString) morphing.continuousGeneralisation(t);
+                ILineString morph = (ILineString) morphing
+                        .continuousGeneralisation(t);
                 continuousGeoms.put(scale, morph);
                 System.out.println("t= " + t);
                 t += step;
@@ -611,12 +680,16 @@ public class ContinuousGUIComponent extends JMenu {
                 feat.setAttribute(attr, (int) Math.round(scale));
                 featureCollection.add(feat);
             }
-            DiscontinuitiesMeasure measure = new DiscontinuitiesMeasure(continuousGeoms);
+            DiscontinuitiesMeasure measure = new DiscontinuitiesMeasure(
+                    continuousGeoms);
             measure.addLegibilityFunction(new CoalescenceFunction(0.8));
             measure.addLegibilityFunction(new TopologyValidationFunction());
-            measure.addDistanceFunction(new HausdorffDistanceFunction("Hausdorff"));
-            measure.addDistanceFunction(new MeanLineDistanceFunction("Mean line distance"));
-            measure.addDistanceFunction(new FrechetDistanceFunction("Fréchet distance"));
+            measure.addDistanceFunction(
+                    new HausdorffDistanceFunction("Hausdorff"));
+            measure.addDistanceFunction(
+                    new MeanLineDistanceFunction("Mean line distance"));
+            measure.addDistanceFunction(
+                    new FrechetDistanceFunction("Fréchet distance"));
             measure.computeDiscontinuities();
             try {
                 measure.writeToCsv(file);
@@ -629,8 +702,10 @@ public class ContinuousGUIComponent extends JMenu {
         }
 
         public MeasureDiscontOptCorAction() {
-            putValue(Action.SHORT_DESCRIPTION, "Measure discontinuities for OptCor morphing on two selected features");
-            putValue(Action.NAME, "Measure discontinuities for OptCor morphing");
+            putValue(Action.SHORT_DESCRIPTION,
+                    "Measure discontinuities for OptCor morphing on two selected features");
+            putValue(Action.NAME,
+                    "Measure discontinuities for OptCor morphing");
         }
     }
 
@@ -653,11 +728,15 @@ public class ContinuousGUIComponent extends JMenu {
         @Override
         public void actionPerformed(ActionEvent arg0) {
 
-            double iniScale = new Double(JOptionPane.showInputDialog("Enter initial scale", 10000.0));
-            double finScale = new Double(JOptionPane.showInputDialog("Enter final scale", 250000.0));
-            int nbScales = new Integer(JOptionPane.showInputDialog("Enter the number of intermediate scales", 100));
+            double iniScale = new Double(JOptionPane
+                    .showInputDialog("Enter initial scale", 10000.0));
+            double finScale = new Double(
+                    JOptionPane.showInputDialog("Enter final scale", 250000.0));
+            int nbScales = new Integer(JOptionPane.showInputDialog(
+                    "Enter the number of intermediate scales", 100));
 
-            JFileChooser fc = new JFileChooser("Select the file with selected lines");
+            JFileChooser fc = new JFileChooser(
+                    "Select the file with selected lines");
             fc.setFileFilter(new XMLFileFilter());
             int returnVal = fc.showOpenDialog(appli.getMainFrame().getGui());
             if (returnVal != JFileChooser.APPROVE_OPTION) {
@@ -665,7 +744,8 @@ public class ContinuousGUIComponent extends JMenu {
             }
             File selectionFile = fc.getSelectedFile();
 
-            JFileChooser fc2 = new JFileChooser("Select a directory for output files");
+            JFileChooser fc2 = new JFileChooser(
+                    "Select a directory for output files");
             fc2.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             returnVal = fc2.showSaveDialog(appli.getMainFrame().getGui());
             if (returnVal != JFileChooser.APPROVE_OPTION) {
@@ -673,13 +753,15 @@ public class ContinuousGUIComponent extends JMenu {
             }
             File directory = fc2.getSelectedFile();
 
-            StyledLayerDescriptor sld = appli.getMainFrame().getSelectedProjectFrame().getSld();
+            StyledLayerDescriptor sld = appli.getMainFrame()
+                    .getSelectedProjectFrame().getSld();
 
             // get the ObjectSelection by parsing the file
             try {
                 List<ObjectSelection> selections = new ArrayList<ObjectSelection>();
 
-                LoadSelectionFrame.chargerSelections(selectionFile, appli, selections);
+                LoadSelectionFrame.chargerSelections(selectionFile, appli,
+                        selections);
                 for (ObjectSelection selection : selections) {
                     String selectionName = selection.getName();
                     Set<ILineString> layer1Feats = new HashSet<>();
@@ -687,19 +769,23 @@ public class ContinuousGUIComponent extends JMenu {
                     String layer1 = sld.getLayers().get(0).getName();
                     String layer2 = sld.getLayers().get(1).getName();
                     for (IFeature feat : selection.getObjs()) {
-                        if (sld.getLayer(layer1).getFeatureCollection().contains(feat)) {
+                        if (sld.getLayer(layer1).getFeatureCollection()
+                                .contains(feat)) {
                             if (feat.getGeom() instanceof ILineString)
                                 layer1Feats.add((ILineString) feat.getGeom());
                             else {
-                                IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat.getGeom();
+                                IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat
+                                        .getGeom();
                                 ILineString line = (ILineString) complex.get(0);
                                 layer1Feats.add(line);
                             }
-                        } else if (sld.getLayer(layer2).getFeatureCollection().contains(feat)) {
+                        } else if (sld.getLayer(layer2).getFeatureCollection()
+                                .contains(feat)) {
                             if (feat.getGeom() instanceof ILineString)
                                 layer2Feats.add((ILineString) feat.getGeom());
                             else {
-                                IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat.getGeom();
+                                IMultiCurve<IOrientableCurve> complex = (IMultiCurve<IOrientableCurve>) feat
+                                        .getGeom();
                                 ILineString line = (ILineString) complex.get(0);
                                 layer2Feats.add(line);
                             }
@@ -707,28 +793,34 @@ public class ContinuousGUIComponent extends JMenu {
                     }
 
                     // merge geometries
-                    ILineString merged1 = Operateurs.compileArcs(layer1Feats, 0.001);
-                    ILineString merged2 = Operateurs.compileArcs(layer2Feats, 0.001);
+                    ILineString merged1 = Operateurs.compileArcs(layer1Feats,
+                            0.001);
+                    ILineString merged2 = Operateurs.compileArcs(layer2Feats,
+                            0.001);
 
-                    OptCorMorphing morphing = new OptCorMorphing(merged1, merged2);
+                    OptCorMorphing morphing = new OptCorMorphing(merged1,
+                            merged2);
                     SortedMap<Double, IGeometry> continuousGeoms = new TreeMap<Double, IGeometry>();
                     IFeatureCollection<IFeature> featureCollection = new FT_FeatureCollection<>();
                     FeatureType featureType = new FeatureType();
                     featureType.setNomClasse("continuous");
-                    GF_AttributeType attr = new AttributeType("scale", "scale", "Integer");
+                    GF_AttributeType attr = new AttributeType("scale", "scale",
+                            "Integer");
                     featureType.addFeatureAttribute(attr);
                     featureType.setGeometryType(ILineString.class);
                     featureCollection.setFeatureType(featureType);
                     SchemaDefaultFeature schema = new SchemaDefaultFeature();
                     schema.addFeatureType(featureType);
-                    schema.getAttLookup().put(0, new String[] { "scale", "continuous" });
+                    schema.getAttLookup().put(0,
+                            new String[] { "scale", "continuous" });
                     double t = 0.0;
                     double step = 1.0 / nbScales;
                     t += step;
                     double scaleDiff = finScale - iniScale;
                     while (t < 1.0) {
                         double scale = scaleDiff * t + iniScale;
-                        ILineString morph = (ILineString) morphing.continuousGeneralisation(t);
+                        ILineString morph = (ILineString) morphing
+                                .continuousGeneralisation(t);
                         continuousGeoms.put(scale, morph);
                         System.out.println("t= " + t);
                         t += step;
@@ -755,26 +847,34 @@ public class ContinuousGUIComponent extends JMenu {
                     featFin.setAttribute(attr, (int) Math.round(finScale));
                     featureCollection.add(featFin);
 
-                    DiscontinuitiesMeasure measure = new DiscontinuitiesMeasure(continuousGeoms);
+                    DiscontinuitiesMeasure measure = new DiscontinuitiesMeasure(
+                            continuousGeoms);
                     measure.addLegibilityFunction(new CoalescenceFunction(0.8));
                     measure.addLegibilityFunction(new NbOfBendsFunction(15.0));
                     measure.addLegibilityFunction(new NbOfBendsFunction(75.0));
                     measure.addLegibilityFunction(new NbOfBendsFunction(100.0));
-                    measure.addLegibilityFunction(new TopologyValidationFunction());
-                    measure.addDistanceFunction(new HausdorffDistanceFunction("Hausdorff"));
-                    measure.addDistanceFunction(new MeanLineDistanceFunction("Mean line distance"));
-                    measure.addDistanceFunction(new FrechetDistanceFunction("Fréchet distance"));
+                    measure.addLegibilityFunction(
+                            new TopologyValidationFunction());
+                    measure.addDistanceFunction(
+                            new HausdorffDistanceFunction("Hausdorff"));
+                    measure.addDistanceFunction(
+                            new MeanLineDistanceFunction("Mean line distance"));
+                    measure.addDistanceFunction(
+                            new FrechetDistanceFunction("Fréchet distance"));
                     measure.computeDiscontinuities();
                     try {
-                        File file = new File(directory.getPath() + "//" + selectionName + ".csv");
+                        File file = new File(directory.getPath() + "//"
+                                + selectionName + ".csv");
                         measure.writeToCsv(file);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                     // write the continuous geometries in a shapefile
-                    String shapefileName = directory.getPath() + "//" + selectionName + ".shp";
-                    ShapefileWriter.write(featureCollection, shapefileName, null);
+                    String shapefileName = directory.getPath() + "//"
+                            + selectionName + ".shp";
+                    ShapefileWriter.write(featureCollection, shapefileName,
+                            null);
                 }
             } catch (SAXException | IOException e1) {
                 e1.printStackTrace();
@@ -784,7 +884,8 @@ public class ContinuousGUIComponent extends JMenu {
         }
 
         public MeasureDiscontSelAction() {
-            putValue(Action.SHORT_DESCRIPTION, "Measure discontinuities with OptCor morphing for file selection");
+            putValue(Action.SHORT_DESCRIPTION,
+                    "Measure discontinuities with OptCor morphing for file selection");
             putValue(Action.NAME, "Measure discontinuities for file selection");
         }
     }
@@ -798,7 +899,8 @@ public class ContinuousGUIComponent extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            CartAGenDataSet dataset = CartAGenDoc.getInstance().getCurrentDataset();
+            CartAGenDataSet dataset = CartAGenDoc.getInstance()
+                    .getCurrentDataset();
 
             LoadBendSeriesFrame frame = new LoadBendSeriesFrame(dataset);
             frame.setVisible(true);
@@ -816,14 +918,16 @@ public class ContinuousGUIComponent extends JMenu {
          */
         private static final long serialVersionUID = 1L;
         private CartAGenDataSet dataset;
-        private JButton okBtn, cancelBtn, browseParts, browseSeries, browseHeads, browseRoads;
+        private JButton okBtn, cancelBtn, browseParts, browseSeries,
+                browseHeads, browseRoads;
         private JTextField txtParts, txtSeries, txtHeads, txtRoads;
         private File roadsFile, partsFile, seriesFile, headsFile;
 
         // internationalisation values
         private String okLbl, cancelLbl;
 
-        public LoadBendSeriesFrame(CartAGenDataSet dataset) throws HeadlessException {
+        public LoadBendSeriesFrame(CartAGenDataSet dataset)
+                throws HeadlessException {
             super("Load pre-decomposed bend series shapefiles");
             this.dataset = dataset;
             internationalisation();
@@ -834,7 +938,8 @@ public class ContinuousGUIComponent extends JMenu {
             txtRoads.setMinimumSize(new Dimension(140, 20));
             txtRoads.setPreferredSize(new Dimension(140, 20));
             txtRoads.setEditable(false);
-            browseRoads = new JButton(new ImageIcon("images/icons/16x16/browse.png"));
+            browseRoads = new JButton(
+                    new ImageIcon("images/icons/16x16/browse.png"));
             browseRoads.addActionListener(this);
             browseRoads.setActionCommand("roads");
             roadsPanel.add(txtRoads);
@@ -847,7 +952,8 @@ public class ContinuousGUIComponent extends JMenu {
             txtParts.setMinimumSize(new Dimension(140, 20));
             txtParts.setPreferredSize(new Dimension(140, 20));
             txtParts.setEditable(false);
-            browseParts = new JButton(new ImageIcon("images/icons/16x16/browse.png"));
+            browseParts = new JButton(
+                    new ImageIcon("images/icons/16x16/browse.png"));
             browseParts.addActionListener(this);
             browseParts.setActionCommand("roadParts");
             partsPanel.add(txtParts);
@@ -860,7 +966,8 @@ public class ContinuousGUIComponent extends JMenu {
             txtSeries.setMinimumSize(new Dimension(140, 20));
             txtSeries.setPreferredSize(new Dimension(140, 20));
             txtSeries.setEditable(false);
-            browseSeries = new JButton(new ImageIcon("images/icons/16x16/browse.png"));
+            browseSeries = new JButton(
+                    new ImageIcon("images/icons/16x16/browse.png"));
             browseSeries.addActionListener(this);
             browseSeries.setActionCommand("bendSeries");
             seriesPanel.add(txtSeries);
@@ -873,7 +980,8 @@ public class ContinuousGUIComponent extends JMenu {
             txtHeads.setMinimumSize(new Dimension(140, 20));
             txtHeads.setPreferredSize(new Dimension(140, 20));
             txtHeads.setEditable(false);
-            browseHeads = new JButton(new ImageIcon("images/icons/16x16/browse.png"));
+            browseHeads = new JButton(
+                    new ImageIcon("images/icons/16x16/browse.png"));
             browseHeads.addActionListener(this);
             browseHeads.setActionCommand("bendHeads");
             headsPanel.add(txtHeads);
@@ -901,7 +1009,8 @@ public class ContinuousGUIComponent extends JMenu {
             this.getContentPane().add(headsPanel);
             this.getContentPane().add(Box.createVerticalGlue());
             this.getContentPane().add(btnPanel);
-            this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+            this.getContentPane().setLayout(
+                    new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
             this.pack();
         }
 
@@ -966,13 +1075,17 @@ public class ContinuousGUIComponent extends JMenu {
 
         private void loadData() throws IOException {
             // first load roads
-            Map<ILineString, Map<String, Object>> roads = loadRoadLinesFromSHP(txtRoads.getText(), dataset);
+            Map<ILineString, Map<String, Object>> roads = loadRoadLinesFromSHP(
+                    txtRoads.getText(), dataset);
             Map<Integer, SinuousSection> ids = new HashMap<>();
             IPopulation<IRoadLine> pop = dataset.getRoads();
             for (ILineString line : roads.keySet()) {
                 Map<String, Object> fields = roads.get(line);
-                IRoadLine tr = dataset.getCartAGenDB().getGeneObjImpl().getCreationFactory().createRoadLine(
-                        new TronconDeRouteImpl((Reseau) dataset.getRoadNetwork().getGeoxObj(), false, line), 1);
+                IRoadLine tr = dataset.getCartAGenDB().getGeneObjImpl()
+                        .getCreationFactory()
+                        .createRoadLine(new TronconDeRouteImpl(
+                                (Reseau) dataset.getRoadNetwork().getGeoxObj(),
+                                false, line, 1), 1);
                 if (fields.containsKey("id"))
                     tr.setId((Integer) fields.get("id"));
                 pop.add(tr);
@@ -981,22 +1094,26 @@ public class ContinuousGUIComponent extends JMenu {
             }
 
             // then, load road parts
-            Map<ILineString, Map<String, Object>> roadParts = loadRoadLinesFromSHP(txtParts.getText(), dataset);
+            Map<ILineString, Map<String, Object>> roadParts = loadRoadLinesFromSHP(
+                    txtParts.getText(), dataset);
 
             // then, load bend series parts
-            Map<ILineString, Map<String, Object>> roadSeries = loadRoadLinesFromSHP(txtSeries.getText(), dataset);
+            Map<ILineString, Map<String, Object>> roadSeries = loadRoadLinesFromSHP(
+                    txtSeries.getText(), dataset);
 
             // finally load bend heads
-            Map<ILineString, Map<String, Object>> roadHeads = loadRoadLinesFromSHP(txtHeads.getText(), dataset);
+            Map<ILineString, Map<String, Object>> roadHeads = loadRoadLinesFromSHP(
+                    txtHeads.getText(), dataset);
         }
 
-        private Map<ILineString, Map<String, Object>> loadRoadLinesFromSHP(String path, CartAGenDataSet dataset)
-                throws IOException {
+        private Map<ILineString, Map<String, Object>> loadRoadLinesFromSHP(
+                String path, CartAGenDataSet dataset) throws IOException {
             ShapefileReader shr = null;
             DbaseFileReader dbr = null;
             try {
                 ShpFiles shpf = new ShpFiles(path);
-                shr = new ShapefileReader(shpf, true, false, new GeometryFactory());
+                shr = new ShapefileReader(shpf, true, false,
+                        new GeometryFactory());
                 dbr = new DbaseFileReader(shpf, true, Charset.defaultCharset());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -1029,7 +1146,9 @@ public class ContinuousGUIComponent extends JMenu {
 
                 } else if (geom instanceof IMultiCurve<?>) {
                     for (int i = 0; i < ((IMultiCurve<?>) geom).size(); i++) {
-                        outputMap.put((ILineString) ((IMultiCurve<?>) geom).get(i), fields);
+                        outputMap.put(
+                                (ILineString) ((IMultiCurve<?>) geom).get(i),
+                                fields);
                     }
                 }
             }

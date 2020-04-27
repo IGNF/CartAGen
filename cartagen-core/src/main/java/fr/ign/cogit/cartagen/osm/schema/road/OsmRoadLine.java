@@ -31,148 +31,149 @@ import fr.ign.cogit.geoxygene.schemageo.impl.support.reseau.ReseauImpl;
 
 public class OsmRoadLine extends OsmNetworkSection implements IRoadLine {
 
-  public static final Class<?> associatedNodeClass = OsmRoadNode.class;
+    public static final Class<?> associatedNodeClass = OsmRoadNode.class;
 
-  /**
-   * Associated Geoxygene schema object
-   */
-  private TronconDeRoute geoxObj;
-  private INetworkNode initialNode, finalNode;
+    /**
+     * Associated Geoxygene schema object
+     */
+    private TronconDeRoute geoxObj;
+    private INetworkNode initialNode, finalNode;
 
-  public OsmRoadLine(ILineString line, int importance) {
-    super();
-    this.geoxObj = new TronconDeRouteImpl(new ReseauImpl(), false, line);
-    this.setInitialGeom(line);
-    this.setGeom(line);
-    this.setImportance(importance);
-  }
-
-  public OsmRoadLine(TronconDeRoute geoxObj, int importance) {
-    super();
-    this.geoxObj = geoxObj;
-    this.setInitialGeom(geoxObj.getGeom());
-    this.setEliminated(false);
-    this.setImportance(importance);
-    this.setDeadEnd(false);
-    this.initialNode = null;
-    this.finalNode = null;
-  }
-
-  public OsmRoadLine(String contributor, IGeometry geom, int id, int changeSet,
-      int version, int uid, Date date) {
-    super(contributor, geom, id, changeSet, version, uid, date);
-    this.geoxObj = new TronconDeRouteImpl(new ReseauImpl(), false,
-        (ICurve) geom);
-  }
-
-  public OsmRoadLine() {
-    super();
-    this.geoxObj = new TronconDeRouteImpl(new ReseauImpl(), false, null);
-  }
-
-  @Override
-  public double getWidth() {
-    return SLDUtilCartagen.getSymbolMaxWidthMapMm(this);
-  }
-
-  @Override
-  public double getInternWidth() {
-
-    return SLDUtilCartagen.getSymbolInnerWidthMapMm(this);
-
-  }
-
-  @Override
-  public INetworkNode getInitialNode() {
-    return initialNode;
-  }
-
-  @Override
-  public void setInitialNode(INetworkNode node) {
-    this.initialNode = node;
-  }
-
-  @Override
-  public INetworkNode getFinalNode() {
-    return finalNode;
-  }
-
-  @Override
-  public void setFinalNode(INetworkNode node) {
-    this.finalNode = node;
-  }
-
-  @Override
-  public Color getSeparatorColor() {
-    if (this.getImportance() == 4) {
-      return GeneralisationLegend.ROUTIER_COULEUR_SEPARATEUR_4;
+    public OsmRoadLine(ILineString line, int importance) {
+        super();
+        this.geoxObj = new TronconDeRouteImpl(new ReseauImpl(), false, line,
+                importance);
+        this.setInitialGeom(line);
+        this.setGeom(line);
+        this.setImportance(importance);
     }
-    return null;
-  }
 
-  @Override
-  public Color getFrontColor() {
-    if (this.getImportance() == 0) {
-      return GeneralisationLegend.ROUTIER_COULEUR_0;
+    public OsmRoadLine(TronconDeRoute geoxObj, int importance) {
+        super();
+        this.geoxObj = geoxObj;
+        this.setInitialGeom(geoxObj.getGeom());
+        this.setEliminated(false);
+        this.setImportance(importance);
+        this.setDeadEnd(false);
+        this.initialNode = null;
+        this.finalNode = null;
     }
-    if (this.getImportance() == 1) {
-      return GeneralisationLegend.ROUTIER_COULEUR_1;
+
+    public OsmRoadLine(String contributor, IGeometry geom, int id,
+            int changeSet, int version, int uid, Date date) {
+        super(contributor, geom, id, changeSet, version, uid, date);
+        this.geoxObj = new TronconDeRouteImpl(new ReseauImpl(), false,
+                (ICurve) geom, 0);
     }
-    if (this.getImportance() == 2) {
-      return GeneralisationLegend.ROUTIER_COULEUR_2;
+
+    public OsmRoadLine() {
+        super();
+        this.geoxObj = new TronconDeRouteImpl(new ReseauImpl(), false, null, 0);
     }
-    if (this.getImportance() == 3) {
-      return GeneralisationLegend.ROUTIER_COULEUR_3;
+
+    @Override
+    public double getWidth() {
+        return SLDUtilCartagen.getSymbolMaxWidthMapMm(this);
     }
-    if (this.getImportance() == 4) {
-      return GeneralisationLegend.ROUTIER_COULEUR_4;
+
+    @Override
+    public double getInternWidth() {
+
+        return SLDUtilCartagen.getSymbolInnerWidthMapMm(this);
+
     }
-    return null;
-  }
 
-  @Override
-  public int getImportance() {
-    if (super.getImportance() != -1)
-      return super.getImportance();
-    computeImportance();
-    return super.getImportance();
-  }
+    @Override
+    public INetworkNode getInitialNode() {
+        return initialNode;
+    }
 
-  private void computeImportance() {
-    // get the highway tag value
-    String value = this.getTags().get("highway");
-    if (value.equals("motorway") || value.equals("motorway_link")
-        || value.equals("trunk") || value.equals("trunk_link"))
-      setImportance(4);
-    else if (value.equals("primary") || value.equals("primary_link"))
-      setImportance(3);
-    else if (value.equals("secondary") || value.equals("secondary_link")
-        || value.equals("tertiary") || value.equals("tertiary_link"))
-      setImportance(2);
-    else if (value.equals("road") || value.equals("residential")
-        || value.equals("pedestrian"))
-      setImportance(1);
-    else
-      setImportance(0);
-  }
+    @Override
+    public void setInitialNode(INetworkNode node) {
+        this.initialNode = node;
+    }
 
-  @Override
-  @Transient
-  public IFeature getGeoxObj() {
-    return this.geoxObj;
-  }
+    @Override
+    public INetworkNode getFinalNode() {
+        return finalNode;
+    }
 
-  @Override
-  public IGeometry getSymbolGeom() {
-    return super.getGeom()
-        .buffer(getWidth() * Legend.getSYMBOLISATI0N_SCALE() / 2000);
-  }
+    @Override
+    public void setFinalNode(INetworkNode node) {
+        this.finalNode = node;
+    }
 
-  @Override
-  public void setTags(Map<String, String> tags) {
-    super.setTags(tags);
-    // compute the importance from tags
-    this.computeImportance();
-  }
+    @Override
+    public Color getSeparatorColor() {
+        if (this.getImportance() == 4) {
+            return GeneralisationLegend.ROUTIER_COULEUR_SEPARATEUR_4;
+        }
+        return null;
+    }
+
+    @Override
+    public Color getFrontColor() {
+        if (this.getImportance() == 0) {
+            return GeneralisationLegend.ROUTIER_COULEUR_0;
+        }
+        if (this.getImportance() == 1) {
+            return GeneralisationLegend.ROUTIER_COULEUR_1;
+        }
+        if (this.getImportance() == 2) {
+            return GeneralisationLegend.ROUTIER_COULEUR_2;
+        }
+        if (this.getImportance() == 3) {
+            return GeneralisationLegend.ROUTIER_COULEUR_3;
+        }
+        if (this.getImportance() == 4) {
+            return GeneralisationLegend.ROUTIER_COULEUR_4;
+        }
+        return null;
+    }
+
+    @Override
+    public int getImportance() {
+        if (super.getImportance() != -1)
+            return super.getImportance();
+        computeImportance();
+        return super.getImportance();
+    }
+
+    private void computeImportance() {
+        // get the highway tag value
+        String value = this.getTags().get("highway");
+        if (value.equals("motorway") || value.equals("motorway_link")
+                || value.equals("trunk") || value.equals("trunk_link"))
+            setImportance(4);
+        else if (value.equals("primary") || value.equals("primary_link"))
+            setImportance(3);
+        else if (value.equals("secondary") || value.equals("secondary_link")
+                || value.equals("tertiary") || value.equals("tertiary_link"))
+            setImportance(2);
+        else if (value.equals("road") || value.equals("residential")
+                || value.equals("pedestrian"))
+            setImportance(1);
+        else
+            setImportance(0);
+    }
+
+    @Override
+    @Transient
+    public IFeature getGeoxObj() {
+        return this.geoxObj;
+    }
+
+    @Override
+    public IGeometry getSymbolGeom() {
+        return super.getGeom()
+                .buffer(getWidth() * Legend.getSYMBOLISATI0N_SCALE() / 2000);
+    }
+
+    @Override
+    public void setTags(Map<String, String> tags) {
+        super.setTags(tags);
+        // compute the importance from tags
+        this.computeImportance();
+    }
 
 }

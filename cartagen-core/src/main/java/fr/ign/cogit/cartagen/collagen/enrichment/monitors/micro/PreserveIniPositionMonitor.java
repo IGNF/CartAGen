@@ -23,7 +23,7 @@ public class PreserveIniPositionMonitor extends MicroConstraintMonitor {
       FormalGenConstraint constraint) {
     super(obj, constraint);
     this.calculerValeurCourante();
-    this.setValeurIni(getValeurCourante());
+    this.setInitialValue(getCurrentValue());
     this.calculerValeurBut();
     this.computeSatisfaction();
     this.getEtatsSatisf().set(0, getSatisfaction());
@@ -32,14 +32,14 @@ public class PreserveIniPositionMonitor extends MicroConstraintMonitor {
   @Override
   public void computeSatisfaction() {
     // on teste d'abord si le sujet a été éliminé
-    if (this.getSujet().isEliminated()) {
+    if (this.getSubject().isEliminated()) {
       setSatisfaction(ConstraintSatisfaction.valueOfFrench("PARFAIT"));
       return;
     }
     double epsilon = 1.0;
-    double but = (Double) getValeurBut();
-    IDirectPosition courante = (IDirectPosition) getValeurCourante();
-    IDirectPosition ini = (IDirectPosition) getValeurIni();
+    double but = (Double) getGoalValue();
+    IDirectPosition courante = (IDirectPosition) getCurrentValue();
+    IDirectPosition ini = (IDirectPosition) getInitialValue();
     double dist = courante.distance2D(ini);
     // si la valeur courante est l'initiale à epsilon près,
     if (dist < epsilon)
@@ -63,7 +63,7 @@ public class PreserveIniPositionMonitor extends MicroConstraintMonitor {
 
   @Override
   public void calculerValeurCourante() {
-    this.setValeurCourante(this.getSujet().getGeom().centroid());
+    this.setCurrentValue(this.getSubject().getGeom().centroid());
   }
 
   @Override
@@ -72,7 +72,7 @@ public class PreserveIniPositionMonitor extends MicroConstraintMonitor {
     FormalMicroConstraint contrainte = (FormalMicroConstraint) getElementSpec();
     double dist = UnitsTranslation.getValeurContrUniteTerrain(
         Legend.getSYMBOLISATI0N_SCALE(), contrainte);
-    setValeurBut(dist);
+    setGoalValue(dist);
   }
 
   @Override

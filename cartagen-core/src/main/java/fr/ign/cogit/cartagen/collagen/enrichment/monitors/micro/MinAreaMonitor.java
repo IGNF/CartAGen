@@ -24,9 +24,9 @@ public class MinAreaMonitor extends MicroConstraintMonitor {
   public void computeSatisfaction() {
     // on compare le but à la valeur courante
     double epsilon = 5.0;
-    double but = (Double) getValeurBut();
-    double courante = (Double) getValeurCourante();
-    if (getSujet().isEliminated()) {
+    double but = (Double) getGoalValue();
+    double courante = (Double) getCurrentValue();
+    if (getSubject().isEliminated()) {
       setSatisfaction(ConstraintSatisfaction.valueOfFrench("PARFAIT"));
       return;
     }
@@ -52,7 +52,7 @@ public class MinAreaMonitor extends MicroConstraintMonitor {
 
   @Override
   public void calculerValeurCourante() {
-    this.setValeurCourante(this.getSujet().getGeom().area());
+    this.setCurrentValue(this.getSubject().getGeom().area());
   }
 
   @Override
@@ -61,7 +61,7 @@ public class MinAreaMonitor extends MicroConstraintMonitor {
     FormalMicroConstraint contrainte = (FormalMicroConstraint) getElementSpec();
     double min = UnitsTranslation.getValeurContrUniteTerrain(
         Legend.getSYMBOLISATI0N_SCALE(), contrainte);
-    setValeurBut(min);
+    setGoalValue(min);
   }
 
   @Override

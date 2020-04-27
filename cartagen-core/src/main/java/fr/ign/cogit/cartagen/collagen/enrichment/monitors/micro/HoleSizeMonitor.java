@@ -26,7 +26,7 @@ public class HoleSizeMonitor extends MicroConstraintMonitor {
     // on calcule les valeurs de la contrainte de nouveau après initialisation
     // du paramètre
     this.calculerValeurCourante();
-    this.setValeurIni(this.getValeurCourante());
+    this.setInitialValue(this.getCurrentValue());
     this.calculerValeurBut();
     this.computeSatisfaction();
     this.getEtatsSatisf().add(this.getSatisfaction());
@@ -39,17 +39,17 @@ public class HoleSizeMonitor extends MicroConstraintMonitor {
           ConstraintSatisfaction.valueOfFrench("NON_SATISFAIT"));
       return;
     }
-    if (this.getSujet().isEliminated()) {
+    if (this.getSubject().isEliminated()) {
       this.setSatisfaction(ConstraintSatisfaction.valueOfFrench("PARFAIT"));
       return;
     }
 
     // on compare le but à la valeur courante
-    double but = ((ValeurTailleTrou) this.getValeurBut()).aireTrouMin1;
+    double but = ((ValeurTailleTrou) this.getGoalValue()).aireTrouMin1;
     double aireTrouMin = ((ValeurTailleTrou) this
-        .getValeurCourante()).aireTrouMin1;
+        .getCurrentValue()).aireTrouMin1;
     int nbPetitsTrous = ((ValeurTailleTrou) this
-        .getValeurCourante()).nbPetitsTrous;
+        .getCurrentValue()).nbPetitsTrous;
     // si la valeur courante vaut le but à epsilon près,
     if (nbPetitsTrous == 0) {
       this.setSatisfaction(ConstraintSatisfaction.valueOfFrench("PARFAIT"));
@@ -77,17 +77,17 @@ public class HoleSizeMonitor extends MicroConstraintMonitor {
   @Override
   public void calculerValeurBut() {
     // on commence par récupérer la valeur min de la contrainte
-    this.setValeurBut(new ValeurTailleTrou(this.aireTrouMin, 0));
+    this.setGoalValue(new ValeurTailleTrou(this.aireTrouMin, 0));
   }
 
   @Override
   public void calculerValeurCourante() {
     if (this.aireTrouMin == 0.0) {
-      this.setValeurCourante(new ValeurTailleTrou(0.0, 0));
+      this.setCurrentValue(new ValeurTailleTrou(0.0, 0));
       return;
     }
-    IPolygon geom = (IPolygon) this.getSujet().getGeom();
-    double min = ((ValeurTailleTrou) this.getValeurBut()).aireTrouMin1;
+    IPolygon geom = (IPolygon) this.getSubject().getGeom();
+    double min = ((ValeurTailleTrou) this.getGoalValue()).aireTrouMin1;
     double aireTrouMin = min;
     int nbPetitsTrous = 0;
     if (geom.getInterior().size() == 0) {
@@ -103,7 +103,7 @@ public class HoleSizeMonitor extends MicroConstraintMonitor {
         }
       }
     }
-    this.setValeurCourante(new ValeurTailleTrou(aireTrouMin, nbPetitsTrous));
+    this.setCurrentValue(new ValeurTailleTrou(aireTrouMin, nbPetitsTrous));
   }
 
   public static class ValeurTailleTrou {

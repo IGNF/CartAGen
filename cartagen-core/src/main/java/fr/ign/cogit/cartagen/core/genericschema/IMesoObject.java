@@ -1,4 +1,4 @@
-package fr.ign.cogit.cartagen.collagen.enrichment;
+package fr.ign.cogit.cartagen.core.genericschema;
 
 import java.util.Collection;
 

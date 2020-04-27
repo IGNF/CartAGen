@@ -29,96 +29,112 @@ import fr.ign.cogit.geoxygene.schemageo.api.support.reseau.ArcReseau;
 
 /**
  * Road network selection algorithms based on strokes.
+ * 
  * @author GTouya
  * 
  */
 public class RoadNetworkStrokesBasedSelection {
 
-  private INetwork network;
-  private RoadStrokesNetwork strokes;
-  private Map<ArcReseau, IRoadLine> map = new HashMap<ArcReseau, IRoadLine>();
-  private String attributeName;
+    private INetwork network;
+    private RoadStrokesNetwork strokes;
+    private Map<ArcReseau, IRoadLine> map = new HashMap<ArcReseau, IRoadLine>();
+    private String attributeName;
 
-  public RoadNetworkStrokesBasedSelection(CartAGenDataSet dataset,
-      INetwork network) {
-    super();
-    this.network = network;
-    for (INetworkSection obj : network.getSections()) {
-      map.put((ArcReseau) obj.getGeoxObj(), (IRoadLine) obj);
+    public RoadNetworkStrokesBasedSelection(CartAGenDataSet dataset,
+            INetwork network) {
+        super();
+        this.network = network;
+        for (INetworkSection obj : network.getSections()) {
+            map.put((ArcReseau) obj.getGeoxObj(), (IRoadLine) obj);
+        }
+        strokes = new RoadStrokesNetwork(map.keySet());
+        HashSet<String> attributeNames = new HashSet<String>();
+        strokes.buildStrokes(attributeNames, 112.5, 45.0, true);
     }
-    strokes = new RoadStrokesNetwork(map.keySet());
-    HashSet<String> attributeNames = new HashSet<String>();
-    if (this.getAttributeName() != null) {
-      if (this.getAttributeName() != "")
-        attributeNames.add(this.getAttributeName());
+
+    public RoadNetworkStrokesBasedSelection(CartAGenDataSet dataset,
+            INetwork network, String attributeName) {
+        super();
+        this.network = network;
+        this.attributeName = attributeName;
+        for (INetworkSection obj : network.getSections()) {
+            map.put((ArcReseau) obj.getGeoxObj(), (IRoadLine) obj);
+        }
+        strokes = new RoadStrokesNetwork(map.keySet());
+        HashSet<String> attributeNames = new HashSet<String>();
+        if (this.getAttributeName() != null) {
+            if (this.getAttributeName() != "")
+                attributeNames.add(this.getAttributeName());
+        }
+        strokes.buildStrokes(attributeNames, 112.5, 45.0, true);
     }
-    strokes.buildStrokes(attributeNames, 112.5, 45.0, true);
-  }
 
-  public RoadNetworkStrokesBasedSelection(CartAGenDataSet dataset,
-      INetwork network, RoadStrokesNetwork strokes,
-      Map<ArcReseau, IRoadLine> map) {
-    super();
-    this.network = network;
-    this.strokes = strokes;
-    this.map = map;
-  }
+    public RoadNetworkStrokesBasedSelection(CartAGenDataSet dataset,
+            INetwork network, RoadStrokesNetwork strokes,
+            Map<ArcReseau, IRoadLine> map) {
+        super();
+        this.network = network;
+        this.strokes = strokes;
+        this.map = map;
+    }
 
-  /**
-   * Select the roads in a network that belong to a stroke longer than the given
-   * minimum threshold. Strokes that are part of enough T-shaped crossroads can
-   * also be added to selection even if length selection fails.
-   * @param minLength
-   * @param minTs the minimum number of T crossroads for a stroke to be selected
-   *          (-1 means don't use Ts)
-   * @return the roads to eliminate
-   */
-  public Set<INetworkSection> strokesBasedSelection(double minLength,
-      int minTs) {
-    Set<INetworkSection> toEliminate = new HashSet<>();
+    /**
+     * Select the roads in a network that belong to a stroke longer than the
+     * given minimum threshold. Strokes that are part of enough T-shaped
+     * crossroads can also be added to selection even if length selection fails.
+     * 
+     * @param minLength
+     * @param minTs
+     *            the minimum number of T crossroads for a stroke to be selected
+     *            (-1 means don't use Ts)
+     * @return the roads to eliminate
+     */
+    public Set<INetworkSection> strokesBasedSelection(double minLength,
+            int minTs) {
+        Set<INetworkSection> toEliminate = new HashSet<>();
 
-    for (Stroke stroke : strokes.getStrokes()) {
-      if (stroke.getLength() > minLength) {
-        continue;
-      }
+        for (Stroke stroke : strokes.getStrokes()) {
+            if (stroke.getLength() > minLength) {
+                continue;
+            }
 
-      if (minTs > -1) {
-        // now checks the number of Ts on the stroke
-        Collection<INetworkNode> strokeNodes = network.getNodes()
-            .select(stroke.getGeomStroke());
-        int nbTs = 0;
-        CrossRoadDetection detection = new CrossRoadDetection();
-        for (INetworkNode node : strokeNodes) {
-          if (TCrossRoad.isTNode((NoeudRoutier) node.getGeoxObj(),
-              detection.getFlatAngle(), detection.getBisAngle()))
-            nbTs++;
+            if (minTs > -1) {
+                // now checks the number of Ts on the stroke
+                Collection<INetworkNode> strokeNodes = network.getNodes()
+                        .select(stroke.getGeomStroke());
+                int nbTs = 0;
+                CrossRoadDetection detection = new CrossRoadDetection();
+                for (INetworkNode node : strokeNodes) {
+                    if (TCrossRoad.isTNode((NoeudRoutier) node.getGeoxObj(),
+                            detection.getFlatAngle(), detection.getBisAngle()))
+                        nbTs++;
+                }
+
+                if (nbTs > minTs)
+                    continue;
+            }
+
+            // arrived here, eliminate all road sections of the stroke
+            for (ArcReseau feat : stroke.getFeatures()) {
+                IRoadLine road = map.get(feat);
+                if (road != null)
+                    toEliminate.add(road);
+            }
         }
 
-        if (nbTs > minTs)
-          continue;
-      }
-
-      // arrived here, eliminate all road sections of the stroke
-      for (ArcReseau feat : stroke.getFeatures()) {
-        IRoadLine road = map.get(feat);
-        if (road != null)
-          toEliminate.add(road);
-      }
+        return toEliminate;
     }
 
-    return toEliminate;
-  }
+    public String getAttributeName() {
+        return attributeName;
+    }
 
-  public String getAttributeName() {
-    return attributeName;
-  }
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
+    }
 
-  public void setAttributeName(String attributeName) {
-    this.attributeName = attributeName;
-  }
-
-  public RoadStrokesNetwork getStroke() {
-    return this.strokes;
-  }
+    public RoadStrokesNetwork getStroke() {
+        return this.strokes;
+    }
 
 }

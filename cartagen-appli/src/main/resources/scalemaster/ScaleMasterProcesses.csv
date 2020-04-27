@@ -1,0 +1,4 @@
+douglas_peucker,fr.ign.cogit.cartagen.mrdb.processes.DouglasPeuckerProcess
+touya_road_selection,fr.ign.cogit.cartagen.mrdb.processes.MixedRoadSelectionProcess
+stroke_based_selection,fr.ign.cogit.cartagen.mrdb.processes.StrokesRoadSelectionProcess
+river_stroke_selection,fr.ign.cogit.cartagen.mrdb.processes.RiverSelectionProcess

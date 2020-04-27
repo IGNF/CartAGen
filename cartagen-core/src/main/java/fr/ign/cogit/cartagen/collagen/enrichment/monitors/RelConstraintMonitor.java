@@ -44,7 +44,7 @@ public abstract class RelConstraintMonitor extends ConstraintMonitor {
   @Override
   public String toString() {
     return this.contrainte.toString() + " instanci�e sur "
-        + this.getSujet().toString();
+        + this.getSubject().toString();
   }
 
   @Override
@@ -52,14 +52,14 @@ public abstract class RelConstraintMonitor extends ConstraintMonitor {
     // il s'agit ici d'un buffer autour de la géométrie de la relation liée à
     // la contrainte instanciée, buffer de la taille du facteur
     // on commence donc par récupérer la géométrie du sujet
-    IGeometry geom = this.getSujet().getGeom();
+    IGeometry geom = this.getSubject().getGeom();
     IGeometry emprise = geom.buffer(facteur, 10);
     return emprise;
   }
 
   @Override
   public IDirectPosition toPoint() {
-    return this.getSujet().getGeom().centroid();
+    return this.getSubject().getGeom().centroid();
   }
 
   @Override
@@ -68,8 +68,8 @@ public abstract class RelConstraintMonitor extends ConstraintMonitor {
   }
 
   @Override
-  public CollaGenRelation getSujet() {
-    return (CollaGenRelation) super.getSujet();
+  public CollaGenRelation getSubject() {
+    return (CollaGenRelation) super.getSubject();
   }
 
 }

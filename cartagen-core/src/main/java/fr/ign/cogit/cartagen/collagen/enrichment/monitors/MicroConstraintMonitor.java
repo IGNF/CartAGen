@@ -27,7 +27,7 @@ public abstract class MicroConstraintMonitor extends ConstraintMonitor {
     this.constraint = (FormalMicroConstraint) constraint;
     // on calcule les valeurs de la contrainte
     this.calculerValeurCourante();
-    this.setValeurIni(this.getValeurCourante());
+    this.setInitialValue(this.getCurrentValue());
     this.calculerValeurBut();
     this.computeSatisfaction();
     this.getEtatsSatisf().add(this.getSatisfaction());
@@ -50,7 +50,7 @@ public abstract class MicroConstraintMonitor extends ConstraintMonitor {
   @Override
   public String toString() {
     return this.constraint.toString() + " monitored on "
-        + this.getSujet().toString();
+        + this.getSubject().toString();
   }
 
   @Override
@@ -63,14 +63,14 @@ public abstract class MicroConstraintMonitor extends ConstraintMonitor {
     // il s'agit ici d'un buffer autour de la géométrie du sujet du moniteur,
     // buffer de la taille du facteur
     // on commence donc par récupérer la géométrie du sujet
-    IGeometry geom = this.getSujet().getGeom();
+    IGeometry geom = this.getSubject().getGeom();
     IGeometry emprise = geom.buffer(facteur, 10);
     return emprise;
   }
 
   @Override
   public IDirectPosition toPoint() {
-    return this.getSujet().getGeom().centroid();
+    return this.getSubject().getGeom().centroid();
   }
 
   @Override
@@ -84,8 +84,8 @@ public abstract class MicroConstraintMonitor extends ConstraintMonitor {
   }
 
   @Override
-  public IGeneObj getSujet() {
-    return (IGeneObj) super.getSujet();
+  public IGeneObj getSubject() {
+    return (IGeneObj) super.getSubject();
   }
 
 }

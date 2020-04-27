@@ -22,15 +22,15 @@ public class BuildingAreaMonitor extends MicroConstraintMonitor {
 
   @Override
   public void computeSatisfaction() {
-    if (getSujet().isEliminated()) {
+    if (getSubject().isEliminated()) {
       setSatisfaction(ConstraintSatisfaction.valueOfFrench("TRES_SATISFAIT"));
       return;
     }
 
     // on compare le but à la valeur courante
     double epsilon = 5.0;
-    double but = (Double) getValeurBut();
-    double courante = (Double) getValeurCourante();
+    double but = (Double) getGoalValue();
+    double courante = (Double) getCurrentValue();
 
     // si la valeur courante vaut le but � epsilon pr�s,
     if (Math.abs(but - courante) < epsilon)
@@ -54,8 +54,8 @@ public class BuildingAreaMonitor extends MicroConstraintMonitor {
 
   @Override
   public void calculerValeurCourante() {
-    double area = getSujet().getGeom().area();
-    this.setValeurCourante(area);
+    double area = getSubject().getGeom().area();
+    this.setCurrentValue(area);
   }
 
   @Override
@@ -64,15 +64,15 @@ public class BuildingAreaMonitor extends MicroConstraintMonitor {
     FormalMicroConstraint contrainte = (FormalMicroConstraint) getElementSpec();
     double min = UnitsTranslation.getValeurContrUniteTerrain(
         Legend.getSYMBOLISATI0N_SCALE(), contrainte);
-    if ((Double) getValeurIni() < min)
-      setValeurBut(min);
-    else if ((Double) getValeurIni() < 2 * min) {
+    if ((Double) getInitialValue() < min)
+      setGoalValue(min);
+    else if ((Double) getInitialValue() < 2 * min) {
       double epsilon = 5.0;
       double a = (1.0 - 2.0 * epsilon) / min;
       double b = min - 1.0 + 3.0 * epsilon;
-      setValeurBut(a * (Double) getValeurIni() + b);
+      setGoalValue(a * (Double) getInitialValue() + b);
     } else
-      setValeurBut(getValeurIni());
+      setGoalValue(getInitialValue());
 
   }
 

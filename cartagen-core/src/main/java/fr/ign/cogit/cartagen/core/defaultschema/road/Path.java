@@ -28,150 +28,151 @@ import fr.ign.cogit.geoxygene.schemageo.impl.support.reseau.ArcReseauImpl;
 
 public class Path extends GeneObjLinDefault implements IPathLine {
 
-  private int importance;
-  private Direction direction;
-  private NetworkSectionType netSectionType;
-  private boolean deadEnd;
-  private ArcReseau geoxObj;
-  private INetworkNode initialNode, finalNode;
+    private int importance;
+    private Direction direction;
+    private NetworkSectionType netSectionType;
+    private boolean deadEnd;
+    private ArcReseau geoxObj;
+    private INetworkNode initialNode, finalNode;
 
-  /**
-   * Constructor
-   */
-  public Path(ILineString line, int importance, int symbolId) {
-    super();
-    this.geoxObj = new ArcReseauImpl(null, false, line);
-    this.setInitialGeom(line);
-    this.setEliminated(false);
-    this.setImportance(importance);
-    this.deadEnd = false;
-    this.initialNode = null;
-    this.finalNode = null;
-    this.setSymbolId(symbolId);
-  }
-
-  /**
-   * Constructor
-   */
-  public Path(ILineString line, int importance) {
-    super();
-    this.geoxObj = new ArcReseauImpl(null, false, line);
-    this.setInitialGeom(line);
-    this.setEliminated(false);
-    this.setImportance(importance);
-    this.deadEnd = false;
-    this.initialNode = null;
-    this.finalNode = null;
-  }
-
-  /**
-   * Constructor
-   */
-  public Path() {
-    super();
-    this.setEliminated(false);
-    this.deadEnd = false;
-    this.initialNode = null;
-    this.finalNode = null;
-  }
-
-  @Override
-  @Transient
-  public IFeature getGeoxObj() {
-    return this.geoxObj;
-  }
-
-  @Override
-  public Color getFrontColor() {
-    if (this.importance == 0) {
-      return Color.DARK_GRAY;
+    /**
+     * Constructor
+     */
+    public Path(ILineString line, int importance, int symbolId) {
+        super();
+        this.geoxObj = new ArcReseauImpl(null, false, line, importance);
+        this.setInitialGeom(line);
+        this.setEliminated(false);
+        this.setImportance(importance);
+        this.deadEnd = false;
+        this.initialNode = null;
+        this.finalNode = null;
+        this.setSymbolId(symbolId);
     }
-    return Color.BLACK;
-  }
 
-  @Override
-  public int getImportance() {
-    return this.importance;
-  }
+    /**
+     * Constructor
+     */
+    public Path(ILineString line, int importance) {
+        super();
+        this.geoxObj = new ArcReseauImpl(null, false, line, importance);
+        this.setInitialGeom(line);
+        this.setEliminated(false);
+        this.setImportance(importance);
+        this.deadEnd = false;
+        this.initialNode = null;
+        this.finalNode = null;
+    }
 
-  @Override
-  public void setImportance(int importance) {
-    this.importance = importance;
-  }
+    /**
+     * Constructor
+     */
+    public Path() {
+        super();
+        this.setEliminated(false);
+        this.deadEnd = false;
+        this.initialNode = null;
+        this.finalNode = null;
+    }
 
-  @Override
-  public Direction getDirection() {
-    return this.direction;
-  }
+    @Override
+    @Transient
+    public IFeature getGeoxObj() {
+        return this.geoxObj;
+    }
 
-  @Override
-  public INetworkNode getFinalNode() {
-    return this.finalNode;
-  }
+    @Override
+    public Color getFrontColor() {
+        if (this.importance == 0) {
+            return Color.DARK_GRAY;
+        }
+        return Color.BLACK;
+    }
 
-  @Override
-  public INetworkNode getInitialNode() {
-    return this.initialNode;
-  }
+    @Override
+    public int getImportance() {
+        return this.importance;
+    }
 
-  @Override
-  public double getInternWidth() {
-    return SLDUtilCartagen.getSymbolInnerWidthMapMm(this);
-  }
+    @Override
+    public void setImportance(int importance) {
+        this.importance = importance;
+        this.geoxObj.setImportance(importance);
+    }
 
-  @Override
-  public INetworkFace getLeftFace() {
-    return null;
-  }
+    @Override
+    public Direction getDirection() {
+        return this.direction;
+    }
 
-  @Override
-  public NetworkSectionType getNetworkSectionType() {
-    return this.netSectionType;
-  }
+    @Override
+    public INetworkNode getFinalNode() {
+        return this.finalNode;
+    }
 
-  @Override
-  public INetworkFace getRightFace() {
-    return null;
-  }
+    @Override
+    public INetworkNode getInitialNode() {
+        return this.initialNode;
+    }
 
-  @Override
-  public double getWidth() {
-    return this.getInternWidth();
-  }
+    @Override
+    public double getInternWidth() {
+        return SLDUtilCartagen.getSymbolInnerWidthMapMm(this);
+    }
 
-  @Override
-  public boolean isAnalog(INetworkSection at) {
-    return false;
-  }
+    @Override
+    public INetworkFace getLeftFace() {
+        return null;
+    }
 
-  @Override
-  public boolean isDeadEnd() {
-    return this.deadEnd;
-  }
+    @Override
+    public NetworkSectionType getNetworkSectionType() {
+        return this.netSectionType;
+    }
 
-  @Override
-  public void setDeadEnd(boolean deadEnd) {
-    this.deadEnd = deadEnd;
-  }
+    @Override
+    public INetworkFace getRightFace() {
+        return null;
+    }
 
-  @Override
-  public void setDirection(Direction direction) {
-    this.direction = direction;
-  }
+    @Override
+    public double getWidth() {
+        return this.getInternWidth();
+    }
 
-  @Override
-  public void setFinalNode(INetworkNode node) {
-    this.finalNode = node;
-  }
+    @Override
+    public boolean isAnalog(INetworkSection at) {
+        return false;
+    }
 
-  @Override
-  public void setInitialNode(INetworkNode node) {
-    this.initialNode = node;
-  }
+    @Override
+    public boolean isDeadEnd() {
+        return this.deadEnd;
+    }
 
-  @Override
-  public void setNetworkSectionType(NetworkSectionType type) {
-    this.netSectionType = type;
-  }
+    @Override
+    public void setDeadEnd(boolean deadEnd) {
+        this.deadEnd = deadEnd;
+    }
+
+    @Override
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    @Override
+    public void setFinalNode(INetworkNode node) {
+        this.finalNode = node;
+    }
+
+    @Override
+    public void setInitialNode(INetworkNode node) {
+        this.initialNode = node;
+    }
+
+    @Override
+    public void setNetworkSectionType(NetworkSectionType type) {
+        this.netSectionType = type;
+    }
 
 }

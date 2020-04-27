@@ -26,15 +26,15 @@ public class GranularityMonitor extends MicroConstraintMonitor {
 
   @Override
   public void computeSatisfaction() {
-    if (getSujet().isEliminated()) {
+    if (getSubject().isEliminated()) {
       setSatisfaction(ConstraintSatisfaction.valueOfFrench("PARFAIT"));
       return;
     }
     // on compare le but à la valeur courante
     double seuilDensite = 0.05;// 5 vertices pour 100 m, à vérifier
-    ValeurGranularite but = (ValeurGranularite) getValeurBut();
-    double longMinSeg = ((ValeurGranularite) getValeurCourante()).longMinSeg;
-    double densite = ((ValeurGranularite) getValeurCourante()).densiteVertices;
+    ValeurGranularite but = (ValeurGranularite) getGoalValue();
+    double longMinSeg = ((ValeurGranularite) getCurrentValue()).longMinSeg;
+    double densite = ((ValeurGranularite) getCurrentValue()).densiteVertices;
     // si la valeur courante vaut le but � epsilon pr�s,
     if (longMinSeg >= but.longMinSeg)
       setSatisfaction(ConstraintSatisfaction.valueOfFrench("PARFAIT"));
@@ -58,7 +58,7 @@ public class GranularityMonitor extends MicroConstraintMonitor {
 
   @Override
   public void calculerValeurCourante() {
-    IGeometry geom = this.getSujet().getGeom();
+    IGeometry geom = this.getSubject().getGeom();
     double longMinSeg = CommonAlgorithmsFromCartAGen
         .getShortestEdgeLength(geom);
     double densiteVert = 0.0;
@@ -71,7 +71,7 @@ public class GranularityMonitor extends MicroConstraintMonitor {
       double perim = geom.length();
       densiteVert = nbVert / perim;
     }
-    this.setValeurCourante(new ValeurGranularite(longMinSeg, densiteVert));
+    this.setCurrentValue(new ValeurGranularite(longMinSeg, densiteVert));
   }
 
   @Override
@@ -80,7 +80,7 @@ public class GranularityMonitor extends MicroConstraintMonitor {
     FormalMicroConstraint contrainte = (FormalMicroConstraint) getElementSpec();
     double min = UnitsTranslation.getValeurContrUniteTerrain(
         Legend.getSYMBOLISATI0N_SCALE(), contrainte);
-    setValeurBut(new ValeurGranularite(min, 0.05));
+    setGoalValue(new ValeurGranularite(min, 0.05));
   }
 
   public static class ValeurGranularite {

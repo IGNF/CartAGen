@@ -13,6 +13,7 @@ import fr.ign.cogit.cartagen.core.defaultschema.GeneObjLinDefault;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkFace;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkSection;
 import fr.ign.cogit.cartagen.core.genericschema.network.NetworkSectionType;
+import fr.ign.cogit.geoxygene.schemageo.api.support.reseau.ArcReseau;
 
 /*
  * ###### IGN / CartAGen ###### Title: WaterLine Description: Tronçons de
@@ -20,58 +21,59 @@ import fr.ign.cogit.cartagen.core.genericschema.network.NetworkSectionType;
  * 18/09/2009
  */
 
-public abstract class NetworkSection extends GeneObjLinDefault implements
-    INetworkSection {
+public abstract class NetworkSection extends GeneObjLinDefault
+        implements INetworkSection {
 
-  private int importance;
+    private int importance;
 
-  @Override
-  public int getImportance() {
-    return this.importance;
-  }
+    @Override
+    public int getImportance() {
+        return this.importance;
+    }
 
-  @Override
-  public void setImportance(int importance) {
-    this.importance = importance;
-  }
+    @Override
+    public void setImportance(int importance) {
+        this.importance = importance;
+        ((ArcReseau) this.getGeoxObj()).setImportance(importance);
+    }
 
-  @Override
-  public boolean isAnalog(INetworkSection at) {
-    return this.importance == at.getImportance();
-  }
+    @Override
+    public boolean isAnalog(INetworkSection at) {
+        return this.importance == at.getImportance();
+    }
 
-  private INetworkFace leftFace;
+    private INetworkFace leftFace;
 
-  @Override
-  public INetworkFace getLeftFace() {
-    return this.leftFace;
-  }
+    @Override
+    public INetworkFace getLeftFace() {
+        return this.leftFace;
+    }
 
-  public void setLeftFace(INetworkFace leftFace) {
-    this.leftFace = leftFace;
-  }
+    public void setLeftFace(INetworkFace leftFace) {
+        this.leftFace = leftFace;
+    }
 
-  private INetworkFace rightFace;
+    private INetworkFace rightFace;
 
-  @Override
-  public INetworkFace getRightFace() {
-    return this.rightFace;
-  }
+    @Override
+    public INetworkFace getRightFace() {
+        return this.rightFace;
+    }
 
-  public void setRightFace(INetworkFace rightFace) {
-    this.rightFace = rightFace;
-  }
+    public void setRightFace(INetworkFace rightFace) {
+        this.rightFace = rightFace;
+    }
 
-  private NetworkSectionType networkSectionType = NetworkSectionType.UNKNOWN;
+    private NetworkSectionType networkSectionType = NetworkSectionType.UNKNOWN;
 
-  @Override
-  public NetworkSectionType getNetworkSectionType() {
-    return this.networkSectionType;
-  }
+    @Override
+    public NetworkSectionType getNetworkSectionType() {
+        return this.networkSectionType;
+    }
 
-  @Override
-  public void setNetworkSectionType(NetworkSectionType type) {
-    this.networkSectionType = type;
-  }
+    @Override
+    public void setNetworkSectionType(NetworkSectionType type) {
+        this.networkSectionType = type;
+    }
 
 }

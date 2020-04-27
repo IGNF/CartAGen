@@ -27,11 +27,11 @@ public class PreserveConcavityMonitor extends MicroConstraintMonitor {
     double pourcent = ((MarginExpressionType) contrainte.getExprType())
         .getMargin();
     // récupère la valeur but
-    double but = (Double) getValeurBut();
+    double but = (Double) getGoalValue();
     // calcule la marge
     double marge = but * pourcent;
     // récupère la valeur courante
-    double val = (Double) getValeurCourante();
+    double val = (Double) getCurrentValue();
     double epsilon = 0.05;
     if (Math.abs(val - but) < epsilon + marge)
       setSatisfaction(ConstraintSatisfaction.valueOfFrench("PARFAIT"));
@@ -55,17 +55,17 @@ public class PreserveConcavityMonitor extends MicroConstraintMonitor {
   @Override
   public void calculerValeurBut() {
     // c'est la valeur initiale
-    setValeurBut(getValeurIni());
+    setGoalValue(getInitialValue());
   }
 
   @Override
   public void calculerValeurCourante() {
-    IPolygon geom = (IPolygon) this.getSujet().getGeom();
+    IPolygon geom = (IPolygon) this.getSubject().getGeom();
     double area = geom.area();
     IGeometry hull = geom.convexHull();
     double areaHull = hull.area();
 
-    this.setValeurCourante(new Double(area / areaHull));
+    this.setCurrentValue(new Double(area / areaHull));
   }
 
   @Override

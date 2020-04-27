@@ -1,7 +1,7 @@
 <Config-CartAGen-GUI-Components>
 	<Component>
 		<name>Utilities</name>
-		<path>fr.ign.cogit.geoxygene.appli.plugin.cartagen.util.UtilitiesGUIComponent</path>
+		<path>fr.ign.cogit.cartagen.appli.plugins.UtilitiesGUIComponent</path>
 	</Component>
 		<Component>
 		<name>Least Squares</name>
@@ -10,6 +10,10 @@
 	<Component>
 		<name>CollaGen</name>
 		<path>fr.ign.cogit.cartagen.appli.plugins.process.CollaGenComponent</path>
+	</Component>
+	<Component>
+		<name>ScaleMaster</name>
+		<path>fr.ign.cogit.cartagen.appli.plugins.process.ScaleMaster2Plugin</path>
 	</Component>
 	<Component>
 		<name>Evaluation</name>
@@ -21,7 +25,7 @@
 	</Component>
 	<Component>
 		<name>Continuous</name>
-		<path>fr.ign.cogit.geoxygene.appli.plugin.cartagen.util.ContinuousGUIComponent</path>
+		<path>fr.ign.cogit.cartagen.appli.plugins.process.ContinuousGUIComponent</path>
 	</Component>
 	<Component>
 		<name>OpenStreetMap</name>

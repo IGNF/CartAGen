@@ -69,11 +69,14 @@ public class AlgorithmsMenu extends JMenu {
         mDouglas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
-                double seuil = Double.valueOf(JOptionPane.showInputDialog("Douglas & Peucker threshold"));
+                GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                        .getApplication();
+                double seuil = Double.valueOf(JOptionPane
+                        .showInputDialog("Douglas & Peucker threshold"));
                 for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
                     IGeometry geom = feat.getGeom();
-                    IGeometry generalised = Filtering.DouglasPeucker(geom, seuil);
+                    IGeometry generalised = Filtering.DouglasPeucker(geom,
+                            seuil);
                     if (generalised != null)
                         feat.setGeom(generalised);
                 }
@@ -84,13 +87,16 @@ public class AlgorithmsMenu extends JMenu {
         mVisva.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
-                double seuil = Double.valueOf(JOptionPane.showInputDialog("Visvalingam-Whyatt threshold (m²)"));
+                GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                        .getApplication();
+                double seuil = Double.valueOf(JOptionPane
+                        .showInputDialog("Visvalingam-Whyatt threshold (m²)"));
                 for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
                     IGeometry geom = feat.getGeom();
                     VisvalingamWhyatt algo = new VisvalingamWhyatt(seuil);
                     if (geom instanceof ILineString) {
-                        ILineString generalised = algo.simplify((ILineString) geom);
+                        ILineString generalised = algo
+                                .simplify((ILineString) geom);
                         if (generalised != null)
                             feat.setGeom(generalised);
                     } else if (geom instanceof IPolygon) {
@@ -107,14 +113,18 @@ public class AlgorithmsMenu extends JMenu {
         mRaposo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
-                double initialScale = Double.valueOf(
-                        JOptionPane.showInputDialog("initial scale of simplified data (1000.0 for 1:1k scale)"));
+                GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                        .getApplication();
+                double initialScale = Double
+                        .valueOf(JOptionPane.showInputDialog(
+                                "initial scale of simplified data (1000.0 for 1:1k scale)"));
                 for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
                     IGeometry geom = feat.getGeom();
-                    RaposoSimplification algo = new RaposoSimplification(true, false, initialScale);
+                    RaposoSimplification algo = new RaposoSimplification(true,
+                            false, initialScale);
                     if (geom instanceof ILineString) {
-                        ILineString generalised = algo.simplify((ILineString) geom);
+                        ILineString generalised = algo
+                                .simplify((ILineString) geom);
                         if (generalised != null)
                             feat.setGeom(generalised);
                     } else if (geom instanceof IPolygon) {
@@ -130,14 +140,17 @@ public class AlgorithmsMenu extends JMenu {
         mLiOpenshaw.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
-                double cellSize = Double.valueOf(JOptionPane
-                        .showInputDialog("size (in meters) of the cell (only one vertex is retained per cell)"));
+                GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                        .getApplication();
+                double cellSize = Double.valueOf(JOptionPane.showInputDialog(
+                        "size (in meters) of the cell (only one vertex is retained per cell)"));
                 for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
                     IGeometry geom = feat.getGeom();
-                    LiOpenshawSimplification algo = new LiOpenshawSimplification(true, cellSize);
+                    LiOpenshawSimplification algo = new LiOpenshawSimplification(
+                            true, cellSize);
                     if (geom instanceof ILineString) {
-                        ILineString generalised = algo.simplify((ILineString) geom);
+                        ILineString generalised = algo
+                                .simplify((ILineString) geom);
                         if (generalised != null)
                             feat.setGeom(generalised);
                     } else if (geom instanceof IPolygon) {
@@ -153,20 +166,26 @@ public class AlgorithmsMenu extends JMenu {
         mSmoothing.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
-                double seuil = Double.valueOf(JOptionPane.showInputDialog("Gaussian sigma threshold"));
-                double step = Double.valueOf(JOptionPane.showInputDialog("line subsampling step"));
+                GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                        .getApplication();
+                double seuil = Double.valueOf(JOptionPane
+                        .showInputDialog("Gaussian sigma threshold"));
+                double step = Double.valueOf(
+                        JOptionPane.showInputDialog("line subsampling step"));
                 for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
                     IGeometry geom = feat.getGeom();
                     if (geom instanceof ILineString) {
-                        IGeometry generalised = GaussianFilter.gaussianFilter((ILineString) geom, seuil, step);
+                        IGeometry generalised = GaussianFilter.gaussianFilter(
+                                (ILineString) geom, seuil, step);
                         if (generalised != null)
                             feat.setGeom(generalised);
                     } else if (geom instanceof IPolygon) {
-                        ILineString generalised = GaussianFilter.gaussianFilter(((IPolygon) geom).exteriorLineString(),
-                                seuil, step);
+                        ILineString generalised = GaussianFilter.gaussianFilter(
+                                ((IPolygon) geom).exteriorLineString(), seuil,
+                                step);
                         if (generalised != null)
-                            feat.setGeom(GeometryEngine.getFactory().createIPolygon(generalised));
+                            feat.setGeom(GeometryEngine.getFactory()
+                                    .createIPolygon(generalised));
                     }
                 }
             }
@@ -175,11 +194,13 @@ public class AlgorithmsMenu extends JMenu {
 
         // displacement menu
         JMenu mDisplacement = new JMenu("Displacement");
-        JMenuItem mRandom = new JMenuItem("Random displacement of overlapping polygon features");
+        JMenuItem mRandom = new JMenuItem(
+                "Random displacement of overlapping polygon features");
         mRandom.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
+                GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                        .getApplication();
                 List<IFeature> polygons = new ArrayList<>();
                 Set<IFeature> lines = new HashSet<>();
                 for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
@@ -196,11 +217,13 @@ public class AlgorithmsMenu extends JMenu {
 
         // elimination menu
         JMenu mElimination = new JMenu("Contextual Deletion");
-        JMenuItem mOverlaps = new JMenuItem("Contextual deletion based on overlapping polygon features");
+        JMenuItem mOverlaps = new JMenuItem(
+                "Contextual deletion based on overlapping polygon features");
         mOverlaps.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
+                GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                        .getApplication();
                 List<IFeature> polygons = new ArrayList<>();
                 Set<IFeature> lines = new HashSet<>();
                 for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
@@ -216,7 +239,8 @@ public class AlgorithmsMenu extends JMenu {
                     feat.setDeleted(true);
                     if (feat instanceof IGeneObj)
                         ((IGeneObj) feat).eliminate();
-                    Layer layer = CartAGenPlugin.getInstance().getApplication().getMainFrame().getSelectedProjectFrame()
+                    Layer layer = CartAGenPlugin.getInstance().getApplication()
+                            .getMainFrame().getSelectedProjectFrame()
                             .getLayerFromFeature(feat);
                     layer.getFeatureCollection().remove(feat);
                 }
@@ -235,11 +259,16 @@ public class AlgorithmsMenu extends JMenu {
 
         // Bend generalization
         JMenu mBendSeries = new JMenu("Bend Series");
-        JMenuItem mContinuousAccordion = new JMenuItem(new ContinuousAccordionAction());
+        JMenuItem mContinuousAccordion = new JMenuItem(
+                new ContinuousAccordionAction());
         mBendSeries.add(mContinuousAccordion);
         JMenuItem mAccordion = new JMenuItem(new AccordionAction());
         mBendSeries.add(mAccordion);
-        JMenuItem mContinuousMaxBreak = new JMenuItem(new ContinuousMaxBreakAction());
+        JMenuItem mSchematization = new JMenuItem(
+                new BendSchematizationAction());
+        mBendSeries.add(mSchematization);
+        JMenuItem mContinuousMaxBreak = new JMenuItem(
+                new ContinuousMaxBreakAction());
         mBendSeries.add(mContinuousMaxBreak);
 
         this.add(mLineSimplif);
@@ -264,21 +293,28 @@ public class AlgorithmsMenu extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
+            GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                    .getApplication();
 
             for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
                 IGeometry geom = feat.getGeom();
                 if (!(geom instanceof IPolygon))
                     continue;
-                Set<ILineSegment> segments = Skeletonize.skeletonizeStraightSkeleton((IPolygon) geom);
-                Set<ILineString> skeleton = Skeletonize.connectSkeletonToPolygon(segments, (IPolygon) geom);
+                Set<ILineSegment> segments = Skeletonize
+                        .skeletonizeStraightSkeleton((IPolygon) geom);
+                Set<ILineString> skeleton = Skeletonize
+                        .connectSkeletonToPolygon(segments, (IPolygon) geom);
                 for (ILineString generalised : skeleton) {
                     if (generalised != null) {
                         // display the output in the geometry pool
-                        CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool().setSld(CartAGenPlugin
-                                .getInstance().getApplication().getMainFrame().getSelectedProjectFrame().getSld());
-                        CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
-                                .addFeatureToGeometryPool(generalised, Color.RED, 2);
+                        CartAGenDoc.getInstance().getCurrentDataset()
+                                .getGeometryPool()
+                                .setSld(CartAGenPlugin.getInstance()
+                                        .getApplication().getMainFrame()
+                                        .getSelectedProjectFrame().getSld());
+                        CartAGenDoc.getInstance().getCurrentDataset()
+                                .getGeometryPool().addFeatureToGeometryPool(
+                                        generalised, Color.RED, 2);
                     }
                 }
             }
@@ -300,19 +336,25 @@ public class AlgorithmsMenu extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
-            double densStep = Double.valueOf(JOptionPane.showInputDialog("add a vertex every x meters"));
+            GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                    .getApplication();
+            double densStep = Double.valueOf(
+                    JOptionPane.showInputDialog("add a vertex every x meters"));
             for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
                 IGeometry geom = feat.getGeom();
                 if (!(geom instanceof IPolygon))
                     continue;
-                TreeGraph skeleton = Skeletonize.skeletonizeTINGraph((IPolygon) geom, densStep);
+                TreeGraph skeleton = Skeletonize
+                        .skeletonizeTINGraph((IPolygon) geom, densStep);
 
                 // display the output in the geometry pool
-                CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool().setSld(CartAGenPlugin.getInstance()
-                        .getApplication().getMainFrame().getSelectedProjectFrame().getSld());
-                CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool().addGraphToGeometryPool(skeleton,
-                        Color.RED, Color.MAGENTA);
+                CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
+                        .setSld(CartAGenPlugin.getInstance().getApplication()
+                                .getMainFrame().getSelectedProjectFrame()
+                                .getSld());
+                CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
+                        .addGraphToGeometryPool(skeleton, Color.RED,
+                                Color.MAGENTA);
             }
         }
     }
@@ -332,13 +374,16 @@ public class AlgorithmsMenu extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
+            GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                    .getApplication();
             List<IPolygon> listPoly = new ArrayList<>();
 
-            double overSample = Double.valueOf(JOptionPane.showInputDialog("add a vertex every x meters"));
-            double lengthMin = Double
-                    .valueOf(JOptionPane.showInputDialog("minimum length (in m) to keep a segment in the spine"));
-            int answer = JOptionPane.showConfirmDialog(null, "Do you want to remove holes from the polygons?");
+            double overSample = Double.valueOf(
+                    JOptionPane.showInputDialog("add a vertex every x meters"));
+            double lengthMin = Double.valueOf(JOptionPane.showInputDialog(
+                    "minimum length (in m) to keep a segment in the spine"));
+            int answer = JOptionPane.showConfirmDialog(null,
+                    "Do you want to remove holes from the polygons?");
             boolean removeHoles = answer == JOptionPane.YES_OPTION;
 
             for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
@@ -347,15 +392,20 @@ public class AlgorithmsMenu extends JMenu {
                     continue;
                 listPoly.add((IPolygon) geom);
             }
-            List<ILineString> segments = Spinalize.spinalize(listPoly, lengthMin, overSample, removeHoles);
+            List<ILineString> segments = Spinalize.spinalize(listPoly,
+                    lengthMin, overSample, removeHoles);
 
             for (ILineString generalised : segments) {
                 if (generalised != null) {
                     // display the output in the geometry pool
-                    CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool().setSld(CartAGenPlugin.getInstance()
-                            .getApplication().getMainFrame().getSelectedProjectFrame().getSld());
-                    CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
-                            .addFeatureToGeometryPool(generalised, Color.RED, 2);
+                    CartAGenDoc.getInstance().getCurrentDataset()
+                            .getGeometryPool()
+                            .setSld(CartAGenPlugin.getInstance()
+                                    .getApplication().getMainFrame()
+                                    .getSelectedProjectFrame().getSld());
+                    CartAGenDoc.getInstance().getCurrentDataset()
+                            .getGeometryPool().addFeatureToGeometryPool(
+                                    generalised, Color.RED, 2);
                 }
             }
 
@@ -378,22 +428,27 @@ public class AlgorithmsMenu extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
-            CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool().setSld(
-                    CartAGenPlugin.getInstance().getApplication().getMainFrame().getSelectedProjectFrame().getSld());
+            GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                    .getApplication();
+            CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
+                    .setSld(CartAGenPlugin.getInstance().getApplication()
+                            .getMainFrame().getSelectedProjectFrame().getSld());
             for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
                 IGeometry geom = feat.getGeom();
                 if (!(geom instanceof ILineString))
                     continue;
                 BendSeries bendSeries = new BendSeries((ILineString) geom);
-                BendSeriesContinuousAlgorithm algo = new BendSeriesContinuousAlgorithm(bendSeries, 20.0, 60.0);
-                algo.setDebugMode(CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool());
+                BendSeriesContinuousAlgorithm algo = new BendSeriesContinuousAlgorithm(
+                        bendSeries, 20.0, 60.0);
+                algo.setDebugMode(CartAGenDoc.getInstance().getCurrentDataset()
+                        .getGeometryPool());
                 List<ILineString> generalized = algo.accordion(5);
 
                 // display the output in the geometry pool
                 for (ILineString line : generalized)
-                    CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool().addFeatureToGeometryPool(line,
-                            Color.RED, 2);
+                    CartAGenDoc.getInstance().getCurrentDataset()
+                            .getGeometryPool()
+                            .addFeatureToGeometryPool(line, Color.RED, 2);
             }
         }
     }
@@ -413,23 +468,29 @@ public class AlgorithmsMenu extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
-            CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool().setSld(
-                    CartAGenPlugin.getInstance().getApplication().getMainFrame().getSelectedProjectFrame().getSld());
+            GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                    .getApplication();
+            CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
+                    .setSld(CartAGenPlugin.getInstance().getApplication()
+                            .getMainFrame().getSelectedProjectFrame().getSld());
             for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
                 IGeometry geom = feat.getGeom();
                 if (!(geom instanceof ILineString))
                     continue;
                 BendSeries bendSeries = new BendSeries((ILineString) geom);
-                BendSeriesContinuousAlgorithm algo = new BendSeriesContinuousAlgorithm(bendSeries, 20.0, 60.0);
-                algo.setDebugMode(CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool());
+                BendSeriesContinuousAlgorithm algo = new BendSeriesContinuousAlgorithm(
+                        bendSeries, 20.0, 60.0);
+                algo.setDebugMode(CartAGenDoc.getInstance().getCurrentDataset()
+                        .getGeometryPool());
                 for (Bend bend : bendSeries.getBends()) {
-                    List<ILineString> generalized = algo.continuousMaxBreak(5, bend);
+                    List<ILineString> generalized = algo.continuousMaxBreak(5,
+                            bend);
 
                     // display the output in the geometry pool
                     for (ILineString line : generalized)
-                        CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool().addFeatureToGeometryPool(line,
-                                Color.RED, 2);
+                        CartAGenDoc.getInstance().getCurrentDataset()
+                                .getGeometryPool()
+                                .addFeatureToGeometryPool(line, Color.RED, 2);
                 }
             }
         }
@@ -450,21 +511,67 @@ public class AlgorithmsMenu extends JMenu {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
+            GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                    .getApplication();
 
             for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
                 IGeometry geom = feat.getGeom();
                 if (!(geom instanceof ILineString))
                     continue;
                 BendSeries bendSeries = new BendSeries((ILineString) geom);
-                BendSeriesAlgorithm algo = new BendSeriesAlgorithm(bendSeries, 0.0, 60.0);
+                BendSeriesAlgorithm algo = new BendSeriesAlgorithm(bendSeries,
+                        0.0, 60.0);
                 ILineString generalized = algo.accordion();
 
                 // display the output in the geometry pool
-                CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool().setSld(CartAGenPlugin.getInstance()
-                        .getApplication().getMainFrame().getSelectedProjectFrame().getSld());
-                CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool().addFeatureToGeometryPool(generalized,
-                        Color.RED, 2);
+                CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
+                        .setSld(CartAGenPlugin.getInstance().getApplication()
+                                .getMainFrame().getSelectedProjectFrame()
+                                .getSld());
+                CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
+                        .addFeatureToGeometryPool(generalized, Color.RED, 2);
+            }
+        }
+    }
+
+    class BendSchematizationAction extends AbstractAction {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1L;
+
+        public BendSchematizationAction() {
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Trigger the Bend Schematization algorithm on a selected line with bend series");
+            this.putValue(Action.NAME, "Bend Schematization");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            GeOxygeneApplication appli = CartAGenPlugin.getInstance()
+                    .getApplication();
+
+            double seuil = Double.valueOf(
+                    JOptionPane.showInputDialog("Gaussian sigma threshold"));
+
+            for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
+                IGeometry geom = feat.getGeom();
+                if (!(geom instanceof ILineString))
+                    continue;
+                BendSeries bendSeries = new BendSeries((ILineString) geom,
+                        seuil);
+                BendSeriesAlgorithm algo = new BendSeriesAlgorithm(bendSeries,
+                        0.0, 60.0);
+                ILineString generalized = algo.schematisation();
+
+                // display the output in the geometry pool
+                CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
+                        .setSld(CartAGenPlugin.getInstance().getApplication()
+                                .getMainFrame().getSelectedProjectFrame()
+                                .getSld());
+                CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
+                        .addFeatureToGeometryPool(generalized, Color.RED, 2);
             }
         }
     }

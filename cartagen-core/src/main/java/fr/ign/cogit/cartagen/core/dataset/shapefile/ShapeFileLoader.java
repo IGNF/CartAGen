@@ -397,10 +397,12 @@ public class ShapeFileLoader {
             }
             if (geom instanceof ILineString) {
                 IRoadLine tr = dataset.getCartAGenDB().getGeneObjImpl()
-                        .getCreationFactory()
-                        .createRoadLine(new TronconDeRouteImpl(
-                                (Reseau) dataset.getRoadNetwork().getGeoxObj(),
-                                false, (ILineString) geom), importance);
+                        .getCreationFactory().createRoadLine(
+                                new TronconDeRouteImpl(
+                                        (Reseau) dataset.getRoadNetwork()
+                                                .getGeoxObj(),
+                                        false, (ILineString) geom, importance),
+                                importance);
                 if (fields.containsKey("CARTAGEN_ID")) {
                     tr.setId((Integer) fields.get("CARTAGEN_ID"));
                 } else {
@@ -417,8 +419,8 @@ public class ShapeFileLoader {
                                     (Reseau) dataset.getRoadNetwork()
                                             .getGeoxObj(),
                                     false, (ILineString) ((IMultiCurve<?>) geom)
-                                            .get(i)),
-                                    importance);
+                                            .get(i),
+                                    importance), importance);
                     if (fields.containsKey("CARTAGEN_ID")) {
                         tr.setId((Integer) fields.get("CARTAGEN_ID"));
                     } else {
@@ -595,11 +597,13 @@ public class ShapeFileLoader {
 
                 if (sourceDlm != SourceDLM.BD_TOPO_V2)
                     tr = dataset.getCartAGenDB().getGeneObjImpl()
-                            .getCreationFactory()
-                            .createRoadLine(new TronconDeRouteImpl(
-                                    (Reseau) dataset.getRoadNetwork()
-                                            .getGeoxObj(),
-                                    false, (ILineString) geom), importance);
+                            .getCreationFactory().createRoadLine(
+                                    new TronconDeRouteImpl(
+                                            (Reseau) dataset.getRoadNetwork()
+                                                    .getGeoxObj(),
+                                            false, (ILineString) geom,
+                                            importance),
+                                    importance);
                 else {
 
                     tr = new RoadLineWithAttributes(
@@ -607,7 +611,7 @@ public class ShapeFileLoader {
                             new TronconDeRouteImpl(
                                     (Reseau) dataset.getRoadNetwork()
                                             .getGeoxObj(),
-                                    false, (ILineString) geom),
+                                    false, (ILineString) geom, importance),
                             importance);
                     tr.setFeatureType(ft);
 
@@ -641,12 +645,12 @@ public class ShapeFileLoader {
                         tr = dataset.getCartAGenDB().getGeneObjImpl()
                                 .getCreationFactory()
                                 .createRoadLine(new TronconDeRouteImpl(
-                                        (Reseau) dataset.getRoadNetwork()
-                                                .getGeoxObj(),
+                                        (Reseau) dataset
+                                                .getRoadNetwork().getGeoxObj(),
                                         false,
                                         (ILineString) ((IMultiCurve<?>) geom)
-                                                .get(i)),
-                                        importance);
+                                                .get(i),
+                                        importance), importance);
 
                     else {
 
@@ -655,8 +659,8 @@ public class ShapeFileLoader {
 
                                         .getGeoxObj(),
                                 false,
-                                (ILineString) ((IMultiCurve<?>) geom).get(i)),
-                                importance);
+                                (ILineString) ((IMultiCurve<?>) geom).get(i),
+                                importance), importance);
 
                         tr.setFeatureType(ft);
                         for (int k = 0; k < dbr.getHeader()
@@ -762,7 +766,7 @@ public class ShapeFileLoader {
                         .getCreationFactory()
                         .createRoadLine(new TronconDeRouteImpl(
                                 (Reseau) dataset.getRoadNetwork(), false,
-                                (ILineString) geom), 4);
+                                (ILineString) geom, 4), 4);
 
                 dataset.getRoads().add(tr);
 
@@ -775,8 +779,8 @@ public class ShapeFileLoader {
                                     (Reseau) dataset.getRoadNetwork()
                                             .getGeoxObj(),
                                     false, (ILineString) ((IMultiCurve<?>) geom)
-                                            .get(i)),
-                                    4);
+                                            .get(i),
+                                    4), 4);
 
                     dataset.getRoads().add(tr);
                 }
@@ -850,7 +854,7 @@ public class ShapeFileLoader {
                         .getCreationFactory()
                         .createWaterLine(new TronconHydrographiqueImpl(
                                 (Reseau) dataset.getHydroNetwork().getGeoxObj(),
-                                false, (ILineString) geom), 0);
+                                false, (ILineString) geom, 0), 0);
                 if (fields.containsKey("CARTAGEN_ID")) {
                     tr.setId((Integer) fields.get("CARTAGEN_ID"));
                 } else {
@@ -866,8 +870,8 @@ public class ShapeFileLoader {
                                     (Reseau) dataset.getHydroNetwork()
                                             .getGeoxObj(),
                                     false, (ILineString) ((IMultiCurve<?>) geom)
-                                            .get(i)),
-                                    0);
+                                            .get(i),
+                                    0), 0);
                     if (fields.containsKey("CARTAGEN_ID")) {
                         tr.setId((Integer) fields.get("CARTAGEN_ID"));
                     } else {
@@ -1208,7 +1212,7 @@ public class ShapeFileLoader {
                         .createRailwayLine(new TronconFerreImpl(
                                 (Reseau) dataset.getRailwayNetwork()
                                         .getGeoxObj(),
-                                false, (ILineString) geom), 0);
+                                false, (ILineString) geom, 0), 0);
                 if (sidetrackValue != null)
                     tr.setSidetrack(new Boolean(sidetrackValue));
                 if (fields.containsKey("CARTAGEN_ID")) {
@@ -1226,8 +1230,8 @@ public class ShapeFileLoader {
                                     (Reseau) dataset.getRailwayNetwork()
                                             .getGeoxObj(),
                                     false, (ILineString) ((IMultiCurve<?>) geom)
-                                            .get(i)),
-                                    0);
+                                            .get(i),
+                                    0), 0);
                     if (sidetrackValue != null)
                         tr.setSidetrack(new Boolean(sidetrackValue));
                     if (fields.containsKey("CARTAGEN_ID")) {
@@ -1378,7 +1382,7 @@ public class ShapeFileLoader {
                         .createElectricityLine(new ArcReseauImpl(
                                 (Reseau) dataset.getElectricityNetwork()
                                         .getGeoxObj(),
-                                false, (ILineString) geom), 0);
+                                false, (ILineString) geom, 0), 0);
                 if (fields.containsKey("CARTAGEN_ID")) {
                     tr.setId((Integer) fields.get("CARTAGEN_ID"));
                 } else {
@@ -1394,8 +1398,8 @@ public class ShapeFileLoader {
                                     (Reseau) dataset.getElectricityNetwork()
                                             .getGeoxObj(),
                                     false, (ILineString) ((IMultiCurve<?>) geom)
-                                            .get(i)),
-                                    0);
+                                            .get(i),
+                                    0), 0);
                     if (fields.containsKey("CARTAGEN_ID")) {
                         tr.setId((Integer) fields.get("CARTAGEN_ID"));
                     } else {
@@ -2704,7 +2708,7 @@ public class ShapeFileLoader {
                             .getCreationFactory().createRoadLine(
                                     new TronconDeRouteImpl(
                                             (Reseau) dataset.getRoadNetwork(),
-                                            false, (ILineString) geom),
+                                            false, (ILineString) geom, 4),
                                     4, symbolID);
                     tr.setId(id);
                     dataset.getRoads().add(tr);
@@ -2718,8 +2722,8 @@ public class ShapeFileLoader {
                                                 .getGeoxObj(),
                                         false,
                                         (ILineString) ((IMultiCurve<?>) geom)
-                                                .get(i)),
-                                        4, symbolID);
+                                                .get(i),
+                                        4), 4, symbolID);
                         tr.setId(id);
                         dataset.getRoads().add(tr);
                     }
@@ -2804,7 +2808,7 @@ public class ShapeFileLoader {
                             .getCreationFactory().createRoadLine(
                                     new TronconDeRouteImpl(
                                             (Reseau) dataset.getRoadNetwork(),
-                                            false, (ILineString) geom),
+                                            false, (ILineString) geom, 4),
                                     4, symbolID);
 
                     tr.setAttribute(new AttributeType("ID", "String"), key);
@@ -2819,8 +2823,8 @@ public class ShapeFileLoader {
                                                 .getGeoxObj(),
                                         false,
                                         (ILineString) ((IMultiCurve<?>) geom)
-                                                .get(i)),
-                                        4, symbolID);
+                                                .get(i),
+                                        4), 4, symbolID);
                         // tr.setAttribute(new AttributeType("KEY","KEY"), key);
                         dataset.getRoads().add(tr);
                     }

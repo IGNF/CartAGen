@@ -12,6 +12,7 @@ package fr.ign.cogit.cartagen.core.genericschema.urban;
 import java.util.List;
 
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObjSurf;
+import fr.ign.cogit.cartagen.core.genericschema.IMesoObject;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
 
 /*
@@ -19,46 +20,48 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
  * Alignements de batiments Author: J. Renard Date: 16/09/2009
  */
 
-public interface IUrbanAlignment extends IGeneObjSurf {
+public interface IUrbanAlignment
+        extends IGeneObjSurf, IMesoObject<IUrbanElement> {
 
-  public ILineString getShapeLine();
+    public ILineString getShapeLine();
 
-  public void setShapeLine(ILineString shapeLine);
+    public void setShapeLine(ILineString shapeLine);
 
-  public ILineString getInitialShapeLine();
+    public ILineString getInitialShapeLine();
 
-  public void setInitialShapeLine(ILineString shapeLine);
+    public void setInitialShapeLine(ILineString shapeLine);
 
-  public IUrbanElement getInitialElement();
+    public IUrbanElement getInitialElement();
 
-  public void setInitialElement(IUrbanElement initialElement);
+    public void setInitialElement(IUrbanElement initialElement);
 
-  public IUrbanElement getFinalElement();
+    public IUrbanElement getFinalElement();
 
-  public void setFinalElement(IUrbanElement finalElement);
+    public void setFinalElement(IUrbanElement finalElement);
 
-  /**
-   * Gets the urban elements composing the alignment
-   * @return
-   */
-  public List<IUrbanElement> getUrbanElements();
+    /**
+     * Gets the urban elements composing the alignment
+     * 
+     * @return
+     */
+    public List<IUrbanElement> getUrbanElements();
 
-  public void setUrbanElements(List<IUrbanElement> urbanElements);
+    public void setUrbanElements(List<IUrbanElement> urbanElements);
 
-  /**
-   * determines the initial and final urban elements of the alignment
-   */
-  public void computeInitialAndFinalElements();
+    /**
+     * determines the initial and final urban elements of the alignment
+     */
+    public void computeInitialAndFinalElements();
 
-  /**
-   * computes the shape line of the alignment based on its buildings
-   */
-  public void computeShapeLine();
+    /**
+     * computes the shape line of the alignment based on its buildings
+     */
+    public void computeShapeLine();
 
-  /**
-   * completely destroys an alignment, deleting its inner buildings
-   */
-  public void destroy();
+    /**
+     * completely destroys an alignment, deleting its inner buildings
+     */
+    public void destroy();
 
-  public static final String FEAT_TYPE_NAME = "UrbanAlignment";
+    public static final String FEAT_TYPE_NAME = "UrbanAlignment";
 }

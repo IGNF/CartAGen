@@ -22,17 +22,6 @@
 		<Name>roads</Name>
 		<UserStyle>
 		    <FeatureTypeStyle>
-                <Rule>
-                    <Name>road_default</Name>
-                    <LineSymbolizer>
-                        <Stroke>
-                            <CssParameter name="stroke">#7f7f7f</CssParameter>
-                            <CssParameter name="stroke-width">2.0</CssParameter>
-                        </Stroke>
-                        <GeometryPropertyName>geom</GeometryPropertyName>
-                        <PerpendicularOffset>0.0</PerpendicularOffset>
-                    </LineSymbolizer>
-                </Rule>
 				<Rule>
 					<Name>road_importance_0</Name>
 					<Filter>
@@ -131,17 +120,6 @@
                 </Rule>
             </FeatureTypeStyle>     						
             <FeatureTypeStyle>
-                <Rule>
-                    <Name>road_default_fill</Name>
-                    <LineSymbolizer>
-                        <Stroke>
-                            <CssParameter name="stroke">#7f7f7f</CssParameter>
-                            <CssParameter name="stroke-width">2.0</CssParameter>
-                        </Stroke>
-                        <GeometryPropertyName>geom</GeometryPropertyName>
-                        <PerpendicularOffset>0.0</PerpendicularOffset>
-                    </LineSymbolizer>
-                </Rule>
 				<Rule>
 					<Name>road_importance_0_fill</Name>
 					<Filter>

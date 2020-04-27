@@ -1,0 +1,33 @@
+<scalemaster>
+	<name>tutorial</name>
+	<global-range>
+		<interval-min>10000</interval-min>
+		<interval-max>200000</interval-max>
+	</global-range>
+	<scale-line theme="roadl">
+		<scale-interval>
+			<interval-min>10000</interval-min>
+			<interval-max>20000</interval-max>
+			<db-name>IGN</db-name>
+		</scale-interval>
+		<scale-interval>
+			<interval-min>20000</interval-min>
+			<interval-max>40000</interval-max>
+			<db-name>IGN</db-name>
+			<attribute-selection priority="4">
+				<ogc:PropertyIsNotEqualTo>
+					<ogc:PropertyName>Importance</ogc:PropertyName>
+					<ogc:Literal>0</ogc:Literal>
+				</ogc:PropertyIsNotEqualTo>
+			</attribute-selection>
+			<generalisation-processes>
+				<process priority="0">
+					<name>douglas_peucker</name>
+					<params>
+						<parameter name="dp_filering" type="Double">20</parameter>
+					</params>
+				</process>
+			</generalisation-processes>
+		</scale-interval>
+	</scale-line>
+</scalemaster>
