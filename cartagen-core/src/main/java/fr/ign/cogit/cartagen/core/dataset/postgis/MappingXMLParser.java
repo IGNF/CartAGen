@@ -235,6 +235,9 @@ public class MappingXMLParser {
                         .item(0).getTextContent();
                 String theme = matching.getElementsByTagName("theme").item(0)
                         .getTextContent();
+                String featureType = matching
+                        .getElementsByTagName("featureType").item(0)
+                        .getTextContent();
 
                 // get matching attributes mapping
                 Element attributes = (Element) matching
@@ -262,7 +265,7 @@ public class MappingXMLParser {
                 ShapeToLayerMatching matchingObj = mapping.new ShapeToLayerMatching(
                         postgisLayer,
                         factory.getClass().getDeclaredMethod(creationMethod),
-                        scaleRef, theme, attrMappingStorage);
+                        scaleRef, theme, featureType, attrMappingStorage);
                 // add it to CalacMatchings
                 matchingSet.add(matchingObj);
             }

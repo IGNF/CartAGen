@@ -1195,7 +1195,7 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         }
 
         // on r�cup�re la pond�ration des contraintes
-        mapspecs.setPoidsContraintes(new HashMap<String, Double>());
+        mapspecs.setConstraintWeights(new HashMap<String, Double>());
         iter = this.poidsContraintes.keySet().iterator();
         while (iter.hasNext()) {
             String contrainte = iter.next();
