@@ -80,11 +80,13 @@ import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
 import fr.ign.cogit.geoxygene.appli.panel.XMLFileFilter;
 import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSExternalConstraint;
 import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSScheduler;
+import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSScheduler.EndVertexStrategy;
 import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSScheduler.MatrixSolver;
 import fr.ign.cogit.geoxygene.contrib.leastsquares.core.MapspecsLS;
 import fr.ign.cogit.geoxygene.util.XMLUtil;
 
-public class LeastSquaresFrame extends JFrame implements ActionListener, ListSelectionListener, ChangeListener {
+public class LeastSquaresFrame extends JFrame
+        implements ActionListener, ListSelectionListener, ChangeListener {
 
     /**
      * 
@@ -156,7 +158,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
             this.enleverClasseListe();
             if (this.listeObjRigides.getModel().getSize() == 0) {
                 this.contraintesActivees.removeAll(this.contraintesRigides);
-                this.removeAllMap(this.poidsContraintes, this.contraintesRigides);
+                this.removeAllMap(this.poidsContraintes,
+                        this.contraintesRigides);
             }
             this.miseAjourFrame();
         } else if (e.getActionCommand().equals("ajouterMal")) {
@@ -168,11 +171,13 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
             this.enleverClasseListe();
             if (this.listeObjMalleables.getModel().getSize() == 0) {
                 this.contraintesActivees.removeAll(this.contraintesMalleables);
-                this.removeAllMap(this.poidsContraintes, this.contraintesMalleables);
+                this.removeAllMap(this.poidsContraintes,
+                        this.contraintesMalleables);
             }
             this.miseAjourFrame();
         } else if (e.getActionCommand().equals("ajouterExt")) {
-            AddExternalConstraintFrame frame = new AddExternalConstraintFrame(this);
+            AddExternalConstraintFrame frame = new AddExternalConstraintFrame(
+                    this);
             frame.setVisible(true);
         } else if (e.getActionCommand().equals("ajouterSurf")) {
             this.listeCourante = "surf";
@@ -186,13 +191,20 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         super("Généraliser par moindres carrés");
         this.setSize(500, 500);
         // on remplit les contraintes par d�faut
-        this.contraintesFixes.add("fr.ign.cogit.cartagen.leastsquares.core.LSMovementConstraint");
-        this.contraintesRigides.add("fr.ign.cogit.cartagen.leastsquares.core.LSMovementConstraint");
-        this.contraintesRigides.add("fr.ign.cogit.cartagen.leastsquares.core.LSStiffnessConstraint");
-        this.contraintesRigides.add("fr.ign.cogit.cartagen.leastsquares.core.LSSideOrientConstraint");
-        this.contraintesMalleables.add("fr.ign.cogit.cartagen.leastsquares.core.LSMovementConstraint");
-        this.contraintesMalleables.add("fr.ign.cogit.cartagen.leastsquares.core.LSCurvatureConstraint");
-        this.contraintesMalleables.add("fr.ign.cogit.cartagen.leastsquares.core.LSMovementDirConstraint");
+        this.contraintesFixes.add(
+                "fr.ign.cogit.cartagen.leastsquares.core.LSMovementConstraint");
+        this.contraintesRigides.add(
+                "fr.ign.cogit.cartagen.leastsquares.core.LSMovementConstraint");
+        this.contraintesRigides.add(
+                "fr.ign.cogit.cartagen.leastsquares.core.LSStiffnessConstraint");
+        this.contraintesRigides.add(
+                "fr.ign.cogit.cartagen.leastsquares.core.LSSideOrientConstraint");
+        this.contraintesMalleables.add(
+                "fr.ign.cogit.cartagen.leastsquares.core.LSMovementConstraint");
+        this.contraintesMalleables.add(
+                "fr.ign.cogit.cartagen.leastsquares.core.LSCurvatureConstraint");
+        this.contraintesMalleables.add(
+                "fr.ign.cogit.cartagen.leastsquares.core.LSMovementDirConstraint");
         this.findExternalConstraints();
         // contraintesMalleables.add("CIMC_Croisement");
 
@@ -243,7 +255,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         panelObjsFixes.add(boutonsFixes);
         // layout de panelObjsFixes
         panelObjsFixes.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        panelObjsFixes.setLayout(new BoxLayout(panelObjsFixes, BoxLayout.Y_AXIS));
+        panelObjsFixes
+                .setLayout(new BoxLayout(panelObjsFixes, BoxLayout.Y_AXIS));
 
         // ----------------------------
         // Panneau objets rigides
@@ -260,7 +273,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         JButton btnEnleverRigides = new JButton("-");
         btnEnleverRigides.addActionListener(this);
         btnEnleverRigides.setActionCommand("enleverRig");
-        boutonsRigides.setLayout(new BoxLayout(boutonsRigides, BoxLayout.X_AXIS));
+        boutonsRigides
+                .setLayout(new BoxLayout(boutonsRigides, BoxLayout.X_AXIS));
         boutonsRigides.add(btnAjouterRigides);
         boutonsRigides.add(btnEnleverRigides);
         panelObjsRigides.add(lblRigide);
@@ -268,14 +282,16 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         panelObjsRigides.add(boutonsRigides);
         // layout de panelObjsFixes
         panelObjsRigides.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        panelObjsRigides.setLayout(new BoxLayout(panelObjsRigides, BoxLayout.Y_AXIS));
+        panelObjsRigides
+                .setLayout(new BoxLayout(panelObjsRigides, BoxLayout.Y_AXIS));
 
         // ----------------------------
         // Panneau objets rigides
         JPanel panelObjsMalleables = new JPanel();
         this.listeObjMalleables = new JList<>();
         this.listeObjMalleables.setPreferredSize(new Dimension(50, 50));
-        this.listeObjMalleables.setCellRenderer(new ClassSimpleNameListRenderer());
+        this.listeObjMalleables
+                .setCellRenderer(new ClassSimpleNameListRenderer());
         JLabel lblMall = new JLabel("Classes Malléables");
         // on fait un panneau horizontal pour mettre les boutons + et -
         JPanel boutonsMalleables = new JPanel();
@@ -285,15 +301,18 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         JButton btnEnleverMalleables = new JButton("-");
         btnEnleverMalleables.addActionListener(this);
         btnEnleverMalleables.setActionCommand("enleverMal");
-        boutonsMalleables.setLayout(new BoxLayout(boutonsMalleables, BoxLayout.X_AXIS));
+        boutonsMalleables
+                .setLayout(new BoxLayout(boutonsMalleables, BoxLayout.X_AXIS));
         boutonsMalleables.add(btnAjouterMalleables);
         boutonsMalleables.add(btnEnleverMalleables);
         panelObjsMalleables.add(lblMall);
         panelObjsMalleables.add(new JScrollPane(this.listeObjMalleables));
         panelObjsMalleables.add(boutonsMalleables);
         // layout de panelObjsFixes
-        panelObjsMalleables.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        panelObjsMalleables.setLayout(new BoxLayout(panelObjsMalleables, BoxLayout.Y_AXIS));
+        panelObjsMalleables
+                .setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        panelObjsMalleables.setLayout(
+                new BoxLayout(panelObjsMalleables, BoxLayout.Y_AXIS));
 
         // layout de panelTypeObjs
         panelTypeObjs.add(panelObjsFixes);
@@ -308,28 +327,36 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         // externes utilisée et les classes pour lesquelles la contrainte
         // est définie. Les sous-classes de classes du tableau héritent de la
         // contrainte
-        DefaultTableModel model = new DefaultTableModel(new String[] { "Contrainte", "Classe 1", "Classe 2", "Seuil" },
+        DefaultTableModel model = new DefaultTableModel(
+                new String[] { "Contrainte", "Classe 1", "Classe 2", "Seuil" },
                 0);
         if (this.tableContrRel != null) {
-            for (int i = 0; i < this.tableContrRel.getModel().getRowCount(); i++) {
-                model.addRow(new String[] { (String) this.tableContrRel.getModel().getValueAt(i, 0),
+            for (int i = 0; i < this.tableContrRel.getModel()
+                    .getRowCount(); i++) {
+                model.addRow(new String[] {
+                        (String) this.tableContrRel.getModel().getValueAt(i, 0),
                         (String) this.tableContrRel.getModel().getValueAt(i, 1),
                         (String) this.tableContrRel.getModel().getValueAt(i, 2),
-                        (String) this.tableContrRel.getModel().getValueAt(i, 3) });
+                        (String) this.tableContrRel.getModel().getValueAt(i,
+                                3) });
             }
         }
         this.tableContrRel = new JTable(model);
         this.tableContrRel.setEnabled(false);
-        this.tableContrRel.getColumnModel().getColumn(0).setCellRenderer(new ClassSimpleNameTableRenderer());
-        this.tableContrRel.getColumnModel().getColumn(1).setCellRenderer(new ClassSimpleNameTableRenderer());
-        this.tableContrRel.getColumnModel().getColumn(2).setCellRenderer(new ClassSimpleNameTableRenderer());
+        this.tableContrRel.getColumnModel().getColumn(0)
+                .setCellRenderer(new ClassSimpleNameTableRenderer());
+        this.tableContrRel.getColumnModel().getColumn(1)
+                .setCellRenderer(new ClassSimpleNameTableRenderer());
+        this.tableContrRel.getColumnModel().getColumn(2)
+                .setCellRenderer(new ClassSimpleNameTableRenderer());
         // on ajoute un bouton pour ajouter une contrainte externe à la table
         JButton btnAjouterContr = new JButton("Ajouter une contrainte externe");
         btnAjouterContr.addActionListener(this);
         btnAjouterContr.setActionCommand("ajouterExt");
         panelContrExternes.add(btnAjouterContr);
         panelContrExternes.add(new JScrollPane(this.tableContrRel));
-        panelContrExternes.setLayout(new BoxLayout(panelContrExternes, BoxLayout.Y_AXIS));
+        panelContrExternes
+                .setLayout(new BoxLayout(panelContrExternes, BoxLayout.Y_AXIS));
 
         // panneau global de l'onglet
         panelMapspecs.add(panelTypeObjs);
@@ -351,7 +378,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         this.listeContraintes = new JList<>(contraintes);
         // on ajoute un �couteur de la liste
         this.listeContraintes.addListSelectionListener(this);
-        this.listeContraintes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.listeContraintes
+                .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.listeContraintes.setPreferredSize(new Dimension(50, 60));
         JScrollPane scrollPanePds = new JScrollPane(this.listeContraintes);
         // panneau contenant le curseur
@@ -378,7 +406,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         // mise en place du panneau pond�ration
         panelPonderation.add(scrollPanePds);
         panelPonderation.add(panelCurseur);
-        panelPonderation.setLayout(new BoxLayout(panelPonderation, BoxLayout.Y_AXIS));
+        panelPonderation
+                .setLayout(new BoxLayout(panelPonderation, BoxLayout.Y_AXIS));
 
         // *********************************
         // ONGLET Zone d'application
@@ -420,7 +449,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         // que des chiffres dans cette zone de texte
         this.txtEchelle.setDocument(new PlainDocument() {
             @Override
-            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+            public void insertString(int offs, String str, AttributeSet a)
+                    throws BadLocationException {
                 for (int i = 0; i < str.length(); i++) {
                     if (!Character.isDigit(str.charAt(i))) {
                         return;
@@ -429,7 +459,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
                 super.insertString(offs, str, a);
             }
         });
-        this.txtEchelle.setText(String.valueOf(new Double(Legend.getSYMBOLISATI0N_SCALE()).intValue()));
+        this.txtEchelle.setText(String.valueOf(
+                new Double(Legend.getSYMBOLISATI0N_SCALE()).intValue()));
         panelEchelle.add(lblEchelle);
         panelEchelle.add(this.txtEchelle);
         panelEchelle.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -464,7 +495,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         this.chkDiffusion.setToolTipText(commentaire);
         this.chkCommit = new JCheckBox("Appliquer les modifications");
         JPanel pDisplay = new JPanel();
-        this.chkDisplay = new JCheckBox("Afficher la géométrie finale (ou initiale");
+        this.chkDisplay = new JCheckBox(
+                "Afficher la géométrie finale (ou initiale");
         this.colorButton = new JColorSelectionButton(Color.RED);
         this.widthSlider = new JSlider(1, 10, 5);
         this.widthSlider.setMajorTickSpacing(1);
@@ -489,9 +521,11 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         // *********************************
         JMenuBar menuBar = new JMenuBar();
         JMenu menuFichier = new JMenu("Fichier");
-        ImageIcon iconeAide = new ImageIcon("C:\\Program Files\\Laser-Scan\\clarity-v2.6\\images\\help.gif");
+        ImageIcon iconeAide = new ImageIcon(
+                "C:\\Program Files\\Laser-Scan\\clarity-v2.6\\images\\help.gif");
         JMenuItem aide = new JMenuItem("Aide", iconeAide);
-        aide.setAccelerator(KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        aide.setAccelerator(KeyStroke.getKeyStroke('N',
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         aide.setActionCommand("aide");
         aide.addActionListener(this);
         ImportAction importAct = new ImportAction(this);
@@ -512,7 +546,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         this.getContentPane().add(onglets);
         this.getContentPane().add(pParams);
         this.getContentPane().add(panelOK);
-        this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        this.getContentPane().setLayout(
+                new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         this.setVisible(true);
         this.pack();
 
@@ -540,7 +575,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
                 File fic = this.fc.getSelectedFile();
                 try {
                     this.frame.importFicXML(fic);
-                    LastSessionParameters.getInstance().setParameter("Least Squares Config", fic.getPath(),
+                    LastSessionParameters.getInstance().setParameter(
+                            "Least Squares Config", fic.getPath(),
                             new HashMap<String, String>());
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
@@ -561,13 +597,15 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
 
         public ImportAction(LeastSquaresFrame parent) {
             this.frame = parent;
-            this.putValue(Action.SHORT_DESCRIPTION, "Import d'un fichier XML de mapspecs");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Import d'un fichier XML de mapspecs");
             this.putValue(Action.NAME, "Import XML");
             this.putValue(Action.MNEMONIC_KEY, new Integer('I'));
-            this.putValue(Action.ACCELERATOR_KEY,
-                    KeyStroke.getKeyStroke('I', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('I',
+                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
             this.fc.setCurrentDirectory(new File("goth_dataroot"));
-            this.fc.setDialogTitle("Ouvrir un fichier XML de mapspecs pour les Moindres carrés");
+            this.fc.setDialogTitle(
+                    "Ouvrir un fichier XML de mapspecs pour les Moindres carrés");
             this.fc.setFileFilter(new XMLFileFilter());
         }
     }// class ImportAction
@@ -584,7 +622,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         public void actionPerformed(ActionEvent e) {
 
             // initialisation après le choix du fichier
-            String path = (String) LastSessionParameters.getInstance().getParameterValue("Least Squares Config");
+            String path = (String) LastSessionParameters.getInstance()
+                    .getParameterValue("Least Squares Config");
             File fic = new File(path);
             System.out.println(fic.getName());
             try {
@@ -606,18 +645,19 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         public ImportPrecAction(LeastSquaresFrame parent) {
             this.frame = parent;
             this.putValue(Action.SHORT_DESCRIPTION,
-                    "Import du fichier XML de mapspecs utilisé à" + "la dernière session");
+                    "Import du fichier XML de mapspecs utilisé à"
+                            + "la dernière session");
             this.putValue(Action.NAME, "Import des dernières mapspecs");
             this.putValue(Action.MNEMONIC_KEY, new Integer('P'));
-            this.putValue(Action.ACCELERATOR_KEY,
-                    KeyStroke.getKeyStroke('P', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('P',
+                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         }
     }// class ImportPrecAction
 
     // *******************************************************************
     // fonction d'import dans la frame de mapspecs stock�es au format XML
-    private void importFicXML(File fic)
-            throws ParserConfigurationException, SAXException, IOException, ClassNotFoundException {
+    private void importFicXML(File fic) throws ParserConfigurationException,
+            SAXException, IOException, ClassNotFoundException {
         // on commence par ouvrir le doucment XML pour le parser
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db;
@@ -625,20 +665,26 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         Document doc;
         doc = db.parse(fic);
         doc.getDocumentElement().normalize();
-        System.out.println("Root element " + doc.getDocumentElement().getNodeName());
+        System.out.println(
+                "Root element " + doc.getDocumentElement().getNodeName());
 
         // **************************************
         // ON PARSE LE FICHIER XML
         // **************************************
         // on commence par les mapspecs
-        Element mapspecElem = (Element) doc.getElementsByTagName("mapspecs").item(0);
+        Element mapspecElem = (Element) doc.getElementsByTagName("mapspecs")
+                .item(0);
         // puis on récupère les classes fixes
-        Element fixeElem = (Element) mapspecElem.getElementsByTagName("objets-fixes").item(0);
+        Element fixeElem = (Element) mapspecElem
+                .getElementsByTagName("objets-fixes").item(0);
         if (fixeElem != null) {
-            Class<?>[] classes = new Class<?>[fixeElem.getElementsByTagName("classe").getLength()];
+            Class<?>[] classes = new Class<?>[fixeElem
+                    .getElementsByTagName("classe").getLength()];
             for (int i = 0; i < classes.length; i++) {
-                Element classElem = (Element) fixeElem.getElementsByTagName("classe").item(i);
-                String className = classElem.getChildNodes().item(0).getNodeValue();
+                Element classElem = (Element) fixeElem
+                        .getElementsByTagName("classe").item(i);
+                String className = classElem.getChildNodes().item(0)
+                        .getNodeValue();
                 classes[i] = Class.forName(className);
                 this.classesFixes.add(classes[i]);
             }
@@ -647,12 +693,16 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         } // if(fixeElem!=null)
 
         // puis on récupère les classes rigides
-        Element rigideElem = (Element) mapspecElem.getElementsByTagName("objets-rigides").item(0);
+        Element rigideElem = (Element) mapspecElem
+                .getElementsByTagName("objets-rigides").item(0);
         if (rigideElem != null) {
-            Class<?>[] classes = new Class<?>[rigideElem.getElementsByTagName("classe").getLength()];
+            Class<?>[] classes = new Class<?>[rigideElem
+                    .getElementsByTagName("classe").getLength()];
             for (int i = 0; i < classes.length; i++) {
-                Element classElem = (Element) rigideElem.getElementsByTagName("classe").item(i);
-                String className = classElem.getChildNodes().item(0).getNodeValue();
+                Element classElem = (Element) rigideElem
+                        .getElementsByTagName("classe").item(i);
+                String className = classElem.getChildNodes().item(0)
+                        .getNodeValue();
                 classes[i] = Class.forName(className);
                 this.classesRigides.add(classes[i]);
             }
@@ -661,12 +711,16 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         } // if(rigideElem!=null)
 
         // puis on récupère les classes mall�ables
-        Element mallElem = (Element) mapspecElem.getElementsByTagName("objets-malleables").item(0);
+        Element mallElem = (Element) mapspecElem
+                .getElementsByTagName("objets-malleables").item(0);
         if (mallElem != null) {
-            Class<?>[] classes = new Class<?>[mallElem.getElementsByTagName("classe").getLength()];
+            Class<?>[] classes = new Class<?>[mallElem
+                    .getElementsByTagName("classe").getLength()];
             for (int i = 0; i < classes.length; i++) {
-                Element classElem = (Element) mallElem.getElementsByTagName("classe").item(i);
-                String className = classElem.getChildNodes().item(0).getNodeValue();
+                Element classElem = (Element) mallElem
+                        .getElementsByTagName("classe").item(i);
+                String className = classElem.getChildNodes().item(0)
+                        .getNodeValue();
                 classes[i] = Class.forName(className);
                 this.classesMalleables.add(classes[i]);
             }
@@ -675,39 +729,55 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         } // if(mallElem!=null)
 
         // on parse maintenant les contraintes externes
-        DefaultTableModel model = new DefaultTableModel(new String[] { "Contrainte", "Classe 1", "Classe 2", "Seuil" },
+        DefaultTableModel model = new DefaultTableModel(
+                new String[] { "Contrainte", "Classe 1", "Classe 2", "Seuil" },
                 0);
-        Element contrExtElem = (Element) mapspecElem.getElementsByTagName("contraintes-externes").item(0);
-        for (int i = 0; i < contrExtElem.getElementsByTagName("contrainte").getLength(); i++) {
-            Element contrainteElem = (Element) contrExtElem.getElementsByTagName("contrainte").item(i);
+        Element contrExtElem = (Element) mapspecElem
+                .getElementsByTagName("contraintes-externes").item(0);
+        for (int i = 0; i < contrExtElem.getElementsByTagName("contrainte")
+                .getLength(); i++) {
+            Element contrainteElem = (Element) contrExtElem
+                    .getElementsByTagName("contrainte").item(i);
             // on récupère le nom
-            Element nomElem = (Element) contrainteElem.getElementsByTagName("nom").item(0);
+            Element nomElem = (Element) contrainteElem
+                    .getElementsByTagName("nom").item(0);
             String nom = nomElem.getChildNodes().item(0).getNodeValue();
             // on récupère la classe1
-            Element classe1Elem = (Element) contrainteElem.getElementsByTagName("classe1").item(0);
+            Element classe1Elem = (Element) contrainteElem
+                    .getElementsByTagName("classe1").item(0);
             String classe1 = classe1Elem.getChildNodes().item(0).getNodeValue();
             // on récupère la classe2
-            Element classe2Elem = (Element) contrainteElem.getElementsByTagName("classe2").item(0);
+            Element classe2Elem = (Element) contrainteElem
+                    .getElementsByTagName("classe2").item(0);
             String classe2 = classe2Elem.getChildNodes().item(0).getNodeValue();
             // on récupère le seuil
-            Element seuilElem = (Element) contrainteElem.getElementsByTagName("seuil").item(0);
+            Element seuilElem = (Element) contrainteElem
+                    .getElementsByTagName("seuil").item(0);
             String seuil = seuilElem.getChildNodes().item(0).getNodeValue();
             model.addRow(new String[] { nom, classe1, classe2, seuil });
         }
         this.tableContrRel.setModel(model);
         this.tableContrRel.setEnabled(false);
-        this.tableContrRel.getColumnModel().getColumn(0).setCellRenderer(new ClassSimpleNameTableRenderer());
-        this.tableContrRel.getColumnModel().getColumn(1).setCellRenderer(new ClassSimpleNameTableRenderer());
-        this.tableContrRel.getColumnModel().getColumn(2).setCellRenderer(new ClassSimpleNameTableRenderer());
+        this.tableContrRel.getColumnModel().getColumn(0)
+                .setCellRenderer(new ClassSimpleNameTableRenderer());
+        this.tableContrRel.getColumnModel().getColumn(1)
+                .setCellRenderer(new ClassSimpleNameTableRenderer());
+        this.tableContrRel.getColumnModel().getColumn(2)
+                .setCellRenderer(new ClassSimpleNameTableRenderer());
 
         // on s'occupe maintenant des pondérations
-        Element pondElem = (Element) doc.getElementsByTagName("ponderations").item(0);
+        Element pondElem = (Element) doc.getElementsByTagName("ponderations")
+                .item(0);
         DefaultListModel<String> lmodel = new DefaultListModel<>();
-        for (int i = 0; i < pondElem.getElementsByTagName("contrainte").getLength(); i++) {
-            Element contrainteElem = (Element) pondElem.getElementsByTagName("contrainte").item(i);
-            Element nomElem = (Element) contrainteElem.getElementsByTagName("classe").item(0);
+        for (int i = 0; i < pondElem.getElementsByTagName("contrainte")
+                .getLength(); i++) {
+            Element contrainteElem = (Element) pondElem
+                    .getElementsByTagName("contrainte").item(i);
+            Element nomElem = (Element) contrainteElem
+                    .getElementsByTagName("classe").item(0);
             String nom = nomElem.getChildNodes().item(0).getNodeValue();
-            Element poidsElem = (Element) contrainteElem.getElementsByTagName("poids").item(0);
+            Element poidsElem = (Element) contrainteElem
+                    .getElementsByTagName("poids").item(0);
             String poidsS = poidsElem.getChildNodes().item(0).getNodeValue();
             Double poids = new Double(poidsS);
             this.poidsContraintes.put(nom, poids);
@@ -716,7 +786,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         this.listeContraintes.setModel(lmodel);
 
         // on s'occupe du mode de sélection
-        Element selectionElem = (Element) doc.getElementsByTagName("selection").item(0);
+        Element selectionElem = (Element) doc.getElementsByTagName("selection")
+                .item(0);
         String choixSel = selectionElem.getChildNodes().item(0).getNodeValue();
         if (choixSel.equals("objets")) {
             this.selectionObjs.setSelected(true);
@@ -727,9 +798,11 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         if (choixSel.equals("surfaces")) {
             this.selectionSurfs.setSelected(true);
         }
-        Element clasSurfElem = (Element) selectionElem.getElementsByTagName("classe-surf").item(0);
+        Element clasSurfElem = (Element) selectionElem
+                .getElementsByTagName("classe-surf").item(0);
         if (clasSurfElem != null) {
-            this.txtClasseSurf.setText(clasSurfElem.getChildNodes().item(0).getNodeValue());
+            this.txtClasseSurf.setText(
+                    clasSurfElem.getChildNodes().item(0).getNodeValue());
         }
 
         // on parse enfin l'échelle
@@ -774,7 +847,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
             for (int i = 0; i < modelFixe.getSize(); i++) {
                 // Child i.
                 Element classe = xmldoc.createElement("classe");
-                n = xmldoc.createTextNode(((Class<?>) modelFixe.getElementAt(i)).getName());
+                n = xmldoc.createTextNode(
+                        ((Class<?>) modelFixe.getElementAt(i)).getName());
                 classe.appendChild(n);
                 objsFixes.appendChild(classe);
             }
@@ -786,7 +860,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
             for (int i = 0; i < modelRigide.getSize(); i++) {
                 // Child i.
                 Element classe = xmldoc.createElement("classe");
-                n = xmldoc.createTextNode(((Class<?>) modelRigide.getElementAt(i)).getName());
+                n = xmldoc.createTextNode(
+                        ((Class<?>) modelRigide.getElementAt(i)).getName());
                 classe.appendChild(n);
                 objsRigides.appendChild(classe);
             }
@@ -794,11 +869,13 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
             // puis les objets malleables
             Element objsMalleables = xmldoc.createElement("objets-malleables");
             mapspecs.appendChild(objsMalleables);
-            ListModel<Class<?>> modelMalleables = this.listeObjMalleables.getModel();
+            ListModel<Class<?>> modelMalleables = this.listeObjMalleables
+                    .getModel();
             for (int i = 0; i < modelMalleables.getSize(); i++) {
                 // Child i.
                 Element classe = xmldoc.createElement("classe");
-                n = xmldoc.createTextNode(((Class<?>) modelMalleables.getElementAt(i)).getName());
+                n = xmldoc.createTextNode(
+                        ((Class<?>) modelMalleables.getElementAt(i)).getName());
                 classe.appendChild(n);
                 objsMalleables.appendChild(classe);
             }
@@ -806,7 +883,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
             // puis les contraintes externes
             Element contrExtElem = xmldoc.createElement("contraintes-externes");
             mapspecs.appendChild(contrExtElem);
-            DefaultTableModel dtm = (DefaultTableModel) this.tableContrRel.getModel();
+            DefaultTableModel dtm = (DefaultTableModel) this.tableContrRel
+                    .getModel();
             for (int i = 0; i < this.tableContrRel.getRowCount(); i++) {
                 // on la stocke en XML
                 Element contrainteElem = xmldoc.createElement("contrainte");
@@ -834,7 +912,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
             Element ponderations = xmldoc.createElement("ponderations");
             root.appendChild(ponderations);
 
-            Iterator<String> iterPds = this.poidsContraintes.keySet().iterator();
+            Iterator<String> iterPds = this.poidsContraintes.keySet()
+                    .iterator();
             while (iterPds.hasNext()) {
                 // Child i.
                 e = xmldoc.createElementNS(null, "contrainte");
@@ -842,7 +921,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
                 Element classePond = xmldoc.createElement("classe");
                 Element poidsPond = xmldoc.createElement("poids");
                 n1 = xmldoc.createTextNode(classe);
-                n2 = xmldoc.createTextNode(this.poidsContraintes.get(classe).toString());
+                n2 = xmldoc.createTextNode(
+                        this.poidsContraintes.get(classe).toString());
                 classePond.appendChild(n1);
                 poidsPond.appendChild(n2);
                 e.appendChild(classePond);
@@ -905,7 +985,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
                 System.out.println(fic.getName());
                 this.frame.exportFicXML(fic);
                 try {
-                    LastSessionParameters.getInstance().setParameter("Least Squares Config", fic.getAbsolutePath(),
+                    LastSessionParameters.getInstance().setParameter(
+                            "Least Squares Config", fic.getAbsolutePath(),
                             new HashMap<String, String>());
                 } catch (TransformerException e1) {
                     e1.printStackTrace();
@@ -917,11 +998,12 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
 
         public ExportAction(LeastSquaresFrame parent) {
             this.frame = parent;
-            this.putValue(Action.SHORT_DESCRIPTION, "Export des mapspecs dans un fichier XML");
+            this.putValue(Action.SHORT_DESCRIPTION,
+                    "Export des mapspecs dans un fichier XML");
             this.putValue(Action.NAME, "Export XML");
             this.putValue(Action.MNEMONIC_KEY, new Integer('E'));
-            this.putValue(Action.ACCELERATOR_KEY,
-                    KeyStroke.getKeyStroke('E', Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('E',
+                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         }
     }// class ExportAction
 
@@ -942,30 +1024,43 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getActionCommand().equals("OK")) {
-                Class<?>[] classesChoisies = this.classTree.getSelectedClasses();
+                Class<?>[] classesChoisies = this.classTree
+                        .getSelectedClasses();
                 if (LeastSquaresFrame.this.listeCourante.equals("fixe")) {
                     for (Class<?> c : classesChoisies) {
                         LeastSquaresFrame.this.classesFixes.add(c);
                     }
-                    LeastSquaresFrame.this.contraintesActivees.addAll(LeastSquaresFrame.this.contraintesFixes);
-                    LeastSquaresFrame.putColnMap(LeastSquaresFrame.this.poidsContraintes,
-                            LeastSquaresFrame.this.contraintesFixes, new Double(1));
-                } else if (LeastSquaresFrame.this.listeCourante.equals("rigide")) {
+                    LeastSquaresFrame.this.contraintesActivees
+                            .addAll(LeastSquaresFrame.this.contraintesFixes);
+                    LeastSquaresFrame.putColnMap(
+                            LeastSquaresFrame.this.poidsContraintes,
+                            LeastSquaresFrame.this.contraintesFixes,
+                            new Double(1));
+                } else if (LeastSquaresFrame.this.listeCourante
+                        .equals("rigide")) {
                     for (Class<?> c : classesChoisies) {
                         LeastSquaresFrame.this.classesRigides.add(c);
                     }
-                    LeastSquaresFrame.this.contraintesActivees.addAll(LeastSquaresFrame.this.contraintesRigides);
-                    LeastSquaresFrame.putColnMap(LeastSquaresFrame.this.poidsContraintes,
-                            LeastSquaresFrame.this.contraintesRigides, new Double(1));
-                } else if (LeastSquaresFrame.this.listeCourante.equals("malleable")) {
+                    LeastSquaresFrame.this.contraintesActivees
+                            .addAll(LeastSquaresFrame.this.contraintesRigides);
+                    LeastSquaresFrame.putColnMap(
+                            LeastSquaresFrame.this.poidsContraintes,
+                            LeastSquaresFrame.this.contraintesRigides,
+                            new Double(1));
+                } else if (LeastSquaresFrame.this.listeCourante
+                        .equals("malleable")) {
                     for (Class<?> c : classesChoisies) {
                         LeastSquaresFrame.this.classesMalleables.add(c);
                     }
-                    LeastSquaresFrame.this.contraintesActivees.addAll(LeastSquaresFrame.this.contraintesMalleables);
-                    LeastSquaresFrame.putColnMap(LeastSquaresFrame.this.poidsContraintes,
-                            LeastSquaresFrame.this.contraintesMalleables, new Double(1));
+                    LeastSquaresFrame.this.contraintesActivees.addAll(
+                            LeastSquaresFrame.this.contraintesMalleables);
+                    LeastSquaresFrame.putColnMap(
+                            LeastSquaresFrame.this.poidsContraintes,
+                            LeastSquaresFrame.this.contraintesMalleables,
+                            new Double(1));
                 } else {
-                    LeastSquaresFrame.this.txtClasseSurf.setText(this.classTree.getSelectedClasses()[0].getName());
+                    LeastSquaresFrame.this.txtClasseSurf.setText(
+                            this.classTree.getSelectedClasses()[0].getName());
                 }
                 this.classTree.clearSelection();
                 this.setVisible(false);
@@ -997,9 +1092,11 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
                 this.classTree.filterClasses(IGeneObjSurf.class);
             }
             if (LeastSquaresFrame.this.listeCourante.equals("malleable")) {
-                this.classTree.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+                this.classTree.setSelectionMode(
+                        TreeSelectionModel.SINGLE_TREE_SELECTION);
             } else {
-                this.classTree.setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
+                this.classTree.setSelectionMode(
+                        TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
             }
             panelTree.add(new JScrollPane(this.classTree));
 
@@ -1046,7 +1143,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
     @Override
     public void valueChanged(ListSelectionEvent ev) {
 
-        Double poids = this.poidsContraintes.get(this.listeContraintes.getModel().getElementAt(ev.getFirstIndex()));
+        Double poids = this.poidsContraintes.get(this.listeContraintes
+                .getModel().getElementAt(ev.getFirstIndex()));
         this.curseurPoids.setValue(poids.intValue());
     }
 
@@ -1061,12 +1159,15 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
 
         // on met à jour la map poidsContraintes avec la nouvelle valeur
         if (this.listeContraintes.isSelectionEmpty() == false) {
-            String contrainte = (String) this.listeContraintes.getSelectedValue();
-            this.poidsContraintes.put(contrainte, new Double(((JSlider) ev.getSource()).getValue()));
+            String contrainte = (String) this.listeContraintes
+                    .getSelectedValue();
+            this.poidsContraintes.put(contrainte,
+                    new Double(((JSlider) ev.getSource()).getValue()));
         }
     }// stateChanged
 
-    static void putColnMap(Map<String, Double> map, Collection<String> coln, Double value) {
+    static void putColnMap(Map<String, Double> map, Collection<String> coln,
+            Double value) {
         Iterator<String> i = coln.iterator();
         while (i.hasNext()) {
             String obj = i.next();
@@ -1083,12 +1184,16 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         sched.setSolver(MatrixSolver.JAMA);
 
         // on lance la généralisation
-        sched.triggerAdjustment(this.chkDiffusion.isSelected(), this.chkCommit.isSelected());
+        EndVertexStrategy strategy = EndVertexStrategy.FIX;
+        if (this.chkDiffusion.isSelected())
+            strategy = EndVertexStrategy.DIFFUSION;
+        sched.triggerAdjustment(strategy, this.chkCommit.isSelected());
 
         // affichage de l'autre géométrie
         for (IGeometry geom : sched.getMapObjGeom().values()) {
-            CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool().addFeatureToGeometryPool(geom,
-                    this.colorButton.getColor(), this.widthSlider.getValue());
+            CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
+                    .addFeatureToGeometryPool(geom, this.colorButton.getColor(),
+                            this.widthSlider.getValue());
         }
     }
 
@@ -1118,7 +1223,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
     }
 
     private void findExternalConstraints() {
-        this.externalConstraints.addAll(FileUtil.findClassesInPackage(LSExternalConstraint.class.getPackage(),
+        this.externalConstraints.addAll(FileUtil.findClassesInPackage(
+                LSExternalConstraint.class.getPackage(),
                 LSExternalConstraint.class, false));
     }
 
@@ -1141,29 +1247,37 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         MapspecsLS mapspecs = new MapspecsLS();
         // on remplit les champs des mapspecs à partir des champs de la frame
         // on commence par l'échelle
-        mapspecs.setEchelle(new Integer(this.txtEchelle.getText()).doubleValue());
+        mapspecs.setEchelle(
+                new Integer(this.txtEchelle.getText()).doubleValue());
 
         // on récupère les classes fixes, rigides et malléables
         for (int i = 0; i < this.listeObjFixes.getModel().getSize(); i++) {
-            Class<?> classe = (Class<?>) this.listeObjFixes.getModel().getElementAt(i);
+            Class<?> classe = (Class<?>) this.listeObjFixes.getModel()
+                    .getElementAt(i);
             mapspecs.getClassesFixes().add(classe.getName());
         }
         for (int i = 0; i < this.listeObjRigides.getModel().getSize(); i++) {
-            Class<?> classe = (Class<?>) this.listeObjRigides.getModel().getElementAt(i);
+            Class<?> classe = (Class<?>) this.listeObjRigides.getModel()
+                    .getElementAt(i);
             mapspecs.getClassesRigides().add(classe.getName());
 
         }
         for (int i = 0; i < this.listeObjMalleables.getModel().getSize(); i++) {
-            Class<?> classe = (Class<?>) this.listeObjMalleables.getModel().getElementAt(i);
+            Class<?> classe = (Class<?>) this.listeObjMalleables.getModel()
+                    .getElementAt(i);
             mapspecs.getClassesMalleables().add(classe.getName());
         }
 
         // on récupère les contraintes externes
         for (int i = 0; i < this.tableContrRel.getRowCount(); i++) {
-            String nom = (String) this.tableContrRel.getModel().getValueAt(i, 0);
-            String classe1 = (String) this.tableContrRel.getModel().getValueAt(i, 1);
-            String classe2 = (String) this.tableContrRel.getModel().getValueAt(i, 2);
-            String seuil = (String) this.tableContrRel.getModel().getValueAt(i, 3);
+            String nom = (String) this.tableContrRel.getModel().getValueAt(i,
+                    0);
+            String classe1 = (String) this.tableContrRel.getModel()
+                    .getValueAt(i, 1);
+            String classe2 = (String) this.tableContrRel.getModel()
+                    .getValueAt(i, 2);
+            String seuil = (String) this.tableContrRel.getModel().getValueAt(i,
+                    3);
             String[] cleMap = { nom, classe1, classe2 };
             mapspecs.getContraintesExternes().put(cleMap, new Double(seuil));
         }
@@ -1213,7 +1327,8 @@ public class LeastSquaresFrame extends JFrame implements ActionListener, ListSel
         }
 
         // on récupère enfin la sélection d'objets
-        mapspecs.setSelectedObjects(SelectionUtil.getSelectedObjects(CartAGenPlugin.getInstance().getApplication()));
+        mapspecs.setSelectedObjects(SelectionUtil.getSelectedObjects(
+                CartAGenPlugin.getInstance().getApplication()));
 
         return mapspecs;
     }

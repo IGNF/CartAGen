@@ -11,6 +11,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 
 import fr.ign.cogit.cartagen.appli.core.geoxygene.selection.SelectionUtil;
+import fr.ign.cogit.cartagen.core.Legend;
 import fr.ign.cogit.cartagen.core.SLDUtilCartagen;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObjLin;
@@ -18,7 +19,6 @@ import fr.ign.cogit.cartagen.core.genericschema.hydro.IWaterLine;
 import fr.ign.cogit.cartagen.core.genericschema.railway.IRailwayLine;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IEmbankmentLine;
 import fr.ign.cogit.cartagen.core.genericschema.road.IRoadLine;
-import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
 import fr.ign.cogit.cartagen.spatialanalysis.network.flexibilitygraph.MinimumSeparation;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
@@ -28,8 +28,8 @@ import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSMovementConstraint;
 import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSMovementDirConstraint;
 import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSProximityConstraint;
 import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSScheduler;
+import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSScheduler.EndVertexStrategy;
 import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSScheduler.MatrixSolver;
-import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSSpatialConflict;
 import fr.ign.cogit.geoxygene.contrib.leastsquares.core.MapspecsLS;
 
 public class LSEmbankmentAction extends AbstractAction {
@@ -57,13 +57,13 @@ public class LSEmbankmentAction extends AbstractAction {
         System.out.println("scheduler created");
 
         // trigger the generalisation
-        sched.triggerAdjustment(true, true);
+        sched.triggerAdjustment(EndVertexStrategy.MOBILE, true);
         System.out.println("adjusment achieved");
         System.out.println("solutions: ");
         System.out.println(sched.getSolutions());
-        for (LSSpatialConflict conflict : sched.getConflits()) {
-            System.out.println(conflict.distance());
-        }
+        // for (LSSpatialConflict conflict : sched.getConflits()) {
+        // System.out.println(conflict.distance());
+        // }
 
         // finally display the other geometry
 
@@ -71,13 +71,16 @@ public class LSEmbankmentAction extends AbstractAction {
             CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
                     .addFeatureToGeometryPool(geom, Color.GREEN, 2);
         }
-        CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
-                .addTriangulationToGeometryPool(sched.getTriangulation(),
-                        Color.ORANGE, Color.ORANGE);
+        /*
+         * CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
+         * .addTriangulationToGeometryPool(sched.getTriangulation(),
+         * Color.ORANGE, Color.ORANGE);
+         */
     }
 
     private MapspecsLS buildMapspecs(Set<IFeature> selected) {
         MapspecsLS mapspecs = new MapspecsLS();
+        mapspecs.setEchelle(Legend.getSYMBOLISATI0N_SCALE());
 
         mapspecs.getClassesFixes().add(IRoadLine.class.getName());
         mapspecs.getClassesFixes().add(IWaterLine.class.getName());
@@ -86,14 +89,14 @@ public class LSEmbankmentAction extends AbstractAction {
         mapspecs.getClassesMalleables().add(IEmbankmentLine.class.getName());
 
         Set<MinimumSeparation> minSeps = new HashSet<>();
-        minSeps.add(
-                new MinimumSeparation(IRoadLine.class, IRoadLine.class, 0.1));
-        minSeps.add(
-                new MinimumSeparation(IBuilding.class, IRoadLine.class, 0.1));
-        minSeps.add(
-                new MinimumSeparation(IBuilding.class, IWaterLine.class, 0.1));
-        minSeps.add(
-                new MinimumSeparation(IBuilding.class, IBuilding.class, 0.1));
+        minSeps.add(new MinimumSeparation(IEmbankmentLine.class,
+                IEmbankmentLine.class, 0.1));
+        minSeps.add(new MinimumSeparation(IEmbankmentLine.class,
+                IRoadLine.class, 0.1));
+        minSeps.add(new MinimumSeparation(IEmbankmentLine.class,
+                IWaterLine.class, 0.1));
+        minSeps.add(new MinimumSeparation(IEmbankmentLine.class,
+                IRailwayLine.class, 0.1));
 
         Map<IFeature, Double> symbolWidths = new HashMap<IFeature, Double>();
         for (IFeature feat : selected) {
@@ -104,6 +107,7 @@ public class LSEmbankmentAction extends AbstractAction {
             } else
                 symbolWidths.put(feat, 0.0);
         }
+        mapspecs.setMapSymbolWidth(symbolWidths);
 
         // set the constraints
         Set<String> malleableConstraints = new HashSet<String>();
@@ -120,9 +124,9 @@ public class LSEmbankmentAction extends AbstractAction {
         }
         Map<String, Double> constraintWeights = new HashMap<String, Double>();
         constraintWeights.put(LSMovementConstraint.class.getName(), 1.0);
-        constraintWeights.put(LSCurvatureConstraint.class.getName(), 10.0);
-        constraintWeights.put(LSMovementDirConstraint.class.getName(), 10.0);
-        constraintWeights.put(LSProximityConstraint.class.getName(), 15.0);
+        constraintWeights.put(LSCurvatureConstraint.class.getName(), 8.0);
+        constraintWeights.put(LSMovementDirConstraint.class.getName(), 8.0);
+        constraintWeights.put(LSProximityConstraint.class.getName(), 20.0);
 
         mapspecs.setConstraintWeights(constraintWeights);
         mapspecs.setContraintesExternes(externalConstraints);

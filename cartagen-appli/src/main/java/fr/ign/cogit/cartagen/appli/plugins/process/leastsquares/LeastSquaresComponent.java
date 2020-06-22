@@ -84,6 +84,7 @@ import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSMovementConstraint;
 import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSMovementDirConstraint;
 import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSPoint;
 import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSScheduler;
+import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSScheduler.EndVertexStrategy;
 import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSScheduler.MatrixSolver;
 import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSSideOrientConstraint;
 import fr.ign.cogit.geoxygene.contrib.leastsquares.core.LSStiffnessConstraint;
@@ -330,7 +331,7 @@ public class LeastSquaresComponent extends JMenu
                     LSVectorDisplConstraint1.class);
             sched.setSolver(MatrixSolver.JAMA);
             // on lance la généralisation
-            sched.triggerAdjustment(false, true);
+            sched.triggerAdjustment(EndVertexStrategy.FIX, true);
 
             GeometryPool pool = CartAGenDoc.getInstance().getCurrentDataset()
                     .getGeometryPool();
@@ -716,7 +717,7 @@ public class LeastSquaresComponent extends JMenu
                 LSScheduler sched = new LSScheduler(mapspecs);
 
                 // on lance la généralisation
-                sched.triggerAdjustment(false, true);
+                sched.triggerAdjustment(EndVertexStrategy.FIX, true);
 
             } catch (SAXException e1) {
                 e1.printStackTrace();
