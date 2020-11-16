@@ -62,6 +62,7 @@ import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.feature.IFeatureCollection;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
+import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IMultiCurve;
 import fr.ign.cogit.geoxygene.api.spatial.geomprim.IPoint;
 import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
 import fr.ign.cogit.geoxygene.appli.api.ProjectFrame;
@@ -91,14 +92,17 @@ public class ExportFrame extends JFrame implements ActionListener {
         this.setResizable(false);
         this.setSize(new Dimension(400, 500));
         this.setLocation(100, 100);
-        this.setTitle(CartAGenPlugin.getInstance().getApplication().getMainFrame().getGui().getTitle()
-                + " - export généralisation");
+        this.setTitle(
+                CartAGenPlugin.getInstance().getApplication().getMainFrame()
+                        .getGui().getTitle() + " - export généralisation");
         this.setAlwaysOnTop(true);
 
-        this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        this.getContentPane().setLayout(
+                new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
         JPanel dirPanel = new JPanel();
-        JButton dirButton = new JButton(new ImageIcon(this.getClass().getResource("/images/icons/magnifier.png")));
+        JButton dirButton = new JButton(new ImageIcon(
+                this.getClass().getResource("/images/icons/magnifier.png")));
         dirButton.addActionListener(this);
         dirButton.setActionCommand("directory");
         txtDir = new JTextField();
@@ -204,15 +208,18 @@ public class ExportFrame extends JFrame implements ActionListener {
             Class<? extends IGeometry> geomType = null;
 
             // get the features to export
-            Collection<? extends IFeature> iterable = layer.getFeatureCollection();
+            Collection<? extends IFeature> iterable = layer
+                    .getFeatureCollection();
             if (selection)
-                iterable = SelectionUtil.getSelectedObjects(CartAGenPlugin.getInstance().getApplication(),
+                iterable = SelectionUtil.getSelectedObjects(
+                        CartAGenPlugin.getInstance().getApplication(),
                         layer.getName());
             IFeatureCollection<IFeature> features = new FT_FeatureCollection<IFeature>();
             for (IFeature obj : iterable) {
 
                 if (geomType == null) {
-                    if (obj.getGeom() instanceof ILineString)
+                    if ((obj.getGeom() instanceof ILineString)
+                            || (obj.getGeom() instanceof IMultiCurve<?>))
                         geomType = ILineString.class;
                     else if (obj.getGeom() instanceof IPolygon)
                         geomType = IPolygon.class;
@@ -233,25 +240,30 @@ public class ExportFrame extends JFrame implements ActionListener {
             }
 
             // write the shapefile
-            write(features, geomType, this.exportDir + "\\" + shapeFileName, layer.getName());
+            write(features, geomType, this.exportDir + "\\" + shapeFileName,
+                    layer.getName());
         }
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public <Feature extends IFeature> void write(IFeatureCollection<IFeature> featurePop,
-            Class<? extends IGeometry> geomType, String shpName, String layerName) {
+    public <Feature extends IFeature> void write(
+            IFeatureCollection<IFeature> featurePop,
+            Class<? extends IGeometry> geomType, String shpName,
+            String layerName) {
         if (featurePop == null) {
             return;
         }
         if (featurePop.isEmpty()) {
             return;
         }
-        String shapefileName = shpName;
+        String shapefileName = shpName.replace(" ", "_");
+        ;
         try {
             if (!shapefileName.contains(".shp")) { //$NON-NLS-1$
                 shapefileName = shapefileName + ".shp"; //$NON-NLS-1$
             }
-            ShapefileDataStore store = new ShapefileDataStore(new File(shapefileName).toURI().toURL());
+            ShapefileDataStore store = new ShapefileDataStore(
+                    new File(shapefileName).toURI().toURL());
 
             // specify the geometry type
             String specs = "the_geom:"; //$NON-NLS-1$
@@ -274,9 +286,14 @@ public class ExportFrame extends JFrame implements ActionListener {
              * featureTypeName.replace('.', '_');
              */
 
-            SimpleFeatureType type = DataUtilities.createType(layerName, specs);
+            String featureTypeName = layerName;
+            featureTypeName = featureTypeName.replace(" ", "_");
+            System.out.println(specs);
+            SimpleFeatureType type = DataUtilities.createType(featureTypeName,
+                    specs);
             store.createSchema(type);
-            ContentFeatureStore featureStore = (ContentFeatureStore) store.getFeatureSource(layerName);
+            ContentFeatureStore featureStore = (ContentFeatureStore) store
+                    .getFeatureSource(featureTypeName);
             Transaction t = new DefaultTransaction();
             Collection features = new HashSet<>();
             int i = 1;
@@ -290,14 +307,16 @@ public class ExportFrame extends JFrame implements ActionListener {
                 if ((geom instanceof ILineString) && (geom.coord().size() < 2))
                     continue;
 
-                liste.add(AdapterFactory.toGeometry(new GeometryFactory(), geom));
+                liste.add(
+                        AdapterFactory.toGeometry(new GeometryFactory(), geom));
                 liste.add(feature.getId());
                 // put the attributes in the list, after the geometry
                 for (String getter : getters) {
                     Method m = feature.getClass().getDeclaredMethod(getter);
                     liste.add(m.invoke(feature));
                 }
-                SimpleFeature simpleFeature = SimpleFeatureBuilder.build(type, liste.toArray(), String.valueOf(i++));
+                SimpleFeature simpleFeature = SimpleFeatureBuilder.build(type,
+                        liste.toArray(), String.valueOf(i++));
                 features.add(simpleFeature);
             }
             featureStore.addFeatures(features);
@@ -306,19 +325,24 @@ public class ExportFrame extends JFrame implements ActionListener {
             store.dispose();
         } catch (MalformedURLException e) {
             logger.log(Level.SEVERE, I18N.getString("ShapefileWriter.FileName") //$NON-NLS-1$
-                    + shapefileName + I18N.getString("ShapefileWriter.Malformed")); //$NON-NLS-1$
+                    + shapefileName
+                    + I18N.getString("ShapefileWriter.Malformed")); //$NON-NLS-1$
             e.printStackTrace();
         } catch (IOException e) {
-            logger.log(Level.SEVERE, I18N.getString("ShapefileWriter.ErrorWritingFile") //$NON-NLS-1$
-                    + shapefileName);
+            logger.log(Level.SEVERE,
+                    I18N.getString("ShapefileWriter.ErrorWritingFile") //$NON-NLS-1$
+                            + shapefileName);
             e.printStackTrace();
         } catch (SchemaException e) {
-            logger.log(Level.SEVERE, I18N.getString("ShapefileWriter.SchemeUsedForWritingFile") //$NON-NLS-1$
-                    + shapefileName + I18N.getString("ShapefileWriter.Incorrect")); //$NON-NLS-1$
+            logger.log(Level.SEVERE,
+                    I18N.getString("ShapefileWriter.SchemeUsedForWritingFile") //$NON-NLS-1$
+                            + shapefileName
+                            + I18N.getString("ShapefileWriter.Incorrect")); //$NON-NLS-1$
             e.printStackTrace();
         } catch (Exception e) {
-            logger.log(Level.SEVERE, I18N.getString("ShapefileWriter.ErrorWritingFile") //$NON-NLS-1$
-                    + shapefileName);
+            logger.log(Level.SEVERE,
+                    I18N.getString("ShapefileWriter.ErrorWritingFile") //$NON-NLS-1$
+                            + shapefileName);
             e.printStackTrace();
         }
     }
@@ -362,7 +386,8 @@ public class ExportFrame extends JFrame implements ActionListener {
                 continue;
             }
             attrNames.add(m.getName());
-            String attributeName = m.getName().substring(3, 4).toLowerCase() + m.getName().substring(4);
+            String attributeName = m.getName().substring(3, 4).toLowerCase()
+                    + m.getName().substring(4);
             if (returnType.equals(long.class.getName())) {
                 returnType = Integer.class.getName();
             }

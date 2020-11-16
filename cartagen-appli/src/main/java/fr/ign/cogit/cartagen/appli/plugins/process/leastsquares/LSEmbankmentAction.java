@@ -57,7 +57,7 @@ public class LSEmbankmentAction extends AbstractAction {
         System.out.println("scheduler created");
 
         // trigger the generalisation
-        sched.triggerAdjustment(EndVertexStrategy.MOBILE, true);
+        sched.triggerAdjustment(EndVertexStrategy.MOBILE, false);
         System.out.println("adjusment achieved");
         System.out.println("solutions: ");
         System.out.println(sched.getSolutions());
@@ -67,9 +67,12 @@ public class LSEmbankmentAction extends AbstractAction {
 
         // finally display the other geometry
 
-        for (IGeometry geom : sched.getMapObjGeom().values()) {
+        for (IFeature feat : sched.getMapObjGeom().keySet()) {
+            if (!(feat instanceof IEmbankmentLine))
+                continue;
+            IGeometry geom = sched.getMapObjGeom().get(feat);
             CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
-                    .addFeatureToGeometryPool(geom, Color.GREEN, 2);
+                    .addFeatureToGeometryPool(geom, Color.BLUE, 2);
         }
         /*
          * CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
