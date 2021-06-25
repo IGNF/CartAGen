@@ -51,12 +51,12 @@ public class MinAreaMonitor extends MicroConstraintMonitor {
   }
 
   @Override
-  public void calculerValeurCourante() {
+  public void computeCurrentValue() {
     this.setCurrentValue(this.getSubject().getGeom().area());
   }
 
   @Override
-  public void calculerValeurBut() {
+  public void computeGoalValue() {
     // on commence par r�cup�rer la valeur min de la contrainte
     FormalMicroConstraint contrainte = (FormalMicroConstraint) getElementSpec();
     double min = UnitsTranslation.getValeurContrUniteTerrain(

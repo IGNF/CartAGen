@@ -84,11 +84,11 @@ public class PreserveLineShapeMonitor extends MicroConstraintMonitor {
     }
 
     @Override
-    public void calculerValeurBut() {
+    public void computeGoalValue() {
     }
 
     @Override
-    public void calculerValeurCourante() {
+    public void computeCurrentValue() {
         // il s'agit ici de la géométrie courante
         setCurrentValue(subject.getGeom());
     }

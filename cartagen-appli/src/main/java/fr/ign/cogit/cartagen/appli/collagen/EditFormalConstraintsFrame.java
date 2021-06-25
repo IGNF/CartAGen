@@ -67,7 +67,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.xml.sax.SAXException;
 
-import fr.ign.cogit.cartagen.appli.plugins.process.CollaGenComponent;
+import fr.ign.cogit.cartagen.appli.plugins.process.collagen.CollaGenComponent;
 import fr.ign.cogit.cartagen.appli.utilities.I18N;
 import fr.ign.cogit.cartagen.collagen.resources.ontology.Character;
 import fr.ign.cogit.cartagen.collagen.resources.ontology.GeneralisationConcept;

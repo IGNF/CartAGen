@@ -22,9 +22,9 @@ public class PreserveIniPositionMonitor extends MicroConstraintMonitor {
   public PreserveIniPositionMonitor(IGeneObj obj,
       FormalGenConstraint constraint) {
     super(obj, constraint);
-    this.calculerValeurCourante();
+    this.computeCurrentValue();
     this.setInitialValue(getCurrentValue());
-    this.calculerValeurBut();
+    this.computeGoalValue();
     this.computeSatisfaction();
     this.getEtatsSatisf().set(0, getSatisfaction());
   }
@@ -62,12 +62,12 @@ public class PreserveIniPositionMonitor extends MicroConstraintMonitor {
   }
 
   @Override
-  public void calculerValeurCourante() {
+  public void computeCurrentValue() {
     this.setCurrentValue(this.getSubject().getGeom().centroid());
   }
 
   @Override
-  public void calculerValeurBut() {
+  public void computeGoalValue() {
     // on commence par récupérer la valeur de la contrainte
     FormalMicroConstraint contrainte = (FormalMicroConstraint) getElementSpec();
     double dist = UnitsTranslation.getValeurContrUniteTerrain(

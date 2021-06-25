@@ -53,13 +53,13 @@ public class PreserveConcavityMonitor extends MicroConstraintMonitor {
   }
 
   @Override
-  public void calculerValeurBut() {
+  public void computeGoalValue() {
     // c'est la valeur initiale
     setGoalValue(getInitialValue());
   }
 
   @Override
-  public void calculerValeurCourante() {
+  public void computeCurrentValue() {
     IPolygon geom = (IPolygon) this.getSubject().getGeom();
     double area = geom.area();
     IGeometry hull = geom.convexHull();

@@ -2,7 +2,7 @@
 <cartagen-document>
    <name>database name</name>
    <databases>
-      <database>src/main/resources/xml/Cartagen_dbs/alpe_huez.xml<geo-center>
+      <database>src/main/resources/xml/Cartagen_dbs/alpe_huez_shape.xml<geo-center>
             <x>893403.688057</x>
             <y>2017046.028429</y>
          </geo-center>

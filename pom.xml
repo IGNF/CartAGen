@@ -199,11 +199,11 @@
 			<version>3.0.0</version>
 			<scope>compile</scope>
 		</dependency>
-		      <dependency>
+		<!-- dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
             <version>3.6</version>
-        </dependency>
+        </dependency-->
 		<dependency>
 			<groupId>twak</groupId>
 			<artifactId>campskeleton</artifactId>
@@ -285,9 +285,9 @@
 		    <version>${postgis.jdbc.version}</version>
  	</dependency> 
 		<dependency>
-			<groupId>net.sf.opencsv</groupId>
+			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
-			<version>2.3</version>
+			<version>5.2</version>
 		</dependency>
 		<dependency>
 			<groupId>xml-apis</groupId>

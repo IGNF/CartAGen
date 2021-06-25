@@ -41,9 +41,9 @@ public abstract class SpecElementMonitor extends AbstractFeature
 
   public abstract SpecificationElement getElementSpec();
 
-  public abstract void calculerValeurCourante();
+  public abstract void computeCurrentValue();
 
-  public abstract void calculerValeurBut();
+  public abstract void computeGoalValue();
 
   /**
    * Get the importance of the monitor that corresponds to the number of objects

@@ -25,9 +25,9 @@ public class HoleSizeMonitor extends MicroConstraintMonitor {
         .getValeurContrUniteTerrain(Legend.getSYMBOLISATI0N_SCALE(), contr);
     // on calcule les valeurs de la contrainte de nouveau après initialisation
     // du paramètre
-    this.calculerValeurCourante();
+    this.computeCurrentValue();
     this.setInitialValue(this.getCurrentValue());
-    this.calculerValeurBut();
+    this.computeGoalValue();
     this.computeSatisfaction();
     this.getEtatsSatisf().add(this.getSatisfaction());
   }
@@ -75,13 +75,13 @@ public class HoleSizeMonitor extends MicroConstraintMonitor {
   }
 
   @Override
-  public void calculerValeurBut() {
+  public void computeGoalValue() {
     // on commence par récupérer la valeur min de la contrainte
     this.setGoalValue(new ValeurTailleTrou(this.aireTrouMin, 0));
   }
 
   @Override
-  public void calculerValeurCourante() {
+  public void computeCurrentValue() {
     if (this.aireTrouMin == 0.0) {
       this.setCurrentValue(new ValeurTailleTrou(0.0, 0));
       return;

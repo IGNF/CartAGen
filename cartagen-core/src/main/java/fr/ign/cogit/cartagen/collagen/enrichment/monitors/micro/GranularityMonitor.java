@@ -57,7 +57,7 @@ public class GranularityMonitor extends MicroConstraintMonitor {
   }
 
   @Override
-  public void calculerValeurCourante() {
+  public void computeCurrentValue() {
     IGeometry geom = this.getSubject().getGeom();
     double longMinSeg = CommonAlgorithmsFromCartAGen
         .getShortestEdgeLength(geom);
@@ -75,7 +75,7 @@ public class GranularityMonitor extends MicroConstraintMonitor {
   }
 
   @Override
-  public void calculerValeurBut() {
+  public void computeGoalValue() {
     // on commence par récupèrer la valeur min de la contrainte
     FormalMicroConstraint contrainte = (FormalMicroConstraint) getElementSpec();
     double min = UnitsTranslation.getValeurContrUniteTerrain(

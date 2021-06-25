@@ -56,7 +56,7 @@ public class SquarenessMonitor extends MicroConstraintMonitor {
     }
 
     @Override
-    public void calculerValeurCourante() {
+    public void computeCurrentValue() {
         double measureAble = 0.0;
         double currentSquared = 0.0;
         double currentNearlySquared = 0.0;
@@ -98,7 +98,7 @@ public class SquarenessMonitor extends MicroConstraintMonitor {
     }
 
     @Override
-    public void calculerValeurBut() {
+    public void computeGoalValue() {
     }
 
     public static class ValeurEquarrite {

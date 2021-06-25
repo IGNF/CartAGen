@@ -1,0 +1,3 @@
+name;javaClass;layer;parameter;type
+minimum_line_length;fr.ign.cogit.cartagen.tactilemaps.monitors.MinimumLineLengthMonitor;waterLines;12.5;micro
+minimum_line_length;fr.ign.cogit.cartagen.tactilemaps.monitors.MinimumLineLengthMonitor;adminLimits;12.5;micro

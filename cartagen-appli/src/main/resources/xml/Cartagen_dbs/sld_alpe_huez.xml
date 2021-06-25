@@ -236,6 +236,22 @@
 			</FeatureTypeStyle>
 		</UserStyle>
 	</NamedLayer>
+	<NamedLayer>
+		<Name>adminLimits</Name>
+		<UserStyle>
+			<FeatureTypeStyle>
+				<Rule>
+					<LineSymbolizer>
+						<Stroke>
+							<CssParameter name="stroke">#dcdcdc</CssParameter>
+							<CssParameter name="stroke-width">4.5</CssParameter>
+							<CssParameter name="stroke-dasharray">10 10</CssParameter>
+						</Stroke>
+					</LineSymbolizer>
+				</Rule>
+			</FeatureTypeStyle>
+		</UserStyle>
+	</NamedLayer>	
 		<NamedLayer>
 		<Name>contourLines</Name>
 		<UserStyle>

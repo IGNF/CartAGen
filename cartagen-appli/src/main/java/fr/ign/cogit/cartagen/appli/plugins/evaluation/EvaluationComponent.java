@@ -29,7 +29,7 @@ import org.xml.sax.SAXException;
 import fr.ign.cogit.cartagen.appli.collagen.ComputeMonitorsFrame;
 import fr.ign.cogit.cartagen.appli.core.geoxygene.CartAGenPlugin;
 import fr.ign.cogit.cartagen.appli.core.geoxygene.selection.SelectionUtil;
-import fr.ign.cogit.cartagen.appli.plugins.process.CollaGenComponent;
+import fr.ign.cogit.cartagen.appli.plugins.process.collagen.CollaGenComponent;
 import fr.ign.cogit.cartagen.collagen.components.translator.ConstraintsInstanciation;
 import fr.ign.cogit.cartagen.collagen.enrichment.ConstraintMonitor;
 import fr.ign.cogit.cartagen.collagen.resources.ontology.GeneralisationConcept;
