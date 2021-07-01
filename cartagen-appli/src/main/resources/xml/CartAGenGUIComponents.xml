@@ -9,7 +9,7 @@
 	</Component>
 	<Component>
 		<name>CollaGen</name>
-		<path>fr.ign.cogit.cartagen.appli.plugins.process.CollaGenComponent</path>
+		<path>fr.ign.cogit.cartagen.appli.plugins.process.collagen.CollaGenComponent</path>
 	</Component>
 	<Component>
 		<name>ScaleMaster</name>
@@ -30,6 +30,10 @@
 	<Component>
 		<name>OpenStreetMap</name>
 		<path>fr.ign.cogit.cartagen.appli.plugins.vgi.OSMCartAGenPlugin</path>
+	</Component>
+	<Component>
+		<name>Tactile Maps</name>
+		<path>fr.ign.cogit.cartagen.appli.plugins.tactilemaps.TactileMapsComponent</path>
 	</Component>
 	<Component>
 		<name>Training Generator</name>
