@@ -194,3 +194,324 @@
  WARN 2021-06-25 17:06:33,711 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
  WARN 2021-06-25 17:06:33,711 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
  WARN 2021-06-25 17:06:33,851 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-06-28 10:30:24,907 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-06-28 10:30:25,685 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-06-28 10:30:26,711 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-06-28 10:30:46,610 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-28 10:30:46,612 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-28 10:30:46,612 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-28 10:30:46,612 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-28 10:30:46,764 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-28 10:30:46,764 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-28 10:30:46,764 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-28 10:30:46,932 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-28 10:30:46,932 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-28 10:30:47,099 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-06-29 17:42:07,826 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-06-29 17:42:08,523 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-06-29 17:42:09,352 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ INFO 2021-06-29 17:44:22,836 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-06-29 17:44:23,504 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-06-29 17:44:24,137 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ INFO 2021-06-29 17:45:12,632 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-06-29 17:45:13,304 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-06-29 17:45:13,951 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-06-29 17:45:22,848 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:45:22,849 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:45:22,849 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:45:22,849 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:45:22,981 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:45:22,982 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:45:22,982 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:45:23,145 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:45:23,145 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:45:23,285 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-06-29 17:48:56,729 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-06-29 17:48:57,402 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-06-29 17:48:58,032 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-06-29 17:49:06,468 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:49:06,470 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:49:06,470 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:49:06,470 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:49:06,609 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:49:06,609 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:49:06,609 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:49:06,765 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:49:06,765 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:49:06,906 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-06-29 17:54:22,508 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-06-29 17:54:23,220 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-06-29 17:54:23,860 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-06-29 17:54:32,883 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:54:32,884 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:54:32,884 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:54:32,884 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:54:33,015 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:54:33,015 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:54:33,016 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:54:33,177 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:54:33,177 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 17:54:33,324 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-06-29 18:18:14,180 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-06-29 18:18:14,853 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-06-29 18:18:15,461 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-06-29 18:18:28,409 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 18:18:28,410 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 18:18:28,410 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 18:18:28,410 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 18:18:28,539 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 18:18:28,540 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 18:18:28,540 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 18:18:28,696 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 18:18:28,696 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-29 18:18:28,845 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-06-30 08:29:30,637 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-06-30 08:29:31,317 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-06-30 08:29:32,198 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-06-30 08:48:08,492 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:48:08,494 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:48:08,494 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:48:08,494 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:48:08,627 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:48:08,627 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:48:08,627 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:48:08,789 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:48:08,789 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:48:08,965 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-06-30 08:51:21,699 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-06-30 08:51:22,355 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-06-30 08:51:22,968 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-06-30 08:51:42,253 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:51:42,254 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:51:42,254 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:51:42,254 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:51:42,384 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:51:42,384 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:51:42,384 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:51:42,536 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:51:42,536 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 08:51:42,669 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-06-30 09:06:43,596 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-06-30 09:06:44,287 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-06-30 09:06:44,927 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-06-30 09:06:55,036 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 09:06:55,037 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 09:06:55,037 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 09:06:55,037 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 09:06:55,166 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 09:06:55,166 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 09:06:55,166 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 09:06:55,318 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 09:06:55,318 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 09:06:55,468 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-06-30 11:30:47,859 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-06-30 11:30:48,524 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-06-30 11:30:49,157 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-06-30 11:30:58,262 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 11:30:58,264 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 11:30:58,264 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 11:30:58,264 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 11:30:58,384 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 11:30:58,384 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 11:30:58,384 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 11:30:58,545 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 11:30:58,545 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-06-30 11:30:58,680 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-07-01 13:51:26,991 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-01 13:51:27,679 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-01 13:51:28,589 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-07-01 13:52:17,918 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 13:52:17,920 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 13:52:17,920 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 13:52:17,920 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 13:52:18,048 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 13:52:18,048 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 13:52:18,048 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 13:52:18,213 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 13:52:18,213 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 13:52:18,399 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-07-01 14:49:50,666 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-01 14:49:51,352 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-01 14:49:51,995 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-07-01 14:51:12,921 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 14:51:12,923 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 14:51:12,923 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 14:51:12,923 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 14:51:13,051 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 14:51:13,051 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 14:51:13,051 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 14:51:13,209 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 14:51:13,209 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-01 14:51:13,359 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-07-02 10:35:48,268 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-02 10:35:48,942 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-02 10:35:49,688 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-07-02 10:36:02,167 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:36:02,169 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:36:02,169 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:36:02,169 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:36:02,304 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:36:02,304 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:36:02,304 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:36:02,460 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:36:02,460 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:36:02,596 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-07-02 10:40:07,727 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-02 10:40:08,387 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-02 10:40:09,009 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-07-02 10:40:21,094 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:40:21,095 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:40:21,095 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:40:21,095 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:40:21,231 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:40:21,231 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:40:21,231 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:40:21,386 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:40:21,386 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:40:21,523 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-07-02 10:41:37,906 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-02 10:41:38,601 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-02 10:41:39,227 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-07-02 10:41:50,441 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:41:50,443 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:41:50,443 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:41:50,443 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:41:50,571 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:41:50,571 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:41:50,571 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:41:50,729 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:41:50,729 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:41:50,867 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-07-02 10:48:19,282 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-02 10:48:19,949 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-02 10:48:20,590 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-07-02 10:48:31,483 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:48:31,485 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:48:31,485 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:48:31,485 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:48:31,615 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:48:31,615 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:48:31,615 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:48:31,776 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:48:31,776 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:48:31,916 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-07-02 10:49:57,420 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-02 10:49:58,100 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-02 10:49:58,714 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-07-02 10:50:12,018 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:50:12,020 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:50:12,020 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:50:12,020 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:50:12,159 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:50:12,159 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:50:12,159 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:50:12,313 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:50:12,313 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:50:12,448 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-07-02 10:55:56,688 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-02 10:55:57,351 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-02 10:55:57,967 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ INFO 2021-07-02 10:57:01,935 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-02 10:57:02,601 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-02 10:57:03,213 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-07-02 10:57:22,638 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:57:22,640 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:57:22,640 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:57:22,640 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:57:22,770 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:57:22,770 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:57:22,770 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:57:22,932 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:57:22,932 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 10:57:23,076 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-07-02 12:58:03,404 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-02 12:58:04,068 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-02 12:58:04,819 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-07-02 12:58:27,437 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 12:58:27,439 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 12:58:27,439 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 12:58:27,439 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 12:58:27,561 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 12:58:27,561 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 12:58:27,561 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 12:58:27,727 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 12:58:27,727 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 12:58:27,890 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-07-02 13:07:13,978 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-02 13:07:14,651 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-02 13:07:15,285 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-07-02 13:07:26,636 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:07:26,638 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:07:26,638 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:07:26,638 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:07:26,784 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:07:26,785 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:07:26,785 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:07:26,956 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:07:26,956 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:07:27,120 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-07-02 13:17:25,431 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-02 13:17:26,145 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-02 13:17:26,785 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-07-02 13:17:38,054 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:17:38,056 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:17:38,056 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:17:38,056 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:17:38,191 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:17:38,191 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:17:38,191 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:17:38,367 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:17:38,367 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 13:17:38,518 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-07-02 18:16:34,752 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-02 18:16:35,426 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-02 18:16:36,079 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-07-02 18:18:00,874 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 18:18:00,875 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 18:18:00,876 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 18:18:00,876 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 18:18:01,009 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 18:18:01,009 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 18:18:01,009 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 18:18:01,187 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 18:18:01,187 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-02 18:18:01,340 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-07-05 13:56:37,413 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-05 13:56:38,079 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-05 13:56:38,808 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-07-05 13:56:49,864 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 13:56:49,866 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 13:56:49,866 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 13:56:49,866 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 13:56:49,994 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 13:56:49,994 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 13:56:49,994 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 13:56:50,154 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 13:56:50,154 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 13:56:50,292 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-07-05 14:04:48,575 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-05 14:04:49,252 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-05 14:04:49,869 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-07-05 14:06:18,326 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:06:18,328 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:06:18,328 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:06:18,328 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:06:18,450 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:06:18,450 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:06:18,450 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:06:18,619 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:06:18,619 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:06:18,781 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ INFO 2021-07-05 14:13:23,148 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Using 12 logical processors
+ WARN 2021-07-05 14:13:23,836 (fr.ign.cogit.geoxygene.appli.GeOxygeneApplication) - Cannot restore Look and Feel ''. Use default one
+ INFO 2021-07-05 14:13:24,455 (fr.ign.cogit.geoxygene.appli.gl.ResourcesManager) - Added the resource CURRENT_ROOT_URI to the ResourceManager RootManager. This manager now register 1 resources.
+ WARN 2021-07-05 14:15:47,945 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:15:47,946 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:15:47,946 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:15:47,946 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:15:48,068 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:15:48,068 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:15:48,068 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:15:48,225 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:15:48,225 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set
+ WARN 2021-07-05 14:15:48,361 (fr.ign.cogit.geoxygene.appli.render.MultithreadedRenderingManager) - Rendering process requested but no renderer has been set

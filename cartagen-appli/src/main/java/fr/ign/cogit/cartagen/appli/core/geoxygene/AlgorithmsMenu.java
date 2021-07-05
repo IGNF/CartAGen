@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 
 import fr.ign.cogit.cartagen.algorithms.block.deletion.BuildingDeletionOverlap;
 import fr.ign.cogit.cartagen.algorithms.block.displacement.BuildingDisplacementRandom;
+import fr.ign.cogit.cartagen.algorithms.points.PointDisplacement;
 import fr.ign.cogit.cartagen.algorithms.polygon.LiOpenshawSimplification;
 import fr.ign.cogit.cartagen.algorithms.polygon.RaposoSimplification;
 import fr.ign.cogit.cartagen.algorithms.polygon.Skeletonize;
@@ -35,15 +36,18 @@ import fr.ign.cogit.cartagen.algorithms.section.BendSeriesContinuousAlgorithm;
 import fr.ign.cogit.cartagen.appli.core.geoxygene.selection.SelectionUtil;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
+import fr.ign.cogit.cartagen.core.genericschema.IGeneObjPoint;
 import fr.ign.cogit.cartagen.graph.TreeGraph;
 import fr.ign.cogit.cartagen.spatialanalysis.measures.section.Bend;
 import fr.ign.cogit.cartagen.spatialanalysis.measures.section.BendSeries;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
+import fr.ign.cogit.geoxygene.api.feature.IFeatureCollection;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineSegment;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
 import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
 import fr.ign.cogit.geoxygene.appli.GeOxygeneApplication;
+import fr.ign.cogit.geoxygene.feature.FT_FeatureCollection;
 import fr.ign.cogit.geoxygene.generalisation.Filtering;
 import fr.ign.cogit.geoxygene.generalisation.GaussianFilter;
 import fr.ign.cogit.geoxygene.spatial.geomengine.GeometryEngine;
@@ -193,6 +197,8 @@ public class AlgorithmsMenu extends JMenu {
 			}
 		});
 		mDisplacement.add(mRandom);
+		JMenuItem mPoints = new JMenuItem(new PointDisplacementAction());
+		mDisplacement.add(mPoints);
 
 		// elimination menu
 		JMenu mElimination = new JMenu("Contextual Deletion");
@@ -318,6 +324,32 @@ public class AlgorithmsMenu extends JMenu {
 				CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool().addGraphToGeometryPool(skeleton,
 						Color.RED, Color.MAGENTA);
 			}
+		}
+	}
+
+	class PointDisplacementAction extends AbstractAction {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public PointDisplacementAction() {
+			this.putValue(Action.SHORT_DESCRIPTION, "Displace point features with overlapping symbols");
+			this.putValue(Action.NAME, "Displace point features");
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
+			double minSep = Double.valueOf(JOptionPane.showInputDialog("Minimum separation between two symbols"));
+			double displacementRatio = Double.valueOf(JOptionPane.showInputDialog("Displacement factor"));
+			IFeatureCollection<IGeneObjPoint> points = new FT_FeatureCollection<>();
+			for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
+				if (feat instanceof IGeneObjPoint)
+					points.add((IGeneObjPoint) feat);
+			}
+			PointDisplacement.compute(points, minSep, displacementRatio);
 		}
 	}
 
