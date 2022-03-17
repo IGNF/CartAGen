@@ -45,6 +45,11 @@
 		<artifactId>campskeleton</artifactId>
 		<version>1.0</version>
 		<scope>compile</scope>
-	</dependency>	
+	</dependency>
+	<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.24.jre7</version>
+		</dependency>	
   </dependencies>
 </project>

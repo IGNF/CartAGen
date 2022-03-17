@@ -33,67 +33,85 @@ import fr.ign.cogit.geoxygene.schemageo.impl.bati.AutreConstructionImpl;
 @Access(AccessType.PROPERTY)
 public class MiscPoint extends GeneObjPointDefault implements IMiscPoint {
 
-  /**
-   * Associated Geoxygene schema object
-   */
-  private AutreConstruction geoxObj;
+	/**
+	 * Associated Geoxygene schema object
+	 */
+	private AutreConstruction geoxObj;
+	private String nature;
 
-  /**
-   * Constructor
-   */
-  public MiscPoint(AutreConstruction geoxObj) {
-    super();
-    this.geoxObj = geoxObj;
-    this.setInitialGeom(geoxObj.getGeom());
-    this.setEliminated(false);
-  }
+	/**
+	 * Constructor
+	 */
+	public MiscPoint(AutreConstruction geoxObj) {
+		super();
+		this.geoxObj = geoxObj;
+		this.setInitialGeom(geoxObj.getGeom());
+		this.setEliminated(false);
+	}
 
-  public MiscPoint(IPoint point) {
-    super();
-    this.geoxObj = new AutreConstructionImpl(point);
-    this.setInitialGeom(point);
-    this.setEliminated(false);
-  }
+	public MiscPoint(IPoint point) {
+		super();
+		this.geoxObj = new AutreConstructionImpl(point);
+		this.setInitialGeom(point);
+		this.setEliminated(false);
+	}
 
-  /**
-   * Default constructor, used by Hibernate.
-   */
-  public MiscPoint() {
-    super();
-  }
+	public MiscPoint(IPoint point, String nature) {
+		super();
+		this.geoxObj = new AutreConstructionImpl(point);
+		this.setInitialGeom(point);
+		this.setEliminated(false);
+		this.setNature(nature);
+	}
 
-  @Override
-  @Transient
-  public IFeature getGeoxObj() {
-    return this.geoxObj;
-  }
+	/**
+	 * Default constructor, used by Hibernate.
+	 */
+	public MiscPoint() {
+		super();
+	}
 
-  @Override
-  @Type(type = "fr.ign.cogit.cartagen.core.persistence.GeOxygeneGeometryUserType")
-  public IPoint getGeom() {
-    return super.getGeom();
-  }
+	@Override
+	@Transient
+	public IFeature getGeoxObj() {
+		return this.geoxObj;
+	}
 
-  @Override
-  @Column(name = "CartAGenDB_name")
-  public String getDbName() {
-    return super.getDbName();
-  }
+	@Override
+	@Type(type = "fr.ign.cogit.cartagen.core.persistence.GeOxygeneGeometryUserType")
+	public IPoint getGeom() {
+		return super.getGeom();
+	}
 
-  @Override
-  @Id
-  public int getId() {
-    return super.getId();
-  }
+	@Override
+	@Column(name = "CartAGenDB_name")
+	public String getDbName() {
+		return super.getDbName();
+	}
 
-  @Override
-  public int getSymbolId() {
-    return super.getSymbolId();
-  }
+	@Override
+	@Id
+	public int getId() {
+		return super.getId();
+	}
 
-  @Override
-  public boolean isEliminated() {
-    return super.isEliminated();
-  }
+	@Override
+	public int getSymbolId() {
+		return super.getSymbolId();
+	}
+
+	@Override
+	public boolean isEliminated() {
+		return super.isEliminated();
+	}
+
+	@Override
+	public String getNature() {
+		return nature;
+	}
+
+	public void setNature(String nature) {
+		this.nature = nature;
+	}
 
 }

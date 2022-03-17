@@ -23,9 +23,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import com.vividsolutions.jts.geom.LineString;
+
 import fr.ign.cogit.cartagen.algorithms.block.deletion.BuildingDeletionOverlap;
 import fr.ign.cogit.cartagen.algorithms.block.displacement.BuildingDisplacementRandom;
 import fr.ign.cogit.cartagen.algorithms.points.PointDisplacement;
+import fr.ign.cogit.cartagen.algorithms.polygon.EnlargeThinPart;
 import fr.ign.cogit.cartagen.algorithms.polygon.LiOpenshawSimplification;
 import fr.ign.cogit.cartagen.algorithms.polygon.RaposoSimplification;
 import fr.ign.cogit.cartagen.algorithms.polygon.Skeletonize;
@@ -42,9 +45,11 @@ import fr.ign.cogit.cartagen.spatialanalysis.measures.section.Bend;
 import fr.ign.cogit.cartagen.spatialanalysis.measures.section.BendSeries;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.feature.IFeatureCollection;
+import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineSegment;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
+import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IMultiCurve;
 import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
 import fr.ign.cogit.geoxygene.appli.GeOxygeneApplication;
 import fr.ign.cogit.geoxygene.feature.FT_FeatureCollection;
@@ -52,6 +57,7 @@ import fr.ign.cogit.geoxygene.generalisation.Filtering;
 import fr.ign.cogit.geoxygene.generalisation.GaussianFilter;
 import fr.ign.cogit.geoxygene.spatial.geomengine.GeometryEngine;
 import fr.ign.cogit.geoxygene.style.Layer;
+import fr.ign.cogit.geoxygene.util.conversion.AdapterFactory;
 
 /**
  * A menu for generic algorithms, i.e. algorithms that apply to standard
@@ -252,11 +258,16 @@ public class AlgorithmsMenu extends JMenu {
 		JMenuItem mContinuousMaxBreak = new JMenuItem(new ContinuousMaxBreakAction());
 		mBendSeries.add(mContinuousMaxBreak);
 
+		JMenu mOther = new JMenu("Other Algorithms");
+		JMenuItem mEnlargeThinPart = new JMenuItem(new EnlargeThinPartAction());
+		mOther.add(mEnlargeThinPart);
+
 		this.add(mLineSimplif);
 		this.add(mElimination);
 		this.add(mDisplacement);
 		this.add(mCollapse);
 		this.add(mBendSeries);
+		this.add(mOther);
 	}
 
 	class StraightSkeAction extends AbstractAction {
@@ -349,7 +360,8 @@ public class AlgorithmsMenu extends JMenu {
 				if (feat instanceof IGeneObjPoint)
 					points.add((IGeneObjPoint) feat);
 			}
-			PointDisplacement.compute(points, minSep, displacementRatio);
+			PointDisplacement ptDispl = new PointDisplacement();
+			ptDispl.compute(points, minSep, displacementRatio);
 		}
 	}
 
@@ -570,4 +582,51 @@ public class AlgorithmsMenu extends JMenu {
 		}
 	}
 
+	class EnlargeThinPartAction extends AbstractAction {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public EnlargeThinPartAction() {
+			this.putValue(Action.NAME, "Enlarge thin parts");
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			GeOxygeneApplication appli = CartAGenPlugin.getInstance().getApplication();
+			int size = Integer.valueOf(JOptionPane.showInputDialog("Minimum width"));
+			for (IFeature feat : SelectionUtil.getSelectedObjects(appli)) {
+				IGeometry geom = feat.getGeom();
+				if (geom instanceof IMultiCurve<?>) {
+					geom = ((IMultiCurve<ILineString>) geom).get(0);
+				}
+				if (!(geom instanceof ILineString))
+					continue;
+
+				EnlargeThinPart algorithm = new EnlargeThinPart((ILineString) geom, size);
+				ILineString newGeom = algorithm.enlargeParts();
+				feat.setGeom(newGeom);
+
+				// display the output in the geometry pool
+				CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool().addFeatureToGeometryPool(newGeom,
+						Color.MAGENTA, 4);
+				for (LineString edge : algorithm.getEnlargedEdges()) {
+					IGeometry geomEdge = null;
+					try {
+						geomEdge = AdapterFactory.toGM_Object(edge);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool().addFeatureToGeometryPool(geomEdge,
+							Color.GREEN, 2);
+				}
+				for (IDirectPosition point : algorithm.getVectorField().keySet()) {
+					CartAGenDoc.getInstance().getCurrentDataset().getGeometryPool()
+							.addVectorToGeometryPool(algorithm.getVectorField().get(point), point, Color.BLUE, 2);
+				}
+			}
+		}
+	}
 }

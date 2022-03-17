@@ -9,10 +9,12 @@
  ******************************************************************************/
 package fr.ign.cogit.cartagen.core.defaultschema.admin;
 
+import fr.ign.cogit.cartagen.core.SLDUtilCartagen;
 import fr.ign.cogit.cartagen.core.defaultschema.GeneObjLinDefault;
 import fr.ign.cogit.cartagen.core.genericschema.admin.IAdminLimit;
 import fr.ign.cogit.geoxygene.api.feature.IFeature;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
+import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
 import fr.ign.cogit.geoxygene.schemageo.api.administratif.LimiteAdministrative;
 import fr.ign.cogit.geoxygene.schemageo.impl.administratif.LimiteAdministrativeImpl;
 
@@ -23,38 +25,43 @@ import fr.ign.cogit.geoxygene.schemageo.impl.administratif.LimiteAdministrativeI
 
 public class AdminLimit extends GeneObjLinDefault implements IAdminLimit {
 
-  /**
-   * Associated Geoxygene schema object
-   */
-  private LimiteAdministrative geoxObj;
+	/**
+	 * Associated Geoxygene schema object
+	 */
+	private LimiteAdministrative geoxObj;
 
-  /**
-   * Constructor
-   */
-  public AdminLimit(LimiteAdministrative geoxObj) {
-    super();
-    this.geoxObj = geoxObj;
-    this.setInitialGeom(geoxObj.getGeom());
-    this.setEliminated(false);
-  }
+	/**
+	 * Constructor
+	 */
+	public AdminLimit(LimiteAdministrative geoxObj) {
+		super();
+		this.geoxObj = geoxObj;
+		this.setInitialGeom(geoxObj.getGeom());
+		this.setEliminated(false);
+	}
 
-  public AdminLimit(ILineString line) {
-    super();
-    this.geoxObj = new LimiteAdministrativeImpl();
-    this.geoxObj.setGeom(line);
-    this.setInitialGeom(line);
-    this.setEliminated(false);
-  }
+	public AdminLimit(ILineString line) {
+		super();
+		this.geoxObj = new LimiteAdministrativeImpl();
+		this.geoxObj.setGeom(line);
+		this.setInitialGeom(line);
+		this.setEliminated(false);
+	}
 
-  public AdminLimit() {
-    super();
-    this.geoxObj = new LimiteAdministrativeImpl();
-    this.setEliminated(false);
-  }
+	public AdminLimit() {
+		super();
+		this.geoxObj = new LimiteAdministrativeImpl();
+		this.setEliminated(false);
+	}
 
-  @Override
-  public IFeature getGeoxObj() {
-    return this.geoxObj;
-  }
+	@Override
+	public IFeature getGeoxObj() {
+		return this.geoxObj;
+	}
+
+	@Override
+	public IGeometry getSymbolGeom() {
+		return getGeom().buffer(SLDUtilCartagen.getSymbolMaxWidth(this));
+	}
 
 }

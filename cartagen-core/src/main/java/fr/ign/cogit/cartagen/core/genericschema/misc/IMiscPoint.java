@@ -17,5 +17,12 @@ import fr.ign.cogit.cartagen.core.genericschema.IGeneObjPoint;
  */
 
 public interface IMiscPoint extends IGeneObjPoint {
-  public static final String FEAT_TYPE_NAME = "MiscPoint"; //$NON-NLS-1$
+	public static final String FEAT_TYPE_NAME = "MiscPoint"; //$NON-NLS-1$
+
+	/**
+	 * The nature of the label, e.g. "city"
+	 * 
+	 * @return
+	 */
+	public String getNature();
 }
