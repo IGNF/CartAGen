@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb">
+
+<head>
+    <script type="text/javascript">
+var isRTL = false;
+</script>
+
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="keywords" content="map generalisation, map generalization, multiple representation, Java, open source, AGENT, multi-agent systems" />
+  <meta name="author" content="Super User" />
+  <meta name="description" content="website of the CartAGen open source generalisation platform. This is a platform for research on map generalisation, and gathers research code from the past research projects at IGN France." />
+  <meta name="generator" content="Joomla! - Open Source Content Management" />
+  <title>CartAGen Map Generalisation Research Platform - Welcome</title>
+  <link rel="stylesheet" href="/images/ea5c3.css" type="text/css" />
+
+<style type="text/css">
+#ja-header .main {
+	background-image: url(/images/header.png);
+}
+</style>
+
+    <style type="text/css">
+/*dynamic css*/
+    body#bd,
+    div.logo-text h1 a,
+    div.ja-moduletable h3, div.moduletable h3,
+    div.ja-module h3, div.module h3,
+    h1.componentheading, .componentheading,
+    .contentheading,
+    .article-content h1,
+    .article-content h2,
+    .article-content h3,
+    .article-content h4,
+    .article-content h5,
+    .article-content h6
+    {font-size:90%;}
+    div.logo-text h1, div.logo-text h1 a
+    {margin-top:15px;
+font-size:22pt;}
+    #ja-splitmenu,
+    #jasdl-mainnav,
+    #ja-cssmenu li,
+    #ja-megamenu ul.level0
+    {font-size:120%;}
+    .contentheading,
+    .article-content h1,
+    .article-content h2,
+    .article-content h3,
+    .article-content h4,
+    .article-content h5,
+    .article-content h6
+    {font-size:180%; }
+
+    body.bd .main {width: 980px;}
+    body.bd #ja-wrapper {min-width: 980px;}
+</style></head>
+
+<body id="bd" class="bd fs3 com_content">
+<a name="Top" id="Top"></a>
+<div id="ja-wrapper">
+
+
+                <div id="ja-header"
+            	class="wrap ">
+                   <div class="main">
+                           <div class="main-inner1 clearfix">
+                <div class="logo-text">
+    <h1><a href="/" title="CartAGen - Map Generalisation Open Research Platform"><span>CartAGen - Map Generalisation Open Research Platform</span></a></h1>
+    <p class="site-slogan"></p>
+</div>                </div>
+                            </div>
+                        </div>
+                        <div id="ja-navhelper"
+            	class="wrap ">
+                   <div class="main">
+                           <div class="main-inner1 clearfix">
+                <div class="ja-breadcrums">
+	<span class="breadcrumbs pathway">
+<strong>You are here: </strong>{{ page.title | escape }}</span>
+
+</div>
+<ul class="no-display">
+	<li><a href="#ja-content" title="Skip to content">Skip to content</a></li>
+</ul>                </div>
+                            </div>
+                        </div>
+
+    <!-- MAIN CONTAINER -->
+    <div id="ja-container" class="wrap ja-l1">
+               <div class="main clearfix">
+                   <div id="ja-mainbody" style="width:100%">
+            <!-- CONTENT -->
+            <div id="ja-main" style="width:79%">
+            <div class="inner clearfix">
+
+
+<div id="system-message-container">
+</div>
+
+                <div id="ja-contentwrap" class="clearfix ">
+                    <div id="ja-content" class="column" style="width:100%">
+                        <div id="ja-current-content" class="column" style="width:100%">
+
+                                                        <div id="ja-content-main" class="ja-content-main clearfix">
+                                <div class="item-page">
+
+
+
+{{ content }}
+
+
+
+	</div>
+                            </div>
+
+                                                    </div>
+
+                                            </div>
+
+
+                </div>
+
+                            </div>
+            </div>
+            <!-- //CONTENT -->
+                        <!-- LEFT COLUMN-->
+            <div id="ja-left" class="column sidebar" style="width:21%">
+
+                                <div class="ja-colswrap clearfix ja-l1">
+                                    <div id="ja-left1" class="ja-col  column" style="width:100%">
+                        	<div class="ja-moduletable moduletable  clearfix" id="Mod80">
+						<div class="ja-box-ct clearfix">
+
+
+<div class="custom"  >
+	<div id="title">
+<p><span style="font-size: x-large; color: #c0c0c0; font-family: helvetica;"><img src="/images/ica_logo.png" border="0" alt="" width="150" height="123" style="display: block; margin-left: auto; margin-right: auto;" /></span></p>
+</div></div>
+		</div>
+    </div>
+		<div class="ja-moduletable moduletable_menu  clearfix" id="Mod1">
+				<div class="ja-box-ct clearfix">
+
+<ul class="menu">
+
+  {% assign sorted_pages = site.pages | sort:"order" %}
+
+  {% for node in sorted_pages %}
+    {% if node.title %}
+
+      {% if page.url == node.url %}
+        <li class="active"><a href="{{node.url}}" class="active">{{ node.title | escape }}</a></li>
+      {% else %}
+        <li><a href="{{node.url}}">{{ node.title | escape }}</a></li>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+</ul>
+
+		</div>
+    </div>
+	                    </div>
+
+                                </div>
+                                            </div>
+            <!-- //LEFT COLUMN-->
+
+        </div>
+                        </div>
+                </div>
+        <!-- //MAIN CONTAINER -->
+      </div>
+
+<div id="ja-footer" class="wrap "></div>
+
+
+
+
+</body>
+
+</html>

@@ -1,3 +1,9 @@
+---
+  title: Agent-Based Generalisation
+  layout: page
+  order: 3
+---
+
 # Tutorial on agent-based generalization with CartAGen
 This tutorial explains how to use the agent-based generalization model implemented in CartAGen: [AGENT][2], [CartACom][3], [GAEL][4], and [DIOGEN][5]. Be aware that each of these implementations are for now mainly based on research code that has not been consolidated. Many bugs still remain and some functionalities described in the papers describing the models are not implemented in CartAGen. Feel free to add issues in the Github platform, or to implement yourself the missing functionalities.
 
