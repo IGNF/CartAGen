@@ -19,6 +19,7 @@ import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -28,16 +29,21 @@ import javax.swing.JMenu;
 
 import org.apache.log4j.Logger;
 
+import fr.ign.cogit.cartagen.deeplearning.vector2image.CoordinateTransformation;
 import fr.ign.cogit.cartagen.appli.core.geoxygene.CartAGenPlugin;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanBlock;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanElement;
 import fr.ign.cogit.cartagen.deeplearning.vector2image.Roads2Image;
+import fr.ign.cogit.geoxygene.api.feature.IFeature;
+import fr.ign.cogit.geoxygene.api.feature.IFeatureCollection;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPositionList;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IEnvelope;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
+import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IMultiSurface;
+import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
 import fr.ign.cogit.geoxygene.appli.GeOxygeneApplication;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPosition;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPositionList;
@@ -76,13 +82,19 @@ public class TrainingDatasetGenerator extends JMenu {
         TrainingDatasetGenerator.instance = this;
 
         JMenu buildingMenu = new JMenu("Building Generalisation");
+        JMenu urbanMenu = new JMenu("Urban Map Generalisation");
         JMenu roadMenu = new JMenu("Road Generalisation");
         JMenu enrichMenu = new JMenu("Data Enrichment");
         this.add(buildingMenu);
         this.add(roadMenu);
         roadMenu.add(new RoadPiX2PixAction());
+        this.add(urbanMenu);
+        urbanMenu.add(new FromLayerAction());
+        urbanMenu.add(new FromSymbolAction());
         this.add(enrichMenu);
         enrichMenu.add(new BlockImagesAction());
+        enrichMenu.add(new RoadImagesAction());
+        enrichMenu.add(new AliImagesAction());
         this.addSeparator();
         this.add(new ChangeSizeAction());
     }
@@ -105,6 +117,902 @@ public class TrainingDatasetGenerator extends JMenu {
         public ChangeSizeAction() {
             super();
             this.putValue(Action.NAME, "Change image size");
+        }
+
+    }
+    
+    /**
+     * This action construct mask of shape and location for road, water and building at 1:25 000 
+     * and the corresponding symbolized generalisation at 1:50 000.
+     * 
+     * @author ACourtial
+     *
+     */
+    private class FromLayerAction extends AbstractAction {
+
+        private static final long serialVersionUID = 1L;
+        private String build25Name="build25";
+        private String build50Name="build50";
+        private String road25Name="road25";
+        private String road50Name="road50";
+        private String water25Name="water25";
+        private String water50Name="water50";
+        private String gray50Name="gray50";
+        private String outputPath="D://urbandataset//fromlayer";
+	    private Color building_color = new Color(137,110,90);
+	    private Color graying_color = new Color(230, 230, 210);
+	    private Color road_color = new Color(250, 250, 200);
+	    private Color water_color = new Color(170, 210, 230);
+    	private GeOxygeneApplication application;
+    	private int imageSize=512; private float scale=500; private int recov=60;
+    	
+  	
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Thread th = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                	application = CartAGenPlugin.getInstance().getApplication();
+        	 		Layer build25Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(build25Name);
+        			Layer build50Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(build50Name);
+        			Layer road25Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(road25Name);
+        			Layer road50Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(road50Name);
+        			Layer water25Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(water25Name);
+        			Layer water50Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(water50Name);
+        			Layer gray50Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(gray50Name);
+        			
+        			IFeatureCollection<? extends IFeature> build25 = build25Layer.getFeatureCollection();
+        			IFeatureCollection<? extends IFeature> build50 = build50Layer.getFeatureCollection();
+        			IFeatureCollection<? extends IFeature> road25 = road25Layer.getFeatureCollection();
+        			IFeatureCollection<? extends IFeature> road50 = road50Layer.getFeatureCollection();
+        			IFeatureCollection<? extends IFeature> water25 = water25Layer.getFeatureCollection();
+        			IFeatureCollection<? extends IFeature> water50 = water50Layer.getFeatureCollection();
+        			IFeatureCollection<? extends IFeature> gray50 = gray50Layer.getFeatureCollection();
+        			
+        			IEnvelope carte=road25.envelope(); IDirectPosition p1=carte.getLowerCorner(); IDirectPosition p2=carte.getUpperCorner();
+        	    	double xmin=carte.minX(); double ymin=carte.minY(); double xmax=carte.maxX(); double ymax=carte.maxY();
+        	    	IEnvelope fenetre= (IEnvelope) carte.clone();
+        	    	
+        	    	double pas_intern=scale;
+        	    	double pas_extern=scale*recov/100;
+        	    	int nb=0;
+        	    	p2.setCoordinate(xmin+pas_intern, ymin+(pas_intern)); 
+        	    	while (p1.getX()<xmax){
+        	    		p1.setCoordinate(p1.getX(), ymin);
+        	    		p2.setCoordinate(p2.getX(), ymin+(pas_intern));
+        	    		while(p1.getY()<ymax){
+        	    		    fenetre.setLowerCorner(p1);
+        	    		    fenetre.setUpperCorner(p2);
+        	                Collection<IFeature> build50s =(Collection<IFeature>)  build50.select((IEnvelope) fenetre);
+        	                Collection<IFeature> road50s =(Collection<IFeature>)  road50.select((IEnvelope) fenetre);
+        	                Collection<IFeature> water50s =(Collection<IFeature>)  water50.select((IEnvelope) fenetre);
+        	                Collection<IFeature> gray50s =(Collection<IFeature>)  gray50.select((IEnvelope) fenetre);
+        	                Collection<IFeature> build25s =(Collection<IFeature>)  build25.select((IEnvelope) fenetre);
+        	                Collection<IFeature> road25s =(Collection<IFeature>)  road25.select((IEnvelope) fenetre);
+        	                Collection<IFeature> water25s =(Collection<IFeature>)  water25.select((IEnvelope) fenetre);
+
+    	                	
+        	                if(build25s.isEmpty()) {
+        	                	p1.setCoordinate(p1.getX(), p1.getY()+pas_extern);
+        	                	p2.setCoordinate(p2.getX(), p2.getY()+pas_extern);
+        	                	continue;
+        	                }
+
+        	                
+        	    		    BufferedImage buildImg = new BufferedImage(imageSize, imageSize,BufferedImage.TYPE_BYTE_GRAY);
+        	    		    BufferedImage roadImg = new BufferedImage(imageSize, imageSize,BufferedImage.TYPE_BYTE_GRAY);
+        	    		    BufferedImage waterImg = new BufferedImage(imageSize, imageSize,BufferedImage.TYPE_BYTE_GRAY);
+        	    		    BufferedImage targetImg = new BufferedImage(imageSize, imageSize,BufferedImage.TYPE_INT_RGB);
+        	    		    
+        	    		    Graphics2D buildGraphic= buildImg.createGraphics();
+        	    		    buildGraphic.setBackground(new Color(0, 0, 0));
+        	    		    buildGraphic.clearRect(0, 0, imageSize, imageSize);
+        	                
+        	    		    Graphics2D roadGraphic= roadImg.createGraphics();
+        	    		    roadGraphic.setBackground(new Color(0, 0, 0));
+        	    		    roadGraphic.clearRect(0, 0, imageSize, imageSize);
+        	                
+        	    		    Graphics2D waterGraphic= waterImg.createGraphics();
+        	    		    waterGraphic.setBackground(new Color(0, 0, 0));
+        	    		    waterGraphic.clearRect(0, 0, imageSize, imageSize);
+        	    	
+        	    		    Graphics2D targetGraphic= targetImg.createGraphics();
+        	    		    targetGraphic.setBackground(new Color(255, 255, 255));
+        	    		    targetGraphic.clearRect(0, 0, imageSize, imageSize);
+
+        	                
+        	    		    IEnvelope env = fenetre.getGeom().getEnvelope();
+        	    	        double xMin = env.minX();
+        	    	        double yMin = env.minY();
+        	    	        double ratio = 0.0;
+
+        	    	        ratio = (imageSize - 2 * 3) / env.length();
+
+        	    	        CoordinateTransformation transform= new CoordinateTransformation(xMin, yMin, ratio, 3, imageSize);
+
+        	    	        for (IFeature build : build50s) {
+        	                    IMultiSurface<IPolygon> geom = (IMultiSurface)( build.getGeom());
+        	                    for (IPolygon elem : geom){
+        	                    	IDirectPositionList viewDirectPositionList1 = transform.transform(elem.getExterior().coord());
+        	                    	int numPoints1 = viewDirectPositionList1.size();
+        	                        int[] xpoints1 = new int[numPoints1];
+        	                        int[] ypoints1 = new int[numPoints1];
+        	                        for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+        	                            IDirectPosition p3 = viewDirectPositionList1.get(i);
+        	                            xpoints1[i] = (int) p3.getX();
+        	                            ypoints1[i] = (int) p3.getY();}
+        	                        targetGraphic.setColor(building_color);
+        	                        targetGraphic.fillPolygon(xpoints1, ypoints1, numPoints1);
+        	                        for (int i=0; i<elem.sizeInterior();i++){ 
+        	                        	IDirectPositionList viewDirectPositionList2 = transform.transform(elem.getInterior(i).coord());
+        	                        	int numPoints2 = viewDirectPositionList2.size();
+        	                            int[] xpoints2 = new int[numPoints2];
+        	                            int[] ypoints2 = new int[numPoints2];
+        	                            for (int j = 0; j < viewDirectPositionList2.size(); j++) {
+        	                                IDirectPosition p3 = viewDirectPositionList2.get(j);
+        	                                xpoints2[j] = (int) p3.getX();
+        	                                ypoints2[j] = (int) p3.getY();}
+                                
+        	                            targetGraphic.setColor(Color.WHITE);
+        	                            targetGraphic.fillPolygon(xpoints2, ypoints2, numPoints2);}
+        	                    }
+        	                }
+        	                for (IFeature build : build25s) {
+        	                    IMultiSurface<IPolygon> geom = (IMultiSurface)( build.getGeom());
+        	                    for (IPolygon elem : geom){
+        	                    	IDirectPositionList viewDirectPositionList1 = transform.transform(elem.getExterior().coord());
+        	                    	int numPoints1 = viewDirectPositionList1.size();
+        	                        int[] xpoints1 = new int[numPoints1];
+        	                        int[] ypoints1 = new int[numPoints1];
+        	                        for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+        	                            IDirectPosition p3 = viewDirectPositionList1.get(i);
+        	                            xpoints1[i] = (int) p3.getX();
+        	                            ypoints1[i] = (int) p3.getY();}
+        	                        buildGraphic.setColor(Color.WHITE);
+        	                        buildGraphic.fillPolygon(xpoints1, ypoints1, numPoints1);
+        	                        for (int i=0; i<elem.sizeInterior();i++){ 
+        	                        	IDirectPositionList viewDirectPositionList2 = transform.transform(elem.getInterior(i).coord());
+        	                        	int numPoints2 = viewDirectPositionList2.size();
+        	                            int[] xpoints2 = new int[numPoints2];
+        	                            int[] ypoints2 = new int[numPoints2];
+        	                            for (int j = 0; j < viewDirectPositionList2.size(); j++) {
+        	                                IDirectPosition p3 = viewDirectPositionList2.get(j);
+        	                                xpoints2[j] = (int) p3.getX();
+        	                                ypoints2[j] = (int) p3.getY();
+        	                            }
+        	                            buildGraphic.setColor(Color.BLACK);
+        	                            buildGraphic.fillPolygon(xpoints2, ypoints2, numPoints2);
+        	                        }
+        	                    }
+        	                }
+        	                for (IFeature water : water50s) {
+          	                    IMultiSurface<IPolygon> geom = (IMultiSurface)(  water.getGeom());
+        	                    for (IPolygon elem : geom){
+        	                    	IDirectPositionList viewDirectPositionList1 = transform.transform(elem.getExterior().coord());
+        	                    	int numPoints1 = viewDirectPositionList1.size();
+        	                        int[] xpoints1 = new int[numPoints1];
+        	                        int[] ypoints1 = new int[numPoints1];
+        	                        for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+        	                            IDirectPosition p3 = viewDirectPositionList1.get(i);
+        	                            xpoints1[i] = (int) p3.getX();
+        	                            ypoints1[i] = (int) p3.getY();}
+        	                        targetGraphic.setColor(water_color);
+        	                        targetGraphic.fillPolygon(xpoints1, ypoints1, numPoints1);
+        	                        for (int i=0; i<elem.sizeInterior();i++){ 
+        	                        	IDirectPositionList viewDirectPositionList2 = transform.transform(elem.getInterior(i).coord());
+        	                        	int numPoints2 = viewDirectPositionList2.size();
+        	                            int[] xpoints2 = new int[numPoints2];
+        	                            int[] ypoints2 = new int[numPoints2];
+        	                            for (int j = 0; j < viewDirectPositionList2.size(); j++) {
+        	                                IDirectPosition p3 = viewDirectPositionList2.get(j);
+        	                                xpoints2[j] = (int) p3.getX();
+        	                                ypoints2[j] = (int) p3.getY();}
+                                
+        	                            targetGraphic.setColor(Color.WHITE);
+        	                            targetGraphic.fillPolygon(xpoints2, ypoints2, numPoints2);
+        	                     }
+        	                    }
+        	                 }
+        	                 for (IFeature water : water25s) {
+           	                    IMultiSurface<IPolygon> geom = (IMultiSurface)(  water.getGeom());
+         	                    for (IPolygon elem : geom){
+         	                    	IDirectPositionList viewDirectPositionList1 = transform.transform(elem.getExterior().coord());
+         	                    	int numPoints1 = viewDirectPositionList1.size();
+         	                        int[] xpoints1 = new int[numPoints1];
+         	                        int[] ypoints1 = new int[numPoints1];
+         	                        for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+         	                            IDirectPosition p3 = viewDirectPositionList1.get(i);
+         	                            xpoints1[i] = (int) p3.getX();
+         	                            ypoints1[i] = (int) p3.getY();}
+         	                        waterGraphic.setColor(Color.WHITE);
+         	                        waterGraphic.fillPolygon(xpoints1, ypoints1, numPoints1);
+         	                        for (int i=0; i<elem.sizeInterior();i++){ 
+         	                        	IDirectPositionList viewDirectPositionList2 = transform.transform(elem.getInterior(i).coord());
+         	                        	int numPoints2 = viewDirectPositionList2.size();
+         	                            int[] xpoints2 = new int[numPoints2];
+         	                            int[] ypoints2 = new int[numPoints2];
+         	                            for (int j = 0; j < viewDirectPositionList2.size(); j++) {
+         	                                IDirectPosition p3 = viewDirectPositionList2.get(j);
+         	                                xpoints2[j] = (int) p3.getX();
+         	                                ypoints2[j] = (int) p3.getY();}
+                                 
+         	                            waterGraphic.setColor(Color.BLACK);
+         	                            waterGraphic.fillPolygon(xpoints2, ypoints2, numPoints2);
+         	                        }
+         	                    }
+        	                }
+        	                for (IFeature route : road50s) {
+
+        	                    IGeometry geom =  route.getGeom();
+        	                    IDirectPositionList viewDirectPositionList1 = transform.transform(geom.coord());
+        	                    int numPoints1 = viewDirectPositionList1.size();
+        	                    int[] xpoints1 = new int[numPoints1];
+        	                    int[] ypoints1 = new int[numPoints1];
+        	                    for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+        	                        IDirectPosition p3 = viewDirectPositionList1.get(i);
+        	                        xpoints1[i] = (int) p3.getX();
+        	                        ypoints1[i] = (int) p3.getY();
+        	                    }
+        	                    
+        	                    targetGraphic.setColor(Color.BLACK);
+        	                    targetGraphic.setStroke(new BasicStroke(5,0,2));
+        	                    targetGraphic.drawPolyline(xpoints1, ypoints1, numPoints1);
+        	                    targetGraphic.setColor(road_color);
+        	                    targetGraphic.setStroke(new BasicStroke(3,0,2));
+        	                    targetGraphic.drawPolyline(xpoints1, ypoints1, numPoints1);
+        	                }
+        	                for (IFeature route : road25s) {
+
+        	                	IGeometry geom =  route.getGeom();
+        	                	IDirectPositionList viewDirectPositionList1 = transform.transform(geom.coord());
+        	                	int numPoints1 = viewDirectPositionList1.size();
+        	                	int[] xpoints1 = new int[numPoints1];
+        	                	int[] ypoints1 = new int[numPoints1];
+        	                	for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+        	                		IDirectPosition p3 = viewDirectPositionList1.get(i);
+        	                		xpoints1[i] = (int) p3.getX();
+        	                		ypoints1[i] = (int) p3.getY();
+        	                	}
+
+                            
+        	                	roadGraphic.setColor(Color.WHITE);
+        	                	roadGraphic.setStroke(new BasicStroke(3,0,2));
+        	                	roadGraphic.drawPolyline(xpoints1, ypoints1, numPoints1);
+        	                }
+        	                for (IFeature gray_item : gray50) {
+        	                	IGeometry geom =  gray_item.getGeom();
+        	                	IDirectPositionList viewDirectPositionList1 = transform.transform(geom.coord());
+        	                	int numPoints1 = viewDirectPositionList1.size();
+        	                	int[] xpoints1 = new int[numPoints1];
+        	                	int[] ypoints1 = new int[numPoints1];
+        	                	for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+        	                		IDirectPosition p3 = viewDirectPositionList1.get(i);
+        	                		xpoints1[i] = (int) p3.getX();
+        	                		ypoints1[i] = (int) p3.getY();
+        	                	}
+        	                	targetGraphic.setColor(graying_color);
+        	                	targetGraphic.setStroke(new BasicStroke(1));
+        	                	targetGraphic.fillPolygon(xpoints1, ypoints1, numPoints1);
+        	                }
+
+
+        	                File outputfile1 = new File(outputPath +"//build//image"+ nb + ".png");
+        	                
+        	                try {
+        	                	ImageIO.write(buildImg, "png", outputfile1);
+        	                } catch (IOException f) {
+        	                	f.printStackTrace();
+        	                }
+        	    			File outputfile2 = new File(outputPath +"//road//image"+ nb + ".png");
+        	                
+        	                try {
+        	                	ImageIO.write(roadImg, "png", outputfile2);
+        	                } catch (IOException f) {
+        	                	f.printStackTrace();
+        	                }
+        	    			File outputfile3 = new File(outputPath +"//water//image"+ nb + ".png");
+        	                
+        	                try {
+        	                	ImageIO.write(waterImg, "png", outputfile3);
+        	                } catch (IOException f) {
+        	                	f.printStackTrace();
+        	                }
+
+        	                File outputfileTarget = new File(outputPath +"//target//image"+ nb + ".png");
+        	                
+        	                try {
+        	                	ImageIO.write(targetImg, "png", outputfileTarget);
+        	                } catch (IOException f) {
+        	                	f.printStackTrace();
+        	                }
+
+        	    			nb+=1;
+        	    			p1.setCoordinate(p1.getX(), p1.getY()+pas_extern);
+        	    			p2.setCoordinate(p2.getX(), p2.getY()+pas_extern);
+
+        	    		}
+        	    		p1.setCoordinate(p1.getX()+pas_extern, p1.getY());
+        	    		p2.setCoordinate(p2.getX()+pas_extern, p2.getY());
+        	    	}
+
+                }
+            });
+            th.start();
+        }
+
+        public FromLayerAction() {
+            super();
+            this.putValue(Action.NAME, "From theme tiles");
+        }
+
+
+        
+        
+    }
+    
+
+    /**
+     * This action construct symbolised tiles from data at 1:25 000 and at 1:50 000. 
+     * 
+     * 
+     * @author ACourtial
+     *
+     */
+    private class FromSymbolAction extends AbstractAction {
+
+        private static final long serialVersionUID = 1L;
+        private String build25Name="build25";
+        private String build50Name="build50";
+        private String road25Name="road25";
+        private String road50Name="road50";
+        private String water25Name="water25";
+        private String water50Name="water50";
+        private String gray50Name="gray50";
+        private String outputPath="D://urbandataset//fromsymbol";
+	    private Color building_color = new Color(137,110,90);
+	    private Color graying_color = new Color(230, 230, 210);
+	    private Color road_color = new Color(250, 250, 200);
+	    private Color water_color = new Color(170, 210, 230);
+    	private GeOxygeneApplication application;
+    	private int imageSize=512; private float scale=500; private int recov=60;
+    	
+  	
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Thread th = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                	application = CartAGenPlugin.getInstance().getApplication();
+        	 		Layer build25Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(build25Name);
+        			Layer build50Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(build50Name);
+        			Layer road25Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(road25Name);
+        			Layer road50Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(road50Name);
+        			Layer water25Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(water25Name);
+        			Layer water50Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(water50Name);
+        			Layer gray50Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(gray50Name);
+        			
+        			IFeatureCollection<? extends IFeature> build25 = build25Layer.getFeatureCollection();
+        			IFeatureCollection<? extends IFeature> build50 = build50Layer.getFeatureCollection();
+        			IFeatureCollection<? extends IFeature> road25 = road25Layer.getFeatureCollection();
+        			IFeatureCollection<? extends IFeature> road50 = road50Layer.getFeatureCollection();
+        			IFeatureCollection<? extends IFeature> water25 = water25Layer.getFeatureCollection();
+        			IFeatureCollection<? extends IFeature> water50 = water50Layer.getFeatureCollection();
+        			IFeatureCollection<? extends IFeature> gray50 = gray50Layer.getFeatureCollection();
+        			
+        			IEnvelope carte=road25.envelope(); IDirectPosition p1=carte.getLowerCorner(); IDirectPosition p2=carte.getUpperCorner();
+        	    	double xmin=carte.minX(); double ymin=carte.minY(); double xmax=carte.maxX(); double ymax=carte.maxY();
+        	    	IEnvelope fenetre= (IEnvelope) carte.clone();
+        	    	
+        	    	double pas_intern=scale;
+        	    	double pas_extern=scale*recov/100;
+        	    	int nb=0;
+        	    	p2.setCoordinate(xmin+pas_intern, ymin+(pas_intern)); 
+        	    	while (p1.getX()<xmax){
+        	    		p1.setCoordinate(p1.getX(), ymin);
+        	    		p2.setCoordinate(p2.getX(), ymin+(pas_intern));
+        	    		while(p1.getY()<ymax){
+        	    		    fenetre.setLowerCorner(p1);
+        	    		    fenetre.setUpperCorner(p2);
+        	                Collection<IFeature> build50s =(Collection<IFeature>)  build50.select((IEnvelope) fenetre);
+        	                Collection<IFeature> road50s =(Collection<IFeature>)  road50.select((IEnvelope) fenetre);
+        	                Collection<IFeature> water50s =(Collection<IFeature>)  water50.select((IEnvelope) fenetre);
+        	                Collection<IFeature> gray50s =(Collection<IFeature>)  gray50.select((IEnvelope) fenetre);
+        	                Collection<IFeature> build25s =(Collection<IFeature>)  build25.select((IEnvelope) fenetre);
+        	                Collection<IFeature> road25s =(Collection<IFeature>)  road25.select((IEnvelope) fenetre);
+        	                Collection<IFeature> water25s =(Collection<IFeature>)  water25.select((IEnvelope) fenetre);
+
+    	                	
+        	                if(build25s.isEmpty()) {
+        	                	p1.setCoordinate(p1.getX(), p1.getY()+pas_extern);
+        	                	p2.setCoordinate(p2.getX(), p2.getY()+pas_extern);
+        	                	continue;
+        	                }
+
+        	                
+        	    		    BufferedImage inputImg = new BufferedImage(imageSize, imageSize,BufferedImage.TYPE_INT_RGB);
+        	    		    BufferedImage targetImg = new BufferedImage(imageSize, imageSize,BufferedImage.TYPE_INT_RGB);
+        	    		    
+
+        	    		    Graphics2D inputGraphic= inputImg.createGraphics();
+        	    		    inputGraphic.setBackground(new Color(255, 255, 255));
+        	    		    inputGraphic.clearRect(0, 0, imageSize, imageSize);
+        	    		    
+        	    		    Graphics2D targetGraphic= targetImg.createGraphics();
+        	    		    targetGraphic.setBackground(new Color(255, 255, 255));
+        	    		    targetGraphic.clearRect(0, 0, imageSize, imageSize);
+
+        	                
+        	    		    IEnvelope env = fenetre.getGeom().getEnvelope();
+        	    	        double xMin = env.minX();
+        	    	        double yMin = env.minY();
+        	    	        double ratio = 0.0;
+
+        	    	        ratio = (imageSize - 2 * 3) / env.length();
+
+        	    	        CoordinateTransformation transform= new CoordinateTransformation(xMin, yMin, ratio, 3, imageSize);
+
+        	    	        for (IFeature build : build50s) {
+        	                    IMultiSurface<IPolygon> geom = (IMultiSurface)( build.getGeom());
+        	                    for (IPolygon elem : geom){
+        	                    	IDirectPositionList viewDirectPositionList1 = transform.transform(elem.getExterior().coord());
+        	                    	int numPoints1 = viewDirectPositionList1.size();
+        	                        int[] xpoints1 = new int[numPoints1];
+        	                        int[] ypoints1 = new int[numPoints1];
+        	                        for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+        	                            IDirectPosition p3 = viewDirectPositionList1.get(i);
+        	                            xpoints1[i] = (int) p3.getX();
+        	                            ypoints1[i] = (int) p3.getY();}
+        	                        targetGraphic.setColor(building_color);
+        	                        targetGraphic.fillPolygon(xpoints1, ypoints1, numPoints1);
+        	                        for (int i=0; i<elem.sizeInterior();i++){ 
+        	                        	IDirectPositionList viewDirectPositionList2 = transform.transform(elem.getInterior(i).coord());
+        	                        	int numPoints2 = viewDirectPositionList2.size();
+        	                            int[] xpoints2 = new int[numPoints2];
+        	                            int[] ypoints2 = new int[numPoints2];
+        	                            for (int j = 0; j < viewDirectPositionList2.size(); j++) {
+        	                                IDirectPosition p3 = viewDirectPositionList2.get(j);
+        	                                xpoints2[j] = (int) p3.getX();
+        	                                ypoints2[j] = (int) p3.getY();}
+                                
+        	                            targetGraphic.setColor(Color.WHITE);
+        	                            targetGraphic.fillPolygon(xpoints2, ypoints2, numPoints2);}
+        	                    }
+        	                }
+        	                for (IFeature build : build25s) {
+        	                    IMultiSurface<IPolygon> geom = (IMultiSurface)( build.getGeom());
+        	                    for (IPolygon elem : geom){
+        	                    	IDirectPositionList viewDirectPositionList1 = transform.transform(elem.getExterior().coord());
+        	                    	int numPoints1 = viewDirectPositionList1.size();
+        	                        int[] xpoints1 = new int[numPoints1];
+        	                        int[] ypoints1 = new int[numPoints1];
+        	                        for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+        	                            IDirectPosition p3 = viewDirectPositionList1.get(i);
+        	                            xpoints1[i] = (int) p3.getX();
+        	                            ypoints1[i] = (int) p3.getY();}
+        	                        inputGraphic.setColor(building_color);
+        	                        inputGraphic.fillPolygon(xpoints1, ypoints1, numPoints1);
+        	                        for (int i=0; i<elem.sizeInterior();i++){ 
+        	                        	IDirectPositionList viewDirectPositionList2 = transform.transform(elem.getInterior(i).coord());
+        	                        	int numPoints2 = viewDirectPositionList2.size();
+        	                            int[] xpoints2 = new int[numPoints2];
+        	                            int[] ypoints2 = new int[numPoints2];
+        	                            for (int j = 0; j < viewDirectPositionList2.size(); j++) {
+        	                                IDirectPosition p3 = viewDirectPositionList2.get(j);
+        	                                xpoints2[j] = (int) p3.getX();
+        	                                ypoints2[j] = (int) p3.getY();
+        	                            }
+        	                            inputGraphic.setColor(Color.WHITE);
+        	                            inputGraphic.fillPolygon(xpoints2, ypoints2, numPoints2);
+        	                        }
+        	                    }
+        	                }
+        	                for (IFeature water : water50s) {
+          	                    IMultiSurface<IPolygon> geom = (IMultiSurface)(  water.getGeom());
+        	                    for (IPolygon elem : geom){
+        	                    	IDirectPositionList viewDirectPositionList1 = transform.transform(elem.getExterior().coord());
+        	                    	int numPoints1 = viewDirectPositionList1.size();
+        	                        int[] xpoints1 = new int[numPoints1];
+        	                        int[] ypoints1 = new int[numPoints1];
+        	                        for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+        	                            IDirectPosition p3 = viewDirectPositionList1.get(i);
+        	                            xpoints1[i] = (int) p3.getX();
+        	                            ypoints1[i] = (int) p3.getY();}
+        	                        targetGraphic.setColor(water_color);
+        	                        targetGraphic.fillPolygon(xpoints1, ypoints1, numPoints1);
+        	                        for (int i=0; i<elem.sizeInterior();i++){ 
+        	                        	IDirectPositionList viewDirectPositionList2 = transform.transform(elem.getInterior(i).coord());
+        	                        	int numPoints2 = viewDirectPositionList2.size();
+        	                            int[] xpoints2 = new int[numPoints2];
+        	                            int[] ypoints2 = new int[numPoints2];
+        	                            for (int j = 0; j < viewDirectPositionList2.size(); j++) {
+        	                                IDirectPosition p3 = viewDirectPositionList2.get(j);
+        	                                xpoints2[j] = (int) p3.getX();
+        	                                ypoints2[j] = (int) p3.getY();}
+                                
+        	                            targetGraphic.setColor(Color.WHITE);
+        	                            targetGraphic.fillPolygon(xpoints2, ypoints2, numPoints2);
+        	                     }
+        	                    }
+        	                 }
+        	                 for (IFeature water : water25s) {
+           	                    IMultiSurface<IPolygon> geom = (IMultiSurface)(  water.getGeom());
+         	                    for (IPolygon elem : geom){
+         	                    	IDirectPositionList viewDirectPositionList1 = transform.transform(elem.getExterior().coord());
+         	                    	int numPoints1 = viewDirectPositionList1.size();
+         	                        int[] xpoints1 = new int[numPoints1];
+         	                        int[] ypoints1 = new int[numPoints1];
+         	                        for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+         	                            IDirectPosition p3 = viewDirectPositionList1.get(i);
+         	                            xpoints1[i] = (int) p3.getX();
+         	                            ypoints1[i] = (int) p3.getY();}
+         	                        inputGraphic.setColor(water_color);
+         	                        inputGraphic.fillPolygon(xpoints1, ypoints1, numPoints1);
+         	                        for (int i=0; i<elem.sizeInterior();i++){ 
+         	                        	IDirectPositionList viewDirectPositionList2 = transform.transform(elem.getInterior(i).coord());
+         	                        	int numPoints2 = viewDirectPositionList2.size();
+         	                            int[] xpoints2 = new int[numPoints2];
+         	                            int[] ypoints2 = new int[numPoints2];
+         	                            for (int j = 0; j < viewDirectPositionList2.size(); j++) {
+         	                                IDirectPosition p3 = viewDirectPositionList2.get(j);
+         	                                xpoints2[j] = (int) p3.getX();
+         	                                ypoints2[j] = (int) p3.getY();}
+                                 
+         	                            inputGraphic.setColor(Color.WHITE);
+         	                            inputGraphic.fillPolygon(xpoints2, ypoints2, numPoints2);
+         	                        }
+         	                    }
+        	                }
+        	                for (IFeature route : road50s) {
+
+        	                    IGeometry geom =  route.getGeom();
+        	                    IDirectPositionList viewDirectPositionList1 = transform.transform(geom.coord());
+        	                    int numPoints1 = viewDirectPositionList1.size();
+        	                    int[] xpoints1 = new int[numPoints1];
+        	                    int[] ypoints1 = new int[numPoints1];
+        	                    for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+        	                        IDirectPosition p3 = viewDirectPositionList1.get(i);
+        	                        xpoints1[i] = (int) p3.getX();
+        	                        ypoints1[i] = (int) p3.getY();
+        	                    }
+        	                    
+        	                    targetGraphic.setColor(Color.BLACK);
+        	                    targetGraphic.setStroke(new BasicStroke(5,0,2));
+        	                    targetGraphic.drawPolyline(xpoints1, ypoints1, numPoints1);
+        	                    targetGraphic.setColor(road_color);
+        	                    targetGraphic.setStroke(new BasicStroke(3,0,2));
+        	                    targetGraphic.drawPolyline(xpoints1, ypoints1, numPoints1);
+        	                }
+        	                for (IFeature route : road25s) {
+
+        	                	IGeometry geom =  route.getGeom();
+        	                	IDirectPositionList viewDirectPositionList1 = transform.transform(geom.coord());
+        	                	int numPoints1 = viewDirectPositionList1.size();
+        	                	int[] xpoints1 = new int[numPoints1];
+        	                	int[] ypoints1 = new int[numPoints1];
+        	                	for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+        	                		IDirectPosition p3 = viewDirectPositionList1.get(i);
+        	                		xpoints1[i] = (int) p3.getX();
+        	                		ypoints1[i] = (int) p3.getY();
+        	                	}
+
+                            
+        	                    inputGraphic.setColor(Color.BLACK);
+        	                    inputGraphic.setStroke(new BasicStroke(5,0,2));
+        	                    inputGraphic.drawPolyline(xpoints1, ypoints1, numPoints1);
+        	                    inputGraphic.setColor(road_color);
+        	                    inputGraphic.setStroke(new BasicStroke(3,0,2));
+        	                    inputGraphic.drawPolyline(xpoints1, ypoints1, numPoints1);
+        	                }
+        	                for (IFeature gray_item : gray50) {
+        	                	IGeometry geom =  gray_item.getGeom();
+        	                	IDirectPositionList viewDirectPositionList1 = transform.transform(geom.coord());
+        	                	int numPoints1 = viewDirectPositionList1.size();
+        	                	int[] xpoints1 = new int[numPoints1];
+        	                	int[] ypoints1 = new int[numPoints1];
+        	                	for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+        	                		IDirectPosition p3 = viewDirectPositionList1.get(i);
+        	                		xpoints1[i] = (int) p3.getX();
+        	                		ypoints1[i] = (int) p3.getY();
+        	                	}
+        	                	targetGraphic.setColor(graying_color);
+        	                	targetGraphic.setStroke(new BasicStroke(1));
+        	                	targetGraphic.fillPolygon(xpoints1, ypoints1, numPoints1);
+        	                }
+
+
+        	                File outputfile1 = new File(outputPath +"//input//image"+ nb + ".png");
+        	                
+        	                try {
+        	                	ImageIO.write(inputImg, "png", outputfile1);
+        	                } catch (IOException f) {
+        	                	f.printStackTrace();
+        	                }
+        	    		
+
+        	                File outputfileTarget = new File(outputPath +"//target//image"+ nb + ".png");
+        	                
+        	                try {
+        	                	ImageIO.write(targetImg, "png", outputfileTarget);
+        	                } catch (IOException f) {
+        	                	f.printStackTrace();
+        	                }
+
+        	    			nb+=1;
+        	    			p1.setCoordinate(p1.getX(), p1.getY()+pas_extern);
+        	    			p2.setCoordinate(p2.getX(), p2.getY()+pas_extern);
+
+        	    		}
+        	    		p1.setCoordinate(p1.getX()+pas_extern, p1.getY());
+        	    		p2.setCoordinate(p2.getX()+pas_extern, p2.getY());
+        	    	}
+
+                }
+
+            });
+            th.start();
+        }
+
+        public FromSymbolAction() {
+            super();
+            this.putValue(Action.NAME, "From symbolised tiles");
+        }
+
+    }
+    
+
+    /**
+     * This action gets all road features and generates a gray image,
+     * that represents the probability to be selected after generalisation,
+     * within the build up area, using a sliding windows. 
+     * 
+     * 
+     * @author ACourtial
+     *
+     */
+    private class RoadImagesAction extends AbstractAction {
+
+        private static final long serialVersionUID = 1L;
+        private String build25Name="build25";
+        private String road25Name="road25";
+        private String outputPath="D://urbandataset//road_enrichment";
+    	private GeOxygeneApplication application;
+    	private int imageSize=512; private float scale=500; private int recov=60;
+    	
+  	
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Thread th = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                	application = CartAGenPlugin.getInstance().getApplication();
+        	 		Layer build25Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(build25Name);
+        			Layer road25Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(road25Name);
+
+        			IFeatureCollection<? extends IFeature> build25 = build25Layer.getFeatureCollection();
+        			IFeatureCollection<? extends IFeature> road25 = road25Layer.getFeatureCollection();
+
+        			IEnvelope carte=road25.envelope(); IDirectPosition p1=carte.getLowerCorner(); IDirectPosition p2=carte.getUpperCorner();
+        	    	double xmin=carte.minX(); double ymin=carte.minY(); double xmax=carte.maxX(); double ymax=carte.maxY();
+        	    	IEnvelope fenetre= (IEnvelope) carte.clone();
+        	    	
+        	    	double pas_intern=scale;
+        	    	double pas_extern=scale*recov/100;
+        	    	int nb=0;
+        	    	p2.setCoordinate(xmin+pas_intern, ymin+(pas_intern)); 
+        	    	while (p1.getX()<xmax){
+        	    		p1.setCoordinate(p1.getX(), ymin);
+        	    		p2.setCoordinate(p2.getX(), ymin+(pas_intern));
+        	    		while(p1.getY()<ymax){
+        	    		    fenetre.setLowerCorner(p1);
+        	    		    fenetre.setUpperCorner(p2);
+        	                Collection<IFeature> build25s =(Collection<IFeature>)  build25.select((IEnvelope) fenetre);
+        	                Collection<IFeature> road25s =(Collection<IFeature>)  road25.select((IEnvelope) fenetre);
+
+    	                	
+        	                if(build25s.isEmpty()) {
+        	                	p1.setCoordinate(p1.getX(), p1.getY()+pas_extern);
+        	                	p2.setCoordinate(p2.getX(), p2.getY()+pas_extern);
+        	                	continue;
+        	                }
+
+        	                
+        	    		    BufferedImage targetImg = new BufferedImage(imageSize, imageSize,BufferedImage.TYPE_INT_RGB);
+        	    		    
+        	    		    
+        	    		    Graphics2D targetGraphic= targetImg.createGraphics();
+        	    		    targetGraphic.setBackground(new Color(0, 0, 0));
+        	    		    targetGraphic.clearRect(0, 0, imageSize, imageSize);
+
+        	                
+        	    		    IEnvelope env = fenetre.getGeom().getEnvelope();
+        	    	        double xMin = env.minX();
+        	    	        double yMin = env.minY();
+        	    	        double ratio = 0.0;
+
+        	    	        ratio = (imageSize - 2 * 3) / env.length();
+
+        	    	        CoordinateTransformation transform= new CoordinateTransformation(xMin, yMin, ratio, 3, imageSize);
+
+        	    	        
+
+        	                for (IFeature route : road25s) {
+
+        	                	IGeometry geom =  route.getGeom();
+        	                	IDirectPositionList viewDirectPositionList1 = transform.transform(geom.coord());
+        	                	int numPoints1 = viewDirectPositionList1.size();
+        	                	int[] xpoints1 = new int[numPoints1];
+        	                	int[] ypoints1 = new int[numPoints1];
+        	                	for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+        	                		IDirectPosition p3 = viewDirectPositionList1.get(i);
+        	                		xpoints1[i] = (int) p3.getX();
+        	                		ypoints1[i] = (int) p3.getY();
+        	                	}
+
+        	                	int x=(int)(((Float.parseFloat(route.getAttribute("p").toString())/100))*255);
+        	                	System.out.println(x);
+        	                	targetGraphic.setColor(new Color(x,x,x));
+        	                	targetGraphic.setStroke(new BasicStroke(3,0,2));
+        	                	targetGraphic.drawPolyline(xpoints1, ypoints1, numPoints1);
+        	                }
+        	                
+
+
+        	                File outputfile1 = new File(outputPath +"//image"+ nb + ".png");
+        	                
+        	                try {
+        	                	ImageIO.write(targetImg, "png", outputfile1);
+        	                } catch (IOException f) {
+        	                	f.printStackTrace();
+        	                }
+        	    
+        	    			nb+=1;
+        	    			p1.setCoordinate(p1.getX(), p1.getY()+pas_extern);
+        	    			p2.setCoordinate(p2.getX(), p2.getY()+pas_extern);
+
+        	    		}
+        	    		p1.setCoordinate(p1.getX()+pas_extern, p1.getY());
+        	    		p2.setCoordinate(p2.getX()+pas_extern, p2.getY());
+        	    	}
+
+                }
+            });
+            th.start();
+        }
+
+        public RoadImagesAction() {
+            super();
+            this.putValue(Action.NAME, "Generate images of road information");
+        }
+
+    }
+    
+    /**
+     * This action gets all alignement features and generates masks of aligned areas,
+     * within the build up area, using a sliding windows. 
+     * 
+     * @author ACourtial
+     *
+     */
+    private class AliImagesAction extends AbstractAction {
+
+        private static final long serialVersionUID = 1L;
+        private String build25Name="build25";
+        private String ali25Name="ali25";
+        private String road25Name="road25";
+        private String outputPath="D://urbandataset//alignement_enrichment";
+    	private GeOxygeneApplication application;
+    	private int imageSize=512; private float scale=500; private int recov=60;
+    	
+  	
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Thread th = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                	application = CartAGenPlugin.getInstance().getApplication();
+        	 		Layer build25Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(build25Name);
+        			Layer ali25Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(ali25Name);
+        			Layer road25Layer = application.getMainFrame().getSelectedProjectFrame().getLayer(road25Name);
+        			
+        			IFeatureCollection<? extends IFeature> build25 = build25Layer.getFeatureCollection();
+        			IFeatureCollection<? extends IFeature> ali25 = ali25Layer.getFeatureCollection();
+        			IFeatureCollection<? extends IFeature> road25 = road25Layer.getFeatureCollection();
+        			
+        			IEnvelope carte=road25.envelope(); IDirectPosition p1=carte.getLowerCorner(); IDirectPosition p2=carte.getUpperCorner();
+        	    	double xmin=carte.minX(); double ymin=carte.minY(); double xmax=carte.maxX(); double ymax=carte.maxY();
+        	    	IEnvelope fenetre= (IEnvelope) carte.clone();
+        	    	
+        	    	double pas_intern=scale;
+        	    	double pas_extern=scale*recov/100;
+        	    	int nb=0;
+        	    	p2.setCoordinate(xmin+pas_intern, ymin+(pas_intern)); 
+        	    	while (p1.getX()<xmax){
+        	    		p1.setCoordinate(p1.getX(), ymin);
+        	    		p2.setCoordinate(p2.getX(), ymin+(pas_intern));
+        	    		while(p1.getY()<ymax){
+        	    		    fenetre.setLowerCorner(p1);
+        	    		    fenetre.setUpperCorner(p2);
+        	                Collection<IFeature> build25s =(Collection<IFeature>)  build25.select((IEnvelope) fenetre);
+        	                Collection<IFeature> ali25s =(Collection<IFeature>)  ali25.select((IEnvelope) fenetre);
+   	                	
+        	                if(build25s.isEmpty()) {
+        	                	p1.setCoordinate(p1.getX(), p1.getY()+pas_extern);
+        	                	p2.setCoordinate(p2.getX(), p2.getY()+pas_extern);
+        	                	continue;
+        	                }
+        	                
+        	    		    BufferedImage buildImg = new BufferedImage(imageSize, imageSize,BufferedImage.TYPE_BYTE_GRAY);
+        	    		    
+        	    		    Graphics2D buildGraphic= buildImg.createGraphics();
+        	    		    buildGraphic.setBackground(new Color(0, 0, 0));
+        	    		    buildGraphic.clearRect(0, 0, imageSize, imageSize);
+        	                        	                
+        	    		    IEnvelope env = fenetre.getGeom().getEnvelope();
+        	    	        double xMin = env.minX();
+        	    	        double yMin = env.minY();
+        	    	        double ratio = 0.0;
+
+        	    	        ratio = (imageSize - 2 * 3) / env.length();
+
+        	    	        CoordinateTransformation transform= new CoordinateTransformation(xMin, yMin, ratio, 3, imageSize);
+
+
+        	                for (IFeature ali : ali25s) {
+        	                    IMultiSurface<IPolygon> geom = (IMultiSurface)( ali.getGeom());
+        	                    for (IPolygon elem : geom){
+        	                    	IDirectPositionList viewDirectPositionList1 = transform.transform(elem.getExterior().coord());
+        	                    	int numPoints1 = viewDirectPositionList1.size();
+        	                        int[] xpoints1 = new int[numPoints1];
+        	                        int[] ypoints1 = new int[numPoints1];
+        	                        for (int i = 0; i < viewDirectPositionList1.size(); i++) {
+        	                            IDirectPosition p3 = viewDirectPositionList1.get(i);
+        	                            xpoints1[i] = (int) p3.getX();
+        	                            ypoints1[i] = (int) p3.getY();}
+        	                        buildGraphic.setColor(Color.WHITE);
+        	                        buildGraphic.fillPolygon(xpoints1, ypoints1, numPoints1);
+        	                        for (int i=0; i<elem.sizeInterior();i++){ 
+        	                        	IDirectPositionList viewDirectPositionList2 = transform.transform(elem.getInterior(i).coord());
+        	                        	int numPoints2 = viewDirectPositionList2.size();
+        	                            int[] xpoints2 = new int[numPoints2];
+        	                            int[] ypoints2 = new int[numPoints2];
+        	                            for (int j = 0; j < viewDirectPositionList2.size(); j++) {
+        	                                IDirectPosition p3 = viewDirectPositionList2.get(j);
+        	                                xpoints2[j] = (int) p3.getX();
+        	                                ypoints2[j] = (int) p3.getY();
+        	                            }
+        	                            buildGraphic.setColor(Color.BLACK);
+        	                            buildGraphic.fillPolygon(xpoints2, ypoints2, numPoints2);
+        	                        }
+        	                    }
+        	                }
+        	                
+
+        	                File outputfile1 = new File(outputPath +"//image"+ nb + ".png");
+        	                
+        	                try {
+        	                	ImageIO.write(buildImg, "png", outputfile1);
+        	                } catch (IOException f) {
+        	                	f.printStackTrace();
+        	                }
+        	    			
+
+        	    			nb+=1;
+        	    			p1.setCoordinate(p1.getX(), p1.getY()+pas_extern);
+        	    			p2.setCoordinate(p2.getX(), p2.getY()+pas_extern);
+
+        	    		}
+        	    		p1.setCoordinate(p1.getX()+pas_extern, p1.getY());
+        	    		p2.setCoordinate(p2.getX()+pas_extern, p2.getY());
+        	    	}
+
+                }
+            });
+            th.start();
+        }
+
+        public AliImagesAction() {
+            super();
+            this.putValue(Action.NAME, "Generate images of alignments areas");
         }
 
     }
