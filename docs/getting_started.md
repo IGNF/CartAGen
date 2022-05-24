@@ -1,3 +1,9 @@
+---
+  title: Getting Started
+  layout: page
+  order: 2
+---
+
 # Getting Started with CartAGen
 This page gathers the tutorials for basic and advanced uses of CartAGen.
 

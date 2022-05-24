@@ -14,9 +14,9 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-name: ICA-GEN
+name: CartAGen
 
-title: ICA Commission on Generalisation and Multiple Representation
+title: CartAGen - the map generalisation open research platform
 
 # Build settings
 markdown: kramdown
