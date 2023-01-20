@@ -25,6 +25,7 @@
 		<postgis.jdbc.version>2.2.0</postgis.jdbc.version>
 		<hibernate.version>5.1.0.Final</hibernate.version>
 		<geoxygene.version>1.9-SNAPSHOT</geoxygene.version>
+		<main.basedir>${project.basedir}</main.basedir>
 
 		<!-- <skip.unit.tests>false</skip.unit.tests> -->
 		<!-- <skip.integration.tests>true</skip.integration.tests> -->
@@ -45,6 +46,11 @@
 				<complianceLevel>1.8</complianceLevel>
 				<target>1.8</target>
 			</configuration>
+		</plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-install-plugin</artifactId>
+			<version>3.1.0</version>
 		</plugin>
 	</plugins>
   </build>
@@ -68,28 +74,6 @@
 		</repository>
  -->
 		<repository>
-			<id>cogit-snapshots</id>
-			<name>Cogit Snapshots Repository</name>
-			<url>https://forge-cogit.ign.fr/nexus/content/repositories/snapshots/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>cogit-releases</id>
-			<name>Cogit Releases Repository</name>
-			<url>https://forge-cogit.ign.fr/nexus/content/repositories/releases/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
 			<id>geosolutions</id>
 			<name>GeoSolutions libraries repository</name>
 			<url>https://maven.geo-solutions.it/</url>
@@ -107,6 +91,10 @@
             <snapshots><enabled>false</enabled></snapshots>
             <releases><enabled>true</enabled></releases>
         </repository>
+        <repository>
+	        <id>local-maven-repo</id>
+	        <url>file://${project.basedir}/local-maven-repo</url>
+	    </repository>
 	</repositories>
 
 <!-- 	<pluginRepositories>
