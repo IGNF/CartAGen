@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<StyledLayerDescriptor xmlns:ogc="http://www.opengis.net/ogc">
+	<NamedLayer>
+		<Name>waterLines</Name>
+		<UserStyle>
+			<FeatureTypeStyle>
+				<Rule>
+					<LineSymbolizer>
+						<GeometryPropertyName>geom</GeometryPropertyName>
+						<Stroke>
+							<CssParameter name="stroke">#74aae8</CssParameter>
+							<CssParameter name="stroke-width">2000.0</CssParameter>
+						</Stroke>
+					</LineSymbolizer>
+				</Rule>
+			</FeatureTypeStyle>
+		</UserStyle>
+	</NamedLayer>
+    <NamedLayer>
+        <Name>miscPoints</Name>
+        <UserStyle>
+            <FeatureTypeStyle>
+                <Rule>
+					<PointSymbolizer  uom="http://www.opengeospatial.org/se/units/metre">
+						<Geometry>
+							<PropertyName>geom</PropertyName>
+						</Geometry>
+						<Graphic>
+							<Mark>
+								<WellKnownName>square</WellKnownName>
+								<Fill>
+									<CssParameter name="fill">#ff0000</CssParameter>
+								</Fill>
+							</Mark>
+							<Size>11000</Size>
+						</Graphic>
+					</PointSymbolizer>
+                </Rule>
+            </FeatureTypeStyle>
+        </UserStyle>
+    </NamedLayer>
+    
+    <NamedLayer>
+        <Name>waterAreas</Name>
+        <UserStyle>
+            <FeatureTypeStyle>
+                <Rule>
+                    <PolygonSymbolizer>
+                        <GeometryPropertyName>geom</GeometryPropertyName>
+                        <Fill>
+                            <CssParameter name="stroke">#74aae8</CssParameter>
+                        </Fill>
+                    </PolygonSymbolizer>
+                </Rule>
+            </FeatureTypeStyle>
+        </UserStyle>
+    </NamedLayer>
+    <NamedLayer>
+        <Name>adminCapitals</Name>
+        <UserStyle>
+            <FeatureTypeStyle>
+                <Rule>
+					<PointSymbolizer  uom="http://www.opengeospatial.org/se/units/metre">
+						<Geometry>
+							<PropertyName>geom</PropertyName>
+						</Geometry>
+						<Graphic>
+							<Mark>
+								<WellKnownName>circle</WellKnownName>
+								<Fill>
+									<CssParameter name="fill">#dddddd</CssParameter>
+								</Fill>
+							</Mark>
+							<Size>15000</Size>
+						</Graphic>
+					</PointSymbolizer>
+                </Rule>
+            </FeatureTypeStyle>
+        </UserStyle>
+    </NamedLayer>
+    <NamedLayer>
+        <Name>adminLimits</Name>
+        <UserStyle>
+            <FeatureTypeStyle>
+                <Rule>
+                    <LineSymbolizer>
+                        <GeometryPropertyName>geom</GeometryPropertyName>
+                        <Stroke>
+                            <CssParameter name="stroke">#111111</CssParameter>
+                            <CssParameter name="stroke-width">4000.0</CssParameter>
+                        </Stroke>
+                    </LineSymbolizer>
+                </Rule>
+            </FeatureTypeStyle>
+        </UserStyle>
+    </NamedLayer>
+        <NamedLayer>
+        <Name>partitionElements</Name>
+        <UserStyle>
+            <FeatureTypeStyle>
+                <Rule>
+                    <PolygonSymbolizer>
+                        <GeometryPropertyName>geom</GeometryPropertyName>
+                        <Stroke>
+                            <CssParameter name="stroke">#111111</CssParameter>
+                            <CssParameter name="stroke-width">13.0</CssParameter>
+                        </Stroke>
+                    </PolygonSymbolizer>
+                </Rule>
+            </FeatureTypeStyle>
+        </UserStyle>
+    </NamedLayer>
+</StyledLayerDescriptor>

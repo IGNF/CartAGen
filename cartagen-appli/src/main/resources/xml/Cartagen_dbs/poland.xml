@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cartagen-dataset>
+  <name>Poland</name>
+  <system-path>D:\Donnees\ACTIVmap\data</system-path>
+  <type>fr.ign.cogit.cartagen.core.dataset.shapefile.ShapeFileDB</type>
+  <dataset-type>fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet</dataset-type>
+  <scale>25000</scale>
+  <classes-list>
+    <class>
+     <path>D:\Donnees\ACTIVmap\data\Border_Poland.shp</path>
+      <feature-type>AdminLimit</feature-type>
+    </class>
+     <class>
+     <path>D:\Donnees\ACTIVmap\data\Cities_proj.shp</path>
+      <feature-type>AdminCapital</feature-type>
+    </class>
+     <class>
+     <path>D:\Donnees\ACTIVmap\data\Lakes_proj.shp</path>
+     <feature-type>WaterArea</feature-type>
+    </class>
+    <class>
+      <path>D:\Donnees\ACTIVmap\data\Rivers_proj.shp</path>
+      <feature-type>WaterLine</feature-type>
+    </class>	
+    <class>
+      <path>D:\Donnees\ACTIVmap\data\Thematic.shp</path>
+      <feature-type>MiscPoint</feature-type>
+    </class>
+  </classes-list>
+  <mapping-file>src/main/resources/xml/mapping_poland_data.xml</mapping-file>
+  <geneobj-implementation>
+    <implementation-name>default</implementation-name>
+    <implementation-package>fr.ign.cogit.cartagen.core.defaultschema</implementation-package>
+    <implementation-root-class>fr.ign.cogit.cartagen.core.defaultschema.GeneObjDefault</implementation-root-class>
+    <implementation-factory>fr.ign.cogit.cartagen.core.defaultschema.DefaultCreationFactory</implementation-factory>
+  </geneobj-implementation>
+  <persistent>false</persistent>
+  <persistent-classes/>
+</cartagen-dataset>

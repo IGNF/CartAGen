@@ -27,7 +27,7 @@
     <plugin>fr.ign.cogit.geoxygene.appli.plugin.density.TriangulationPlugin</plugin>
     <plugin>fr.ign.cogit.geoxygene.appli.plugin.density.VoronoiPlugin</plugin>
     <plugin>fr.ign.cogit.geoxygene.appli.plugin.density.GridPlugin</plugin>
-    <lastOpenedFile>D:\workspace\cartagen\cartagen-appli</lastOpenedFile>
+    <lastOpenedFile>D:\Donnees\ACTIVmap\peninsula_cut.shp</lastOpenedFile>
     <sld></sld>
     <ConnectionParam>
         <dbtype>postgis</dbtype>
@@ -41,5 +41,6 @@
     <DefaultVisualizationType>AWT</DefaultVisualizationType>
     <ProjectFrameLayout>floating</ProjectFrameLayout>
     <DefaultLookAndFeel></DefaultLookAndFeel>
+    <recent>D:\Donnees\ACTIVmap</recent>
     <GeometryEngine>JTS</GeometryEngine>
 </GeOxygeneApplicationProperties>

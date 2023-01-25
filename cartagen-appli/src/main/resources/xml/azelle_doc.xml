@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cartagen-document>
+   <name>talus_25k</name>
+   <databases>
+      <database>src/main/resources/xml/Cartagen_dbs/azelle_data.xml<sld-file>src/main/resources/xml/Cartagen_dbs/sld_alpe_huez.xml</sld-file>
+         <displayed-layer>roads</displayed-layer>
+         <displayed-layer>buildings</displayed-layer>
+      </database>
+   </databases>
+</cartagen-document>

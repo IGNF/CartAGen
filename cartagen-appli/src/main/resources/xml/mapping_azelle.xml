@@ -1,0 +1,26 @@
+<mapping>
+    <gene-obj-implementation>
+    	<name>default</name>
+    	<factory>fr.ign.cogit.cartagen.core.defaultschema.DefaultCreationFactory</factory>
+    	<root-package-name>fr.ign.cogit.cartagen.core.defaultschema</root-package-name>
+    	<root-class>fr.ign.cogit.cartagen.core.defaultschema.GeneObjDefault</root-class>
+    </gene-obj-implementation>
+        <matching>
+        <postgisLayer>data25_routes</postgisLayer>
+        <featureType>RoadLine</featureType>
+        <creationMethod>createRoadLine</creationMethod>
+        <scaleRef>15000</scaleRef>
+        <theme>road</theme>
+        <attributes>
+                <postgisAttr>importance</postgisAttr>
+                <javaAttr>importance</javaAttr>
+        </attributes>
+    </matching>
+    <matching>
+        <postgisLayer>data25_bat</postgisLayer>
+        <featureType>Building</featureType>
+        <creationMethod>createBuilding</creationMethod>
+        <scaleRef>15000</scaleRef>
+        <theme>urban</theme>
+    </matching>
+</mapping>

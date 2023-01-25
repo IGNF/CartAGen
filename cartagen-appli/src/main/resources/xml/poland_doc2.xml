@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cartagen-document>
+   <name>poland</name>
+   <databases>
+      <database>src/main/resources/xml/Cartagen_dbs/poland2.xml<sld-file>src/main/resources/xml/Cartagen_dbs/sld_poland2.xml</sld-file>
+         <displayed-layer>waterLines</displayed-layer>
+         <displayed-layer>waterAreas</displayed-layer>
+         <displayed-layer>adminCapitals</displayed-layer>
+         <displayed-layer>adminLimits</displayed-layer>
+         <displayed-layer>miscPoints</displayed-layer>
+         <displayed-layer>partitionElements</displayed-layer>
+      </database>
+   </databases>
+</cartagen-document>
