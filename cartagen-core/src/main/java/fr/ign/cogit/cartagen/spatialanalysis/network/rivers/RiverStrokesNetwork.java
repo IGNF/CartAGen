@@ -397,9 +397,6 @@ public class RiverStrokesNetwork extends StrokesNetwork {
 		for (RiverStroke stroke : upstreamStrokes) {
 			double angle = AngleOperations.angleBetween2Lines2D(stroke.getLastLine(),
 					(ILineString) downstreamSection.getGeom());
-			System.out.println(stroke.getLastLine());
-			System.out.println(downstreamSection.getGeom());
-			System.out.println(angle);
 			if (Math.cos(angle) < min) {
 				min = Math.cos(angle);
 				best = stroke;
