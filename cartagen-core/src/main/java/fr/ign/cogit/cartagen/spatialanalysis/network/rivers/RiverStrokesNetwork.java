@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 import fr.ign.cogit.cartagen.spatialanalysis.network.Stroke;
 import fr.ign.cogit.cartagen.spatialanalysis.network.StrokesNetwork;
+import fr.ign.cogit.cartagen.util.geometry.AngleOperations;
 import fr.ign.cogit.geoxygene.api.feature.IFeatureCollection;
 import fr.ign.cogit.geoxygene.api.feature.IPopulation;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
@@ -394,8 +395,11 @@ public class RiverStrokesNetwork extends StrokesNetwork {
 		RiverStroke best = null;
 		double min = 1.0;
 		for (RiverStroke stroke : upstreamStrokes) {
-			double angle = CommonAlgorithmsFromCartAGen.angleBetween2Lines(stroke.getLastLine(),
+			double angle = AngleOperations.angleBetween2Lines2D(stroke.getLastLine(),
 					(ILineString) downstreamSection.getGeom());
+			System.out.println(stroke.getLastLine());
+			System.out.println(downstreamSection.getGeom());
+			System.out.println(angle);
 			if (Math.cos(angle) < min) {
 				min = Math.cos(angle);
 				best = stroke;
