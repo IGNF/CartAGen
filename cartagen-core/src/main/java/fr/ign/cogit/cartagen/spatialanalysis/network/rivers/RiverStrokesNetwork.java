@@ -261,7 +261,7 @@ public class RiverStrokesNetwork extends StrokesNetwork {
 				if (node.getArcsEntrants().size() == 1) {
 					// normal case
 					// the main branch has to be found
-					ArcReseau upStream = node.getArcsEntrants().iterator().next();
+					TronconHydrographique upStream = (TronconHydrographique) node.getArcsEntrants().iterator().next();
 					ArcReseau mainBranch = this.manageBraidedConfluence(node, upStream, downstreamNodes);
 
 					// build new RiverStrokes with remaining branches
@@ -286,8 +286,8 @@ public class RiverStrokesNetwork extends StrokesNetwork {
 
 					if (unbraided != null) {
 						upstreamStrokes.remove(unbraided);
-						ArcReseau mainBranch = this.manageBraidedConfluence(node, unbraided.getLastFeat(),
-								downstreamNodes);
+						ArcReseau mainBranch = this.manageBraidedConfluence(node,
+								(TronconHydrographique) unbraided.getLastFeat(), downstreamNodes);
 						remainingBranches.remove(mainBranch);
 					}
 					for (ArcReseau branch : remainingBranches) {
@@ -309,11 +309,18 @@ public class RiverStrokesNetwork extends StrokesNetwork {
 		}
 	}
 
-	private ArcReseau manageBraidedConfluence(NoeudHydrographique node, ArcReseau upStream,
+	private ArcReseau manageBraidedConfluence(NoeudHydrographique node, TronconHydrographique upStream,
 			Stack<NoeudHydrographique> downstreamNodes) {
 		ArcReseau mainBranch = null;
+
 		double min = 1.0;
 		for (ArcReseau branch : node.getArcsSortants()) {
+			// first, make a decision on river name
+			if (((TronconHydrographique) branch).getNom().equals(upStream.getNom())) {
+				mainBranch = branch;
+				break;
+			}
+			// then decide on angles
 			double angle = CommonAlgorithmsFromCartAGen.angleBetween2Lines((ILineString) upStream.getGeom(),
 					(ILineString) branch.getGeom());
 			if (Math.cos(angle) < min) {
