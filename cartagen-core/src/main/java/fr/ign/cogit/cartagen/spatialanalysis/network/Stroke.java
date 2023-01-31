@@ -997,7 +997,7 @@ public class Stroke extends AbstractFeature implements Comparable<Stroke> {
 		ILineString lineBefore = null, lineAfter = null;
 
 		if (index != 0) {
-			lineBefore = LineOperations.compileArcs2D(before);
+			lineBefore = LineOperations.compileArcs2D(before, 0.5);
 			if (lineBefore != null) {
 				if (Distances.proche(this.root.getGeom().startPoint(), lineBefore.startPoint(), 0)) {
 					lineBefore = lineBefore.reverse();
@@ -1010,7 +1010,7 @@ public class Stroke extends AbstractFeature implements Comparable<Stroke> {
 		pointsFinaux.addAll(((ILineString) this.root.getGeom()).getControlPoint());
 
 		if (index != lines.size() - 1) {
-			lineAfter = LineOperations.compileArcs2D(after);
+			lineAfter = LineOperations.compileArcs2D(after, 0.5);
 			if (lineAfter != null) {
 				pointsFinaux.remove(this.root.getGeom().endPoint());
 

@@ -27,10 +27,10 @@ public class LineOperations {
 	 * English: Combination of lines.
 	 * 
 	 * @param geometries : Linestrings à fusionner
-	 * @param tolerance  :distance minimale à laquelle on considère 2 points
+	 * @param epsilon    :distance minimale à laquelle on considère 2 points
 	 *                   superposés.
 	 */
-	public static ILineString compileArcs2D(List<ILineString> geometries) {
+	public static ILineString compileArcs2D(List<ILineString> geometries, double epsilon) {
 
 		logger.fine("compile geometries");
 		for (ILineString l : geometries) {
@@ -47,13 +47,13 @@ public class LineOperations {
 		}
 		ILineString nextLine = geometries.get(1);
 		IDirectPosition currentPoint = null;
-		if (currentLine.startPoint().equals2D(nextLine.startPoint())
-				|| currentLine.startPoint().equals2D(nextLine.endPoint())) {
+		if (currentLine.startPoint().equals2D(nextLine.startPoint(), epsilon)
+				|| currentLine.startPoint().equals2D(nextLine.endPoint(), epsilon)) {
 			// premier point = point finale de la premiere ligne
 			finalPoints.addAll(((ILineString) currentLine.reverse()).getControlPoint());
 			currentPoint = currentLine.startPoint();
-		} else if (currentLine.endPoint().equals2D(nextLine.startPoint())
-				|| currentLine.endPoint().equals2D(nextLine.endPoint())) {
+		} else if (currentLine.endPoint().equals2D(nextLine.startPoint(), epsilon)
+				|| currentLine.endPoint().equals2D(nextLine.endPoint(), epsilon)) {
 			// premier point = point initial de la premiere ligne
 			finalPoints.addAll(currentLine.getControlPoint());
 			currentPoint = currentLine.endPoint();
@@ -70,12 +70,12 @@ public class LineOperations {
 			nextLine = geometries.get(i);
 			logger.fine("copying " + nextLine.getControlPoint().size() + " = " + nextLine);
 			ILineString lineCopy = new GM_LineString(nextLine.getControlPoint());
-			if (currentPoint.equals2D(nextLine.startPoint())) {
+			if (currentPoint.equals2D(nextLine.startPoint(), epsilon)) {
 				// LSSuivante dans le bon sens
 				lineCopy.removeControlPoint(lineCopy.startPoint());
 				finalPoints.addAll(lineCopy.getControlPoint());
 				currentPoint = lineCopy.endPoint();
-			} else if (currentPoint.equals2D(nextLine.endPoint())) {
+			} else if (currentPoint.equals2D(nextLine.endPoint(), epsilon)) {
 				// LSSuivante dans le bon sens
 				IDirectPosition toRemove = lineCopy.endPoint();
 				ILineString reverse = (ILineString) lineCopy.reverse();
