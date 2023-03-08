@@ -236,7 +236,7 @@ public class RiverStrokesNetwork extends StrokesNetwork {
 			if (node.getArcsSortants().size() == 1) {
 				TronconHydrographique downstreamSection = (TronconHydrographique) node.getArcsSortants().iterator()
 						.next();
-				// get the upstream strokes and find the one that continueso
+				// get the upstream strokes and find the one that continues
 				RiverStroke continuing = this.makeDecisionAtConfluence(node, downstreamSection,
 						this.getUpstreamStrokes(node));
 

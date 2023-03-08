@@ -189,6 +189,7 @@ public class WaterLine extends NetworkSection implements IWaterLine {
 
 	public void setName(String name) {
 		this.name = name;
+		this.geoxObj.setNom(name);
 	}
 
 	@Override
