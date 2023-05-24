@@ -22,7 +22,7 @@ To be done...
 |  Density | Blocks		| [CartAGen class][21]  |
 |  Spatial Distribution | Blocks		| [CartAGen class][22]  |
 |  Street Density | Towns		| [CartAGen class][23]  |
-|  Coalescence | Roads, Rivers		| [CartAGen class][24]  |
+|  Coalescence | Roads, Rivers	| [CartAGen class][24]  |
 
 
 | Action name  | Applicable agents | Applicable constraints	| Code | Description |
