@@ -2,7 +2,8 @@ package fr.ign.cogit.cartagen.agents.core.constraint.section;
 
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.agent.GeographicObjectAgentGeneralisation;
 import fr.ign.cogit.cartagen.agents.core.agent.ISectionAgent;
@@ -16,7 +17,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.constraint.GeographicObjectConstrai
 public class DeformationControl extends GeographicObjectConstraintImpl {
 
   @SuppressWarnings("unused")
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(DeformationControl.class.getName());
 
   /**

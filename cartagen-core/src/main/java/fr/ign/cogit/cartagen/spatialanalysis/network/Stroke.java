@@ -18,7 +18,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.spatialanalysis.network.roads.RoadStrokesNetwork;
 import fr.ign.cogit.cartagen.util.geometry.LineOperations;
@@ -39,7 +40,7 @@ import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPositionList;
 import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineString;
 
 public class Stroke extends AbstractFeature implements Comparable<Stroke> {
-	private static Logger logger = Logger.getLogger(Stroke.class.getName());
+	private static Logger logger = LogManager.getLogger(Stroke.class.getName());
 
 	private StrokesNetwork network;
 

@@ -16,7 +16,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.graph.Graph;
 import fr.ign.cogit.cartagen.graph.triangulation.ITriangulation;
@@ -51,7 +52,7 @@ import fr.ign.cogit.geoxygene.util.index.Tiling;
  */
 
 public class Triangulation extends Graph implements ITriangulation {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(Triangulation.class.getName());
 
   /**

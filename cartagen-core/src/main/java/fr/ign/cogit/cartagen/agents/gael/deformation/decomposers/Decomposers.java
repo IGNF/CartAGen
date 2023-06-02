@@ -1,6 +1,7 @@
 package fr.ign.cogit.cartagen.agents.gael.deformation.decomposers;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.agent.GeographicObjectAgentGeneralisation;
 import fr.ign.cogit.cartagen.agents.gael.deformation.GAELDeformable;
@@ -22,7 +23,7 @@ import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
  * 
  */
 public class Decomposers {
-  private static Logger logger = Logger.getLogger(Decomposers.class.getName());
+  private static Logger logger = LogManager.getLogger(Decomposers.class.getName());
 
   /**
    * Decompose the geometry of a polygonal deformable object. This deformable

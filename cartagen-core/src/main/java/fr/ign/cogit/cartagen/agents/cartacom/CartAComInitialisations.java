@@ -14,7 +14,8 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -33,7 +34,7 @@ public class CartAComInitialisations {
   // //////////////////////////////////////////
 
   // All static fields //
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(CartAComInitialisations.class.getName());
 
   // Public fields //

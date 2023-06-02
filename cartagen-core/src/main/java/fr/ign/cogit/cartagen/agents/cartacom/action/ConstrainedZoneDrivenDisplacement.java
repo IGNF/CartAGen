@@ -6,7 +6,8 @@ package fr.ign.cogit.cartagen.agents.cartacom.action;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.agent.interfaces.ICartAComAgentGeneralisation;
 import fr.ign.cogit.cartagen.agents.cartacom.agent.interfaces.ISmallCompactAgent;
@@ -56,7 +57,7 @@ public class ConstrainedZoneDrivenDisplacement extends AggregableActionImpl {
   /**
    * Logger for this class
    */
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(ConstrainedZoneDrivenDisplacement.class.getName());
 
   // Public fields //

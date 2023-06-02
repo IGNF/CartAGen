@@ -16,8 +16,9 @@ import javax.swing.Action;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Extra menu that contains utility functions of CartAGen.
@@ -27,7 +28,7 @@ import org.apache.log4j.PropertyConfigurator;
  */
 public class ConfigMenuComponent extends JMenu {
 
-    static Logger logger = Logger.getLogger(ConfigMenuComponent.class.getName());
+    static Logger logger = LogManager.getLogger(ConfigMenuComponent.class.getName());
 
     /**
      */

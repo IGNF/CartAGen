@@ -12,7 +12,8 @@ package fr.ign.cogit.cartagen.core.dataset.geompool;
 import java.awt.Color;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
@@ -49,7 +50,7 @@ public class ColouredFeature extends DefaultFeature {
   // //////////////////////////////////////////
 
   @SuppressWarnings("unused")
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(ColouredFeature.class.getName());
   private static AtomicInteger idCounter = new AtomicInteger();
 

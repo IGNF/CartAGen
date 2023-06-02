@@ -3,7 +3,8 @@ package fr.ign.cogit.cartagen.algorithms.network.roads;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkNode;
@@ -22,7 +23,7 @@ import fr.ign.cogit.geoxygene.util.algo.geomstructure.Vector2D;
 
 public class SlideDeadEnd {
 
-  private static Logger logger = Logger.getLogger(SlideDeadEnd.class.getName());
+  private static Logger logger = LogManager.getLogger(SlideDeadEnd.class.getName());
 
   /**
    * The dead end group the algorithm has to slide

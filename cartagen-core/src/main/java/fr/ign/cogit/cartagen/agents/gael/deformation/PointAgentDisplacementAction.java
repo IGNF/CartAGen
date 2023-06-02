@@ -1,6 +1,7 @@
 package fr.ign.cogit.cartagen.agents.gael.deformation;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.contrib.agents.action.ActionImpl;
 import fr.ign.cogit.geoxygene.contrib.agents.action.ActionProposal;
@@ -14,7 +15,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.constraint.Constraint;
  * 
  */
 public class PointAgentDisplacementAction extends ActionImpl {
-  static Logger logger = Logger
+  static Logger logger = LogManager
       .getLogger(PointAgentDisplacementAction.class.getName());
 
   /**

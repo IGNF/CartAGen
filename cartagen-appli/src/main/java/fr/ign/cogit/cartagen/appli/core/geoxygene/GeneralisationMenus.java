@@ -24,7 +24,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -47,7 +48,7 @@ import fr.ign.cogit.geoxygene.style.Layer;
  * @author julien Gaffuri 6 mars 2009
  */
 public class GeneralisationMenus {
-	static Logger logger = Logger.getLogger(GeneralisationMenus.class.getName());
+	static Logger logger = LogManager.getLogger(GeneralisationMenus.class.getName());
 
 	/**
 	 * @return

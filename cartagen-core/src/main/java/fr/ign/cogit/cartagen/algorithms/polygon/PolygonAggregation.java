@@ -12,7 +12,8 @@ package fr.ign.cogit.cartagen.algorithms.polygon;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPositionList;
@@ -26,7 +27,7 @@ import fr.ign.cogit.geoxygene.util.algo.geomstructure.Segment;
 
 public class PolygonAggregation {
 
-  private static Logger logger = Logger.getLogger(PolygonAggregation.class);
+  private static Logger logger = LogManager.getLogger(PolygonAggregation.class);
   private IPolygon polygon1, polygon2;
 
   public PolygonAggregation(IPolygon polygon1, IPolygon polygon2) {

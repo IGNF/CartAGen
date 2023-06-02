@@ -3,7 +3,8 @@ package fr.ign.cogit.cartagen.agents.gael.deformation.submicro;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
 import fr.ign.cogit.cartagen.agents.gael.deformation.GAELDeformable;
@@ -34,7 +35,7 @@ import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineSegment;
  * 
  */
 public class GAELSegment extends SubMicro implements TriangulationSegment {
-  static Logger logger = Logger.getLogger(GAELSegment.class.getName());
+  static Logger logger = LogManager.getLogger(GAELSegment.class.getName());
 
   private IPointAgent p1;
   private IPointAgent p2;

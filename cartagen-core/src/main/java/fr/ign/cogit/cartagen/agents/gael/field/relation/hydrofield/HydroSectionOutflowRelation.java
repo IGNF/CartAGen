@@ -3,7 +3,8 @@
  */
 package fr.ign.cogit.cartagen.agents.gael.field.relation.hydrofield;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
 import fr.ign.cogit.cartagen.agents.core.agent.IHydroSectionAgent;
@@ -17,7 +18,7 @@ import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
  * 
  */
 public class HydroSectionOutflowRelation extends ObjectFieldRelation {
-  static Logger logger = Logger
+  static Logger logger = LogManager
       .getLogger(HydroSectionOutflowRelation.class.getName());
 
   // la moyenne des q des segments ponderee par longueur

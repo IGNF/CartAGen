@@ -46,6 +46,7 @@ import fr.ign.cogit.geoxygene.schema.schemaConceptuelISOJeu.AttributeType;
 import fr.ign.cogit.geoxygene.schema.schemaConceptuelISOJeu.FeatureType;
 import fr.ign.cogit.geoxygene.util.ReflectionUtil;
 import fr.ign.cogit.geoxygene.util.algo.CommonAlgorithms;
+import org.apache.logging.log4j.LogManager;
 
 /**
  * @author CDuchene

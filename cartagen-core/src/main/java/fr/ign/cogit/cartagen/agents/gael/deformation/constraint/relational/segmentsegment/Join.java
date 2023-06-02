@@ -3,7 +3,8 @@
  */
 package fr.ign.cogit.cartagen.agents.gael.deformation.constraint.relational.segmentsegment;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.gael.deformation.IPointAgent;
 import fr.ign.cogit.cartagen.agents.gael.deformation.PointAgentDisplacementAction;
@@ -18,7 +19,7 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
  * @author JGaffuri
  */
 public class Join extends SubmicroRelationnalConstraint {
-  private static Logger logger = Logger.getLogger(Join.class.getName());
+  private static Logger logger = LogManager.getLogger(Join.class.getName());
 
   private GAELSegment s1;
 

@@ -18,7 +18,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.state.GeographicAgentState;
  * 
  */
 public abstract class FieldAgent extends GeographicAgentGeneralisation {
-  // private static Logger logger = Logger.getLogger(FieldAgent.class);
+  // private static Logger logger = LogManager.getLogger(FieldAgent.class);
 
   public FieldAgent() {
     super();

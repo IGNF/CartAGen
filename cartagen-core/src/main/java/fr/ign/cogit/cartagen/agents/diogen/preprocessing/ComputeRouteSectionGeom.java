@@ -2,7 +2,8 @@ package fr.ign.cogit.cartagen.agents.diogen.preprocessing;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.diogen.hikingroutes.schema.IRouteSection;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
@@ -19,7 +20,7 @@ import fr.ign.cogit.geoxygene.util.algo.JtsAlgorithms;
 
 public class ComputeRouteSectionGeom {
 
-  private static final Logger LOGGER = Logger
+  private static final Logger LOGGER = LogManager
       .getLogger(ComputeRouteSectionGeom.class.getName());
 
   /**

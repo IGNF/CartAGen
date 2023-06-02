@@ -3,7 +3,8 @@ package fr.ign.cogit.cartagen.agents.core.constraint.building;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.action.micro.LSSquarringAction;
 import fr.ign.cogit.cartagen.agents.core.action.micro.SimpleSquaringAction;
@@ -26,7 +27,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.constraint.GeographicObjectConstrai
  * @author AMaudet 07/02/2012
  */
 public class Squareness extends GeographicObjectConstraintImpl {
-  private static Logger logger = Logger.getLogger(Squareness.class.getName());
+  private static Logger logger = LogManager.getLogger(Squareness.class.getName());
 
   /**
    * Number of almost right angle in the figure. An almost right angle is an

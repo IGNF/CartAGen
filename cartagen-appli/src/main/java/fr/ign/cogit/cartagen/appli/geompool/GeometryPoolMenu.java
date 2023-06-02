@@ -36,7 +36,8 @@ import javax.swing.JTable;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.appli.core.geoxygene.CartAGenPlugin;
 import fr.ign.cogit.cartagen.appli.utilities.ColorEditor;
@@ -75,7 +76,7 @@ import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.morphomaths.Side;
  */
 public class GeometryPoolMenu extends JMenu {
 
-    static Logger logger = Logger.getLogger(GeometryPoolMenu.class.getName());
+    static Logger logger = LogManager.getLogger(GeometryPoolMenu.class.getName());
 
     private static GeometryPoolMenu instance;
 

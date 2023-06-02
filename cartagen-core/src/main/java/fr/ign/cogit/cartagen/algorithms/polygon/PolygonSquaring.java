@@ -9,7 +9,8 @@
  ******************************************************************************/
 package fr.ign.cogit.cartagen.algorithms.polygon;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.api.spatial.AbstractGeomFactory;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
@@ -28,7 +29,7 @@ import fr.ign.cogit.geoxygene.spatial.geomengine.GeometryEngine;
  */
 public class PolygonSquaring {
 
-  private static final Logger logger = Logger.getLogger(PolygonSquaring.class);
+  private static final Logger logger = LogManager.getLogger(PolygonSquaring.class);
 
   private int nb_edges;
   private IDirectPositionList points;

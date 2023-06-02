@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.agent.interfaces.ICartacomAgent;
 import fr.ign.cogit.cartagen.agents.diogen.agent.model.GeographicPointAgent;
@@ -20,7 +21,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.agent.IAgent;
 
 public class Environment {
 
-  private static Logger logger = Logger.getLogger(Environment.class.getName());
+  private static Logger logger = LogManager.getLogger(Environment.class.getName());
 
   /**
    * The hostAgent (bidirectional reference, automatically managed).

@@ -13,7 +13,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.defaultschema.admin.AdminCapital;
 import fr.ign.cogit.cartagen.core.defaultschema.admin.AdminLimit;
@@ -193,7 +194,7 @@ import fr.ign.cogit.geoxygene.schemageo.api.support.reseau.Reseau;
 
 public class DefaultCreationFactory extends AbstractCreationFactory {
 
-	private static Logger logger = Logger.getLogger(DefaultCreationFactory.class.getName());
+	private static Logger logger = LogManager.getLogger(DefaultCreationFactory.class.getName());
 
 	// /////////////////
 	// URBAN

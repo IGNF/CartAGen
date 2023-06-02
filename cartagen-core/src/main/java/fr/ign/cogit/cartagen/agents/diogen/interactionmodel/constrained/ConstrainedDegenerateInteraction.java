@@ -6,7 +6,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.diogen.agent.model.IDiogenAgent;
 import fr.ign.cogit.cartagen.agents.diogen.padawan.Environment;
@@ -21,7 +22,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.constraint.GeographicConstraint;
 public abstract class ConstrainedDegenerateInteraction
     extends ConstrainedAbstractInteraction {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(ConstrainedDegenerateInteraction.class.getName());
 
   /**

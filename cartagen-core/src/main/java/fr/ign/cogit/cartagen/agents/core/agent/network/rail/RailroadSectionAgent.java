@@ -11,7 +11,7 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
  */
 public class RailroadSectionAgent extends SectionAgent {
   // private static Logger
-  // logger=Logger.getLogger(TronconVoieFerree.class.getName());
+  // logger=LogManager.getLogger(TronconVoieFerree.class.getName());
 
   @Override
   public IRailwayLine getFeature() {

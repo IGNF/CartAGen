@@ -11,7 +11,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
 import fr.ign.cogit.cartagen.agents.core.agent.urban.BlockAgent;
@@ -40,7 +41,7 @@ import fr.ign.cogit.geoxygene.appli.MainFrameMenuBar;
  * @author julien Gaffuri 6 mars 2009
  */
 public class GeneralisationMenuAgentComplement {
-    static Logger logger = Logger.getLogger(GeneralisationMenuAgentComplement.class.getName());
+    static Logger logger = LogManager.getLogger(GeneralisationMenuAgentComplement.class.getName());
 
     /**
      * @return

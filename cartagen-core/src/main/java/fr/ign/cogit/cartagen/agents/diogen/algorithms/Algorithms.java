@@ -3,7 +3,8 @@ package fr.ign.cogit.cartagen.agents.diogen.algorithms;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObjLin;
@@ -17,7 +18,7 @@ import fr.ign.cogit.geoxygene.util.algo.geomstructure.Vector2D;
 
 public class Algorithms {
 
-  private static Logger logger = Logger.getLogger(Algorithms.class.getName());
+  private static Logger logger = LogManager.getLogger(Algorithms.class.getName());
 
   public static Set<ICurveSegment> getParallelLines(Vector2D vector,
       Set<INetworkSection> linesSet) {

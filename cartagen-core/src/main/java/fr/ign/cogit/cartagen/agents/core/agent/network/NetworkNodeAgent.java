@@ -5,7 +5,8 @@ package fr.ign.cogit.cartagen.agents.core.agent.network;
 
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.agent.ISectionAgent;
 import fr.ign.cogit.cartagen.agents.core.agent.MicroAgentGeneralisation;
@@ -18,7 +19,7 @@ import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
  */
 public class NetworkNodeAgent extends MicroAgentGeneralisation {
   @SuppressWarnings("unused")
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(NetworkNodeAgent.class.getName());
 
   /**

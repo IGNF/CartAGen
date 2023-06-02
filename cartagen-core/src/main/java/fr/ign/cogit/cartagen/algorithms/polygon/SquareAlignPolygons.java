@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import Jama.Matrix;
 import fr.ign.cogit.geoxygene.api.spatial.AbstractGeomFactory;
@@ -20,6 +21,7 @@ import fr.ign.cogit.geoxygene.spatial.geomengine.GeometryEngine;
 import fr.ign.cogit.geoxygene.util.algo.geomstructure.Vector2D;
 import fr.ign.cogit.geoxygene.util.conversion.ParseException;
 import fr.ign.cogit.geoxygene.util.conversion.WktGeOxygene;
+import org.apache.logging.log4j.core.config.Configurator;
 
 /**
  * Implementation of an algorithm to try to square polygons i.e when angles are
@@ -32,7 +34,7 @@ import fr.ign.cogit.geoxygene.util.conversion.WktGeOxygene;
 
 public class SquareAlignPolygons {
 
-  private static final Logger logger = Logger.getLogger(SquareAlignPolygons.class);
+  private static final Logger logger = LogManager.getLogger(SquareAlignPolygons.class);
 
   private IDirectPositionList points; // P0..Pn Q0..Qm.. Z0..Zp
   private List<int[]> indicesRightAngles; // n-1, n, n+1
@@ -527,7 +529,7 @@ public class SquareAlignPolygons {
   }
 
   public static void main(String[] args) throws ParseException {
-    SquareAlignPolygons.logger.setLevel(Level.OFF);
+    Configurator.setLevel(logger.getName(), Level.OFF);
     String poly = "POLYGON((339810.23176300001796335 7642898.97540399990975857,339825.85329399997135624 7642891.98611100018024445,339825.24993900000117719 7642890.42239999957382679,339826.96127000002888963 7642888.81250800006091595,339824.48684899997897446 7642882.04569400008767843,339822.63982699997723103 7642882.6473599998280406,339821.41962499998044223 7642880.1152379997074604,339805.85743199998978525 7642887.29528400022536516,339810.23176300001796335 7642898.97540399990975857))";
     IPolygon pol0 = (IPolygon) WktGeOxygene.makeGeOxygene(poly);
     poly = "POLYGON((339822.98888800002168864 7642872.4665329996496439,339819.41837899998063222 7642862.75993799977004528,339814.07412300002761185 7642864.54277199972420931,339811.56089000002248213 7642857.55325200036168098,339813.0901999999769032 7642857.02936599962413311,339809.87812700000358745 7642848.08210800029337406,339799.22233900002902374 7642851.85121299978345633,339802.0865639999974519 7642860.31517800036817789,339804.42946900002425537 7642867.23689999990165234,339800.57982099999208003 7642868.71306999959051609,339804.0712000000057742 7642879.3496679998934269,339822.98888800002168864 7642872.4665329996496439))";

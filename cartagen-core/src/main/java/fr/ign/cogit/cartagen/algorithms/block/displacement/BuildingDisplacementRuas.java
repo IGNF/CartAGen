@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.LineString;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.LineString;
 
 import fr.ign.cogit.cartagen.common.triangulation.Triangulation;
 import fr.ign.cogit.cartagen.core.GeneralisationSpecifications;

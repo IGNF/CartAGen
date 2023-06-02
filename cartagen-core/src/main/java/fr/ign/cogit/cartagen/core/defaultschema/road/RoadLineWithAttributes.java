@@ -18,7 +18,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.annotations.Type;
 
 import fr.ign.cogit.cartagen.core.GeneralisationLegend;
@@ -48,7 +49,7 @@ import fr.ign.cogit.geoxygene.schemageo.impl.support.reseau.ReseauImpl;
 public class RoadLineWithAttributes extends NetworkSection
         implements IRoadLine {
 
-    private static final Logger logger = Logger
+    private static final Logger logger = LogManager
             .getLogger(RoadLineWithAttributes.class.getName());
 
     /**

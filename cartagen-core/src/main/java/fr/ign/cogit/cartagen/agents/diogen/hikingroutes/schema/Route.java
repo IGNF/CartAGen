@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.diogen.preprocessing.ComputeRouteSectionGeom;
 import fr.ign.cogit.cartagen.agents.diogen.preprocessing.ConcatLineStrings;
@@ -16,7 +17,7 @@ import fr.ign.cogit.geoxygene.spatial.geomaggr.GM_MultiSurface;
 public abstract class Route implements IRoute {
 
   @SuppressWarnings("unused")
-  private static final Logger LOGGER = Logger.getLogger(Route.class.getName());
+  private static final Logger LOGGER = LogManager.getLogger(Route.class.getName());
 
   private List<IRouteSection> routeSections = new ArrayList<IRouteSection>();
 

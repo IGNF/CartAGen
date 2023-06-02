@@ -3,7 +3,8 @@
  */
 package fr.ign.cogit.cartagen.agents.core.task;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Default implementation of interface EndOfConvTask, based on
@@ -26,7 +27,7 @@ public abstract class EndOfConvTaskImpl extends TaskWithinConversationImpl
   /**
    * Logger for this class
    */
-  private static Logger logger = Logger.getLogger(EndOfConvTaskImpl.class
+  private static Logger logger = LogManager.getLogger(EndOfConvTaskImpl.class
       .getName());
 
   // Public fields //

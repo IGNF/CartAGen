@@ -8,7 +8,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.gael.deformation.submicro.GAELAngle;
 import fr.ign.cogit.cartagen.agents.gael.deformation.submicro.GAELPointSingleton;
@@ -27,7 +28,7 @@ import fr.ign.cogit.geoxygene.feature.FT_FeatureCollection;
  * @author JGaffuri
  */
 public class GAELDeformableImpl implements GAELDeformable {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(GAELDeformableImpl.class.getName());
 
   private IFeatureCollection<IPointAgent> pointAgents = new FT_FeatureCollection<IPointAgent>();

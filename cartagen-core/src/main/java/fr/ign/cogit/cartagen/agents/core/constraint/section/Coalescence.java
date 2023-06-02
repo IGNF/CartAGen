@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.action.section.CurvatureSmoothingAction;
 import fr.ign.cogit.cartagen.agents.core.action.section.LineCoalescencePartitionAction;
@@ -24,7 +25,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.constraint.GeographicObjectConstrai
 public class Coalescence extends GeographicObjectConstraintImpl {
 
   @SuppressWarnings("unused")
-  private static Logger logger = Logger.getLogger(Coalescence.class.getName());
+  private static Logger logger = LogManager.getLogger(Coalescence.class.getName());
 
   /**
    */

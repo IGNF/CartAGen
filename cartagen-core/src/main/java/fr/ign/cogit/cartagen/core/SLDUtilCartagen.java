@@ -12,7 +12,8 @@ package fr.ign.cogit.cartagen.core;
 import java.awt.Color;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObjLin;
@@ -54,7 +55,7 @@ import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.GeometryFactory;
 public class SLDUtilCartagen extends SLDUtil {
 
 	@SuppressWarnings("unused")
-	private static Logger logger = Logger.getLogger(SLDUtilCartagen.class.getName());
+	private static Logger logger = LogManager.getLogger(SLDUtilCartagen.class.getName());
 
 	/**
 	 * Gets the symbol width of a linear object from the SLD value for this object.

@@ -2,7 +2,8 @@ package fr.ign.cogit.cartagen.agents.cartacom.constraint.buildingnetface;
 
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.CartacomSpecifications;
 import fr.ign.cogit.cartagen.agents.cartacom.agent.impl.NetworkFaceAgent;
@@ -19,7 +20,7 @@ public class BuildingTopology extends MicroMicroRelationalConstraintWithZone {
    * Logger for this class
    */
   @SuppressWarnings("unused")
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(BuildingTopology.class.getName());
 
   /**

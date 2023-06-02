@@ -18,7 +18,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedPseudograph;
@@ -69,7 +70,7 @@ import fr.ign.cogit.geoxygene.util.algo.SmallestSurroundingRectangleComputation;
  */
 public class RoadStructureDetection {
 
-    private static Logger logger = Logger
+    private static Logger logger = LogManager
             .getLogger(RoadStructureDetection.class);
 
     private CarteTopo topoMap;

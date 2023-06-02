@@ -1,6 +1,7 @@
 package fr.ign.cogit.cartagen.agents.core.action.micro;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.action.ActionCartagen;
 import fr.ign.cogit.cartagen.agents.core.agent.IMicroAgentGeneralisation;
@@ -15,7 +16,7 @@ import fr.ign.cogit.geoxygene.util.algo.CommonAlgorithms;
  * 
  */
 public class EnlargementAction extends ActionCartagen {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(EnlargementAction.class.getName());
   /**
    */

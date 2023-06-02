@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkSection;
 import fr.ign.cogit.cartagen.core.genericschema.network.NetworkSectionType;
@@ -29,7 +30,7 @@ import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.morphomaths.Side;
  */
 public class DeadEndZoning {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(DeadEndZoning.class.getName());
   /**
    * The network face geometry in which the zoning is computed (the zoning is

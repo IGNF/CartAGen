@@ -14,14 +14,15 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.schema.schemaConceptuelISOJeu.FeatureType;
 import fr.ign.cogit.geoxygene.schemageo.api.support.reseau.ArcReseau;
 
 public class StrokesNetwork {
 
-  private static Logger logger = Logger.getLogger(StrokesNetwork.class
+  private static Logger logger = LogManager.getLogger(StrokesNetwork.class
       .getName());
 
   private Set<Stroke> strokes;

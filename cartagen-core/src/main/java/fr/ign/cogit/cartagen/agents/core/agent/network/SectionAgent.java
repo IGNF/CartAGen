@@ -5,7 +5,8 @@ package fr.ign.cogit.cartagen.agents.core.agent.network;
 
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
 import fr.ign.cogit.cartagen.agents.core.agent.ISectionAgent;
@@ -32,7 +33,7 @@ import fr.ign.cogit.geoxygene.api.spatial.geomroot.IGeometry;
 public abstract class SectionAgent extends MicroAgentGeneralisation
     implements ISectionAgent {
   @SuppressWarnings("unused")
-  private static Logger logger = Logger.getLogger(SectionAgent.class.getName());
+  private static Logger logger = LogManager.getLogger(SectionAgent.class.getName());
 
   @Override
   public INetworkSection getFeature() {

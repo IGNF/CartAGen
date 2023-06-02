@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.algorithms.network.roads.SlideDeadEnd;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
@@ -24,7 +25,7 @@ import fr.ign.cogit.geoxygene.util.algo.CommonAlgorithms;
 public class EmbeddedDeadEndArea extends GeneObjDefault
     implements IEmbeddedDeadEndArea {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(EmbeddedDeadEndArea.class.getName());
 
   private List<IUrbanElement> urbanElements = new ArrayList<IUrbanElement>();

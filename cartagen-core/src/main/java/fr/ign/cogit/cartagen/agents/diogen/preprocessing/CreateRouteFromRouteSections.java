@@ -1,13 +1,14 @@
 package fr.ign.cogit.cartagen.agents.diogen.preprocessing;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.diogen.hikingroutes.schema.IRoute;
 import fr.ign.cogit.cartagen.agents.diogen.hikingroutes.schema.IRouteSection;
 
 public class CreateRouteFromRouteSections {
 
-  private static final Logger LOGGER = Logger
+  private static final Logger LOGGER = LogManager
       .getLogger(CreateRouteFromRouteSections.class.getName());
 
   public void createRouteFromOneRouteSection(IRoute route,

@@ -6,7 +6,8 @@ package fr.ign.cogit.cartagen.agents.cartacom.constraint.buildingroad;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.CartacomSpecifications;
 import fr.ign.cogit.cartagen.agents.cartacom.action.CartacomAction;
@@ -27,7 +28,7 @@ public class BuildingOrientation extends MicroMicroRelationalConstraint {
   /**
    * Logger for this class
    */
-  private static Logger LOGGER = Logger.getLogger(Parallelism.class.getName());
+  private static Logger LOGGER = LogManager.getLogger(Parallelism.class.getName());
 
   public BuildingOrientation(ICartAComAgentGeneralisation ag,
       MicroMicroRelation rel, double importance) {

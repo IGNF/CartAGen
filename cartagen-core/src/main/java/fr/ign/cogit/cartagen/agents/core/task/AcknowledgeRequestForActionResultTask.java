@@ -3,7 +3,8 @@
  */
 package fr.ign.cogit.cartagen.agents.core.task;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.agent.ConversationalObject;
 import fr.ign.cogit.cartagen.agents.cartacom.agent.interfaces.ICartacomAgent;
@@ -31,7 +32,7 @@ public class AcknowledgeRequestForActionResultTask extends EndOfConvTaskImpl {
   /**
    * Logger for this class
    */
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(AcknowledgeRequestForActionResultTask.class.getName());
 
   // Public fields //

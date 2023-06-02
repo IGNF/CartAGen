@@ -3,7 +3,8 @@
  */
 package fr.ign.cogit.cartagen.agents.cartacom.agent.impl;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.agent.interfaces.IBuildingAgent;
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
@@ -16,7 +17,7 @@ import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
  */
 public class BuildingAgent extends SmallCompactAgent implements IBuildingAgent {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(BuildingAgent.class.getName());
 
   /**

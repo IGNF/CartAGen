@@ -30,9 +30,10 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JMenu;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 import fr.ign.cogit.cartagen.agents.core.AgentGeneralisationScheduler;
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
@@ -79,7 +80,7 @@ public class TensorFlowPlugin extends JMenu {
      */
     private static final long serialVersionUID = 1L;
     private static TensorFlowPlugin instance = null;
-    private static Logger logger = Logger.getLogger(TensorFlowPlugin.class.getName());
+    private static Logger logger = LogManager.getLogger(TensorFlowPlugin.class.getName());
 
     public TensorFlowPlugin() {
         // Exists only to defeat instantiation.

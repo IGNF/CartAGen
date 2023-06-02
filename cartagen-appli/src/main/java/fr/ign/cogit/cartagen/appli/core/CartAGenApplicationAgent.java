@@ -18,7 +18,8 @@ import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.appli.core.geoxygene.CartAGenPlugin;
 import fr.ign.cogit.geoxygene.appli.GeOxygeneApplication;
@@ -33,7 +34,7 @@ import fr.ign.cogit.geoxygene.spatial.geomengine.GeometryEngine;
  */
 public class CartAGenApplicationAgent extends GeOxygeneApplication implements AgentObserver {
     @SuppressWarnings("unused")
-    private static final Logger logger = Logger.getLogger(CartAGenApplicationAgent.class);
+    private static final Logger logger = LogManager.getLogger(CartAGenApplicationAgent.class);
 
     private boolean slowMotion = false;
 

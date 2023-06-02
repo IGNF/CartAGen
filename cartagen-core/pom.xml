@@ -9,17 +9,23 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <main.basedir>${project.parent.basedir}</main.basedir>
   </properties>
-  <artifactId>cartagen-core</artifactId>
-	<dependencies>  
-  		<dependency>
+	<artifactId>cartagen-core</artifactId>
+
+	<dependencies>
+		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>geoxygene-osm</artifactId>
-			<version>1.9-SNAPSHOT</version>
+			<version>${geoxygene.version}</version>
 		</dependency>
 		<dependency>
-  			<groupId>org.tensorflow</groupId>
-  			<artifactId>tensorflow</artifactId>
-  			<version>1.8.0</version>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>geoxygene-util</artifactId>
+			<version>${geoxygene.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.tensorflow</groupId>
+			<artifactId>tensorflow</artifactId>
+			<version>1.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.geotools</groupId>

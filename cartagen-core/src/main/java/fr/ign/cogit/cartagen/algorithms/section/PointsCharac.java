@@ -30,7 +30,7 @@ import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPositionList;
  */
 
 public class PointsCharac {
-  // private static Logger logger = Logger.getLogger(PointsCharac.class
+  // private static Logger logger = LogManager.getLogger(PointsCharac.class
   // .getName());
 
   /**

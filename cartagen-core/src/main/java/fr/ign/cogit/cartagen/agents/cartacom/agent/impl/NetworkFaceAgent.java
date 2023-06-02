@@ -6,7 +6,8 @@ package fr.ign.cogit.cartagen.agents.cartacom.agent.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.agent.interfaces.INetworkSectionAgent;
 import fr.ign.cogit.cartagen.agents.cartacom.agent.interfaces.ISmallCompactAgent;
@@ -28,7 +29,7 @@ public class NetworkFaceAgent extends CartAComAgentGeneralisation {
    * Logger for this class
    */
   @SuppressWarnings("unused")
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(NetworkFaceAgent.class.getName());
 
   // Public fields //

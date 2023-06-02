@@ -23,14 +23,15 @@ import javax.swing.JDialog;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.geotools.data.shapefile.dbf.DbaseFileReader;
 import org.geotools.data.shapefile.files.ShpFiles;
 import org.geotools.data.shapefile.shp.ShapefileReader;
 import org.geotools.data.shapefile.shp.ShapefileReader.Record;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
 
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDB;
 import fr.ign.cogit.cartagen.core.dataset.shapefile.ShapeFileClass;
@@ -48,7 +49,7 @@ import fr.ign.cogit.geoxygene.util.conversion.AdapterFactory;
 
 public class OSMShapefileLoader extends SwingWorker<Void, Void> {
 
-  private Logger logger = Logger.getLogger(OSMShapefileLoader.class.getName());
+  private Logger logger = LogManager.getLogger(OSMShapefileLoader.class.getName());
 
   // the global tags of OSM files
   public static final String TAG_BOUNDS = "bounds";

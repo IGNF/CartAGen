@@ -19,13 +19,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Polygon;
-import com.vividsolutions.jts.operation.buffer.BufferParameters;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.operation.buffer.BufferParameters;
 
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
 import fr.ign.cogit.cartagen.util.SpatialQuery;
@@ -48,7 +49,7 @@ import fr.ign.cogit.geoxygene.util.conversion.AdapterFactory;
  * 
  */
 public class UrbanAreaComputationJTS {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(UrbanAreaComputationJTS.class.getName());
 
   /**

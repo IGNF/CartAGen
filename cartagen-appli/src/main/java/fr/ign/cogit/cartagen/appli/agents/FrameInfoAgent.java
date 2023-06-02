@@ -25,7 +25,8 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.agent.GeographicObjectAgentGeneralisation;
 import fr.ign.cogit.geoxygene.contrib.agents.state.AgentState;
@@ -37,7 +38,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.state.GeographicAgentState;
  */
 public class FrameInfoAgent extends JFrame {
   private static final long serialVersionUID = 1L;
-  static final Logger logger = Logger.getLogger(FrameInfoAgent.class.getName());
+  static final Logger logger = LogManager.getLogger(FrameInfoAgent.class.getName());
 
   private GeographicObjectAgentGeneralisation agentGeo = null;
 

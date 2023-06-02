@@ -9,7 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.conversation.ConversationRetrievalException;
 import fr.ign.cogit.cartagen.agents.cartacom.conversation.ConversationState;
@@ -59,7 +60,7 @@ public abstract class FSMBasedConversationalObject
   /**
    * Logger for this class
    */
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(FSMBasedConversationalObject.class.getName());
 
   // Public fields //

@@ -9,7 +9,8 @@ import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -88,7 +89,7 @@ import fr.ign.cogit.geoxygene.util.conversion.AdapterFactory;
  */
 
 public class AgentUtil {
-  protected final static Logger logger = Logger
+  protected final static Logger logger = LogManager
       .getLogger(AgentUtil.class.getName());
 
   public static Logger getLogger() {

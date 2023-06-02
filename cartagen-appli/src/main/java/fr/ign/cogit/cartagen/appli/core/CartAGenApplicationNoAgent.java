@@ -16,7 +16,8 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.appli.core.geoxygene.CartAGenPlugin;
 import fr.ign.cogit.geoxygene.appli.GeOxygeneApplication;
@@ -29,7 +30,7 @@ import fr.ign.cogit.geoxygene.spatial.geomengine.GeometryEngine;
  * @author Charlotte Hoarau
  */
 public class CartAGenApplicationNoAgent extends GeOxygeneApplication {
-    private static final Logger logger = Logger.getLogger(CartAGenApplicationNoAgent.class);
+    private static final Logger logger = LogManager.getLogger(CartAGenApplicationNoAgent.class);
 
     private CartAGenApplicationNoAgent() {
         super("CartAGen-GeOxygene");

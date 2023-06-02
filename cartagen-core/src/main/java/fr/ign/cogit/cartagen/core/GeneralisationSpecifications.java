@@ -16,7 +16,8 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * ensemble de parametres utilises pour la generalisation
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
  */
 public final class GeneralisationSpecifications {
   @SuppressWarnings("unused")
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(GeneralisationSpecifications.class.getName());
 
   // les parametres sont en mm carte, ou bien en m terrain

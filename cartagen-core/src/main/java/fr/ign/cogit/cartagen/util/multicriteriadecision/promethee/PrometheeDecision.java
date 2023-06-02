@@ -18,7 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.util.CollectionsUtil;
 
@@ -30,7 +31,7 @@ import fr.ign.cogit.geoxygene.util.CollectionsUtil;
  */
 public class PrometheeDecision {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(PrometheeDecision.class.getName());
 
   /**

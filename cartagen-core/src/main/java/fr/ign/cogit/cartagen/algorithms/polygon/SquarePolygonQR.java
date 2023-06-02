@@ -18,7 +18,8 @@ import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.QRDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.api.spatial.AbstractGeomFactory;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
@@ -40,7 +41,7 @@ import fr.ign.cogit.geoxygene.util.conversion.WktGeOxygene;
  * 
  */
 public class SquarePolygonQR {
-  private static final Logger logger = Logger.getLogger(SquarePolygonQR.class);
+  private static final Logger logger = LogManager.getLogger(SquarePolygonQR.class);
 
   private IDirectPositionList points;
   private int nb_edges;

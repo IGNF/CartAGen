@@ -6,8 +6,8 @@ package fr.ign.cogit.cartagen.spatialanalysis.measures;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import fr.ign.cogit.cartagen.common.triangulation.Triangulation;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkSection;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;
@@ -35,7 +35,7 @@ import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.CommonAlgorithmsFrom
  * 
  */
 public class BlockTriangulation {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(BlockTriangulation.class.getName());
 
   /**

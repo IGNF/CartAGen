@@ -3,7 +3,8 @@
  */
 package fr.ign.cogit.cartagen.agents.gael.field.agent.relief;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.agent.MicroAgentGeneralisation;
 import fr.ign.cogit.cartagen.core.genericschema.relief.IDEMPixel;
@@ -13,7 +14,7 @@ import fr.ign.cogit.geoxygene.api.spatial.geomprim.IPoint;
  * @author julien Gaffuri 16 déc. 2008
  */
 public class DEMPixelAgent extends MicroAgentGeneralisation {
-  static Logger logger = Logger.getLogger(DEMPixelAgent.class);
+  static Logger logger = LogManager.getLogger(DEMPixelAgent.class);
 
   @Override
   public IDEMPixel getFeature() {

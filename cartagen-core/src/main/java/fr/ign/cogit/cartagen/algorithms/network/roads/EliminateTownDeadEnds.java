@@ -2,7 +2,8 @@ package fr.ign.cogit.cartagen.algorithms.network.roads;
 
 import java.util.HashSet;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkSection;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanBlock;
@@ -13,7 +14,7 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 
 public class EliminateTownDeadEnds {
 
-  private static Logger logger = Logger.getLogger(EliminateTownDeadEnds.class);
+  private static Logger logger = LogManager.getLogger(EliminateTownDeadEnds.class);
 
   /**
    * The street network

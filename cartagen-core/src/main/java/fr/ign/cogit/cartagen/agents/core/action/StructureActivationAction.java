@@ -3,7 +3,8 @@ package fr.ign.cogit.cartagen.agents.core.action;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.contrib.agents.action.ActionResult;
 import fr.ign.cogit.geoxygene.contrib.agents.agent.GeographicObjectAgent;
@@ -16,7 +17,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.constraint.Constraint;
  * 
  */
 public class StructureActivationAction extends ActionCartagen {
-  final static Logger logger = Logger
+  final static Logger logger = LogManager
       .getLogger(StructureActivationAction.class.getName());
 
   public StructureActivationAction(GeographicObjectAgent ag, Constraint cont,

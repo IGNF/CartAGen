@@ -7,7 +7,8 @@ import java.util.HashSet;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.AgentGeneralisationScheduler;
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
@@ -25,7 +26,7 @@ public class RunOnSelectionAction extends AbstractAction {
      * 
      */
     private static final long serialVersionUID = 1L;
-    private static Logger logger = Logger.getLogger(RunOnSelectionAction.class.getName());
+    private static Logger logger = LogManager.getLogger(RunOnSelectionAction.class.getName());
 
     @Override
     public void actionPerformed(ActionEvent arg0) {

@@ -6,7 +6,9 @@ package fr.ign.cogit.cartagen.agents.core.agent;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import fr.ign.cogit.cartagen.agents.gael.deformation.submicro.GAELTriangle;
 import fr.ign.cogit.cartagen.agents.gael.field.agent.FieldAgent;
@@ -32,7 +34,7 @@ public abstract class GeographicObjectAgentGeneralisation
     extends GeographicAgentGeneralisation
     implements GeographicObjectAgent, IGeographicObjectAgentGeneralisation {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(GeographicObjectAgentGeneralisation.class.getName());
 
   private IGeneObj geneObj = null;

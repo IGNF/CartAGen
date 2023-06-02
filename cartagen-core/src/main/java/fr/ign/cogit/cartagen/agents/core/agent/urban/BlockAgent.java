@@ -7,7 +7,8 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.AgentSpecifications;
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
@@ -39,7 +40,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.agent.GeographicObjectAgent;
  */
 public class BlockAgent extends MesoAgentGeneralisation<IUrbanElementAgent>
     implements IBlockAgent {
-  private static Logger logger = Logger.getLogger(BlockAgent.class.getName());
+  private static Logger logger = LogManager.getLogger(BlockAgent.class.getName());
 
   @Override
   public IPolygon getGeom() {

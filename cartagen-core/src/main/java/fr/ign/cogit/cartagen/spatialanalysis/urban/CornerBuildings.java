@@ -11,7 +11,8 @@ package fr.ign.cogit.cartagen.spatialanalysis.urban;
 
 import java.util.HashSet;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.Legend;
 import fr.ign.cogit.geoxygene.api.feature.IFeatureCollection;
@@ -45,7 +46,7 @@ public class CornerBuildings {
   // //////////////////////////////////////////
 
   // All static fields //
-  private static Logger LOGGER = Logger.getLogger(CornerBuildings.class);
+  private static Logger LOGGER = LogManager.getLogger(CornerBuildings.class);
 
   // Private fields //
   private Ilot block;

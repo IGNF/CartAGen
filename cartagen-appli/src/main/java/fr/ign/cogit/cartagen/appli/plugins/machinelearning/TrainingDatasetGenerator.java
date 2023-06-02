@@ -27,7 +27,8 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JMenu;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.deeplearning.vector2image.CoordinateTransformation;
 import fr.ign.cogit.cartagen.appli.core.geoxygene.CartAGenPlugin;
@@ -61,7 +62,7 @@ public class TrainingDatasetGenerator extends JMenu {
     private static int IMAGE_SIZE = 128;
     private static final long serialVersionUID = 1L;
     private static TrainingDatasetGenerator instance = null;
-    private static Logger logger = Logger
+    private static Logger logger = LogManager
             .getLogger(TrainingDatasetGenerator.class.getName());
 
     public TrainingDatasetGenerator() {

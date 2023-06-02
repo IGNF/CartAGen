@@ -3,7 +3,8 @@ package fr.ign.cogit.cartagen.agents.diogen.interaction.point;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.agent.interfaces.ICartacomAgent;
 import fr.ign.cogit.cartagen.agents.diogen.agent.model.IDiogenAgent;
@@ -30,7 +31,7 @@ public class PointDisplacementInteraction
     extends ConstrainedMultipleTargetsAggregatedInteraction
     implements AggregatedInteraction {
 
-  private static Logger LOGGER = Logger
+  private static Logger LOGGER = LogManager
       .getLogger(PointDisplacementInteraction.class.getName());
 
   /**

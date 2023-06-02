@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
 
-import com.vividsolutions.jts.geom.LineString;
+import org.locationtech.jts.geom.LineString;
 
 import fr.ign.cogit.cartagen.core.defaultschema.misc.MiscLine;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObjLin;

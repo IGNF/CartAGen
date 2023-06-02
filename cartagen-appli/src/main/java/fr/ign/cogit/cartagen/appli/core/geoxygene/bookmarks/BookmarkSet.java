@@ -22,7 +22,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.xerces.dom.DocumentImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -44,7 +45,7 @@ import fr.ign.cogit.geoxygene.util.XMLUtil;
  */
 public class BookmarkSet {
 
-  private static Logger logger = Logger.getLogger(BookmarkSet.class.getName());
+  private static Logger logger = LogManager.getLogger(BookmarkSet.class.getName());
   private HashSet<Bookmark> setBookmark;
   private CartAGenDB currentDataset;
   private ProjectFrame currentView;

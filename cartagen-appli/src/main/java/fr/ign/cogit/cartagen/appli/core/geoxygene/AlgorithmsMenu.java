@@ -23,7 +23,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import com.vividsolutions.jts.geom.LineString;
+import org.locationtech.jts.geom.LineString;
 
 import fr.ign.cogit.cartagen.algorithms.block.deletion.BuildingDeletionOverlap;
 import fr.ign.cogit.cartagen.algorithms.block.displacement.BuildingDisplacementRandom;
