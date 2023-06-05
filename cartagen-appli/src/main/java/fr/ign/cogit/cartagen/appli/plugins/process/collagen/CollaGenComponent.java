@@ -14,7 +14,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
@@ -78,7 +79,7 @@ public class CollaGenComponent extends JMenu {
 
 	private CollaGenEnvironment environment;
 	public static String ONTOLOGY = "OntoGeneralisation";
-	private static Logger LOGGER = Logger.getLogger(CollaGenComponent.class);
+	private static Logger LOGGER = LogManager.getLogger(CollaGenComponent.class);
 
 	public CollaGenComponent() {
 		// Exists only to defeat instantiation.

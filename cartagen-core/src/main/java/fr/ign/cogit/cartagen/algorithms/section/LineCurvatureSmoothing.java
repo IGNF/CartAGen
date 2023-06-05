@@ -12,12 +12,13 @@
  */
 package fr.ign.cogit.cartagen.algorithms.section;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.simplify.DouglasPeuckerSimplifier;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.simplify.DouglasPeuckerSimplifier;
 
 import fr.ign.cogit.cartagen.core.GeneralisationSpecifications;
 import fr.ign.cogit.cartagen.core.Legend;
@@ -38,7 +39,7 @@ import fr.ign.cogit.geoxygene.util.algo.CommonAlgorithms;
  */
 
 public class LineCurvatureSmoothing {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(LineCurvatureSmoothing.class.getName());
 
   /**

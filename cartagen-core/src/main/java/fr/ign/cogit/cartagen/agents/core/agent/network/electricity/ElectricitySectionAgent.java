@@ -11,7 +11,7 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
  */
 public class ElectricitySectionAgent extends SectionAgent {
   // private static Logger
-  // logger=Logger.getLogger(TronconElectricite.class.getName());
+  // logger=LogManager.getLogger(TronconElectricite.class.getName());
 
   @Override
   public IElectricityLine getFeature() {

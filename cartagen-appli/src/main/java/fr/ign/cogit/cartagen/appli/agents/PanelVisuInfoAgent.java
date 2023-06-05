@@ -5,7 +5,8 @@ package fr.ign.cogit.cartagen.appli.agents;
 
 import java.awt.Color;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.state.MicroAgentState;
 import fr.ign.cogit.geoxygene.appli.layer.LayerViewAwtPanel;
@@ -20,7 +21,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.state.MesoAgentState;
  */
 public class PanelVisuInfoAgent extends LayerViewAwtPanel {
   private static final long serialVersionUID = -5037001262393524360L;
-  private final static Logger logger = Logger
+  private final static Logger logger = LogManager
       .getLogger(PanelVisuInfoAgent.class.getName());
 
   /**

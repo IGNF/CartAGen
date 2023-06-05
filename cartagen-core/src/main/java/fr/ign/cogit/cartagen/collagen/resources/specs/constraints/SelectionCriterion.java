@@ -5,7 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.w3c.dom.Element;
 
 import fr.ign.cogit.cartagen.collagen.resources.ontology.Character;

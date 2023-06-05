@@ -18,7 +18,7 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
 public class RoadSectionAgent extends SectionAgent
     implements IRoadSectionAgent {
   // private static Logger
-  // logger=Logger.getLogger(TronconRoute.class.getName());
+  // logger=LogManager.getLogger(TronconRoute.class.getName());
 
   @Override
   public IRoadLine getFeature() {

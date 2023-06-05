@@ -12,7 +12,8 @@ package fr.ign.cogit.cartagen.algorithms.points;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObjPoint;
@@ -35,7 +36,7 @@ import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPosition;
  * 
  */
 public class PointDisplacement {
-	private static Logger logger = Logger.getLogger(PointDisplacement.class.getName());
+	private static Logger logger = LogManager.getLogger(PointDisplacement.class.getName());
 
 	private double facteurLongueurDeplacement = 2;
 	private int nbIterations = 5;

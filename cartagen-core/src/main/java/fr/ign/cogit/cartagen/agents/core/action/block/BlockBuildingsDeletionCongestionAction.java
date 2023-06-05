@@ -3,7 +3,8 @@ package fr.ign.cogit.cartagen.agents.core.action.block;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
 import fr.ign.cogit.cartagen.agents.core.action.ActionCartagen;
@@ -23,7 +24,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.constraint.Constraint;
  */
 public class BlockBuildingsDeletionCongestionAction extends ActionCartagen {
 
-  static Logger logger = Logger.getLogger(SimplificationAction.class.getName());
+  static Logger logger = LogManager.getLogger(SimplificationAction.class.getName());
   /**
    */
   private int nbLimite;

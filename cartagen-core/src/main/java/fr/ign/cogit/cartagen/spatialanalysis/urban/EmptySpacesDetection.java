@@ -9,7 +9,8 @@
  ******************************************************************************/
 package fr.ign.cogit.cartagen.spatialanalysis.urban;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanBlock;
@@ -22,7 +23,7 @@ import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.morphomaths.Morpholo
 
 public class EmptySpacesDetection {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(EmptySpacesDetection.class.getName());
 
   /**

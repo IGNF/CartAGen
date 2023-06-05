@@ -16,13 +16,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.usertype.UserType;
 import org.postgis.PGgeometry;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IMultiCurve;
 import fr.ign.cogit.geoxygene.api.spatial.geomaggr.IMultiPoint;
@@ -35,7 +36,7 @@ import fr.ign.cogit.geoxygene.util.conversion.ParseException;
 import fr.ign.cogit.geoxygene.util.conversion.WktGeOxygene;
 
 public class GeOxygeneGeometryUserType implements UserType {
-	static Logger logger = Logger.getLogger(GeOxygeneGeometryUserType.class.getName());
+	static Logger logger = LogManager.getLogger(GeOxygeneGeometryUserType.class.getName());
 	private static final int[] geometryTypes = new int[] { Types.STRUCT };
 
 	@Override

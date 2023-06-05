@@ -15,7 +15,8 @@ package fr.ign.cogit.cartagen.algorithms.section;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
@@ -30,7 +31,7 @@ import fr.ign.cogit.geoxygene.spatial.coordgeom.DirectPositionList;
  */
 
 public class InflectionPoints {
-  private static Logger logger = Logger.getLogger(InflectionPoints.class
+  private static Logger logger = LogManager.getLogger(InflectionPoints.class
       .getName());
 
   /**

@@ -19,7 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanBlock;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IUrbanElement;
@@ -40,7 +41,7 @@ import fr.ign.cogit.geoxygene.feature.FT_FeatureCollection;
  */
 public class BuildingDeletionOverlap {
 
-  private static Logger LOGGER = Logger
+  private static Logger LOGGER = LogManager
       .getLogger(BuildingDeletionOverlap.class);
 
   private double minimumRate = 0.4;

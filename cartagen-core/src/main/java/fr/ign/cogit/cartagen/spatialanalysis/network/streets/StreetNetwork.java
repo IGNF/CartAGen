@@ -16,7 +16,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jfree.data.statistics.Statistics;
 
 import fr.ign.cogit.cartagen.core.GeneralisationSpecifications;
@@ -67,7 +68,7 @@ public class StreetNetwork extends AbstractFeature {
 
     // All static fields //
     public static String ROAD_TRAFFIC_ATTRIBUTE = "accessWeight";
-    private static Logger logger = Logger
+    private static Logger logger = LogManager
             .getLogger(StreetNetwork.class.getName());
     private static double sMinT = 3250.0;// 1 mm * 1.3 mm map at 1:50 000.
     private static AtomicInteger counter = new AtomicInteger();

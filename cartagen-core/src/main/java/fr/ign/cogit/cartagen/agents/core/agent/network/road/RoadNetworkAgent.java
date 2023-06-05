@@ -12,7 +12,7 @@ import fr.ign.cogit.cartagen.core.genericschema.network.INetwork;
  */
 public final class RoadNetworkAgent extends NetworkAgent {
   // private static Logger
-  // logger=Logger.getLogger(ReseauRoutier.class.getName());
+  // logger=LogManager.getLogger(ReseauRoutier.class.getName());
 
   public RoadNetworkAgent(INetwork net) {
     super(net);

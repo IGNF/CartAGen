@@ -1,6 +1,7 @@
 package fr.ign.cogit.cartagen.agents.cartacom.action;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.agent.interfaces.ICartacomAgent;
 import fr.ign.cogit.cartagen.agents.cartacom.constraint.buildingroad.BuildingOrientation;
@@ -15,7 +16,7 @@ public class RotationAction extends CartacomActionImpl {
   /**
    * Logger for this class
    */
-  private static Logger LOGGER = Logger
+  private static Logger LOGGER = LogManager
       .getLogger(RotationAction.class.getName());
 
   public RotationAction(ICartacomAgent agent, GeographicConstraint constraint,

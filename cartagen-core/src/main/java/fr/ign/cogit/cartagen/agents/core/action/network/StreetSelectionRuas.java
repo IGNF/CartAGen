@@ -1,6 +1,7 @@
 package fr.ign.cogit.cartagen.agents.core.action.network;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.action.ActionCartagen;
 import fr.ign.cogit.cartagen.agents.core.agent.ITownAgent;
@@ -20,7 +21,7 @@ public class StreetSelectionRuas extends ActionCartagen {
   // //////////////////////////////////////////
 
   // All static fields //
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(StreetSelectionRuas.class.getSimpleName());
   // Public fields //
 

@@ -26,7 +26,8 @@ import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -56,7 +57,7 @@ import fr.ign.cogit.geoxygene.spatial.geomprim.GM_Point;
  */
 public class OsmXmlParser {
 
-  private static final Logger LOGGER = Logger.getLogger(OsmXmlParser.class);
+  private static final Logger LOGGER = LogManager.getLogger(OsmXmlParser.class);
 
   private Set<OSMResource> nodes;
   private Set<OSMResource> ways;

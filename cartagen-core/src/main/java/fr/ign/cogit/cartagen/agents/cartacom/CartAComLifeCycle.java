@@ -2,7 +2,8 @@ package fr.ign.cogit.cartagen.agents.cartacom;
 
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.action.CartacomAction;
 import fr.ign.cogit.cartagen.agents.cartacom.action.InternalGeneralisationAction;
@@ -14,7 +15,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.lifecycle.AgentLifeCycle;
 
 public class CartAComLifeCycle implements AgentLifeCycle {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(CartAComLifeCycle.class.getName());
 
   /**

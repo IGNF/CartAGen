@@ -15,7 +15,7 @@ import fr.ign.cogit.geoxygene.schemageo.api.support.champContinu.ChampContinu;
  * @author julien Gaffuri
  */
 public class ContourLineAgent extends MicroAgentGeneralisation {
-  // private static Logger logger = Logger.getLogger(CourbeDeNiveau.class);
+  // private static Logger logger = LogManager.getLogger(CourbeDeNiveau.class);
 
   @Override
   public IContourLine getFeature() {

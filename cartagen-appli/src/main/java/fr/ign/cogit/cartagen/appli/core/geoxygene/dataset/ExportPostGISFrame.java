@@ -56,7 +56,7 @@ import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-import com.vividsolutions.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.GeometryFactory;
 
 import fr.ign.cogit.cartagen.appli.core.geoxygene.CartAGenPlugin;
 import fr.ign.cogit.cartagen.appli.core.geoxygene.selection.SelectionUtil;

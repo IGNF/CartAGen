@@ -32,8 +32,8 @@ import javax.persistence.Transient;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.hibernate.annotations.Type;
 
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
 
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;

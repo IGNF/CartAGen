@@ -47,7 +47,7 @@ import fr.ign.cogit.geoxygene.style.UserStyle;
 public class EnrichFrame extends JDialog implements ActionListener {
 
     // private static Logger LOGGER =
-    // Logger.getLogger(EnrichFrame.class.getName());
+    // LogManager.getLogger(EnrichFrame.class.getName());
 
     private static final long serialVersionUID = -6992190369890036500L;
 

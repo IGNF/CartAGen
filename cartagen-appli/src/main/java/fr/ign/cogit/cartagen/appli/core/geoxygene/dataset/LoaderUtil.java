@@ -23,14 +23,15 @@ import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.geotools.data.shapefile.files.ShpFiles;
 import org.geotools.data.shapefile.shp.ShapefileException;
 import org.geotools.data.shapefile.shp.ShapefileReader;
 import org.geotools.data.shapefile.shp.ShapefileReader.Record;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
 
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
@@ -41,7 +42,7 @@ import fr.ign.cogit.geoxygene.util.conversion.AdapterFactory;
 
 public class LoaderUtil {
   @SuppressWarnings("unused")
-  private static Logger logger = Logger.getLogger(LoaderUtil.class.getName());
+  private static Logger logger = LogManager.getLogger(LoaderUtil.class.getName());
 
   // Supported file extensions
   public static final String ext[] = { "shp", "shx", "dbf" };

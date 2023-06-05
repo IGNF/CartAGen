@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.diogen.agent.model.IDiogenAgent;
 import fr.ign.cogit.cartagen.agents.diogen.agent.submicro.SubmicroAgent;
@@ -26,7 +27,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.relation.RelationalConstraint;
 public abstract class ConstrainedMultipleTargetsInteraction
     extends ConstrainedAbstractInteraction {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(ConstrainedMultipleTargetsInteraction.class.getName());
 
   /**

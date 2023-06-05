@@ -2,7 +2,8 @@ package fr.ign.cogit.cartagen.agents.cartacom.relation.buildingroad;
 
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.CartacomSpecifications;
 import fr.ign.cogit.cartagen.agents.cartacom.agent.impl.NetworkFaceAgent;
@@ -23,7 +24,7 @@ public class Parallelism extends MicroMicroRelation {
   /**
    * Logger for this class
    */
-  private static Logger LOGGER = Logger.getLogger(Parallelism.class.getName());
+  private static Logger LOGGER = LogManager.getLogger(Parallelism.class.getName());
 
   /**
    * @param ag1

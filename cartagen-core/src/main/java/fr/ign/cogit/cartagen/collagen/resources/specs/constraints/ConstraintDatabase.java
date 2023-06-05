@@ -12,7 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.apache.xerces.dom.DocumentImpl;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
@@ -543,7 +543,7 @@ public class ConstraintDatabase {
       exprElem.appendChild(classeElem);
       Element motElem = xmlDoc.createElement("keyword");
       n = xmlDoc.createTextNode(
-          StringEscapeUtils.escapeXml(expr.getKeyWord().toShortcut()));
+          StringEscapeUtils.escapeXml11(expr.getKeyWord().toShortcut()));
       motElem.appendChild(n);
       exprElem.appendChild(motElem);
       if (expr.getClass().equals(ThreshExpressionType.class)
@@ -601,7 +601,7 @@ public class ConstraintDatabase {
           reqElem.appendChild(uniteElem);
           Element opeElem = xmlDoc.createElement("operator");
           n = xmlDoc.createTextNode(
-              StringEscapeUtils.escapeXml(r.getOperator().toShortcut()));
+              StringEscapeUtils.escapeXml11(r.getOperator().toShortcut()));
           opeElem.appendChild(n);
           reqElem.appendChild(opeElem);
           critElem.appendChild(reqElem);
@@ -653,7 +653,7 @@ public class ConstraintDatabase {
       exprElem.appendChild(classeElem);
       Element motElem = xmlDoc.createElement("keyword");
       n = xmlDoc.createTextNode(
-          StringEscapeUtils.escapeXml(expr.getKeyWord().toShortcut()));
+          StringEscapeUtils.escapeXml11(expr.getKeyWord().toShortcut()));
       motElem.appendChild(n);
       exprElem.appendChild(motElem);
       if (expr.getClass().equals(ThreshExpressionType.class)
@@ -711,7 +711,7 @@ public class ConstraintDatabase {
           reqElem.appendChild(uniteElem);
           Element opeElem = xmlDoc.createElement("operator");
           n = xmlDoc.createTextNode(
-              StringEscapeUtils.escapeXml(r.getOperator().toShortcut()));
+              StringEscapeUtils.escapeXml11(r.getOperator().toShortcut()));
           opeElem.appendChild(n);
           reqElem.appendChild(opeElem);
           critElem.appendChild(reqElem);
@@ -763,7 +763,7 @@ public class ConstraintDatabase {
       exprElem.appendChild(classeElem);
       Element motElem = xmlDoc.createElement("keyword");
       n = xmlDoc.createTextNode(
-          StringEscapeUtils.escapeXml(expr.getKeyWord().toShortcut()));
+          StringEscapeUtils.escapeXml11(expr.getKeyWord().toShortcut()));
       motElem.appendChild(n);
       exprElem.appendChild(motElem);
       if (expr.getClass().equals(ThreshExpressionType.class)
@@ -827,7 +827,7 @@ public class ConstraintDatabase {
           reqElem.appendChild(uniteElem);
           Element opeElem = xmlDoc.createElement("operator");
           n = xmlDoc.createTextNode(
-              StringEscapeUtils.escapeXml(r.getOperator().toShortcut()));
+              StringEscapeUtils.escapeXml11(r.getOperator().toShortcut()));
           opeElem.appendChild(n);
           reqElem.appendChild(opeElem);
           critElem.appendChild(reqElem);
@@ -887,7 +887,7 @@ public class ConstraintDatabase {
       exprElem.appendChild(classeElem);
       Element motElem = xmlDoc.createElement("keyword");
       n = xmlDoc.createTextNode(
-          StringEscapeUtils.escapeXml(expr.getKeyWord().toShortcut()));
+          StringEscapeUtils.escapeXml11(expr.getKeyWord().toShortcut()));
       motElem.appendChild(n);
       exprElem.appendChild(motElem);
       if (expr.getClass().equals(ThreshExpressionType.class)
@@ -945,7 +945,7 @@ public class ConstraintDatabase {
           reqElem.appendChild(uniteElem);
           Element opeElem = xmlDoc.createElement("operator");
           n = xmlDoc.createTextNode(
-              StringEscapeUtils.escapeXml(r.getOperator().toShortcut()));
+              StringEscapeUtils.escapeXml11(r.getOperator().toShortcut()));
           opeElem.appendChild(n);
           reqElem.appendChild(opeElem);
           critElem.appendChild(reqElem);

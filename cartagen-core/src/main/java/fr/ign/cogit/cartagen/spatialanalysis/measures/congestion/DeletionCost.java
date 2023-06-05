@@ -12,7 +12,8 @@
  */
 package fr.ign.cogit.cartagen.spatialanalysis.measures.congestion;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.contrib.graphe.IGraphLinkableFeature;
 
@@ -21,7 +22,7 @@ import fr.ign.cogit.geoxygene.contrib.graphe.IGraphLinkableFeature;
  * 
  */
 public class DeletionCost {
-  private static Logger logger = Logger.getLogger(DeletionCost.class.getName());
+  private static Logger logger = LogManager.getLogger(DeletionCost.class.getName());
 
   /**
    * mesure d'encombrement permettant de choisir le meilleur batiment d'un ilot

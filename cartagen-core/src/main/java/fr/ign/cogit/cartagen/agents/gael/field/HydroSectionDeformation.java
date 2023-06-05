@@ -3,7 +3,8 @@
  */
 package fr.ign.cogit.cartagen.agents.gael.field;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.AgentSpecifications;
 import fr.ign.cogit.cartagen.agents.core.agent.IHydroSectionAgent;
@@ -16,7 +17,7 @@ import fr.ign.cogit.cartagen.core.GeneralisationSpecifications;
  * 
  */
 public class HydroSectionDeformation {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(HydroSectionDeformation.class.getName());
 
   public static void compute(IHydroSectionAgent tr,

@@ -19,10 +19,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import com.vividsolutions.jts.io.WKBReader;
-import com.vividsolutions.jts.io.WKBWriter;
+import org.locationtech.jts.io.WKBReader;
+import org.locationtech.jts.io.WKBWriter;
 
 /**
  * @author JGaffuri
@@ -31,7 +32,7 @@ public class PostgisDB {
   /**
      */
   private static PostgisDB postGISBD = null;
-  static Logger logger = Logger.getLogger(PostgisDB.class.getName());
+  static Logger logger = LogManager.getLogger(PostgisDB.class.getName());
 
   public static PostgisDB get() {
     if (PostgisDB.postGISBD == null) {

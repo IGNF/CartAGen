@@ -1,6 +1,7 @@
 package fr.ign.cogit.cartagen.agents.core.agent.urban;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.AgentSpecifications;
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
@@ -29,7 +30,7 @@ import fr.ign.cogit.geoxygene.generalisation.simplification.PolygonSegment;
  * 
  */
 public class BuildingAgent extends UrbanElementAgent implements IBuildingAgent {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(BuildingAgent.class.getName());
 
   @Override

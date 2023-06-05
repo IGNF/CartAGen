@@ -1,6 +1,6 @@
 package fr.ign.cogit.cartagen.collagen.enrichment.relations;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 import fr.ign.cogit.cartagen.collagen.resources.ontology.GeographicRelation;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;

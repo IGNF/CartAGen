@@ -5,7 +5,8 @@ package fr.ign.cogit.cartagen.agents.cartacom.relation.building2;
 
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.CartacomSpecifications;
 import fr.ign.cogit.cartagen.agents.cartacom.agent.interfaces.ICartAComAgentGeneralisation;
@@ -36,7 +37,7 @@ public class Proximity extends MicroMicroRelation {
   /**
    * Logger for this class
    */
-  private static Logger logger = Logger.getLogger(Proximity.class.getName());
+  private static Logger logger = LogManager.getLogger(Proximity.class.getName());
 
   // //////////////////////////////////////
   // All constructors //

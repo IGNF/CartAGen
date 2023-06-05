@@ -6,7 +6,8 @@ package fr.ign.cogit.cartagen.agents.core.agent;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.constraint.MesoComponentsSatisfaction;
 import fr.ign.cogit.cartagen.agents.core.constraint.StructureComponentsSatisfaction;
@@ -25,7 +26,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.state.InternStructureAgentState;
 public abstract class InternStructureAgentGeneralisation extends
     GeographicObjectAgentGeneralisation implements InternStructureAgent {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(InternStructureAgentGeneralisation.class.getName());
 
   public void ajouterContrainteSatisfactionComposantsStructure(

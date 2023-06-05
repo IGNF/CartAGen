@@ -12,7 +12,8 @@ package fr.ign.cogit.cartagen.algorithms.polygon;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import Jama.Matrix;
 import fr.ign.cogit.geoxygene.api.spatial.AbstractGeomFactory;
@@ -36,7 +37,7 @@ import fr.ign.cogit.geoxygene.util.conversion.WktGeOxygene;
  */
 public class SquarePolygonLS {
 
-  private static final Logger logger = Logger.getLogger(SquarePolygonLS.class);
+  private static final Logger logger = LogManager.getLogger(SquarePolygonLS.class);
 
   private IDirectPositionList points;
   private int nb_edges;

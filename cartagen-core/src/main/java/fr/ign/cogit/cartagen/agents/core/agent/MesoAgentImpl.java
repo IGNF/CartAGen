@@ -6,7 +6,8 @@ package fr.ign.cogit.cartagen.agents.core.agent;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.contrib.agents.action.Action;
 import fr.ign.cogit.geoxygene.contrib.agents.agent.GeographicObjectAgent;
@@ -24,7 +25,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.state.MesoAgentStateImpl;
  */
 public class MesoAgentImpl<ComponentClass extends GeographicObjectAgent>
     extends GeographicObjectAgentImpl implements MesoAgent<ComponentClass> {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(MesoAgentImpl.class.getName());
 
   /**

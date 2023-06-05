@@ -11,7 +11,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.genericschema.carringrelation.ICarriedObject;
 import fr.ign.cogit.cartagen.core.genericschema.carringrelation.ICarrierNetworkSection;
@@ -33,7 +34,7 @@ import fr.ign.cogit.geoxygene.schemageo.api.support.reseau.NoeudReseau;
 @Entity
 public class RoadStrokeForRoutes extends Stroke {
 
-  private static Logger LOGGER = Logger
+  private static Logger LOGGER = LogManager
       .getLogger(RoadStrokeForRoutes.class.getName());
 
   private static AtomicInteger COUNTER = new AtomicInteger();

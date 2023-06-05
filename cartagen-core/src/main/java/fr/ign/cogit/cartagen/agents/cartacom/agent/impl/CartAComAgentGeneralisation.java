@@ -7,7 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.CartacomSpecifications;
 import fr.ign.cogit.cartagen.agents.cartacom.RelationalConstraintDescriptor;
@@ -59,7 +60,7 @@ public abstract class CartAComAgentGeneralisation extends CartacomAgent
   /**
    * Logger for this class
    */
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(ICartAComAgentGeneralisation.class.getName());
 
   /**

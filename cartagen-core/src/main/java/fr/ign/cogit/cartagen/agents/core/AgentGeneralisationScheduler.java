@@ -6,7 +6,8 @@ import java.util.HashSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.Legend;
 import fr.ign.cogit.geoxygene.contrib.agents.AgentObservationSubject;
@@ -19,7 +20,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.agent.IAgent;
  */
 public class AgentGeneralisationScheduler extends Scheduler
     implements AgentObservationSubject, Callable<Integer> {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(AgentGeneralisationScheduler.class.getName());
 
   /**

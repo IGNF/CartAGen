@@ -29,7 +29,8 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.TableModel;
 import javax.xml.bind.JAXBException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.appli.geompool.GeometryPoolMenu;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDB;
@@ -66,7 +67,7 @@ public class CartAGenPlugin
   /**
    * Logger.
    */
-  static Logger logger = Logger.getLogger(CartAGenPlugin.class.getName());
+  static Logger logger = LogManager.getLogger(CartAGenPlugin.class.getName());
 
   protected static CartAGenPlugin instance = null;
 

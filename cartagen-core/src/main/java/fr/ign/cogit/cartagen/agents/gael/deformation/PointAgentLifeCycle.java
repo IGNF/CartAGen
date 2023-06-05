@@ -3,7 +3,8 @@
  */
 package fr.ign.cogit.cartagen.agents.gael.deformation;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.contrib.agents.action.ActionProposal;
 import fr.ign.cogit.geoxygene.contrib.agents.agent.AgentSatisfactionState;
@@ -15,7 +16,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.lifecycle.AgentLifeCycle;
  * @author jgaffuri
  */
 public class PointAgentLifeCycle implements AgentLifeCycle {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(PointAgentLifeCycle.class.getName());
 
   private int statesMaxNumber = -1;

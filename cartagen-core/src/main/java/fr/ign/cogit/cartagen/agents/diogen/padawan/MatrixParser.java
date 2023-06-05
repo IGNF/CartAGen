@@ -13,7 +13,8 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -28,7 +29,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.agent.IAgent;
 
 public class MatrixParser {
 
-  private static Logger logger = Logger.getLogger(MatrixParser.class.getName());
+  private static Logger logger = LogManager.getLogger(MatrixParser.class.getName());
 
   public static String ENVIRONMENTS_XML = "/padawan/matrices_routes.xml";
 

@@ -3,7 +3,8 @@ package fr.ign.cogit.cartagen.agents.core.agent;
 import java.util.ArrayList;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.gael.deformation.GAELDeformable;
 import fr.ign.cogit.cartagen.agents.gael.deformation.GAELDeformableImpl;
@@ -30,7 +31,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.state.AgentState;
 public abstract class GeographicAgentGeneralisation extends GeographicAgent
     implements GAELDeformable {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(GeographicAgentGeneralisation.class.getName());
 
   // GAEL

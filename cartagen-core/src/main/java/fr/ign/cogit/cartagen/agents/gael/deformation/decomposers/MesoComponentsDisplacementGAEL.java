@@ -3,7 +3,8 @@
  */
 package fr.ign.cogit.cartagen.agents.gael.deformation.decomposers;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.agent.GeographicObjectAgentGeneralisation;
 import fr.ign.cogit.cartagen.agents.core.agent.MesoAgentGeneralisation;
@@ -24,7 +25,7 @@ import fr.ign.cogit.geoxygene.spatial.geomprim.GM_Point;
  * 
  */
 public class MesoComponentsDisplacementGAEL {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(MesoComponentsDisplacementGAEL.class.getName());
 
   // importance de la contrainte de proximite objet referents des segments

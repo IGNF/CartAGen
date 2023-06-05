@@ -9,9 +9,10 @@
  ******************************************************************************/
 package fr.ign.cogit.cartagen.spatialanalysis.measures.section;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import com.vividsolutions.jts.operation.buffer.BufferParameters;
+import org.locationtech.jts.operation.buffer.BufferParameters;
 
 import fr.ign.cogit.cartagen.core.Legend;
 import fr.ign.cogit.cartagen.core.SLDUtilCartagen;
@@ -29,7 +30,7 @@ import fr.ign.cogit.geoxygene.util.algo.JtsAlgorithms;
 import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.CommonAlgorithmsFromCartAGen;
 
 public class SectionSymbol {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(SectionSymbol.class.getName());
 
   /**

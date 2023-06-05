@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
 import fr.ign.cogit.cartagen.core.genericschema.AbstractCreationFactory;
@@ -52,7 +53,7 @@ import fr.ign.cogit.geoxygene.util.index.Tiling;
  * 
  */
 public class NetworkEnrichment {
-    private static Logger logger = Logger
+    private static Logger logger = LogManager
             .getLogger(NetworkEnrichment.class.getName());
 
     /**

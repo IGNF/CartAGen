@@ -12,7 +12,7 @@ import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_Polygon;
  * 
  */
 public class HydroSurfaceAgent extends SmallCompactAgent {
-  // private static Logger logger=Logger.getLogger(SurfaceEau.class.getName());
+  // private static Logger logger=LogManager.getLogger(SurfaceEau.class.getName());
 
   @Override
   public IWaterArea getFeature() {

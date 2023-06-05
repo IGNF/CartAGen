@@ -3,7 +3,8 @@
  */
 package fr.ign.cogit.cartagen.agents.gael.deformation.beamsgael;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.agent.network.NetworkAgent;
 import fr.ign.cogit.cartagen.agents.gael.deformation.IPointAgent;
@@ -15,7 +16,7 @@ import fr.ign.cogit.cartagen.core.GeneralisationSpecifications;
  * 
  */
 public class BeamsGAEL {
-  private static Logger logger = Logger.getLogger(BeamsGAEL.class.getName());
+  private static Logger logger = LogManager.getLogger(BeamsGAEL.class.getName());
 
   /**
    * the network on which to apply the algorithm

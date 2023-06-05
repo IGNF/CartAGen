@@ -34,7 +34,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.appli.utilities.renderer.LoadingListCellRenderer;
 
@@ -47,7 +48,7 @@ import fr.ign.cogit.cartagen.appli.utilities.renderer.LoadingListCellRenderer;
 
 public class LoadingFrame extends JFrame implements ActionListener {
     private static final long serialVersionUID = -6992190369890036500L;
-    private static Logger logger = Logger.getLogger(LoadingFrame.class.getName());
+    private static Logger logger = LogManager.getLogger(LoadingFrame.class.getName());
 
     // Utils
     public static String cheminAbsolu;

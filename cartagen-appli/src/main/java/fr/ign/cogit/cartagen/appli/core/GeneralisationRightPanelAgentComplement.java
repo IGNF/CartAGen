@@ -21,7 +21,8 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.AgentGeneralisationScheduler;
 import fr.ign.cogit.cartagen.agents.core.AgentSpecifications;
@@ -51,7 +52,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.agent.IAgent;
  */
 public class GeneralisationRightPanelAgentComplement implements AgentObserver {
 
-	static Logger logger = Logger.getLogger(GeneralisationRightPanelAgentComplement.class.getName());
+	static Logger logger = LogManager.getLogger(GeneralisationRightPanelAgentComplement.class.getName());
 
 	static Logger getLogger() {
 		return GeneralisationRightPanelAgentComplement.logger;

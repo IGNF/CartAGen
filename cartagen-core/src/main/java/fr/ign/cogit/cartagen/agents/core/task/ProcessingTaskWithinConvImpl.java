@@ -3,7 +3,8 @@
  */
 package fr.ign.cogit.cartagen.agents.core.task;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.agent.ConversationalObject;
 import fr.ign.cogit.cartagen.agents.cartacom.conversation.ConversationState;
@@ -29,7 +30,7 @@ public abstract class ProcessingTaskWithinConvImpl
   /**
    * Logger for this class
    */
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(ProcessingTaskWithinConv.class.getName());
 
   // Public fields //

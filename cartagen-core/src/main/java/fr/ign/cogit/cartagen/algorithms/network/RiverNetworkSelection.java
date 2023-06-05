@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
@@ -18,7 +19,7 @@ import fr.ign.cogit.geoxygene.schemageo.api.support.reseau.ArcReseau;
 
 public class RiverNetworkSelection {
 
-    private static Logger logger = Logger
+    private static Logger logger = LogManager
             .getLogger(RiverNetworkSelection.class);
 
     private RiverStrokesNetwork net;

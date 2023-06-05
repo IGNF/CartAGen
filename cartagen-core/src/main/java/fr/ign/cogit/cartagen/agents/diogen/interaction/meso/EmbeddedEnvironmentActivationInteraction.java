@@ -5,7 +5,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.diogen.agent.model.EmbeddedEnvironmentAgent;
 import fr.ign.cogit.cartagen.agents.diogen.agent.model.IDiogenAgent;
@@ -21,7 +22,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.constraint.GeographicConstraint;
 public class EmbeddedEnvironmentActivationInteraction
     extends ConstrainedDegenerateInteraction {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(EmbeddedEnvironmentActivationInteraction.class.getName());
 
   /**

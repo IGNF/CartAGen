@@ -5,7 +5,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.AgentGeneralisationScheduler;
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
@@ -21,7 +22,7 @@ public class GeneReliefGAELAgentAction extends AbstractAction {
      * 
      */
     private static final long serialVersionUID = 1L;
-    private static Logger logger = Logger.getLogger(GeneReliefGAELAgentAction.class.getName());
+    private static Logger logger = LogManager.getLogger(GeneReliefGAELAgentAction.class.getName());
 
     @Override
     public void actionPerformed(ActionEvent arg0) {

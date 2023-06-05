@@ -3,7 +3,8 @@
  */
 package fr.ign.cogit.cartagen.agents.gael.field.agent.partition;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
 import fr.ign.cogit.cartagen.agents.gael.field.agent.FieldAgent;
@@ -18,7 +19,7 @@ import fr.ign.cogit.geoxygene.spatial.geomprim.GM_Point;
  * @author julien Gaffuri 1 sept. 2008
  */
 public abstract class PartitionFieldAgent extends FieldAgent {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(PartitionFieldAgent.class.getName());
 
   /**

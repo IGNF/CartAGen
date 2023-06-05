@@ -3,7 +3,8 @@ package fr.ign.cogit.cartagen.schematisation.buslinemap;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.genericschema.carringrelation.ICarriedObject;
 import fr.ign.cogit.cartagen.core.genericschema.carringrelation.ICarrierNetworkSection;
@@ -20,7 +21,7 @@ import fr.ign.cogit.geoxygene.schemageo.impl.routier.TronconDeRouteImpl;
 public class TronconDeRouteItineraireImpl extends TronconDeRouteImpl
         implements TronconDeRouteItineraire {
 
-    protected static final Logger LOGGER = Logger
+    protected static final Logger LOGGER = LogManager
             .getLogger(TronconDeRouteItineraireImpl.class.getName());
 
     public TronconDeRouteItineraireImpl(Reseau res, boolean estFictif,

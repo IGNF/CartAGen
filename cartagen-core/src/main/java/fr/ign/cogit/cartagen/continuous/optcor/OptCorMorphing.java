@@ -14,7 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.continuous.ContinuousGeneralisationMethod;
 import fr.ign.cogit.cartagen.continuous.LeastSquaresMorphing;
@@ -47,7 +48,7 @@ import fr.ign.cogit.geoxygene.util.algo.geomstructure.Vector2D;
  */
 public class OptCorMorphing implements ContinuousGeneralisationMethod {
 
-  private static final Logger logger = Logger.getLogger(OptCorMorphing.class);
+  private static final Logger logger = LogManager.getLogger(OptCorMorphing.class);
 
   private ILineString geomIni, geomFinal;
   /**

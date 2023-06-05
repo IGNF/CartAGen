@@ -32,7 +32,7 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
 public class HydroSectionAgent extends SectionAgent
     implements IHydroSectionAgent {
   // private static Logger
-  // logger=Logger.getLogger(TronconCoursEau.class.getName());
+  // logger=LogManager.getLogger(TronconCoursEau.class.getName());
 
   @Override
   public IWaterLine getFeature() {

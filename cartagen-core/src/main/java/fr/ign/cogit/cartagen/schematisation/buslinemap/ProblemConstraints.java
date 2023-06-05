@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Iterables;
 
@@ -22,7 +23,7 @@ import fr.ign.cogit.cartagen.spatialanalysis.network.StrokeNode;
  */
 public class ProblemConstraints {
 
-  private static Logger LOGGER = Logger
+  private static Logger LOGGER = LogManager
       .getLogger(ProblemConstraints.class.getName());
 
   /**

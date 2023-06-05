@@ -9,7 +9,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.action.CartacomAction;
 import fr.ign.cogit.cartagen.agents.cartacom.action.InternalGeneralisationAction;
@@ -45,7 +46,7 @@ public class TryActionTask extends ProcessingTaskWithinConvImpl {
   /**
    * Logger for this class
    */
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(TryActionTask.class.getName());
 
   /*

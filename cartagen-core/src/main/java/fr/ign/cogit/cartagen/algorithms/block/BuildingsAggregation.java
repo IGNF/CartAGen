@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import com.vividsolutions.jts.operation.buffer.BufferParameters;
+import org.locationtech.jts.operation.buffer.BufferParameters;
 
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
 import fr.ign.cogit.cartagen.core.genericschema.urban.IBuilding;

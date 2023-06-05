@@ -6,7 +6,8 @@ package fr.ign.cogit.cartagen.agents.gael.field.agent.relief;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.AgentSpecifications;
 import fr.ign.cogit.cartagen.agents.gael.deformation.GAELDeformable;
@@ -28,7 +29,7 @@ import fr.ign.cogit.geoxygene.util.index.Tiling;
  * @author julien Gaffuri
  */
 public final class ReliefFieldAgent extends FieldAgent {
-  private static Logger logger = Logger.getLogger(ReliefFieldAgent.class);
+  private static Logger logger = LogManager.getLogger(ReliefFieldAgent.class);
 
   private IReliefField geneObj = null;
 

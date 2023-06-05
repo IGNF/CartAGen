@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Iterables;
 
@@ -25,7 +26,7 @@ import utils.Pair;
  */
 public class CSPSolver {
 
-  private static Logger LOGGER = Logger.getLogger(CSPSolver.class.getName());
+  private static Logger LOGGER = LogManager.getLogger(CSPSolver.class.getName());
 
   /**
    * This function solves a CSP problem with 4 possible algorithms

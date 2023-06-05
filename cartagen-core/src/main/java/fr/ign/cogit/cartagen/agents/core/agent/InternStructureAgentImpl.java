@@ -6,7 +6,8 @@ package fr.ign.cogit.cartagen.agents.core.agent;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.state.InternStructureAgentStateImpl;
 import fr.ign.cogit.geoxygene.contrib.agents.action.Action;
@@ -24,7 +25,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.state.InternStructureAgentState;
 public class InternStructureAgentImpl extends GeographicObjectAgentImpl
     implements InternStructureAgent {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(InternStructureAgentImpl.class.getName());
 
   /**

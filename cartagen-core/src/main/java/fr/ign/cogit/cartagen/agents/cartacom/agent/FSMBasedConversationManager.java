@@ -7,7 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.conversation.ConversationState;
 import fr.ign.cogit.cartagen.agents.cartacom.conversation.ConversationStateType;
@@ -44,7 +45,7 @@ public class FSMBasedConversationManager extends FSMBasedConversationalObject
   /**
    * Logger for this class
    */
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(FSMBasedConversationManager.class.getName());
 
   // Public fields //

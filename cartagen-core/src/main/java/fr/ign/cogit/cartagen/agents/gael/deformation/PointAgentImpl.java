@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
 import fr.ign.cogit.cartagen.agents.gael.deformation.constraint.SubmicroConstraint;
@@ -52,7 +53,7 @@ import fr.ign.cogit.geoxygene.spatial.geomprim.GM_Point;
  * @author julien Gaffuri 26 juil. 2005
  */
 public class PointAgentImpl extends Agent implements IPointAgent {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(PointAgentImpl.class.getName());
 
   /**

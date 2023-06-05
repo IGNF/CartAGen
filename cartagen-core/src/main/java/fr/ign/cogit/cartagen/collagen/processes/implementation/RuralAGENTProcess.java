@@ -4,7 +4,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.AgentGeneralisationScheduler;
 import fr.ign.cogit.cartagen.agents.core.AgentUtil;
@@ -41,7 +42,7 @@ import fr.ign.cogit.geoxygene.util.index.Tiling;
 public class RuralAGENTProcess extends GeneralisationProcess
     implements StoppableProcess {
 
-  private static Logger LOGGER = Logger.getLogger(RuralAGENTProcess.class);
+  private static Logger LOGGER = LogManager.getLogger(RuralAGENTProcess.class);
 
   private AgentObserver observer;
 

@@ -1,6 +1,6 @@
 package fr.ign.cogit.cartagen.collagen.resources.specs.constraints;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.w3c.dom.Element;
 
 import fr.ign.cogit.cartagen.collagen.resources.specs.CharacterValueType;

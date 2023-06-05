@@ -29,8 +29,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import com.opencsv.CSVWriter;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
 
 import fr.ign.cogit.cartagen.appli.core.geoxygene.CartAGenPlugin;
 import fr.ign.cogit.cartagen.appli.core.geoxygene.selection.SelectionUtil;

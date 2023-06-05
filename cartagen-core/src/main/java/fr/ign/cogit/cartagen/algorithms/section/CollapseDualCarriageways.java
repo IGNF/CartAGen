@@ -7,7 +7,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.common.triangulation.Triangulation;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
@@ -44,7 +45,7 @@ import fr.ign.cogit.geoxygene.util.algo.CommonAlgorithms;
 
 public class CollapseDualCarriageways {
     @SuppressWarnings("unused")
-    private static Logger logger = Logger
+    private static Logger logger = LogManager
             .getLogger(CollapseDualCarriageways.class.getName());
 
     // Importance of roads that will be collapsed

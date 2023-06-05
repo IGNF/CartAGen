@@ -16,7 +16,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.GeneralisationSpecifications;
 import fr.ign.cogit.cartagen.core.Legend;
@@ -47,7 +48,7 @@ import fr.ign.cogit.geoxygene.schemageo.api.bati.Ilot;
  */
 public class BuildingDeletionPromethee {
 
-  private static Logger LOGGER = Logger
+  private static Logger LOGGER = LogManager
       .getLogger(BuildingDeletionPromethee.class);
 
   private Collection<PrometheeCriterion> criteria;

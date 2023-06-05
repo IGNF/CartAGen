@@ -3,7 +3,8 @@
  */
 package fr.ign.cogit.cartagen.agents.core;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.contrib.agents.lifecycle.AgentLifeCycle;
 import fr.ign.cogit.geoxygene.contrib.agents.lifecycle.TreeExplorationLifeCycle;
@@ -15,7 +16,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.lifecycle.TreeExplorationLifeCycle;
  */
 public final class AgentSpecifications {
     @SuppressWarnings("unused")
-    private static Logger logger = Logger.getLogger(AgentSpecifications.class.getName());
+    private static Logger logger = LogManager.getLogger(AgentSpecifications.class.getName());
 
     public static boolean STORE_STATES = false;
 

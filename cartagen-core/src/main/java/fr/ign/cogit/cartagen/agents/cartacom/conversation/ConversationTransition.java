@@ -1,6 +1,7 @@
 package fr.ign.cogit.cartagen.agents.cartacom.conversation;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.task.TaskResult;
 
@@ -23,7 +24,7 @@ public class ConversationTransition {
   /**
    * Logger for this class
    */
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(ConversationTransition.class.getName());
 
   // Public fields //

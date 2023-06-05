@@ -12,7 +12,8 @@ package fr.ign.cogit.cartagen.spatialanalysis.measures.coalescence;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.Legend;
 import fr.ign.cogit.cartagen.core.genericschema.network.INetworkSection;
@@ -38,7 +39,7 @@ import fr.ign.cogit.geoxygene.util.algo.JtsAlgorithms;
  */
 public class LineCoalescence {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(LineCoalescence.class.getName());
 
   /**

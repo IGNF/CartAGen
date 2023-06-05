@@ -1,12 +1,13 @@
 package fr.ign.cogit.cartagen.agents.gael.field.agent.partition.landuse;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.gael.field.agent.partition.PartitionFieldAgent;
 import fr.ign.cogit.cartagen.core.genericschema.IGeneObj;
 
 public final class LandUseFieldAgent extends PartitionFieldAgent {
-  static Logger logger = Logger.getLogger(LandUseFieldAgent.class.getName());
+  static Logger logger = LogManager.getLogger(LandUseFieldAgent.class.getName());
 
   private IGeneObj geneObj = null;
 

@@ -5,7 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.agent.ISectionAgent;
 import fr.ign.cogit.cartagen.agents.core.agent.MesoAgentGeneralisation;
@@ -34,7 +35,7 @@ import fr.ign.cogit.geoxygene.util.algo.CommonAlgorithms;
  * 
  */
 public class MesoSectionAgent extends MesoAgentGeneralisation<SectionAgent> {
-  private static Logger logger = Logger.getLogger(BlockAgent.class.getName());
+  private static Logger logger = LogManager.getLogger(BlockAgent.class.getName());
 
   /**
    * Constructor for meso section agent

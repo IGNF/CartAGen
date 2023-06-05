@@ -3,7 +3,8 @@ package fr.ign.cogit.cartagen.appli.core.geoxygene.dataset;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.appli.utilities.ProgressFrame;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;
@@ -37,7 +38,7 @@ import fr.ign.cogit.geoxygene.util.index.Tiling;
 
 public class CartAGenLoader {
 
-	private static Logger logger = Logger.getLogger(CartAGenLoader.class.getName());
+	private static Logger logger = LogManager.getLogger(CartAGenLoader.class.getName());
 
 	public CartAGenLoader() {
 		super();

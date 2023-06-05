@@ -13,7 +13,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.constraint.Constraint;
  */
 public class SmallDeadEndsDeletionAction extends ActionCartagen {
   // private static Logger logger =
-  // Logger.getLogger(SuppressionPetitesImpasses.class.getName());
+  // LogManager.getLogger(SuppressionPetitesImpasses.class.getName());
   /**
    */
   private final double longueurMin;

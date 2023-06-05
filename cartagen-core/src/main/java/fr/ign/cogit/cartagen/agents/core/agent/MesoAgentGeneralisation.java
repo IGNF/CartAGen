@@ -4,7 +4,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.constraint.InternStructuresSatisfaction;
 import fr.ign.cogit.cartagen.agents.core.constraint.MesoComponentsSatisfaction;
@@ -24,7 +25,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.state.MesoAgentStateImpl;
 public abstract class MesoAgentGeneralisation<ComponentClass extends GeographicObjectAgent>
     extends GeographicObjectAgentGeneralisation
     implements MesoAgent<ComponentClass> {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(MesoAgentGeneralisation.class.getName());
 
   /**

@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
@@ -12,7 +13,7 @@ import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_LineString;
 
 public class ConcatLineStrings {
 
-  private static final Logger LOGGER = Logger.getLogger(ConcatLineStrings.class
+  private static final Logger LOGGER = LogManager.getLogger(ConcatLineStrings.class
       .getName());
 
   private double threshold = 0.5;

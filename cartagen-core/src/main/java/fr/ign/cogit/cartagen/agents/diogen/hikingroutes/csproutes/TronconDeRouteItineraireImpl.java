@@ -3,7 +3,8 @@ package fr.ign.cogit.cartagen.agents.diogen.hikingroutes.csproutes;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.diogen.hikingroutes.schema.ICarryingRoadLine;
 import fr.ign.cogit.cartagen.agents.diogen.hikingroutes.schema.IHikingRouteSection;
@@ -22,7 +23,7 @@ import fr.ign.cogit.geoxygene.schemageo.impl.routier.TronconDeRouteImpl;
 public class TronconDeRouteItineraireImpl extends TronconDeRouteImpl
         implements TronconDeRouteItineraire {
 
-    protected static final Logger LOGGER = Logger
+    protected static final Logger LOGGER = LogManager
             .getLogger(TronconDeRouteItineraireImpl.class.getName());
 
     public TronconDeRouteItineraireImpl(Reseau res, boolean estFictif,

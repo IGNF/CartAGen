@@ -14,7 +14,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.common.triangulation.Triangulation;
 import fr.ign.cogit.cartagen.graph.triangulation.TriangulationPoint;
@@ -37,7 +38,7 @@ import fr.ign.cogit.geoxygene.spatial.coordgeom.GM_Polygon;
  * 
  */
 public class DelaunayNonConvexHull {
-  private final static Logger logger = Logger
+  private final static Logger logger = LogManager
       .getLogger(DelaunayNonConvexHull.class.getName());
 
   /**

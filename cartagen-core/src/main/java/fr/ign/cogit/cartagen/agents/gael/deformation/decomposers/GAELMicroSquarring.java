@@ -3,7 +3,8 @@
  */
 package fr.ign.cogit.cartagen.agents.gael.deformation.decomposers;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.action.micro.SquarringAction;
 import fr.ign.cogit.cartagen.agents.core.agent.IMicroAgentGeneralisation;
@@ -21,7 +22,7 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
  * 
  */
 public class GAELMicroSquarring {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(SquarringAction.class.getName());
 
   /**

@@ -13,7 +13,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.apache.xerces.dom.DocumentImpl;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
@@ -361,7 +361,7 @@ public class OperationRulesDatabase {
         condElem.appendChild(uniteElem);
         Element opeElem = xmlDoc.createElement("operator");
         n = xmlDoc.createTextNode(
-            StringEscapeUtils.escapeXml(p.getOperator().toShortcut()));
+            StringEscapeUtils.escapeXml11(p.getOperator().toShortcut()));
         opeElem.appendChild(n);
         condElem.appendChild(opeElem);
         premElem.appendChild(condElem);

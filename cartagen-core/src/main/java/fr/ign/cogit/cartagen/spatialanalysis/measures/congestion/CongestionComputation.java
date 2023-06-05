@@ -26,7 +26,7 @@ import fr.ign.cogit.geoxygene.util.algo.CommonAlgorithms;
  */
 public class CongestionComputation {
   // private static Logger logger =
-  // Logger.getLogger(CalculEncombrement.class.getName());
+  // LogManager.getLogger(CalculEncombrement.class.getName());
 
   /**
    */

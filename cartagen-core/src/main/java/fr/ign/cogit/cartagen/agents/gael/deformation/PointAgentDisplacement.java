@@ -3,7 +3,8 @@
  */
 package fr.ign.cogit.cartagen.agents.gael.deformation;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.util.algo.CommonAlgorithms;
 
@@ -13,7 +14,7 @@ import fr.ign.cogit.geoxygene.util.algo.CommonAlgorithms;
  * 
  */
 public class PointAgentDisplacement {
-  private static Logger logger = Logger.getLogger(PointAgentDisplacement.class
+  private static Logger logger = LogManager.getLogger(PointAgentDisplacement.class
       .getName());
 
   public static void displace(IPointAgent pa, double dx, double dy) {

@@ -7,7 +7,8 @@ import java.awt.Color;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.cartacom.CartacomSpecifications;
 import fr.ign.cogit.cartagen.agents.cartacom.action.CartacomAction;
@@ -32,7 +33,7 @@ import fr.ign.cogit.geoxygene.util.algo.geometricAlgorithms.morphomaths.Morpholo
  */
 public class BuildingProximity extends MicroMicroRelationalConstraintWithZone {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(BuildingProximity.class.getName());
 
   /**

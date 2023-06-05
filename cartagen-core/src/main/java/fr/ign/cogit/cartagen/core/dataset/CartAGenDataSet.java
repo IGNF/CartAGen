@@ -15,7 +15,8 @@ package fr.ign.cogit.cartagen.core.dataset;
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.dataset.geompool.GeometryPool;
 import fr.ign.cogit.cartagen.core.defaultschema.GeneObjDefault;
@@ -100,7 +101,7 @@ import fr.ign.cogit.geoxygene.util.conversion.ShapefileWriter;
  */
 public class CartAGenDataSet extends DataSet {
 	@SuppressWarnings("unused")
-	private static Logger logger = Logger.getLogger(CartAGenDataSet.class.getName());
+	private static Logger logger = LogManager.getLogger(CartAGenDataSet.class.getName());
 
 	/**
 	 * Default constructor

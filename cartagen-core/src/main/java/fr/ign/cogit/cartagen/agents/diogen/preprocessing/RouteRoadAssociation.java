@@ -3,7 +3,8 @@ package fr.ign.cogit.cartagen.agents.diogen.preprocessing;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.diogen.hikingroutes.schema.HikingFactory;
 import fr.ign.cogit.cartagen.agents.diogen.hikingroutes.schema.ICarryingRoadLine;
@@ -22,7 +23,7 @@ import fr.ign.cogit.geoxygene.contrib.cartetopo.CarteTopo;
 
 public class RouteRoadAssociation {
 
-  private static final Logger LOGGER = Logger
+  private static final Logger LOGGER = LogManager
       .getLogger(RouteRoadAssociation.class.getName());
 
   /**

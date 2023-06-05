@@ -17,7 +17,8 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -34,7 +35,7 @@ import fr.ign.cogit.cartagen.agents.diogen.interactionmodel.constrained.Constrai
  */
 public class InteractionConfiguration {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(InteractionConfiguration.class.getName());
 
   private static Map<String, Interaction> interactionsMap = null;

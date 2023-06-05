@@ -32,7 +32,8 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author JGaffuri
@@ -40,7 +41,7 @@ import org.apache.log4j.Logger;
 public class GeneralisationLaunchingFrame extends JFrame {
   private static final long serialVersionUID = 1L;
 
-  private static final Logger logger = Logger
+  private static final Logger logger = LogManager
       .getLogger(GeneralisationLaunchingFrame.class.getName());
 
   /**

@@ -10,7 +10,7 @@ package fr.ign.cogit.cartagen.agents.diogen.hikingroutes.csproutes;
 public class constraintsStaticFunctionsForCSP {
   //
   // private static Logger LOGGER =
-  // Logger.getLogger(constraintsStaticFunctionsForCSP.class.getName());
+  // LogManager.getLogger(constraintsStaticFunctionsForCSP.class.getName());
   //
   // /**
   // * this function returns a node score according the number of crossed roads

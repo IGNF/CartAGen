@@ -1,7 +1,8 @@
 // 17 nov. 2005
 package fr.ign.cogit.cartagen.agents.gael.deformation.constraint.relational.segmentsegment;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.gael.deformation.IPointAgent;
 import fr.ign.cogit.cartagen.agents.gael.deformation.PointAgentDisplacementAction;
@@ -18,7 +19,7 @@ import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IDirectPosition;
  * 
  */
 public class MinimalDistance extends SubmicroRelationnalConstraint {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(MinimalDistance.class.getName());
 
   public double distance;

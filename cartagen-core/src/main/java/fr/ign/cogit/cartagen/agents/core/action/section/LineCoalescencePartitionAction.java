@@ -2,7 +2,8 @@ package fr.ign.cogit.cartagen.agents.core.action.section;
 
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.core.action.MesoComponentsActivation;
 import fr.ign.cogit.cartagen.agents.core.agent.network.MesoSectionAgent;
@@ -17,7 +18,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.constraint.Constraint;
  */
 public class LineCoalescencePartitionAction
     extends MesoComponentsActivation<SectionAgent> {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(LineCoalescencePartitionAction.class.getName());
 
   /**

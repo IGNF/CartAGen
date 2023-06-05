@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 import fr.ign.cogit.cartagen.algorithms.polygon.Skeletonize;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDataSet;

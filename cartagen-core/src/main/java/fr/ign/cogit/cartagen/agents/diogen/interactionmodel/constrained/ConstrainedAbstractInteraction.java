@@ -14,7 +14,8 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -34,7 +35,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.constraint.GeographicConstraint;
 public abstract class ConstrainedAbstractInteraction
     implements ConstrainedInteraction {
 
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(ConstrainedAbstractInteraction.class.getName());
 
   private static String CONFIGURATION_FILE = "/padawan/interactions.xml";

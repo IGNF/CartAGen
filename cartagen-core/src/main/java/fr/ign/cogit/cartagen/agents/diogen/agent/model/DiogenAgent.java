@@ -3,7 +3,8 @@ package fr.ign.cogit.cartagen.agents.diogen.agent.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.agents.diogen.lifecycle.PadawanAgentLifeCycle;
 import fr.ign.cogit.cartagen.agents.diogen.padawan.BorderStrategy;
@@ -15,7 +16,7 @@ import fr.ign.cogit.geoxygene.contrib.agents.agent.AgentSatisfactionState;
 
 public abstract class DiogenAgent implements IDiogenAgent {
 
-  private static Logger logger = Logger.getLogger(DiogenAgent.class.getName());
+  private static Logger logger = LogManager.getLogger(DiogenAgent.class.getName());
 
   public DiogenAgent() {
     super();

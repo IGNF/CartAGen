@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.spatialanalysis.network.StrokeNode;
 
@@ -15,7 +16,7 @@ import fr.ign.cogit.cartagen.spatialanalysis.network.StrokeNode;
  */
 public class Backtracking {
 
-  private static Logger LOGGER = Logger.getLogger(Backtracking.class.getName());
+  private static Logger LOGGER = LogManager.getLogger(Backtracking.class.getName());
 
   /**
    * This function uses a dichotomic approach to solve the CSP problem

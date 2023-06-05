@@ -14,7 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.core.GeneralisationSpecifications;
 import fr.ign.cogit.cartagen.core.Legend;
@@ -51,7 +52,7 @@ import fr.ign.cogit.geoxygene.util.algo.CommonAlgorithms;
  * 
  */
 public class BuildingDisplacementRandom {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(BuildingDisplacementRandom.class.getName());
 
   private static double facteurLongueurDeplacement = 2;

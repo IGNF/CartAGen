@@ -1,6 +1,7 @@
 package fr.ign.cogit.cartagen.spatialanalysis.measures;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.ILineString;
 import fr.ign.cogit.geoxygene.api.spatial.coordgeom.IPolygon;
@@ -10,7 +11,7 @@ import fr.ign.cogit.geoxygene.contrib.geometrie.Distances;
 import fr.ign.cogit.geoxygene.util.algo.JtsAlgorithms;
 
 public class ProximityBtwPossiblyOverlappingPolygon {
-  final static Logger logger = Logger
+  final static Logger logger = LogManager
       .getLogger(ProximityBtwPossiblyOverlappingPolygon.class.getName());
 
   /**

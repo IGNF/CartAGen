@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Iterables;
 
@@ -30,7 +31,7 @@ import fr.ign.cogit.geoxygene.schemageo.api.support.reseau.NoeudReseau;
  */
 public class RouteStrokesNetwork extends RoadStrokesNetwork {
 
-  private static Logger LOGGER = Logger.getLogger(RouteStrokesNetwork.class
+  private static Logger LOGGER = LogManager.getLogger(RouteStrokesNetwork.class
       .getName());
 
   private Collection<StrokeNode> routeStrokeNodes;

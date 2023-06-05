@@ -8,7 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Describes a conversation scenario seen from the point of view of one of the
@@ -33,7 +34,7 @@ public class HalfConversationScenario {
   /**
    * Logger for this class
    */
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(HalfConversationScenario.class.getName());
   /**
    * All declared HalfConversationScenario.

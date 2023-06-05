@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import fr.ign.cogit.cartagen.common.triangulation.Triangulation;
 import fr.ign.cogit.cartagen.core.dataset.CartAGenDoc;
@@ -36,7 +37,7 @@ import fr.ign.cogit.geoxygene.util.index.Tiling;
  * 
  */
 public class FieldEnrichment {
-  private static Logger logger = Logger
+  private static Logger logger = LogManager
       .getLogger(FieldEnrichment.class.getName());
 
   /**
