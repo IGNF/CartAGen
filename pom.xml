@@ -17,7 +17,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<jts.version>1.19.0</jts.version>
-		<log4j.version>2.17.2</log4j.version>
+		<log4j.version>2.25.4</log4j.version>
 		<geotools.version>29.0</geotools.version>
 		<jfreechart.version>1.0.13</jfreechart.version>
 		<jgrapht.version>0.9.0</jgrapht.version>
